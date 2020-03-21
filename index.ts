@@ -153,7 +153,8 @@ app.route("/user")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(async () => {
-                return UserController.getUser(request.session.userId);
+                return PermissionController.checkOperationPermissions(request.session.userId, "User", "retrieve")
+                .then(() => UserController.getUser(request.session.userId));
             }, async () => {
                 const user = await UserController.getUserByUsername(request.query.username);
                 return {
