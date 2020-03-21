@@ -1,5 +1,8 @@
 //TYPESCRIPT
 import "reflect-metadata";
+//SERVER
+import * as express from "express";
+import * as session from "express-session";
 //CONTROLLERS
 import {
     UserController,
@@ -13,15 +16,13 @@ import {
 
 //EXPRESS
 const port: number = 8080;
-const express = require("express");
 const jsonParser = express.json();
 const app = express();
 //EXPRESS: SESSION
-const session = require("express-session");
 const sessionMiddleware = session({
     secret: Math.random().toString(),
     saveUninitialized: false,
-    resave: true
+    resave: false
 });
 //EXPRESS INITIALIZATION
 app.use(express.static("./public"));
