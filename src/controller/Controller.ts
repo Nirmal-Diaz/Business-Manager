@@ -20,21 +20,31 @@ export class GeneralController {
         // }
         // return true;
     }
-    
-    static async getItems(tableName:string, restrictNonGeneralData:boolean) {
+
+    static async getItems(tableName: string, restrictNonGeneralData: boolean) {
         const generalEntities = {
             role: Role,
             module: Module
         };
         if (restrictNonGeneralData && generalEntities.hasOwnProperty(tableName)) {
-            return getRepository(generalEntities[tableName]).find();
+            const items = await getRepository(generalEntities[tableName]).find();
+            if (items.length > 0) {
+                return items;
+            } else {
+                throw { title: "Isn't it empty", titleDescription: "Add some items first", message: "Looks like the table you are requesting doesn't have any items in it", technicalMessage: "Requested an empty table" };
+            }
         } else if (restrictNonGeneralData) {
             throw { title: "Whoa! Stop right there", titleDescription: "Try logging in first", message: "Looks like you don't have access to the requested data. Only general data is available for retrieving without logging in", technicalMessage: "Requested access to a non-general entity" };
         } else {
-            return getRepository(generalEntities[tableName]).find();
+            const items = await getRepository(generalEntities[tableName]).find();
+            if (items.length > 0) {
+                return items;
+            } else {
+                throw { title: "Isn't it empty", titleDescription: "Add some items first", message: "Looks like the table you are requesting doesn't have any items in it", technicalMessage: "Requested an empty table" };
+            }
         }
     }
-    
+
     static async deleteItems(tableName, columnName, columnData) {
         // for (let i = 0; i < columnData.length; i++) {
         //     await DAO.GeneralDAO.deleteRowsByExactMatch(tableName, columnName, columnData[i])
@@ -44,7 +54,7 @@ export class GeneralController {
 }
 
 export class SessionController {
-    static async createSession(session, username:string, cellCombination:string) {
+    static async createSession(session, username: string, cellCombination: string) {
         const user = await UserController.getUserByUsername(username);
 
         const generatedHash = crypto.createHash("sha256").update(`${username} : ${cellCombination}`).digest("hex");
@@ -57,12 +67,12 @@ export class SessionController {
             throw { title: "Oops! Pattern mismatch", titleDescription: "Try again with the correct pattern", message: "", technicalMessage: "Inequivalent hashes" };
         }
     }
-    
+
     static async checkLogIn(session) {
-        if (session.logged) {
+        if (session.logged === true) {
             return true;
         } else {
-            throw { title: "Ain't logged in", titleDescription: "Just log in", message: "Let us tell you one last time, you aren't logged in. Also you are clear to log in", technicalMessage: "No login records in session" };
+            throw { title: "Ain't logged in", titleDescription: "Just log in", message: "You need to login to the system to perform the required action", technicalMessage: "No login records in session" };
         }
     }
 }
@@ -75,32 +85,32 @@ export class PermissionController {
         // }
         // return GeneralController.createItems("userModulePermission", userModulePermissions);
     }
-    
+
     static async checkOperationPermissions(userId, moduleName, moduleOperationName) {
         const userModulePermission = await PermissionRepository.getPermissionsForModule(userId, moduleName);
-
-        const operationIndexMap = {
-            create: 0,
-            retrieve: 1,
-            update: 2,
-            delete: 3
-        }
-
-        if (userModulePermission.permissions[operationIndexMap[moduleOperationName]] === "1") {
-            return true;
+        if (userModulePermission) {
+            const operationIndexMap = {
+                create: 0,
+                retrieve: 1,
+                update: 2,
+                delete: 3
+            }
+    
+            if (userModulePermission.permissions[operationIndexMap[moduleOperationName]] === "1") {
+                return true;
+            } else {
+                throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: "Looks like you don't have permissions to the operation to be executed on the current module", technicalMessage: "Operation permissions denied" };
+            }
         } else {
-            throw { title: "The answer is 'No'", titleDescription: "There's nothing you can do", message: "Looks like you don't have permissions to the operation to be executed on the current module", technicalMessage: "Operation permissions denied" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "We couldn't find any record of the queried permission data", technicalMessage: "No records about operation permissions on module" };
         }
     }
-    
-    static async getPermittedOperations(userId:number, moduleName:string) {
+
+    static async getPermittedOperations(userId: number, moduleName: string) {
         const userModulePermission = await PermissionRepository.getPermissionsForModule(userId, moduleName);
-
-        const permittedModuleOperations = [];
-
-        if (!userModulePermission) {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the current module. Usually the system won't show such modules to the user", technicalMessage: "Since no permitted operations for the module, access to the module is denied" };
-        } else {
+        if (userModulePermission) {
+            const permittedModuleOperations = [];
+    
             if (userModulePermission.permissions[0] === "1") {
                 permittedModuleOperations.push("create");
             }
@@ -113,39 +123,43 @@ export class PermissionController {
             if (userModulePermission.permissions[3] === "1") {
                 permittedModuleOperations.push("delete");
             }
+
             return permittedModuleOperations;
+        } else {
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the current module. Usually the system won't show such modules to the user", technicalMessage: "Since no permitted operations for the module, access to the module is denied" };
         }
     }
-    
+
     static async getRetrievableModulePaths(userId) {
         const userModulePermissions = await getRepository(UserModulePermission).find({
-            where : {
+            where: {
                 userId: userId
             },
             relations: ["module"]
         });
-        const retrievableModulePaths = [];
 
-        for (let i = 0; i < userModulePermissions.length; i++) {
-            if (userModulePermissions[i].permissions[1] === "1") {
-                retrievableModulePaths.push(userModulePermissions[i].module.modulePath);
+        if (userModulePermissions.length > 0) {
+            const retrievableModulePaths = [];
+
+            for (let i = 0; i < userModulePermissions.length; i++) {
+                if (userModulePermissions[i].permissions[1] === "1") {
+                    retrievableModulePaths.push(userModulePermissions[i].module.modulePath);
+                }
             }
-        }
 
-        if (retrievableModulePaths.length === 0) {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No retrievable modules" };
-        } else {
             return retrievableModulePaths;
+        } else {
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No record about retrievable modules" };
         }
     }
-    
+
     static async deleteAllPermissions(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("userModulePermission", "username", username);
     }
 }
 
 export class UserController {
-    static async createUser(username:string, user:User) {
+    static async createUser(username: string, user: User) {
         // //Finalize user object
         // user.username = username;
         // user.hash = crypto.createHash("sha256").update(`${username} : A9E5I1`).digest("hex");
@@ -157,29 +171,46 @@ export class UserController {
         // }
         // return getRepository(User).save(user);
     }
-    
-    static async getUser(userId:number) {
-        return getRepository(User).findOne({
-            where : {
+
+    static async getUser(userId: number) {
+        const user = await getRepository(User).findOne({
+            where: {
                 userId: userId
             },
             relations: ["role", "userPreference", "userPreference.theme"]
         });
+
+        if (user) {
+            return user;
+        } else {
+            throw { title: "Hmmm... we couldn't find that user", titleDescription: "Please recheck your parameters", message: "There is no user matching the parameters you provided", technicalMessage: "No user for given parameters" };
+        }
     }
 
-    static async getUserByUsername(username:string) {
-        return getRepository(User).findOne({
-            where : {
+    static async getUserByUsername(username: string) {
+        const user = await getRepository(User).findOne({
+            where: {
                 username: username
-            },
-            relations: ["role", "userPreference", "userPreference.theme"]
+            }
         });
+
+        if (user) {
+            return user;
+        } else {
+            throw { title: "Hmmm... we couldn't find you", titleDescription: "Please recheck your credentials", message: "There is no user matching the credentials you provided", technicalMessage: "No user for given credentials" };
+        }
     }
-    
+
     static async searchUsers(keyword) {
-        return UserRepository.searchUsers(keyword);
+        const users = await UserRepository.searchUsers(keyword);
+
+        if (users.length > 0) {
+            return users;
+        } else {
+            throw { title: "Hmmm... couldn't find anyone", titleDescription: "Try wrods instead of phrases", message: "There is no user matching the keyword you provided", technicalMessage: "No users for given keyword" };
+        }
     }
-    
+
     static async deleteUser(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("user", "username", username);
     }
@@ -195,7 +226,7 @@ export class UserPreferenceController {
         // };
         // return DAO.GeneralDAO.createRow("userPreference", Object.keys(preference), Object.values(preference));
     }
-    
+
     static async getUserPreference(username) {
         // const preferences = await DAO.GeneralDAO.getRows("userPreference", [["username", "true", username]], "");
         // if (preferences.length === 0) {
@@ -204,7 +235,7 @@ export class UserPreferenceController {
         //     return preferences[0];
         // }
     }
-    
+
     static async deleteUserPreference(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("userPreference", "username", username);
     }
@@ -217,7 +248,7 @@ export class ValidationController {
     static async getValidationExpressions(moduleName) {
         // return regExpLibrary[moduleName];
     }
-    
+
     static async validateUserCreation(username = "", user = {}, userModulePermissions = [{}]) {
         // //Check major: Username is invalid
         // if (!(new RegExp(regExpLibrary.User.username).test(username))) {
@@ -251,7 +282,7 @@ export class FileController {
     static async getExtensionsLibrary() {
         return extensionsLibrary;
     }
-    
+
     static async getItemPaths(userId, subDirectoryPath) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
@@ -305,7 +336,7 @@ export class FileController {
             return [directoryData, fileData];
         }
     }
-    
+
     static async getFileBuffer(userId, filePath) {
         const fullRelativeDirectoryPath = `./private/${userId}/${filePath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
