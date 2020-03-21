@@ -1,3 +1,6 @@
+//@ts-check
+import { Card } from "./Card.mjs";
+
 export class PlatformUtil {
     static getCurrentTime() {
         //Create a new dateObject with currentDate
@@ -21,6 +24,25 @@ export class PlatformComponent {
         //Append into HTML
         dropDownInputOption.appendChild(dropDownOptionContent);
         return dropDownInputOption;
+    }
+
+    static createOverlayChip(module, workspaceScreenController) {
+        const overlayChip = document.createElement("div");
+        overlayChip.setAttribute("class", "overlayChip");
+        overlayChip.addEventListener("click", (event) => {
+            if (workspaceScreenController.isCardExist(module.modulePath)) {
+                window.shellInterface.throwAlert("Card already exists", "Continue work with the existing card", "The card you are trying to open already exists on the workspace. Two instances of the same card isn't allowed by the system", null, "OK", null);
+            } else {
+                workspaceScreenController.addCard(new Card(module.modulePath));
+                workspaceScreenController.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+            }
+        });
+
+        const title = document.createElement("div");
+        title.setAttribute("class", "title");
+        title.textContent = module.moduleName;
+        overlayChip.appendChild(title);
+        return overlayChip;
     }
 
     //EVENT HANDLER METHODS
