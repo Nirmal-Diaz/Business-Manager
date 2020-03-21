@@ -91,14 +91,14 @@ app.route("/session/currentUser")
             });
     });
 
-app.route("/permission/retrievableModulePaths")
+app.route("/permission/permittedModules")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
-            .then(() => PermissionController.getRetrievableModulePaths(request.session.userId))
+            .then(() => PermissionController.getPermittedModules(request.session.userId))
             .then(data => {
                 response.json({
                     status: true,
-                    retrievableModulePaths: data
+                    permittedModules: data
                 });
             })
             .catch(error => {
