@@ -94,12 +94,12 @@ export class PermissionRepository {
 
 export class UserRepository {
     static searchUsers(keyword) {
-        // return getRepository(User)
-        // .createQueryBuilder("u")
-        // .leftJoinAndSelect("u.role", "r")
-        // .where("u.username LIKE :keyword", { keyword: keyword })
-        // .orWhere("r.roleName LIKE :keyword", { keyword: keyword })
-        // .getMany();
+        return getRepository(User)
+        .createQueryBuilder("u")
+        .leftJoinAndSelect("u.role", "r")
+        .where("u.username LIKE :keyword", { keyword: `%${keyword}%` })
+        .orWhere("r.roleName LIKE :keyword", { keyword: `%${keyword}%` })
+        .getMany();
     }
 }
 
