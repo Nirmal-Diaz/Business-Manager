@@ -126,11 +126,11 @@ export class PermissionController {
 
             return permittedModuleOperations;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the current module. Usually the system won't show such modules to the user", technicalMessage: "Since no permitted operations for the module, access to the module is denied" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the current module. Usually the system won't show such modules to the user", technicalMessage: "No records about permitted operations" };
         }
     }
 
-    static async getRetrievableModulePaths(userId) {
+    static async getPermittedModules(userId) {
         const userModulePermissions = await getRepository(UserModulePermission).find({
             where: {
                 userId: userId
@@ -139,17 +139,17 @@ export class PermissionController {
         });
 
         if (userModulePermissions.length > 0) {
-            const retrievableModulePaths = [];
+            const permittedModules = [];
 
             for (let i = 0; i < userModulePermissions.length; i++) {
                 if (userModulePermissions[i].permissions[1] === "1") {
-                    retrievableModulePaths.push(userModulePermissions[i].module.modulePath);
+                    permittedModules.push(userModulePermissions[i].module);
                 }
             }
 
-            return retrievableModulePaths;
+            return permittedModules;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No record about retrievable modules" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No records about retrievable modules" };
         }
     }
 
