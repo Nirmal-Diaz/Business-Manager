@@ -45,11 +45,11 @@ app.route("/session")
                     status: true
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -63,11 +63,11 @@ app.route("/workspace")
                     status: true
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -82,11 +82,11 @@ app.route("/session/currentUser")
                     user: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -101,11 +101,11 @@ app.route("/permission/retrievableModulePaths")
                     retrievableModulePaths: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -120,11 +120,11 @@ app.route("/permission/permittedModuleOperations")
                     permittedModuleOperations: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -140,11 +140,11 @@ app.route("/general")
                     items: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -166,11 +166,11 @@ app.route("/user")
                     user: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     })
@@ -186,11 +186,11 @@ app.route("/user")
         //             status: true
         //         });
         //     })
-        //     .catch(serverError => {
-        //         console.log("System error resolved:", serverError);
+        //     .catch(error => {
+        //         console.log("System error resolved:", error);
         //         response.json({
         //             status: false,
-        //             serverError: serverError
+        //             error: error
         //         });
         //     });
     })
@@ -201,11 +201,11 @@ app.route("/user")
         //     response.json({
         //         status: true
         //     });
-        // }).catch((serverError) => {
-        //     console.log("System error resolved:", serverError);
+        // }).catch((error) => {
+        //     console.log("System error resolved:", error);
         //     response.json({
         //         status: false,
-        //         serverError: serverError
+        //         error: error
         //     });
         // });
     });
@@ -220,11 +220,11 @@ app.route("/users")
                     users: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -239,11 +239,11 @@ app.route("/file/extensionsLibrary")
                     extensionsLibrary: data
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -259,11 +259,11 @@ app.route("/file/itemPaths")
                     fileData: data[1]
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });
@@ -278,11 +278,11 @@ app.route("/file/fileBuffer")
                     fileBuffer: data,
                 });
             })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
+            .catch(error => {
+                console.log("System error resolved:", error);
                 response.json({
                     status: false,
-                    serverError: serverError
+                    error: error
                 });
             });
     });

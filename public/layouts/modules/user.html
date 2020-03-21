@@ -78,7 +78,7 @@
                             window.parent.shellInterface.throwAlert("We couldn't find a match", "Try a different keyword", "Try using a single word instead of long phrases for better search results", null, "OK", null);
                         }
                     } else {
-                        window.parent.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                     }
                 })
                 .catch(error => {

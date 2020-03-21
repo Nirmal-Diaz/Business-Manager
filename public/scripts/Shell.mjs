@@ -134,7 +134,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
                 if (response.status) {
                     window.shellInterface.transitScreen(new WorkspaceScreenController(window.shellInterface.getShellView().querySelector("#workspaceScreen")));
                 } else {
-                    window.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                    window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
             }).catch(error => {
                 window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
@@ -228,7 +228,7 @@ export class WorkspaceScreenController {
                     //Apply user preferences to the UI
                     document.getElementsByTagName("link")[0].href = response.user.userPreference.theme.themePath;
                 } else {
-                    window.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                    window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
             })
             .catch(error => {
@@ -258,7 +258,7 @@ export class WorkspaceScreenController {
                     //NOTE: Add onload to presentCard2's iFrame for updateQuickAccessArea
                     this.presentCards[this.presentCards.length - 1].getCardView().querySelector("iframe").addEventListener("load", this.updateQuickAccessArea.bind(this));
                 } else {
-                    window.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                    window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
             })
             .catch(error => {
@@ -515,7 +515,7 @@ export class WorkspaceScreenController {
                         this.permittedModuleOperations[moduleName] = response.permittedModuleOperations;
                         addQuickAccessControls.bind(this)();
                     } else {
-                        window.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                        window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                     }
                 })
                 .catch(error => {

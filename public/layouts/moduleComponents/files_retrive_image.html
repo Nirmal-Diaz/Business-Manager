@@ -67,7 +67,7 @@
                         //Update titleDescription with fileName
                         document.querySelector(".title").textContent = imageFilePath.slice(imageFilePath.lastIndexOf("/") + 1, imageFilePath.lastIndexOf("."));
                     } else {
-                        window.parent.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                     }
                 })
                 .catch(error => {
