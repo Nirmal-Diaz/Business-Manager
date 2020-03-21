@@ -37,7 +37,7 @@ app.route("/")
         response.sendFile(__dirname + "/public/index.html");
     });
 
-app.route("/user/retrieve/profileImage")
+app.route("/user/profileImage")
     .get((request, response) => {
         UserController.getUserByUsername(request.query.username)
             .then(data => {
@@ -57,7 +57,7 @@ app.route("/user/retrieve/profileImage")
             });
     });
 
-app.route("/session/create/newSession")
+app.route("/session")
     .put(jsonParser, (request, response) => {
         SessionController.createSession(request.session, request.body.username, request.body.cellCombination)
             .then(() => {
@@ -92,7 +92,7 @@ app.route("/workspace")
             });
     });
 
-app.route("/session/retrieve/currentUser")
+app.route("/session/currentUser")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => UserController.getUser(request.session.userId))
@@ -111,7 +111,7 @@ app.route("/session/retrieve/currentUser")
             });
     });
 
-app.route("/permission/retrieve/permittedModulePaths")
+app.route("/permission/retrievableModulePaths")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => PermissionController.getRetrievableModulePaths(request.session.userId))
@@ -130,7 +130,7 @@ app.route("/permission/retrieve/permittedModulePaths")
             });
     });
 
-app.route("/permission/retrieve/permittedModuleOperations")
+app.route("/permission/permittedModuleOperations")
     .post(jsonParser, (request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => PermissionController.getPermittedOperations(request.session.userId, request.body.moduleName))
@@ -150,7 +150,7 @@ app.route("/permission/retrieve/permittedModuleOperations")
     });
 
 //EXPRESS ROUTING (WITH LOGIN + PERMISSION VALIDATION)
-app.route("/general/retrieve/items")
+app.route("/general")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => GeneralController.getItems(request.query.tableName, true))
@@ -169,7 +169,7 @@ app.route("/general/retrieve/items")
             });
     });
 
-app.route("/user/create/newUser")
+app.route("/user")
     .put(jsonParser, (request, response) => {
         // PermissionController.checkOperationPermissions(request.session.username, "User", "create")
         //     .then(() => ValidationController.validateUserCreation(request.body.username, request.body.user, request.body.userModulePermissions))
@@ -189,9 +189,24 @@ app.route("/user/create/newUser")
         //             serverError: serverError
         //         });
         //     });
+    })
+    .delete(jsonParser, (request, response) => {
+        // controller.Permission.checkOperationPermissions(request.session.username, "User", "delete").then(() => {
+
+        // }).then(() => {
+        //     response.json({
+        //         status: true
+        //     });
+        // }).catch((serverError) => {
+        //     console.log("System error resolved:", serverError);
+        //     response.json({
+        //         status: false,
+        //         serverError: serverError
+        //     });
+        // });
     });
 
-app.route("/user/retrieve/users")
+app.route("/users")
     .get((request, response) => {
         // PermissionController.checkOperationPermissions(request.session.username, "User", "retrieve")
         //     .then(() => UserController.searchUsers(request.query.keyword))
@@ -210,24 +225,7 @@ app.route("/user/retrieve/users")
         //     });
     });
 
-// app.route("/user/delete/users")
-//     .post(jsonParser, (request, response) => {
-//         controller.Permission.checkOperationPermissions(request.session.username, "User", "delete").then(() => {
-
-//         }).then(() => {
-//             response.json({
-//                 status: true
-//             });
-//         }).catch((serverError) => {
-//             console.log("System error resolved:", serverError);
-//             response.json({
-//                 status: false,
-//                 serverError: serverError
-//             });
-//         });
-//     });
-
-app.route("/file/retrieve/extensionsLibrary")
+app.route("/file/extensionsLibrary")
     .get((request, response) => {
         PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
             .then(() => FileController.getExtensionsLibrary())
@@ -246,7 +244,7 @@ app.route("/file/retrieve/extensionsLibrary")
             });
     });
 
-app.route("/file/retrieve/itemPaths")
+app.route("/file/itemPaths")
     .get((request, response) => {
         PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
             .then(() => FileController.getItemPaths(request.session.userId, request.query.subDirectoryPath))
@@ -266,7 +264,7 @@ app.route("/file/retrieve/itemPaths")
             });
     });
 
-app.route("/file/retrieve/fileBuffer")
+app.route("/file/fileBuffer")
     .get((request, response) => {
         PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
             .then(() => FileController.getFileBuffer(request.session.userId, request.query.filePath))

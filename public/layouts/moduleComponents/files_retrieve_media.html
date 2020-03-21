@@ -159,7 +159,7 @@
             preview(mediaFilePath) {
                 this.mediaFileName = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1, mediaFilePath.lastIndexOf("."));
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/retrieve/fileBuffer?filePath=${encodeURIComponent(mediaFilePath)}`)
+                fetch(`${location.protocol}//${location.host}/file/fileBuffer?filePath=${encodeURIComponent(mediaFilePath)}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {

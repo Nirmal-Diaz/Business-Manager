@@ -57,7 +57,7 @@
             //EVENT HANDLER METHODS
             searchItems(keyword, titleText, titleDescriptionText) {
                 //Fetch registered users of the system
-                fetch(`${location.protocol}//${location.host}/user/retrieve/users?keyword=${keyword}`)
+                fetch(`${location.protocol}//${location.host}/users?keyword=${keyword}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {

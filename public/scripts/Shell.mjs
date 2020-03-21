@@ -120,7 +120,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
 
     attemptAuthorization() {
         //Create a session
-        fetch(`${location.protocol}//${location.host}/session/create/newSession`, {
+        fetch(`${location.protocol}//${location.host}/session`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -156,7 +156,7 @@ export class LogInScreenController {
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
             if (event.key === "Enter") {
-                fetch(`${location.protocol}//${location.host}/user/retrieve/profileImage?username=${this.logInBox.children[1].value}`)
+                fetch(`${location.protocol}//${location.host}/user/profileImage?username=${this.logInBox.children[1].value}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
@@ -217,7 +217,7 @@ export class WorkspaceScreenController {
         this.actionOverlayView = document.getElementById("actionOverlay");
         //INITIATION PROCEDURE
         //Fetch username, roleName and profileImage and apply user preferences
-        fetch(`${location.protocol}//${location.host}/session/retrieve/currentUser`)
+        fetch(`${location.protocol}//${location.host}/session/currentUser`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -235,7 +235,7 @@ export class WorkspaceScreenController {
                 window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         //Fetch modules with "retrieve" permission
-        fetch(`${location.protocol}//${location.host}/permission/retrieve/permittedModulePaths`)
+        fetch(`${location.protocol}//${location.host}/permission/retrievableModulePaths`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -500,7 +500,7 @@ export class WorkspaceScreenController {
         //Check if the permittedModuleOperations are cached
         if (!this.permittedModuleOperations.hasOwnProperty(moduleName)) {
             //Fetch permittedModuleOperations and cache them
-            fetch(`${location.protocol}//${location.host}/permission/retrieve/permittedModuleOperations`, {
+            fetch(`${location.protocol}//${location.host}/permission/permittedModuleOperations`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

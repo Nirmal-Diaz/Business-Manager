@@ -49,7 +49,7 @@
                 //Add onclick to returnFromDirectoryButton for return form current directory
                 this.retrieveControls[1].addEventListener("click", this.returnFromDirectory.bind(this));
                 //Initially cache the extensionsLibrary and navigate the root user directory
-                fetch(`${location.protocol}//${location.host}/file/retrieve/extensionsLibrary`)
+                fetch(`${location.protocol}//${location.host}/file/extensionsLibrary`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -64,7 +64,7 @@
             //EVENT HANDLER METHODS
             navigateDirectory(parentCardDivision, subDirectoryPath) {
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/retrieve/itemPaths?subDirectoryPath=${encodeURIComponent(subDirectoryPath)}`)
+                fetch(`${location.protocol}//${location.host}/file/itemPaths?subDirectoryPath=${encodeURIComponent(subDirectoryPath)}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {

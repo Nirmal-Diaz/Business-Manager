@@ -59,7 +59,7 @@
 
             preview(imageFilePath) {
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/retrieve/fileBuffer?filePath=${encodeURIComponent(imageFilePath)}`)
+                fetch(`${location.protocol}//${location.host}/file/fileBuffer?filePath=${encodeURIComponent(imageFilePath)}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {

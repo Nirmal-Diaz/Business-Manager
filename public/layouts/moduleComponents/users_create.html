@@ -51,7 +51,7 @@
                         }
                     }
                     //Send data to server
-                    fetch(`${location.protocol}//${location.host}/user/create/newUser`, {
+                    fetch(`${location.protocol}//${location.host}/user`, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json"
@@ -80,7 +80,7 @@
 
             loadRoles() {
                 //Fetch roles
-                fetch(`${location.protocol}//${location.host}/general/retrieve/items?tableName=role`)
+                fetch(`${location.protocol}//${location.host}/general?tableName=role`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -109,7 +109,7 @@
 
             loadModules() {
                 //Fetch modules
-                fetch(`${location.protocol}//${location.host}/general/retrieve/items?tableName=module`)
+                fetch(`${location.protocol}//${location.host}/general?tableName=module`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
