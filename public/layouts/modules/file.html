@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Files</title>
+
+    <link rel="stylesheet" href="../../stylesheets/platform_styleVariables_turquoise.css" />
+    <link rel="stylesheet" href="../../stylesheets/platform_styles.css">
+    <link rel="stylesheet" href="../../stylesheets/card_styles.css" />
+
+    <style>
+        .itemInformation:hover {
+            color: var(--defaultColor);
+        }
+    </style>
+
+    <script type="module">
+        //@ts-check
+        import {CardComponent} from "../../scripts/Utility.mjs";
+        import {PopUpCard} from "../../scripts/PopUpCard.mjs";
+        //Prevent contextMenu
+        window.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("load", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface {
+            constructor() {
+                //FIELD DECLARATIONS
+                this.cardObject = null;
+                this.title = document.querySelector("title").textContent;
+                this.currentSubDirectoryPath = "/";
+                this.selectedCardDivisionSectorItems = [];
+                this.extensionsLibrary = null;
+                //Cache elements
+                this.quickAccessArea = document.getElementById("quickAccessArea");
+                this.createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
+                this.retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
+                this.updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
+                this.deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+                this.mainCardDivision = document.getElementById("mainCardDivision");
+                //INITIATION PROCEDURE
+                //Add onclick to retrieveFileButton for showing the retrieve file popUpCard
+                this.retrieveControls[0].addEventListener("click", this.determinePreviewPopUp.bind(this));
+                //Add onclick to returnFromDirectoryButton for return form current directory
+                this.retrieveControls[1].addEventListener("click", this.returnFromDirectory.bind(this));
+                //Initially cache the extensionsLibrary and navigate the root user directory
+                fetch(`${location.protocol}//${location.host}/file/retrieve/extensionsLibrary`)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status) {
+                        this.extensionsLibrary = response.extensionsLibrary;
+                    }
+                }).catch(error => {
+                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch the extensions library from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                })
+                .then(() => this.navigateDirectory(this.mainCardDivision, this.currentSubDirectoryPath));
+            }
+
+            //EVENT HANDLER METHODS
+            navigateDirectory(parentCardDivision, subDirectoryPath) {
+                //Fetch itemPaths in the subDirectoryPath
+                fetch(`${location.protocol}//${location.host}/file/retrieve/itemPaths?subDirectoryPath=${encodeURIComponent(subDirectoryPath)}`)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status) {
+                        parentCardDivision.innerHTML = "";
+                        //Clear the selectedCardDivisionSectorItems
+                        this.selectedCardDivisionSectorItems.length = 0;
+                        //Add a cardDivisionSector for viewing currentSubDirectoryPath
+                        CardComponent.createCardDivisionSector(parentCardDivision, "", this.currentSubDirectoryPath.replace(/\//g, " > "));
+                        if (response.directoryData.length === 0 && response.fileData.length === 0) {
+                            CardComponent.createCardDivisionSector(parentCardDivision, "Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
+                        } else {
+                            if (response.directoryData.length > 0) {
+                                //Create a cardDivisionSector for directories
+                                const cardDivisionSector = CardComponent.createCardDivisionSector("Directories", "Double tap to navigate in");
+                                //Create a cardDivisionSectorItem for each directoryDatum
+                                for (const directoryDatum of response.directoryData) {
+                                    //NOTE: Bounded method is immediately invoked
+                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary.directory.iconPath, directoryDatum.name.slice(0, -1), [])();
+                                    //Store itemExtensionCategory, directoryPath in the cardDivisionSectorItem
+                                    //NOTE: Every directory name has a "/" appended to it
+                                    cardDivisionSectorItem.dataset.directoryPath = subDirectoryPath + directoryDatum.name;
+                                    cardDivisionSectorItem.dataset.itemExtensionCategory = "directories";
+                                    //Add ondblclick to cardDirectorySectorItem for navigating in to the corresponding directory
+                                    cardDivisionSectorItem.addEventListener("dblclick", () => {
+                                        this.currentSubDirectoryPath = cardDivisionSectorItem.dataset.directoryPath;
+                                        this.navigateDirectory(this.mainCardDivision, cardDivisionSectorItem.dataset.directoryPath);
+                                    });
+                                    cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                }
+                                parentCardDivision.appendChild(cardDivisionSector);
+                            }
+                            if (response.fileData.length > 0) {
+                                //Create a cardDivisionSector for files
+                                const cardDivisionSector = CardComponent.createCardDivisionSector("Files", "Double tap to preview");
+                                //Create a cardDivisionSector for each fileDatum
+                                for (const fileDatum of response.fileData) {
+                                    //NOTE: Bounded method is immediately invoked
+                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary[fileDatum.fileExtensionCategory][fileDatum.fileExtension].iconPath, fileDatum.name, [fileDatum.fileType, `${(fileDatum.size / 1049000).toFixed(2)} MiB`])();
+                                    //Store itemExtensionCategory, filePath in the cardDivisionSector
+                                    cardDivisionSectorItem.dataset.filePath = subDirectoryPath + fileDatum.name;
+                                    cardDivisionSectorItem.dataset.itemExtensionCategory = fileDatum.fileExtensionCategory;
+                                    //Add ondblclick to cardDirectorySectorItem for previewing
+                                    cardDivisionSectorItem.addEventListener("dblclick", this.determinePreviewPopUp.bind(this));
+                                    cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                }
+                                parentCardDivision.appendChild(cardDivisionSector);
+                            }
+                        }
+                    } else {
+                        window.parent.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                    }
+                })
+                .catch(error => {
+                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch content list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                });
+            }
+
+            determinePreviewPopUp() {
+                if (this.selectedCardDivisionSectorItems.length > 1) {
+                    window.parent.shellInterface.throwAlert("Too many items", "Select only one item and try again", "The system is not capable of previewing multiple selections at once", null, "OK", null);
+                } else if (this.selectedCardDivisionSectorItems.length === 0) {
+                    window.parent.shellInterface.throwAlert("Preview what now?", "Select no more than one item and try again", "You have to select no more than one item before requesting a preview", null, "OK", null);
+                } else if (this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory === "unknownExtensions") {
+                    window.parent.shellInterface.throwAlert("This file says 0001101...", "Try previewing a preview supported file", "The file type you are about to view is not currently supported by this system", null, "OK", null);
+                } else if (this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory === "directories") {
+                    window.parent.shellInterface.throwAlert("Cannot preview a directory", "Select anything that is not a directory", "Only a handful of file types are currently supported by this system for previewing. And those definitely do not include directories", null, "OK", null);
+                } else {
+                    const fileExtensionCategory = this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory;
+                    const filePath = this.selectedCardDivisionSectorItems[0].dataset.filePath;
+                    if (fileExtensionCategory === "imageExtensions") {
+                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_image.html", filePath);
+                    } else if (fileExtensionCategory === "audioExtensions") {
+                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_media.html", filePath);
+                    } else if (fileExtensionCategory === "videoExtensions") {
+                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_media.html", filePath);
+                    } else if (fileExtensionCategory === "textExtensions") {
+                        console.log("Text file");
+                        // existingPopUpCard.popUpCardInterface.previewText(filePath);
+                    }
+                }
+            }
+
+            //NOTE: Since we use custom procedure for if and if not exists we cannot use this.cardObject.createPopUpCard()
+            showMediaPreviewPopUp(moduleComponentPath, mediaFilePath) {
+                //Try to retrieve already existing popUpCard
+                const existingPopUpCard = this.cardObject.isPopUpCardExists(moduleComponentPath);
+                if (existingPopUpCard) {
+                    existingPopUpCard.popUpCardInterface.preview(mediaFilePath);
+                } else {
+                    const popUpCard = new PopUpCard(moduleComponentPath, this);
+                    this.cardObject.openPopUpCards.push(popUpCard);
+                    //Allow more width than other popUpCards
+                    popUpCard.getPopUpCardView().style.maxWidth = "90vw";
+                    popUpCard.getPopUpCardView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.preview(mediaFilePath);
+                    });
+                }
+            }
+
+            returnFromDirectory() {
+                this.selectedCardDivisionSectorItems.length = 0;
+                if (this.currentSubDirectoryPath === "/") {
+                    window.parent.shellInterface.throwAlert("No more parent directories", "You're already on the root directory", "You cannot navigate back further when you're already on the root directory.", null, "OK", null);
+                } else {
+                    this.currentSubDirectoryPath = this.currentSubDirectoryPath.slice(0, -1);
+                    if (this.currentSubDirectoryPath.includes("/")) {
+                        this.currentSubDirectoryPath = this.currentSubDirectoryPath.slice(0, this.currentSubDirectoryPath.lastIndexOf("/") + 1);
+                    } else {
+                        this.currentSubDirectoryPath = "/";
+                    }
+                    this.navigateDirectory(this.mainCardDivision, this.currentSubDirectoryPath);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="mainCardDivision" class="cardDivision">
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+        <div id="createControlsContainer">
+            <!-- uploadFile -->
+            <button class="buttonGlyph">
+                <span>UP</span>
+            </button>
+            <!-- createDirectory -->
+            <button class="buttonGlyph">
+                <span>DR</span>
+            </button>
+        </div>
+        <div id="retrieveControlsContainer">
+            <!-- previewFile -->
+            <button class="buttonGlyph">
+                <span>PR</span>
+                <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
+                    style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <!-- navigateUp -->
+            <button class="buttonGlyph">
+                <span>NV</span>
+            </button>
+        </div>
+        <div id="updateControlsContainer">
+            <!-- renameFile/Directory -->
+            <button class="buttonGlyph">
+                <span>RN</span>
+            </button>
+        </div>
+        <div id="deleteControlsContainer">
+            <!-- deleteFile/Directory -->
+            <button class="buttonGlyph">
+                <span>DL</span>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

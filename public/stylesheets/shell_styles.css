@@ -1,0 +1,396 @@
+/* splashScreenStyles */
+.splashScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background-image: url("/ImageRes/LogInScreen_BackgroundImage.png"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* background-color: royalblue; */
+}
+
+/* logInScreenStyles */
+.logInScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--logInScreenBackgroundColor);
+}
+
+.logInBoxBackground {
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vw;
+    width: 100vw;
+
+    background-color: var(--logInBoxBackgroundBackgroundColor);
+    border-radius: 10px;
+    box-shadow: 0 0 30px 0 var(--logInBoxBackgroundBoxShadowColor);
+
+    transform: translateX(-40vw) rotate(45deg);
+
+    transition: transform 0.3s;
+}
+
+.logInBox {
+    position: absolute;
+    left: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 65vh;
+    width: 40vw;
+}
+
+.logInBoxInput {
+    position: relative;
+
+    height: auto;
+    width: 100%;
+
+    font-size: 400%;
+
+    background-color: var(--logInBoxInputBackgroundColor);
+    border: none;
+    outline: none;
+
+    -webkit-user-select: text;
+}
+
+.logInProfileImage {
+    position: relative;
+
+    opacity: 0;
+    
+    height: 10vw;
+    width: 10vw;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transition: opacity 0.3s;
+}
+
+/* workspaceScreenStyles */
+.workspaceScreen {
+    background-image: var(--workspaceScreenBackgroundImage);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.viewportArea {
+    position: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+.card {
+    pointer-events: none;
+
+    display: block;
+
+    position: absolute;
+
+    height: 65vh;
+    width: 90vw;
+    padding: 10px;
+
+    background-color: var(--cardBackgroundColor);
+    backdrop-filter: var(--cardBackdropFilter);
+    border-radius: 10px;
+    box-shadow: 0 0 30px 0 var(--cardBoxShadowColor);
+
+    transition: transform 0.3s, opacity 0.3s, visibility 0.3s, filter 0.3s;
+
+    transform-origin: 50% 0;
+}
+
+.upcomingCard {
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(0.4) translateY(-18vh);
+}
+
+.presentCard0 {
+    transform: scale(0.6) translateY(-12vh);
+}
+
+.presentCard1 {
+    transform: scale(0.8) translateY(-6vh);
+}
+
+@keyframes removePresentCard {
+    50% {
+        transform: scale(0.7);
+    }
+
+    100% {
+        transform: translate(0, -100vh) scale(0.7);
+    }
+}
+
+.presentCard2 {
+    pointer-events: all;
+}
+
+.pastCard {
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(1.2) translateY(6vh);
+}
+
+.cardIFrame {
+    height: 100%;
+    width: 100%;
+
+    border: none;
+}
+
+.statusArea {
+    position: fixed;
+    bottom: 3vh;
+    left: 0;
+    overflow: visible;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    transition: transform 0.3s;
+
+    animation-fill-mode: forwards;
+    animation: none;
+}
+
+.statusArea-popOut {
+    transform: scale(2) translateY(20vh);
+}
+
+.quickAccessArea {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+    padding: 10px;
+}
+
+.headerArea {
+    position: fixed;
+    top: 3vh;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+.headerArea * {
+    overflow: visible;
+
+    color: var(--headerAreaColor);
+    text-shadow: 0 0 10px var(--HeaderAreaTextShadowColor);
+}
+
+#navigationControl {
+    margin: 0 0 0 15px;
+    height: 8vh;
+    width: 8vh;
+
+    background-color: transparent;
+    border: thin solid var(--headerAreaColor);
+    border-radius: 50%;
+    outline: none;
+
+    font-size: 290%;
+}
+
+#navigationControl:hover {
+    text-shadow: 0 0 10px black;
+}
+
+#workspaceProfileImage {
+    margin: 0 5px 0 5px;
+    height: 80px;
+    width: 80px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+@keyframes createPopUpCard {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes emphasizePopUpCard {
+    50% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes closePopUpCard {
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+/* popUpCardStyles */
+.popUpCard {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 25px;
+    left: 500px;
+
+    height: 600px;
+    min-height: 600px;
+    max-height: 90vh;
+    width: 400px;
+    min-width: 400px;
+    max-width: 45vw;
+    padding: 60px 0px 0 0px;
+
+    background-color: var(--popUpCardBackgroundColor);
+    backdrop-filter: var(--popUpCardBackdropFilter);
+    border-radius: 10px;
+    box-shadow: 0 0 30px 0 var(--popUpCardBoxShadowColor);
+}
+
+.popUpCard-popIn {
+    animation: createPopUpCard 0.3s;
+}
+
+.popUpCard-popOut {
+    animation: closePopUpCard 0.3s;
+}
+
+.popUpCardIFrame {
+    align-self: stretch;
+
+    height: 100%;
+    width: 100%;
+
+    border: none;
+}
+
+.popUpCardResizeHandle {
+    height: 10px;
+    width: 100%;
+}
+
+/* actionOverlayStyles */
+.actionOverlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--actionOverlayBackgroundColor);
+}
+
+.actionOverlay>* {
+    width: 50%;
+}
+
+.actionOverlay>.titleContainer>* {
+    text-align: center;
+}
+
+#modulePane {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: auto;
+    overflow: overlay;
+
+    padding: 10px 0 10px 0;
+}
+
+.moduleActivationChip {
+    margin: 10px;
+    padding: 10px;
+
+    background-color: royalblue;
+    border-radius: 10px;
+}
+
+/* alertOverlayStyles */
+.alertOverlay {
+    background-color: var(--alertOverlayBackgroundColor);
+}
+
+.alertBoxBackground {
+    position: absolute;
+    bottom: -20vh;
+    left: -20vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    width: 100vh;
+
+    background-color: var(--alertBoxBackgroundBackgroundColor);
+    border-radius: 10px;
+    box-shadow: 0 0 30px 0 var(--alertBoxBackgroundBoxShadowColor);
+
+    transform: rotate(45deg);
+}
+
+@keyframes popInAlertBoxBackground {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) scale(0.8, 0.8);
+    }
+}
+
+@keyframes popOutAlertBoxBackground {
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) scale(0.8, 0.8);
+    }
+}
+
+.alertBoxBackground-popIn {
+    animation: popInAlertBoxBackground 0.3s;
+}
+
+.alertBoxBackground-popOut {
+    animation: popOutAlertBoxBackground 0.3s;
+}
+
+.alertBox {
+    overflow: visible;
+
+    height: 50%;
+    width: 50%;
+
+    transform: rotate(-45deg);
+}

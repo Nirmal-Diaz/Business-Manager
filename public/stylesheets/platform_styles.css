@@ -1,0 +1,353 @@
+/* Checkbox Input Structure
+<div class="checkInput">
+    <div class="checkRadioInputControl"><span>K</span></div>
+    <div class="checkRadioInputLabel">
+        <span>Create</span>
+        <span>User</span>
+    </div>
+</div>
+*/
+
+/* Dropdown Input Structure
+<div class="dropDownInput dropDownInput-collapsed">
+    <div class="dropDownInputOption">
+        <span>Test</span>
+    </div>
+</div>
+*/
+
+/* Glyph Button Structure
+<button class="buttonGlyph">
+    <span>U</span>
+</button>
+*/
+
+* {
+    /* border: thin solid red !important; */
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    font-family: var(--defaultFontFamily);
+    font-size: 14px;
+    color: var(--defaultColor);
+    cursor: default;
+    user-select: none;
+}
+
+*::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-track {
+    display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 2.5px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.screen, .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+
+    height: 100%;
+    width: 100%;
+}
+
+@keyframes popInScreen {
+    0% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.screen-popIn {
+    visibility: visible;
+
+    animation: popInScreen 0.5s;
+}
+
+.screen-popOut {
+    
+}
+
+.overlay-popIn {
+    visibility: visible;
+}
+
+.overlay-popOut {
+
+}
+
+.titleContainer {
+    width: 100%;
+}
+
+.title {
+    width: 100%;
+
+    color: var(--titleColor);
+    font-size: 30px;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.titleDescription {
+    width: 100%;
+
+    color: var(--titleDescriptionColor);
+    font-weight: bolder;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.inputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.textInput {
+    margin: 10px 0 10px 0;
+    height: 40px;
+    width: 100%;
+    padding: 0 20px 0 20px;
+
+    font-weight: bolder;
+
+    background-color: var(--textInputBackgroundColor);
+    border: 2px solid var(--textInputBorderColor);
+    border-radius: 5px;
+    outline: none;
+
+    -webkit-user-select: text;
+}
+
+.textInput:hover {
+    background-color: var(--textInputBackgroundColor-hover);
+}
+
+.textInput::placeholder {
+    color: var(--textInputPlaceholderColor);
+}
+
+.checkInput,
+.radioInput {
+    display: flex;
+    align-items: center;
+
+    margin: 10px 10px 10px 0;
+}
+
+.checkRadioInputControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+
+    background-color: var(--checkRadioInputControlBackgroundColor);
+    border: 2px solid var(--checkRadioInputControlBorderColor);
+    border-radius: 50%;
+}
+
+.checkRadioInputControl:hover {
+    background-color: var(--checkRadioInputControlBackgroundColor-hover);
+}
+
+.checkRadioInputControl-active {
+    background-color: var(--checkRadioInputControlBackgroundColor-active) !important;
+}
+
+.checkRadioInputControl-active>span {
+    color: var(--checkRadioInputControlBackgroundColor-activeChild);
+}
+
+.checkRadioInputLabel {
+    display: flex;
+    flex-direction: column;
+
+    width: 100px;
+
+    font-weight: bolder;
+}
+
+.checkRadioInputLabel>span {
+    width: 100%;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropDownInput {
+    margin: 10px 0 10px 0;
+    height: auto;
+    width: 100%;
+
+    background-color: var(--dropDownInputBackgroundColor);
+    border: 2px solid var(--dropDownInputBorderColor);
+    border-radius: 5px;
+}
+
+.dropDownInput-collapsed {
+
+}
+
+.dropDownInputOption {
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    padding: 0 20px 0 20px;
+
+    font-weight: bolder;
+}
+
+.dropDownInputOption:hover {
+    background-color: var(--dropDownInputOptionBackgroundColor-hover);
+}
+
+.buttonGlyph {
+    margin: 10px 15px 10px 15px;
+    height: 8vh;
+    width: 8vh;
+
+    background-image: var(--buttonGlyphBackgroundImage);
+    border: none;
+    border-radius: 4vh;
+    box-shadow: 0 0 10px 0 var(--buttonGlyphBoxShadowColor);
+    outline: none;
+
+    transition: transform 0.3s, width 0.3s;
+}
+
+.buttonGlyph:hover {
+    background-image: var(--buttonGlyphBackgroundImage-hover);
+
+    transform: scale(1.1);
+}
+
+.buttonGlyph-revealed {
+    width: 45vh;
+}
+
+.buttonGlyph-revealed:hover {
+    background-image: var(--buttonGlyphBackgroundImage);
+}
+
+.buttonGlyph-revealed > span {
+    display: none;
+}
+
+.buttonGlyph-revealed > input {
+    outline: none;
+}
+
+.buttonText {
+    margin: 10px 10px 10px 0;
+    height: 40px;
+    width: auto;
+    padding: 0 20px 0 20px;
+
+    font-weight: bolder;
+
+    background-color: var(--buttonTextBackgroundColor);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 var(--buttonTextBoxShadowColor);
+    outline: none;
+}
+
+.buttonText:hover {
+    background-color: var(--buttonTextBackgroundColor-hover);
+}
+
+.buttonText-link {
+    margin: 10px 20px 10px 0;
+    padding: 0;
+
+    color: var(--buttonTextLinkColor);
+
+    background-color: initial;
+    box-shadow: initial;
+}
+
+.buttonText-link:hover {
+    color: var(--buttonTextLinkColor-hover);
+
+    background-color: initial;
+}
+
+.patternContainer {
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    height: 300px;
+    width: 300px;
+}
+
+.patternCanvas {
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 0;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: calc(100% / 3);
+    width: calc(100% / 3);
+
+    z-index: 1;
+}
+
+.cellPoint {
+    height: 60%;
+    width: 60%;
+
+    background-color: var(--cellPointBackgroundColor);
+    border-radius: 100%;
+
+    transition: transform 0.2s;
+}
+
+.cellPoint:hover {
+    transform: scale(1.3);
+}
+
+.cellPoint-active {
+    background-color: var(--cellPointBackgroundColor-active);
+    border: 10px solid var(--cellPointBorderColor-active);
+}
+
+@media (orientation: portrait) {
+    .buttonGlyph {
+        height: 8vw;
+        width: 8vw;
+    }
+}

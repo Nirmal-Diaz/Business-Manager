@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%;">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Business Manager Server</title>
+
+    <link rel="stylesheet" href="./stylesheets/platform_styleVariables_turquoise.css"/>
+    <link rel="stylesheet" href="./stylesheets/platform_styles.css"/>
+    <link rel="stylesheet" href="./stylesheets/shell_styles.css"/>
+
+    <style>
+        .patternContainer {
+            position: absolute;
+            right: 0;
+
+            display: flex;
+            flex-wrap: wrap;
+            visibility: hidden;
+
+            height: 25vw;
+            width: 25vw;
+
+            transform: translate(-50px);
+        }
+    </style>
+
+    <script type="module">
+        //@ts-check
+        import {ShellInterface} from "./scripts/Shell.mjs";
+        //Prevent contextMenu
+        window.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+        //Add onload to window for initializing shellInterface
+        window.addEventListener("load", () => {
+            window.shellInterface = new ShellInterface(document.body);
+        });
+    </script>
+</head>
+
+<body>
+    <!-- splashScreen -->
+    <div id="splashScreen" class="screen screen-popIn splashScreen">
+        <div class="titleContainer" style="width: auto;">
+            <h1 class="title" style="font-size: 60px;">bonjour.hola.hello</h1>
+            <p class="titleDescription">CLICK ANYWHERE TO CONTINUE</p>
+        </div>
+    </div>
+
+    <!-- logInScreen -->
+    <div id="logInScreen" class="screen screen-popOut logInScreen">
+        <div class="logInBoxBackground"></div>
+        <div class="logInBox">
+            <div class="titleContainer">
+                <h1 class="title">Tell us who you are</h1>
+                <p class="titleDescription">Please type your username and press enter</p>
+            </div>
+            <input type="text" class="logInBoxInput" placeholder="type here..." />
+        </div>
+
+        <div class="logInProfileImage"></div>
+
+        <div class="patternContainer">
+            <canvas class="patternCanvas"></canvas>
+            <div class="cell">
+                <div data-cell-keyword="A9" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="B8" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="C7" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="D6" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="E5" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="F4" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="G3" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="H2" class="cellPoint"></div>
+            </div>
+            <div class="cell">
+                <div data-cell-keyword="I1" class="cellPoint"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- workspaceScreen -->
+    <div id="workspaceScreen" class="screen screen-popOut workspaceScreen">
+        <!-- viewportArea -->
+        <div class="viewportArea">
+
+        </div>
+        <!-- statusArea -->
+        <div id="statusArea" class="statusArea">
+            <div class="quickAccessArea">
+
+            </div>
+        </div>
+        <!-- headerArea -->
+        <div class="headerArea">
+            <div style="display: flex; justify-content: space-between; width: 90vw;">
+                <div style="display: flex; align-items: center;">
+                    <div style="text-align: right;">
+                        <div id="usernameDisplay" class="title">Username</div>
+                        <div id="roleNameDisplay" class="titleDescription">Role Name</div>
+                    </div>
+                    <div id="workspaceProfileImage"></div>
+                    <div>
+                        <div id="moduleNameDisplay" class="title">Module Name</div>
+                        <div class="titleDescription" style="visibility: hidden;">Unnecessary</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <div id="timeDisplay" class="title" style="text-align: right;"></div>
+                        <div id="navigatorControlOptionDisplay" class="titleDescription" style="text-align: right;">Click and drag for options</div>
+                    </div>
+                    <button id="navigationControl">&xcirc;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- actionOverlay -->
+    <div id="actionOverlay" class="overlay overlay-popOut actionOverlay">
+        <div class="titleContainer">
+            <div class="title">Retrievable Modules</div>
+            <div class="titleDescription">Following are the modules that you have access</div>
+        </div>
+        <div id="modulePane">
+            <div class="moduleActivationChip">
+                <div class="title">Motherboards</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">Files</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">Users</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">RAMs</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">Test</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">Notification</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">Hello</div>
+            </div>
+            <div class="moduleActivationChip">
+                <div class="title">World</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- alertOverlay -->
+    <div id="alertOverlay" class="overlay overlay-popOut alertOverlay">
+        <div class="alertBoxBackground alertBoxBackground-popOut">
+            <div class="alertBox">
+                <div class="titleContainer">
+                    <h1 class="title"></h1>
+                    <p class="titleDescription"></p>
+                </div>
+                <p id="alertBoxMessage" style="margin-top: 10px;"></p>
+                <div style="position: absolute; bottom: 0; overflow: visible;">
+                    <input type="text" placeholder="PLACEHOLDER HERE" class="textInput" />
+                    <button id="alertBoxTrueButton" class="buttonText">TRUE</button>
+                    <button id="alertBoxFalseButton" class="buttonText">FALSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

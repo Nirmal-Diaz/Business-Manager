@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Users</title>
+
+    <link rel="stylesheet" href="../../stylesheets/platform_styleVariables_turquoise.css" />
+    <link rel="stylesheet" href="../../stylesheets/platform_styles.css">
+    <link rel="stylesheet" href="../../stylesheets/card_styles.css" />
+
+    <script type="module">
+        //@ts-check
+        import {PlatformComponent, CardComponent} from "../../scripts/Utility.mjs";
+        //Prevent contextMenu
+        window.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("load", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface {
+            constructor() {
+                //FIELD DECLARATIONS
+                this.cardObject = null;
+                this.title = document.querySelector("title").textContent;
+                this.selectedCardDivisionSectorItems = [];
+                //Cache elements
+                this.quickAccessArea = document.getElementById("quickAccessArea");
+                this.createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
+                this.retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
+                this.updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
+                this.deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+                //INITIATION PROCEDURE
+                //Add onclick to createUserButton for showing create user popUpCard
+                this.createControls[0].addEventListener("click", () => {
+                    this.cardObject.createPopUpCard("layouts/moduleComponents/users_create.html");
+                });
+                //Add onclick to searchButton for toggling search UI
+                this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
+                //Add onkeypress to searchButtonInput for searching the card
+                this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
+                    if (event.key === 'Enter' && event.currentTarget.value === "") {
+                        this.searchItems("", "All users", "Double tap to find out more");
+                        this.retrieveControls[0].click();
+                    } else if (event.key === 'Enter') {
+                        this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
+                        this.retrieveControls[0].click();
+                    }
+                });
+                //Initially load every user without specifying a keyword
+                this.searchItems("", "Users", "Double tap to find out more");
+            }
+
+            //EVENT HANDLER METHODS
+            searchItems(keyword, titleText, titleDescriptionText) {
+                //Fetch registered users of the system
+                fetch(`${location.protocol}//${location.host}/user/retrieve/users?keyword=${keyword}`)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status) {
+                        if (response.users.length > 0) {
+                            //Get the main cardDivision
+                            const cardDivision = document.getElementById("mainCardDivision");
+                            cardDivision.innerHTML = "";
+                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+                            //Create a cardDivisionSector for each user
+                            for (const user of response.users) {
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)]));
+                                //NOTE: Bounded method is immediately invoked
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, user.username, [user.role.roleName])();
+                                cardDivisionSector.appendChild(cardDivisionSectorItem);
+                            }
+                            cardDivision.appendChild(cardDivisionSector);
+                        } else {
+                            window.parent.shellInterface.throwAlert("We couldn't find a match", "Try a different keyword", "Try using a single word instead of long phrases for better search results", null, "OK", null);
+                        }
+                    } else {
+                        window.parent.shellInterface.throwAlert(response.serverError.title, response.serverError.titleDescription, response.serverError.message, null, "OK", null);
+                    }
+                })
+                .catch(error => {
+                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch users list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="mainCardDivision" class="cardDivision">
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+            <div id="createControlsContainer">
+            <!-- createUser -->
+            <button class="buttonGlyph">
+                <span>C</span>
+            </button>
+        </div>
+        <div id="retrieveControlsContainer">
+            <!-- searchUser -->
+            <button class="buttonGlyph">
+                <span>S</span>
+                <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
+                    style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+        </div>
+        <div id="updateControlsContainer">
+            <!-- updateUser -->
+            <button class="buttonGlyph">
+                <span>U</span>
+            </button>
+        </div>
+        <div id="deleteControlsContainer">
+            <!-- deleteUser -->
+            <button class="buttonGlyph">
+                <span>D</span>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

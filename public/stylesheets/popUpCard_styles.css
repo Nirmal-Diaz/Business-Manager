@@ -1,0 +1,42 @@
+.popUpDivision {
+    height: 100%;
+    width: 100%;
+    padding: 58px 0 60px 0;
+}
+
+.formTitleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0 20px 20px 20px;
+    
+    box-shadow: 0 -5px 20px 0 var(--formTitleContainerBoxShadow);
+}
+
+.formTitleContainer .title, .formTitleContainer .titleDescription {
+    color: var(--formTitleContainerColor_child);
+}
+
+.formFieldsContainer {
+    overflow: auto;
+    overflow: overlay;
+    
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    
+    background-color: var(--formFieldsContainerBackgroundColor);
+}
+
+.formControlsContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 0 20px 0 20px;
+
+    box-shadow: 0 5px 20px 0 var(--formControlsContainerBoxShadow);
+}

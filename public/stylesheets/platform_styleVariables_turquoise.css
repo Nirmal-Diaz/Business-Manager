@@ -1,0 +1,90 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url('../fonts/SourceSansPro-Regular.ttf')
+}
+
+:root {
+    /* platformStyleVariables */
+    --defaultFontFamily: "OpenSans";
+    --defaultColor: white;
+
+    --titleColor: rgba(102, 205, 170, 1);
+    --titleDescriptionColor: rgba(102, 205, 170, 1);
+
+    --textInputBackgroundColor: transparent;
+    --textInputBackgroundColor-hover: rgba(102, 205, 170, 1);
+    --textInputBorderColor: white;
+    --textInputPlaceholderColor: rgb(140, 140, 140);
+
+    --dropDownInputBackgroundColor: transparent;
+    --dropDownInputBorderColor: white;
+    --dropDownInputOptionBackgroundColor-hover: rgba(102, 205, 170, 1);
+
+    --checkRadioInputControlBackgroundColor: transparent;
+    --checkRadioInputControlBackgroundColor-hover: rgba(102, 205, 170, 1);
+    --checkRadioInputControlBorderColor: white;
+    --checkRadioInputControlBackgroundColor-active: white;
+    --checkRadioInputControlBackgroundColor-activeChild: black;
+
+    --buttonGlyphBackgroundImage: radial-gradient(rgba(102, 205, 170, 1), rgba(60, 179, 113, 1));
+    --buttonGlyphBackgroundImage-hover: radial-gradient(rgba(0, 100, 100, 1), rgba(0, 140, 140, 1));
+    --buttonGlyphBoxShadowColor: black;
+
+    --buttonTextBackgroundColor: rgba(60, 179, 113, 1);
+    --buttonTextBackgroundColor-hover: darkcyan;
+    --buttonTextBoxShadowColor: black;
+
+    --buttonTextLinkColor: white;
+    --buttonTextLinkColor-hover: rgba(102, 205, 170, 1);
+
+    --cellPointBackgroundColor: white;
+    --cellPointBackgroundColor-active: royalblue;
+    --cellPointBorderColor-active: white;
+
+    /* shellStyleVariables */
+    --logInScreenBackgroundColor: royalblue;
+
+    --logInBoxBackgroundBackgroundColor: rgba(10, 100, 100, 0.9);
+    --logInBoxBackgroundBoxShadowColor: black;
+
+    --logInBoxInputBackgroundColor: transparent;
+
+    --workspaceScreenBackgroundImage: url("/images/image_background_workspaceScreen.jpg");
+
+    --cardBackgroundColor: rgba(60, 179, 113, 0.7);
+    --cardBackdropFilter: blur(5px);
+    --cardBoxShadowColor: black;
+
+    --headerAreaColor: white;
+    --HeaderAreaTextShadowColor: black;
+
+    --popUpCardBackgroundColor: rgba(60, 179, 113, 0.9);
+    --popUpCardBackdropFilter: blur(5px);
+    --popUpCardBoxShadowColor: black;
+
+    --actionOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
+
+    --actionPaneBackgroundImage: radial-gradient(rgba(102, 205, 170, 1), rgba(60, 179, 113, 1));
+    --actionPaneBoxShadowColor: black;
+
+    --alertOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
+
+    --alertBoxBackgroundBackgroundColor: rgba(10, 100, 100, 0.9);
+    --alertBoxBackgroundBoxShadowColor: black;
+
+    /* cardStyleVariables */
+    --cardDivisionBackgroundImage: linear-gradient(rgba(0, 140, 140, 0.9), rgba(0, 120, 120, 0.9), rgba(0, 100, 100, 0.8), rgba(0, 100, 100, 0.8), rgba(0, 120, 120, 0.9));
+
+    --cardDivisionSectorItemBackgroundColor-hover: darkcyan;
+    --cardDivisionSectorItemBoxShadowColor-active:  rgba(0, 100, 100, 1);
+
+    /* popUpCardStyleVariables */
+    --formTitleContainerBoxShadow: black;
+    --formTitleContainerColor_child: rgba(102, 205, 170, 1);
+
+    --formTitleControlsContainerBackgroundColor: rgba(0, 128, 128, 0.8);
+
+    --formFieldsContainerBackgroundColor: rgba(0, 100, 100, 0.8);
+
+    --formControlsContainerBoxShadow: rgba(0, 100, 100, 0.8);
+}

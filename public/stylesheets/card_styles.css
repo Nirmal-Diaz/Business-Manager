@@ -1,0 +1,75 @@
+.cardDivision {
+    position: absolute;
+
+    overflow: auto;
+    overflow: overlay;
+
+    height: 100%;
+    width: 100%;
+
+    background-image: var(--cardDivisionBackgroundImage);
+}
+
+.cardDivisionSector {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+.titleContainer {
+    padding: 10px;
+}
+
+.cardDivisionSectorItem {
+    display: flex;
+
+    margin: 10px;
+    height: 100px;
+    padding: 10px;
+    
+    border-radius: 5px;
+}
+
+.cardDivisionSectorItem:hover {
+    background-color: var(--cardDivisionSectorItemBackgroundColor-hover);
+}
+
+.cardDivisionSectorItem-active {
+    box-shadow: 0 0 5px 5px var(--cardDivisionSectorItemBoxShadowColor-active);
+}
+
+.itemPreview {
+    margin: 0 10px 0 0;
+    height: 100%;
+    width: 80px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+.itemDetails {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+
+    height: 100%;
+    width: 210px;
+}
+
+.itemTitle {
+    width: 100%;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.itemInformation {
+    margin: 0 10px 0 0;
+}
+
+.itemInformation:hover {
+    color: var(--itemInformationColor);
+}
