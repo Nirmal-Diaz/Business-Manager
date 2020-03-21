@@ -2,6 +2,7 @@
 import { PlatformUtil } from "./Utility.mjs";
 import { Card } from "./Card.mjs";
 import { PatternAuthorizer } from "./PatternAuthorizer.mjs";
+import { PlatformComponent } from "./Utility.mjs";
 
 export class ShellInterface {
     constructor(shellView) {
@@ -171,8 +172,8 @@ export class LogInScreenController {
                             this.patternAuthorizer.getPatternView().style.visibility = "hidden";
                             this.logInProfileImage.removeAttribute("style");
                             this.logInScreenView.querySelector(".logInBoxBackground").removeAttribute("style");
-                            this.logInBox.children[0].children[0].innerText = "Hmmm... we couldn't find you";
-                            this.logInBox.children[0].children[1].innerText = "Please check again your credentials";
+                            this.logInBox.children[0].children[0].innerText = response.error.title;
+                            this.logInBox.children[0].children[1].innerText = response.error.titleDescription;
                         }
                     })
                     .catch(error => {
@@ -235,28 +236,19 @@ export class WorkspaceScreenController {
                 window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         //Fetch modules with "retrieve" permission
-        fetch(`${location.protocol}//${location.host}/permission/retrievableModulePaths`)
+        fetch(`${location.protocol}//${location.host}/permission/permittedModules`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    //Create a card for each permittedModulePath
-                    for (let i = 0; i < response.retrievableModulePaths.length; i++) {
-                        const card = new Card(response.retrievableModulePaths[i]);
-                        //Set cardView's style
-                        //NOTE: Auto generated cards will be appended linearly starting from presentCards[last] and towards upcomingCards[0]
-                        if (this.presentCards.length < 3) {
-                            const newPresentCardsLength = this.presentCards.unshift(card);
-                            card.getCardView().setAttribute("class", `card presentCard${3 - newPresentCardsLength}`);
-                        } else {
-                            this.upcomingCards.unshift(card);
-                            card.getCardView().setAttribute("class", `card upcomingCard`);
-                        }
-                        //Append elements into HTML
-                        //NOTE: A cards appearance in the HTML DOM corresponds its z-index
-                        this.viewportArea.insertBefore(card.getCardView(), this.viewportArea.firstElementChild);
+                    //Create a card for the first permittedModule
+                    this.addCard(new Card(response.permittedModules[0].modulePath));
+                    //Create actionOverlayChops for each permittedModule
+                    const modulePaneFragment = new DocumentFragment();
+                    for (let i = 0; i < response.permittedModules.length; i++) {
+                        const overlayChip = PlatformComponent.createOverlayChip(response.permittedModules[i], this);
+                        modulePaneFragment.appendChild(overlayChip);
                     }
-                    //NOTE: Add onload to presentCard2's iFrame for updateQuickAccessArea
-                    this.presentCards[this.presentCards.length - 1].getCardView().querySelector("iframe").addEventListener("load", this.updateQuickAccessArea.bind(this));
+                    document.getElementById("modulePane").appendChild(modulePaneFragment);
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -430,7 +422,12 @@ export class WorkspaceScreenController {
     removeCurrentCard() {
         if ((this.pastCards.length + this.presentCards.length) > 1) {
             //Case: There are more then one card open
-            const currentCardView = this.presentCards[this.presentCards.length - 1].getCardView();
+            const currentCard = this.presentCards[this.presentCards.length - 1];
+            //Remove all popUpCards of currentCard
+            for (const openPopUpCard of currentCard.getOpenPopUpCards()) {
+                openPopUpCard.close();
+            }
+            const currentCardView = currentCard.getCardView();
             currentCardView.style.animation = "removePresentCard 0.5s forwards";
             setTimeout(() => {
                 if (this.presentCards.length > 1) {
@@ -588,6 +585,29 @@ export class WorkspaceScreenController {
                 this.quickAccessArea.parentElement.classList.remove("statusArea-popOut");
             }, 300);
         }
+    }
+
+    isCardExist(modulePath) {
+        let foundPopUpCard = false;
+        for (const pastCard of this.pastCards) {
+            if (pastCard.getModulePath() === modulePath) {
+                foundPopUpCard = pastCard;
+                break;
+            }
+        }
+        for (const presentCard of this.presentCards) {
+            if (presentCard.getModulePath() === modulePath) {
+                foundPopUpCard = presentCard;
+                break;
+            }
+        }
+        for (const upcomingCard of this.upcomingCards) {
+            if (upcomingCard.getModulePath() === modulePath) {
+                foundPopUpCard = upcomingCard;
+                break;
+            }
+        }
+        return foundPopUpCard;
     }
 
     logoutSession() {
