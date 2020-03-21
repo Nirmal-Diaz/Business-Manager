@@ -37,26 +37,6 @@ app.route("/")
         response.sendFile(__dirname + "/public/index.html");
     });
 
-app.route("/user/profileImage")
-    .get((request, response) => {
-        UserController.getUserByUsername(request.query.username)
-            .then(data => {
-                response.json({
-                    status: true,
-                    user: {
-                        profileImage: data.profileImage
-                    }
-                });
-            })
-            .catch(serverError => {
-                console.log("System error resolved:", serverError);
-                response.json({
-                    status: false,
-                    serverError: serverError
-                });
-            });
-    });
-
 app.route("/session")
     .put(jsonParser, (request, response) => {
         SessionController.createSession(request.session, request.body.username, request.body.cellCombination)
@@ -170,6 +150,30 @@ app.route("/general")
     });
 
 app.route("/user")
+    .get((request, response) => {
+        SessionController.checkLogIn(request.session)
+            .then(async () => {
+                return UserController.getUser(request.session.userId);
+            }, async () => {
+                const user = await UserController.getUserByUsername(request.query.username);
+                return {
+                    profileImage: user.profileImage
+                };
+            })
+            .then(data => {
+                response.json({
+                    status: true,
+                    user: data
+                });
+            })
+            .catch(serverError => {
+                console.log("System error resolved:", serverError);
+                response.json({
+                    status: false,
+                    serverError: serverError
+                });
+            });
+    })
     .put(jsonParser, (request, response) => {
         // PermissionController.checkOperationPermissions(request.session.username, "User", "create")
         //     .then(() => ValidationController.validateUserCreation(request.body.username, request.body.user, request.body.userModulePermissions))
@@ -208,21 +212,21 @@ app.route("/user")
 
 app.route("/users")
     .get((request, response) => {
-        // PermissionController.checkOperationPermissions(request.session.username, "User", "retrieve")
-        //     .then(() => UserController.searchUsers(request.query.keyword))
-        //     .then(data => {
-        //         response.json({
-        //             status: true,
-        //             users: data
-        //         });
-        //     })
-        //     .catch(serverError => {
-        //         console.log("System error resolved:", serverError);
-        //         response.json({
-        //             status: false,
-        //             serverError: serverError
-        //         });
-        //     });
+        PermissionController.checkOperationPermissions(request.session.userId, "User", "retrieve")
+            .then(() => UserController.searchUsers(request.query.keyword))
+            .then(data => {
+                response.json({
+                    status: true,
+                    users: data
+                });
+            })
+            .catch(serverError => {
+                console.log("System error resolved:", serverError);
+                response.json({
+                    status: false,
+                    serverError: serverError
+                });
+            });
     });
 
 app.route("/file/extensionsLibrary")

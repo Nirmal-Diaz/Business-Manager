@@ -156,7 +156,7 @@ export class LogInScreenController {
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
             if (event.key === "Enter") {
-                fetch(`${location.protocol}//${location.host}/user/profileImage?username=${this.logInBox.children[1].value}`)
+                fetch(`${location.protocol}//${location.host}/user?username=${this.logInBox.children[1].value}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
