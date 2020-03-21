@@ -3,7 +3,11 @@ import { UserModulePermission } from "../entity/UserModulePermission";
 import { User } from "../entity/User";
 
 //TYPE ORM
-createConnection();
+createConnection().then(() => {
+    console.log("Connection status: Successful");
+}).catch((error) => {
+    console.error(error);
+});
 
 export class GeneralRepository {
     static createRow(insertInto, columnNames, columnValues) {
@@ -99,4 +103,4 @@ export class UserRepository {
     }
 }
 
-console.log("DAO status: Ready. Default connection created successfully");
+console.log("DAO status: Ready");
