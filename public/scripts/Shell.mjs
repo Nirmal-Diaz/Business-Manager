@@ -615,6 +615,20 @@ export class WorkspaceScreenController {
     }
 
     logoutSession() {
-        window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
+        fetch(`${location.protocol}//${location.host}/session`, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.status) {
+                    //Transit screen
+                    window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
+                    //Remove actionOverlayChips
+                    document.getElementById("actionOverlayChipPane").innerHTML = "";
+                }
+            })
+            .catch(error => {
+                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
     }
 }

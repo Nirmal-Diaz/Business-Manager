@@ -52,6 +52,13 @@ app.route("/session")
                     error: error
                 });
             });
+    })
+    .delete((request, response) => {
+        request.session.destroy(() => {
+            response.json({
+                status: true
+            });
+        });
     });
 
 //EXPRESS ROUTING (WITH LOGIN VALIDATION)
