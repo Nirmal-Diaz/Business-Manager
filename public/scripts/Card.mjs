@@ -37,9 +37,7 @@ export class Card {
     }
 
     getModuleName() {
-        const camelCaseModuleName = this.modulePath.slice(this.modulePath.lastIndexOf("/") + 1, this.modulePath.lastIndexOf("."));
-        //Return module name in pascal case
-        return camelCaseModuleName[0].toUpperCase() + camelCaseModuleName.slice(1);
+        return this.cardInterface.title;
     }
 
     getControls(controlsType) {

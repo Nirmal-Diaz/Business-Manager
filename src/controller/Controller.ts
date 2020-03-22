@@ -149,7 +149,7 @@ export class PermissionController {
 
             return permittedModules;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No records about retrievable modules" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No records about permitted modules" };
         }
     }
 
