@@ -243,12 +243,12 @@ export class WorkspaceScreenController {
                     //Create a card for the first permittedModule
                     this.addCard(new Card(response.permittedModules[0].modulePath));
                     //Create actionOverlayChops for each permittedModule
-                    const overlayChipPaneFragment = new DocumentFragment();
+                    const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {
-                        const actionOverlayChip = PlatformComponent.createOverlayChip(response.permittedModules[i], this);
-                        overlayChipPaneFragment.appendChild(actionOverlayChip);
+                        const actionOverlayChip = PlatformComponent.createActionOverlayChip(response.permittedModules[i], this);
+                        actionOverlayChipPaneFragment.appendChild(actionOverlayChip);
                     }
-                    document.getElementById("overlayChipPane").appendChild(overlayChipPaneFragment);
+                    document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
