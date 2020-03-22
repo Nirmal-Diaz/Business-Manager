@@ -64,6 +64,9 @@
 
     --actionOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
 
+    --actionOverlayChipBoxShadow: rgba(0, 100, 100, 1);
+    --actionOverlayChipBoxShadow-hover: darkcyan;
+
     --actionPaneBackgroundImage: radial-gradient(rgba(102, 205, 170, 1), rgba(60, 179, 113, 1));
     --actionPaneBoxShadowColor: black;
 
