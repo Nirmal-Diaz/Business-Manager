@@ -344,11 +344,11 @@ export class WorkspaceScreenController {
                 if (absoluteDifferenceX >= absoluteDifferenceY) {
                     //Case: x axis must be prioritized
                     if (differenceX > 0) {
-                        event.target.style.borderColor = "transparent var(--headerAreaColor) transparent transparent";
+                        workspaceScreenController.navigationControl.style.borderColor = "transparent var(--headerAreaColor) transparent transparent";
                         navigatorControlOptionDisplay.innerText = "Logout";
                         procedureToExecute = workspaceScreenController.logoutSession;
                     } else if (differenceX < 0) {
-                        event.target.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
+                        workspaceScreenController.navigationControl.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
                         navigatorControlOptionDisplay.innerText = "View action overlay";
                         procedureToExecute = () => {
                             workspaceScreenController.actionOverlayView.classList.replace("overlay-popOut", "overlay-popIn");
@@ -357,12 +357,12 @@ export class WorkspaceScreenController {
                 } else {
                     //Case: y axis must be prioritized
                     if (differenceY > 0) {
-                        event.target.style.borderColor = "transparent transparent var(--headerAreaColor) transparent";
+                        workspaceScreenController.navigationControl.style.borderColor = "transparent transparent var(--headerAreaColor) transparent";
                         navigatorControlOptionDisplay.innerText = "Close current card";
                         procedureToExecute = workspaceScreenController.removeCurrentCard.bind(workspaceScreenController);
                         reEnablePointerEvents = false;
                     } else if (differenceY < 0) {
-                        event.target.style.borderColor = "var(--headerAreaColor) transparent transparent transparent";
+                        workspaceScreenController.navigationControl.style.borderColor = "var(--headerAreaColor) transparent transparent transparent";
                         navigatorControlOptionDisplay.innerText = "Settings and preferences";
                         procedureToExecute = () => {
 
@@ -375,7 +375,7 @@ export class WorkspaceScreenController {
                 //Execute determined procedure
                 procedureToExecute();
                 //Remove styling
-                event.target.removeAttribute("style");
+                workspaceScreenController.navigationControl.removeAttribute("style");
                 //Reinstate presentCard.last pointer events
                 //WARNING: This becomes useless if the executed procedure is to removeCurrentCard
                 if (reEnablePointerEvents) {

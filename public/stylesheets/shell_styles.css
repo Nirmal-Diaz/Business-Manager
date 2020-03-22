@@ -213,6 +213,10 @@
 }
 
 #navigationControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     margin: 0 0 0 15px;
     height: 8vh;
     width: 8vh;
@@ -227,6 +231,15 @@
 
 #navigationControl:hover {
     text-shadow: 0 0 10px black;
+}
+
+#navigationControl > span {
+    height: 6vh;
+    width: 6vh;
+
+    border: thin solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 5px black;
 }
 
 #workspaceProfileImage {
