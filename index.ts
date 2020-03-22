@@ -160,7 +160,7 @@ app.route("/user")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(async () => {
-                return PermissionController.checkOperationPermissions(request.session.userId, "User", "retrieve")
+                return PermissionController.checkOperationPermissions(request.session.userId, "Users", "retrieve")
                 .then(() => UserController.getUser(request.session.userId));
             }, async () => {
                 const user = await UserController.getUserByUsername(request.query.username);
@@ -220,7 +220,7 @@ app.route("/user")
 
 app.route("/users")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "User", "retrieve")
+        PermissionController.checkOperationPermissions(request.session.userId, "Users", "retrieve")
             .then(() => UserController.searchUsers(request.query.keyword))
             .then(data => {
                 response.json({
@@ -239,7 +239,7 @@ app.route("/users")
 
 app.route("/file/extensionsLibrary")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
+        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
             .then(() => FileController.getExtensionsLibrary())
             .then(data => {
                 response.json({
@@ -258,7 +258,7 @@ app.route("/file/extensionsLibrary")
 
 app.route("/file/itemPaths")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
+        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
             .then(() => FileController.getItemPaths(request.session.userId, request.query.subDirectoryPath))
             .then(data => {
                 response.json({
@@ -278,7 +278,7 @@ app.route("/file/itemPaths")
 
 app.route("/file/fileBuffer")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "File", "retrieve")
+        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
             .then(() => FileController.getFileBuffer(request.session.userId, request.query.filePath))
             .then(data => {
                 response.json({
