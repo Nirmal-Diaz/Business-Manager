@@ -245,8 +245,8 @@ export class WorkspaceScreenController {
                     //Create actionOverlayChops for each permittedModule
                     const modulePaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {
-                        const overlayChip = PlatformComponent.createOverlayChip(response.permittedModules[i], this);
-                        modulePaneFragment.appendChild(overlayChip);
+                        const actionOverlayChip = PlatformComponent.createOverlayChip(response.permittedModules[i], this);
+                        modulePaneFragment.appendChild(actionOverlayChip);
                     }
                     document.getElementById("modulePane").appendChild(modulePaneFragment);
                 } else {
