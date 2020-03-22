@@ -243,12 +243,12 @@ export class WorkspaceScreenController {
                     //Create a card for the first permittedModule
                     this.addCard(new Card(response.permittedModules[0].modulePath));
                     //Create actionOverlayChops for each permittedModule
-                    const modulePaneFragment = new DocumentFragment();
+                    const overlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {
                         const actionOverlayChip = PlatformComponent.createOverlayChip(response.permittedModules[i], this);
-                        modulePaneFragment.appendChild(actionOverlayChip);
+                        overlayChipPaneFragment.appendChild(actionOverlayChip);
                     }
-                    document.getElementById("modulePane").appendChild(modulePaneFragment);
+                    document.getElementById("overlayChipPane").appendChild(overlayChipPaneFragment);
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -387,6 +387,10 @@ export class WorkspaceScreenController {
                 window.removeEventListener("pointermove", determineOption);
                 window.removeEventListener("pointerup", executeOption);
             }
+        });
+        //Add onclick to the close button in actionOverlay for closing actionOverlay
+        this.actionOverlayView.children[2].firstElementChild.addEventListener("click", () => {
+            this.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
         });
     }
 
