@@ -165,7 +165,7 @@ app.route("/user")
             }, async () => {
                 const user = await UserController.getUserByUsername(request.query.username);
                 return {
-                    profileImage: user.profileImage
+                    avatar: user.avatar
                 };
             })
             .then(data => {

@@ -3,12 +3,12 @@ import { Module } from "./Module";
 import { User } from "./User";
 
 @Index("fk_user_has_module_module1_idx", ["moduleId"], {})
-@Entity("userModulePermission", { schema: "d" })
-export class UserModulePermission {
-  @Column("int", { primary: true, name: "userId" })
+@Entity("permission", { schema: "d" })
+export class Permission {
+  @Column("int", { primary: true, name: "user_id" })
   userId: number;
 
-  @Column("int", { primary: true, name: "moduleId" })
+  @Column("int", { primary: true, name: "module_id" })
   moduleId: number;
 
   @Column("char", { name: "permissions", length: 4 })
@@ -16,17 +16,17 @@ export class UserModulePermission {
 
   @ManyToOne(
     () => Module,
-    module => module.userModulePermissions,
+    module => module.permissions,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "moduleId", referencedColumnName: "moduleId" }])
+  @JoinColumn([{ name: "module_id", referencedColumnName: "id" }])
   module: Module;
 
   @ManyToOne(
     () => User,
-    user => user.userModulePermissions,
+    user => user.permissions,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "userId", referencedColumnName: "userId" }])
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
 }

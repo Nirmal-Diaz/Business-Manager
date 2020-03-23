@@ -36,7 +36,7 @@
                 //INITIATION PROCEDURE
                 //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
-                    this.cardObject.createPopUpCard("layouts/moduleComponents/users_create.html");
+                    this.cardObject.createPopUpCard("layouts/popUpCards/users_create.html");
                 });
                 //Add onclick to searchButton for toggling search UI
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
@@ -68,9 +68,9 @@
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
                             //Create a cardDivisionSector for each user
                             for (const user of response.users) {
-                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)]));
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(user.avatar.data)]));
                                 //NOTE: Bounded method is immediately invoked
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, user.username, [user.role.roleName])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, user.username, [user.role.name])();
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
                             cardDivision.appendChild(cardDivisionSector);

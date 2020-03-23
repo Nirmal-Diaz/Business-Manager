@@ -1,39 +1,39 @@
 import {PopUpCard} from "./PopUpCard.mjs";
 
 export class Card {
-    constructor(modulePath) {
+    constructor(layoutFilePath) {
         //FIELD DECLARATIONS
-        this.cardView = document.createElement("div");
+        this.view = document.createElement("div");
         this.cardInterface = null;
-        this.modulePath = modulePath;
+        this.layoutFilePath = layoutFilePath;
         this.openPopUpCards = [];
         //INITIATION PROCEDURE
         //NOTE: A cardView's styling will be handled by the WorkspaceScreen
         //Create the iFrame to load the module
         const iFrame = document.createElement("iframe");
         iFrame.setAttribute("class", "cardIFrame");
-        iFrame.src = `${location.protocol}//${location.host}/${modulePath}`;
+        iFrame.src = `${location.protocol}//${location.host}/${layoutFilePath}`;
         //Add onload to iFrame for connecting cardObject with cardInterface
         iFrame.addEventListener("load", () => {
             this.cardInterface = iFrame.contentWindow.cardInterface;
             this.cardInterface.cardObject = this;
         });
         //Set the cardView's id to match its iFrame's src
-        this.cardView.id = modulePath.slice(modulePath.lastIndexOf("/") + 1, -5).toLowerCase() + "_Module";
+        this.view.id = layoutFilePath.slice(layoutFilePath.lastIndexOf("/") + 1, -5).toLowerCase();
         //Append elements into HTML
-        this.cardView.appendChild(iFrame);
+        this.view.appendChild(iFrame);
     }
 
-    getCardView() {
-        return this.cardView;
+    getView() {
+        return this.view;
     }
 
     getTitle() {
         return this.cardInterface.title;
     }
 
-    getModulePath() {
-        return this.modulePath;
+    getLayoutFilePath() {
+        return this.layoutFilePath;
     }
 
     getModuleName() {
@@ -53,10 +53,10 @@ export class Card {
         return this.openPopUpCards;
     }
 
-    isPopUpCardExists(moduleComponentPath) {
+    isPopUpCardExists(popUpCardLayoutFilePath) {
         let foundPopUpCard = false;
         for (const openPopUpCard of this.openPopUpCards) {
-            if (openPopUpCard.getModuleComponentPath() === moduleComponentPath) {
+            if (openPopUpCard.getLayoutFilePath() === popUpCardLayoutFilePath) {
                 foundPopUpCard = openPopUpCard;
                 break;
             }
@@ -64,11 +64,11 @@ export class Card {
         return foundPopUpCard;
     }
 
-    createPopUpCard(moduleComponentPath) {
-        if (this.isPopUpCardExists(moduleComponentPath)) {
+    createPopUpCard(popUpCardLayoutFilePath) {
+        if (this.isPopUpCardExists(popUpCardLayoutFilePath)) {
             window.parent.shellInterface.throwAlert("Pop-up card already open", "Close it before opening another", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
         } else {
-            const popUpCard = new PopUpCard(moduleComponentPath, this.cardInterface);
+            const popUpCard = new PopUpCard(popUpCardLayoutFilePath, this.cardInterface);
             this.openPopUpCards.push(popUpCard);
         }
     }

@@ -30,17 +30,17 @@ export class PlatformComponent {
         const actionOverlayChip = document.createElement("div");
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
         actionOverlayChip.addEventListener("click", (event) => {
-            if (workspaceScreenController.isCardExist(module.modulePath)) {
+            if (workspaceScreenController.isCardExist(module.htmlPath)) {
                 window.shellInterface.throwAlert("Card already exists", "Continue work with the existing card", "The card you are trying to open already exists on the workspace. Two instances of the same card isn't allowed by the system", null, "OK", null);
             } else {
-                workspaceScreenController.addCard(new Card(module.modulePath));
+                workspaceScreenController.addCard(new Card(module.htmlPath));
                 workspaceScreenController.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
             }
         });
 
         const title = document.createElement("div");
         title.setAttribute("class", "title");
-        title.textContent = module.moduleName;
+        title.textContent = module.name;
         actionOverlayChip.appendChild(title);
         return actionOverlayChip;
     }

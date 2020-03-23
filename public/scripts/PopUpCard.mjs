@@ -1,18 +1,18 @@
 //@ts-check
 export class PopUpCard {
-    constructor(moduleComponentPath, parentCardInterface) {
+    constructor(layoutFilePath, parentCardInterface) {
         //FIELD DECLARATIONS
-        this.popUpCardView = document.createElement("div");
+        this.view = document.createElement("div");
         this.popUpCardInterface = null;
         this.parentCardInterface = parentCardInterface;
-        this.moduleComponentPath = moduleComponentPath;
+        this.layoutFilePath = layoutFilePath;
         //INITIATION PROCEDURE
-        this.popUpCardView.setAttribute("class", "popUpCard popUpCard-popIn");
-        this.popUpCardView.addEventListener("mousedown", (event) => {
+        this.view.setAttribute("class", "popUpCard popUpCard-popIn");
+        this.view.addEventListener("mousedown", (event) => {
             this.startDrag(event);
             window.parent.shellInterface.getCurrentScreenController().focusPopUpCard(this);
         });
-        this.popUpCardView.addEventListener("touchstart", (event) => {
+        this.view.addEventListener("touchstart", (event) => {
             this.startDrag(event);
             window.parent.shellInterface.getCurrentScreenController().focusPopUpCard(this);
         });
@@ -24,7 +24,7 @@ export class PopUpCard {
         //Create the iFrame to load the moduleComponent
         const iFrame = document.createElement("iframe");
         iFrame.setAttribute("class", "popUpCardIFrame");
-        iFrame.src = `${location.protocol}//${location.host}/${moduleComponentPath}`;
+        iFrame.src = `${location.protocol}//${location.host}/${layoutFilePath}`;
         //Add onload to iFrame for connecting popUpCardObject with popUpCardInterface
         iFrame.addEventListener("load", () => {
             this.popUpCardInterface = iFrame.contentWindow.popUpCardInterface;
@@ -35,27 +35,27 @@ export class PopUpCard {
             }
         });
         //Set the popUpCardView's id to match its iFrame's src
-        this.popUpCardView.id = moduleComponentPath.slice(moduleComponentPath.lastIndexOf("/") + 1, -5) + "_ModuleComponent";
+        this.view.id = layoutFilePath.slice(layoutFilePath.lastIndexOf("/") + 1, -5);
         //Append into HTML
-        this.popUpCardView.appendChild(iFrame);
-        this.popUpCardView.appendChild(popUpCardResizeHandle);
+        this.view.appendChild(iFrame);
+        this.view.appendChild(popUpCardResizeHandle);
         //Ask WorkspaceScreen to append popUpCardView
         window.parent.shellInterface.getCurrentScreenController().addPopUpCard(this);
     }
 
-    getPopUpCardView() {
-        return this.popUpCardView;
+    getView() {
+        return this.view;
     }
 
-    getModuleComponentPath() {
-        return this.moduleComponentPath;
+    getLayoutFilePath() {
+        return this.layoutFilePath;
     }
 
     close() {
         this.parentCardInterface.cardObject.getOpenPopUpCards().splice(this.parentCardInterface.cardObject.getOpenPopUpCards().indexOf(this), 1);
-        this.popUpCardView.classList.replace("popUpCard-popIn", "popUpCard-popOut");
+        this.view.classList.replace("popUpCard-popIn", "popUpCard-popOut");
         setTimeout(() => {
-            this.popUpCardView.remove();
+            this.view.remove();
         }, 250);
     }
 

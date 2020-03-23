@@ -2,7 +2,7 @@
 export class PatternAuthorizer {
     constructor(patternView) {
         //Initialize fields
-        this.patternView = patternView;
+        this.view = patternView;
         this.username = "";
         this.cellCombination = "";
         this.activatedCellPositions = [];
@@ -32,8 +32,8 @@ export class PatternAuthorizer {
         }
     }
 
-    getPatternView() {
-        return this.patternView;
+    getView() {
+        return this.view;
     }
 
     //EVENT HANDLER METHODS
@@ -44,20 +44,20 @@ export class PatternAuthorizer {
         this.patternCanvas.width = this.patternCanvas.getBoundingClientRect().width;
         this.patternCanvas.height = this.patternCanvas.getBoundingClientRect().height;
         //Get patternViewBoundingRect
-        const patternViewRect = this.patternView.getBoundingClientRect();
+        const patternViewRect = this.view.getBoundingClientRect();
         //Setup context2D for drawing
         this.context2D.strokeStyle = "white";
         this.context2D.lineWidth = 10;
         //Add onpointerup and onpointerleave to patternView for evaluating username and password or stop stroking path
-        this.patternView.addEventListener("pointerup", pointerUpWindow);
-        this.patternView.addEventListener("pointerleave", pointerUpWindow);
+        this.view.addEventListener("pointerup", pointerUpWindow);
+        this.view.addEventListener("pointerleave", pointerUpWindow);
         //Add onpointerenter and onpointerleave to cellPoints for updating activatedCellPositions and cellCombination
         for (const cellPoint of this.cellPoints) {
             cellPoint.addEventListener("pointerenter", pointerEnterCellPoint);
             cellPoint.addEventListener("pointerleave", pointerLeaveCellPoint);
         }
         //Add onpointermove to patternView for drawing the pattern path on the patternCanvas
-        this.patternView.addEventListener("pointermove", strokePath);
+        this.view.addEventListener("pointermove", strokePath);
         //Change appearance of the initial cellPoint
         event.currentTarget.classList.add("cellPoint-active");
         //Initialize activatedCellPositions by adding the initial cell's position
@@ -97,10 +97,10 @@ export class PatternAuthorizer {
     
         function pointerUpWindow() {
             //Remove onpointerup and onpointerleave from patternView for eliminating unnecessary errors
-            patternAuthorizer.patternView.removeEventListener("pointerup", pointerUpWindow);
-            patternAuthorizer.patternView.removeEventListener("pointerleave", pointerUpWindow);
+            patternAuthorizer.view.removeEventListener("pointerup", pointerUpWindow);
+            patternAuthorizer.view.removeEventListener("pointerleave", pointerUpWindow);
             //Remove onpointermove from blindPad for stop drawing the pattern path on the patternCanvas
-            patternAuthorizer.patternView.removeEventListener("pointermove", strokePath);
+            patternAuthorizer.view.removeEventListener("pointermove", strokePath);
             //Remove onpointerenter from cellPoints for eliminate unnecessary updates to activatedCellPositions and cellCombination
             for (const cellPoint of patternAuthorizer.cellPoints) {
                 cellPoint.removeEventListener("pointerenter", pointerEnterCellPoint);

@@ -135,11 +135,11 @@
                     const fileExtensionCategory = this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory;
                     const filePath = this.selectedCardDivisionSectorItems[0].dataset.filePath;
                     if (fileExtensionCategory === "imageExtensions") {
-                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_image.html", filePath);
+                        this.showMediaPreviewPopUp("layouts/popUpCards/files_retrieve_image.html", filePath);
                     } else if (fileExtensionCategory === "audioExtensions") {
-                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_media.html", filePath);
+                        this.showMediaPreviewPopUp("layouts/popUpCards/files_retrieve_media.html", filePath);
                     } else if (fileExtensionCategory === "videoExtensions") {
-                        this.showMediaPreviewPopUp("layouts/moduleComponents/files_retrieve_media.html", filePath);
+                        this.showMediaPreviewPopUp("layouts/popUpCards/files_retrieve_media.html", filePath);
                     } else if (fileExtensionCategory === "textExtensions") {
                         console.log("Text file");
                         // existingPopUpCard.popUpCardInterface.previewText(filePath);
@@ -148,17 +148,17 @@
             }
 
             //NOTE: Since we use custom procedure for if and if not exists we cannot use this.cardObject.createPopUpCard()
-            showMediaPreviewPopUp(moduleComponentPath, mediaFilePath) {
+            showMediaPreviewPopUp(popUpCardLayoutFilePath, mediaFilePath) {
                 //Try to retrieve already existing popUpCard
-                const existingPopUpCard = this.cardObject.isPopUpCardExists(moduleComponentPath);
+                const existingPopUpCard = this.cardObject.isPopUpCardExists(popUpCardLayoutFilePath);
                 if (existingPopUpCard) {
                     existingPopUpCard.popUpCardInterface.preview(mediaFilePath);
                 } else {
-                    const popUpCard = new PopUpCard(moduleComponentPath, this);
+                    const popUpCard = new PopUpCard(popUpCardLayoutFilePath, this);
                     this.cardObject.openPopUpCards.push(popUpCard);
                     //Allow more width than other popUpCards
-                    popUpCard.getPopUpCardView().style.maxWidth = "90vw";
-                    popUpCard.getPopUpCardView().querySelector("iframe").addEventListener("load", () => {
+                    popUpCard.getView().style.maxWidth = "90vw";
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                         popUpCard.popUpCardInterface.preview(mediaFilePath);
                     });
                 }

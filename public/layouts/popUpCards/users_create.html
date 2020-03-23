@@ -87,7 +87,7 @@
                         this.roleDropDownInput.innerHTML = "";
                         //Create a dropDownInputOption for every role
                         for (const role of response.items) {
-                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.roleName);
+                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.name);
                             //Store relevant data in the dropDownOption
                             dropDownInputOption.dataset.roleId = role.roleId;
                             //Add onclick to dropDownInputOption for toggling dropDownInput
@@ -118,9 +118,9 @@
                         const permissionCheckInputs = document.getElementById("permissionCheckInputContainer").children;
                         //Create a dropDownInputOption for every module
                         for (const module of response.items) {
-                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(module.moduleName);
+                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(module.name);
                             //Store relevant data in the dropDownOption
-                            dropDownInputOption.dataset.moduleId = module.moduleId;
+                            dropDownInputOption.dataset.moduleId = module.id;
                             dropDownInputOption.dataset.permissions = "0000";
                             //Add onclick to dropDownInput for updating permissionCheckInputs according to the currently given permissions
                             dropDownInputOption.addEventListener("click", (event) => {
