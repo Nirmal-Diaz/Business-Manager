@@ -1,12 +1,15 @@
 //@ts-check
 export class PopUpCard {
+    popUpCardInterface = null;
+    layoutFilePath;
+    parentCardInterface;
+    
+    view = document.createElement("div");
+
     constructor(layoutFilePath, parentCardInterface) {
-        //FIELD DECLARATIONS
-        this.view = document.createElement("div");
-        this.popUpCardInterface = null;
-        this.parentCardInterface = parentCardInterface;
         this.layoutFilePath = layoutFilePath;
-        //INITIATION PROCEDURE
+        this.parentCardInterface = parentCardInterface;
+        //Setup view
         this.view.setAttribute("class", "popUpCard popUpCard-popIn");
         this.view.addEventListener("mousedown", (event) => {
             this.startDrag(event);

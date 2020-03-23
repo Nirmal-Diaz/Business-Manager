@@ -1,16 +1,20 @@
 //WARNING: This class must be extended with an implementation of attemptAuthorization() before use
 export class PatternAuthorizer {
+    username = "";
+    cellCombination = "";
+    activatedCellPositions = [];
+
+    view = null;
+    patternCanvas = null;
+    context2D = null;
+    cellPoints = null;
+    
     constructor(patternView) {
-        //Initialize fields
+        //Initialize/cache view elements
         this.view = patternView;
-        this.username = "";
-        this.cellCombination = "";
-        this.activatedCellPositions = [];
-        //Cache elements
-        this.patternCanvas = patternView.querySelector(".patternCanvas");
+        this.patternCanvas = this.view.querySelector(".patternCanvas");
         this.context2D = this.patternCanvas.getContext("2d");
-        this.cellPoints = patternView.querySelectorAll(".cellPoint");
-        //INITIATION PROCEDURE
+        this.cellPoints = this.view.querySelectorAll(".cellPoint");
         //Add onpointerdown to cellPoints for initializing activatedCellPositions and cellCombination
         for (const cellPoint of this.cellPoints) {
             cellPoint.addEventListener("pointerdown", this.pointerDownCellPoint.bind(this));

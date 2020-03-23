@@ -5,19 +5,27 @@ import { PatternAuthorizer } from "./PatternAuthorizer.mjs";
 import { PlatformComponent } from "./Utility.mjs";
 
 export class ShellInterface {
+    currentScreenController = null;
+
+    view = null;
+    alertOverlayView = null;
+    titleContainer = null;
+    alertBoxMessage = null;
+    textInput = null;
+    alertBoxBackground = null;
+    alertBoxTrueButton = null;
+    alertBoxFalseButton = null;
+    
     constructor(shellView) {
-        //FIELD DECLARATIONS
+        //Initialize/cache view elements
         this.view = shellView;
-        this.currentScreenController = null;
-        //Cache elements
-        this.alertOverlayView = document.getElementById("alertOverlay");
+        this.alertOverlayView = this.view.querySelector("#alertOverlay");
         this.titleContainer = this.alertOverlayView.querySelector(".titleContainer");
         this.alertBoxMessage = this.alertOverlayView.querySelector("#alertBoxMessage");
         this.textInput = this.alertOverlayView.querySelector(".textInput");
         this.alertBoxBackground = this.alertOverlayView.querySelector(".alertBoxBackground");
         this.alertBoxTrueButton = this.alertOverlayView.querySelector("#alertBoxTrueButton");
         this.alertBoxFalseButton = this.alertOverlayView.querySelector("#alertBoxFalseButton");
-        //INITIATION PROCEDURE
         //Add onclick to splashScreenView for initializing currentScreen
         this.view.querySelector("#splashScreen").addEventListener("click", () => {
             //Fetch workspace
@@ -144,15 +152,20 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
 }
 
 export class LogInScreenController {
+    patternAuthorizer = null;
+
+    view = null;
+    viewHTML = null;
+    logInBox = null;
+    logInAvatar = null;
+
     constructor(logInScreenView) {
-        //FIELD DECLARATIONS
         this.view = logInScreenView;
-        this.logInScreenHTML = this.view.innerHTML;
+        this.viewHTML = this.view.innerHTML;
         this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternContainer"));
-        //Cache elements
+        //Initialize/Cache elements
         this.logInBox = this.view.querySelector(".logInBox");
         this.logInAvatar = this.view.querySelector("#logInAvatar");
-        //INITIATION PROCEDURE
         //Add onkeypress to logInBoxInputElement for loading relevant profileImage
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
@@ -191,32 +204,40 @@ export class LogInScreenController {
 
     resetView() {
         //Restore HTML inside logInScreen
-        this.view.innerHTML = this.logInScreenHTML;
+        this.view.innerHTML = this.viewHTML;
     }
 }
 
 export class WorkspaceScreenController {
+    //NOTE: Following declarations are aligned with the z-indexes of the cards where last of the pastCards have the highest z-index
+    //NOTE: In the beginning there are no pastCards
+    //NOTE: In the beginning last 3 cards are considered presentCards
+    //NOTE: In the beginning all other cards are considered upcomingCards
+    //NOTE: popUpCards[last] have the highest z-index
+    upcomingCards = [];
+    presentCards = [];
+    pastCards = [];
+    permittedModuleOperations = {};
+
+    view = null;
+    viewHTML = null;
+    headerArea = null;
+    navigationControl = null;
+    timeDisplay = null;
+    viewportArea = null;
+    quickAccessArea = null;
+    actionOverlayView = null;
+
     constructor(workspaceScreenView) {
-        //FIELD DECLARATIONS
-        this.workspaceScreenView = workspaceScreenView;
-        this.workspaceScreenHTML = this.workspaceScreenView.innerHTML;
-        //NOTE: Following declarations are aligned with the z-indexes of the cards where last of the pastCards have the highest z-index
-        //NOTE: In the beginning there are no pastCards
-        //NOTE: In the beginning last 3 cards are considered presentCards
-        //NOTE: In the beginning all other cards are considered upcomingCards
-        //NOTE: popUpCards[last] have the highest z-index
-        this.upcomingCards = [];
-        this.presentCards = [];
-        this.pastCards = [];
-        this.permittedModuleOperations = {};
-        //Cache elements
-        this.headerArea = this.workspaceScreenView.querySelector(".headerArea");
+        this.view = workspaceScreenView;
+        this.viewHTML = this.view.innerHTML;
+        //Initialize/cache elements
+        this.headerArea = this.view.querySelector(".headerArea");
         this.navigationControl = this.headerArea.querySelector("#navigationControl")
         this.timeDisplay = this.headerArea.querySelector("#timeDisplay");
-        this.viewportArea = this.workspaceScreenView.querySelector(".viewportArea");
-        this.quickAccessArea = this.workspaceScreenView.querySelector(".quickAccessArea");
+        this.viewportArea = this.view.querySelector(".viewportArea");
+        this.quickAccessArea = this.view.querySelector(".quickAccessArea");
         this.actionOverlayView = document.getElementById("actionOverlay");
-        //INITIATION PROCEDURE
         //Fetch username, roleName and profileImage and apply user preferences
         fetch(`${location.protocol}//${location.host}/session/currentUser`)
             .then(response => response.json())
@@ -270,7 +291,7 @@ export class WorkspaceScreenController {
             }
         });
         //Add onwheel and ontouchstart to workspaceScreen for scrolling cards
-        this.workspaceScreenView.addEventListener("wheel", (event) => {
+        this.view.addEventListener("wheel", (event) => {
             this.scrollViewport(event.deltaY);
         });
         this.viewportArea.addEventListener("touchstart", (event) => {
@@ -318,7 +339,7 @@ export class WorkspaceScreenController {
             const workspaceScreenController = this;
             //Remove presentCard.last pointer events
             this.presentCards[this.presentCards.length - 1].getView().style.pointerEvents = "none";
-            const navigatorControlOptionDisplay = workspaceScreenController.workspaceScreenView.querySelector("#navigatorControlOptionDisplay");
+            const navigatorControlOptionDisplay = workspaceScreenController.view.querySelector("#navigatorControlOptionDisplay");
             //Cache the inner text of navigatorControlOptionDisplay
             const navigatorControlOptionDisplayInnerText = navigatorControlOptionDisplay.innerText;
             //Get the initial pointer position
@@ -395,12 +416,12 @@ export class WorkspaceScreenController {
     }
 
     getView() {
-        return this.workspaceScreenView;
+        return this.view;
     }
 
     resetView() {
         //Restore HTML inside workspaceScreen
-        this.workspaceScreenView.innerHTML = this.workspaceScreenHTML;
+        this.view.innerHTML = this.viewHTML;
     }
 
     addCard(card) {
@@ -473,7 +494,7 @@ export class WorkspaceScreenController {
 
     addPopUpCard(popUpCard) {
         //NOTE: PopUpCards are not a part of viewportArea
-        this.workspaceScreenView.appendChild(popUpCard.getView());
+        this.view.appendChild(popUpCard.getView());
         //Set popUpCardView's z-index to be the highest among popUpCards
         //NOTE: The relevant z-index matches openPopUpCards array's length
         popUpCard.getView().style.zIndex = document.querySelectorAll(".popUpCard").length;

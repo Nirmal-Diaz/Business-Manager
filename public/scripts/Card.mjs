@@ -1,13 +1,16 @@
 import {PopUpCard} from "./PopUpCard.mjs";
 
 export class Card {
+    cardInterface = null;
+    layoutFilePath = null;
+    openPopUpCards = [];
+    
+    view = null;
+    
     constructor(layoutFilePath) {
-        //FIELD DECLARATIONS
+        //Initialize/cache view elements
         this.view = document.createElement("div");
-        this.cardInterface = null;
         this.layoutFilePath = layoutFilePath;
-        this.openPopUpCards = [];
-        //INITIATION PROCEDURE
         //NOTE: A cardView's styling will be handled by the WorkspaceScreen
         //Create the iFrame to load the module
         const iFrame = document.createElement("iframe");
