@@ -133,7 +133,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
         }).then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    window.shellInterface.transitScreen(new WorkspaceScreenController(window.shellInterface.getShellView().querySelector("#workspaceScreen")));
+                    window.shellInterface.transitScreen(new WorkspaceScreenController(window.shellInterface.getView().querySelector("#workspaceScreen")));
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
