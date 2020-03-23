@@ -16,9 +16,17 @@ export class PlatformUtil {
 }
 
 export class PlatformComponent {
-    static createDropDownInputOption(textContent) {
+    static createDropDownInputOption(textContent, value, customClickHandler = null) {
         const dropDownInputOption = document.createElement("div");
         dropDownInputOption.setAttribute("class", "dropDownInputOption");
+        dropDownInputOption.dataset.value = value;
+        dropDownInputOption.addEventListener("click", (event) => {
+            if (customClickHandler) {
+                customClickHandler(event);
+            }
+            PlatformComponent.toggleDropDownInput(dropDownInputOption);
+        });
+
         const dropDownOptionContent = document.createElement("span");
         dropDownOptionContent.textContent = textContent;
         //Append into HTML
@@ -49,22 +57,17 @@ export class PlatformComponent {
     //NOTE: This method toggles the parent dropDownInput by using a child dropDownInputOption
     static toggleDropDownInput(dropDownInputOption) {
         if (dropDownInputOption.parentElement.classList.toggle("dropDownInput-collapsed")) {
-            for (const dropDownOption of dropDownInputOption.parentElement.children) {
-                dropDownOption.style.display = "none";
-            }
-            dropDownInputOption.removeAttribute("style");
-            //Store the selectedOption's index in its parent's dataset
-            dropDownInputOption.parentElement.dataset.selectedOptionIndex = Array.from(dropDownInputOption.parentElement.children).indexOf(dropDownInputOption);
-            //Return the selected dropDownInputOption
-            return dropDownInputOption;
+            dropDownInputOption.style.display = "flex";
+            //Store the selectedOption's value in its parent's dataset
+            dropDownInputOption.parentElement.dataset.value = dropDownInputOption.dataset.value;
+            return true;
         } else {
             for (const dropDownOption of dropDownInputOption.parentElement.children) {
                 dropDownOption.removeAttribute("style");
             }
-            //Store the selectedOption's index in its parent's dataset as "null"
-            dropDownInputOption.parentElement.dataset.selectedOptionIndex = "null";
-            //Return that no dropDownInputOption is selected
-            return null;
+            //Set the parent's value as "null"
+            dropDownInputOption.parentElement.dataset.value = "null";
+            return false;
         }
     }
 

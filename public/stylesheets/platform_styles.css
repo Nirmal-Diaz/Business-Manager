@@ -206,10 +206,6 @@ body {
     border-radius: 5px;
 }
 
-.dropDownInput-collapsed {
-
-}
-
 .dropDownInputOption {
     display: flex;
     align-items: center;
@@ -223,6 +219,10 @@ body {
 
 .dropDownInputOption:hover {
     background-color: var(--dropDownInputOptionBackgroundColor-hover);
+}
+
+.dropDownInput-collapsed > .dropDownInputOption {
+    display: none;
 }
 
 .buttonGlyph {
