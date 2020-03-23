@@ -10,15 +10,15 @@ import { User } from "./User";
 import { Theme } from "./Theme";
 
 @Index("fk_userPreference_theme1_idx", ["themeId"], {})
-@Entity("userPreference", { schema: "d" })
+@Entity("user_preference", { schema: "d" })
 export class UserPreference {
-  @Column("int", { primary: true, name: "userId" })
+  @Column("int", { primary: true, name: "user_id" })
   userId: number;
 
-  @Column("varchar", { name: "name", length: 45 })
-  name: string;
+  @Column("varchar", { name: "preferred_name", length: 45 })
+  preferredName: string;
 
-  @Column("int", { name: "themeId" })
+  @Column("int", { name: "theme_id" })
   themeId: number;
 
   @OneToOne(
@@ -26,7 +26,7 @@ export class UserPreference {
     user => user.userPreference,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "userId", referencedColumnName: "userId" }])
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
 
   @ManyToOne(
@@ -34,6 +34,6 @@ export class UserPreference {
     theme => theme.userPreferences,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "themeId", referencedColumnName: "themeId" }])
+  @JoinColumn([{ name: "theme_id", referencedColumnName: "id" }])
   theme: Theme;
 }

@@ -1,6 +1,6 @@
 import { getRepository, createConnection, Connection, getConnection, Like } from "typeorm";
 import { User } from "../entity/User";
-import { UserModulePermission } from "../entity/UserModulePermission";
+import { Permission } from "../entity/Permission";
 import { PermissionRepository, UserRepository } from "../repository/Repository";
 import { Role } from "../entity/Role";
 import { Module } from "../entity/Module";
@@ -61,7 +61,7 @@ export class SessionController {
 
         if (user.hash === generatedHash) {
             session.logged = true;
-            session.userId = user.userId;
+            session.userId = user.id;
             return true;
         } else {
             throw { title: "Oops! Pattern mismatch", titleDescription: "Try again with the correct pattern", message: "", technicalMessage: "Inequivalent hashes" };
@@ -131,7 +131,7 @@ export class PermissionController {
     }
 
     static async getPermittedModules(userId) {
-        const userModulePermissions = await getRepository(UserModulePermission).find({
+        const userModulePermissions = await getRepository(Permission).find({
             where: {
                 userId: userId
             },
@@ -139,6 +139,7 @@ export class PermissionController {
         });
 
         if (userModulePermissions.length > 0) {
+            //NOTE: Permitted modules are the ones that have "retrieve" permissions
             const permittedModules = [];
 
             for (let i = 0; i < userModulePermissions.length; i++) {
@@ -175,7 +176,7 @@ export class UserController {
     static async getUser(userId: number) {
         const user = await getRepository(User).findOne({
             where: {
-                userId: userId
+                id: userId
             },
             relations: ["role", "userPreference", "userPreference.theme"]
         });
@@ -207,7 +208,7 @@ export class UserController {
         if (users.length > 0) {
             return users;
         } else {
-            throw { title: "Hmmm... couldn't find anyone", titleDescription: "Try wrods instead of phrases", message: "There is no user matching the keyword you provided", technicalMessage: "No users for given keyword" };
+            throw { title: "Hmmm... couldn't find anyone", titleDescription: "Try single words instead of phrases", message: "There is no user matching the keyword you provided", technicalMessage: "No users for given keyword" };
         }
     }
 

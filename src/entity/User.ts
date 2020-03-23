@@ -9,29 +9,30 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 import { UserPreference } from "./UserPreference";
-import { UserModulePermission } from "./UserModulePermission";
+import { Permission } from "./Permission";
 import { Role } from "./Role";
 
+@Index("username_UNIQUE", ["username"], { unique: true })
 @Index("fk_user_occupation1_idx", ["roleId"], {})
 @Entity("user", { schema: "d" })
 export class User {
-  @PrimaryGeneratedColumn({ type: "int", name: "userId" })
-  userId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  id: number;
 
-  @Column("varchar", { name: "username", length: 45 })
+  @Column("varchar", { name: "username", unique: true, length: 45 })
   username: string;
 
   @Column("char", { name: "hash", length: 64 })
   hash: string;
 
-  @Column("blob", { name: "profileImage", nullable: true })
-  profileImage: Buffer | null;
+  @Column("blob", { name: "avatar", nullable: true })
+  avatar: Buffer | null;
 
-  @Column("int", { name: "roleId" })
+  @Column("int", { name: "role_id" })
   roleId: number;
 
-  @Column("tinyint", { name: "isNewUser" })
-  isNewUser: number;
+  @Column("tinyint", { name: "new_user" })
+  newUser: number;
 
   @OneToOne(
     () => UserPreference,
@@ -40,16 +41,16 @@ export class User {
   userPreference: UserPreference;
 
   @OneToMany(
-    () => UserModulePermission,
-    userModulePermission => userModulePermission.user
+    () => Permission,
+    permission => permission.user
   )
-  userModulePermissions: UserModulePermission[];
+  permissions: Permission[];
 
   @ManyToOne(
     () => Role,
     role => role.users,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION"}
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "roleId", referencedColumnName: "roleId" }])
+  @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
   role: Role;
 }

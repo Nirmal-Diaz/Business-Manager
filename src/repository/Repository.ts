@@ -1,5 +1,5 @@
 import { getRepository, createConnection, Connection, getConnection } from "typeorm";
-import { UserModulePermission } from "../entity/UserModulePermission";
+import { Permission } from "../entity/Permission";
 import { User } from "../entity/User";
 
 //TYPE ORM
@@ -79,11 +79,11 @@ export class GeneralRepository {
 
 export class PermissionRepository {
     static getPermissionsForModule(userId, moduleName) {
-        return getRepository(UserModulePermission)
-        .createQueryBuilder("ump")
-        .leftJoinAndSelect("ump.module", "m")
-        .where("ump.userId = :userId", { userId: userId })
-        .andWhere("m.moduleName = :moduleName", { moduleName: moduleName })
+        return getRepository(Permission)
+        .createQueryBuilder("p")
+        .leftJoinAndSelect("p.module", "m")
+        .where("p.userId = :userId", { userId: userId })
+        .andWhere("m.name = :moduleName", { moduleName: moduleName })
         .getOne();
     }
     
@@ -98,7 +98,7 @@ export class UserRepository {
         .createQueryBuilder("u")
         .leftJoinAndSelect("u.role", "r")
         .where("u.username LIKE :keyword", { keyword: `%${keyword}%` })
-        .orWhere("r.roleName LIKE :keyword", { keyword: `%${keyword}%` })
+        .orWhere("r.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
 }

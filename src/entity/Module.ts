@@ -1,24 +1,24 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserModulePermission } from "./UserModulePermission";
+import { Permission } from "./Permission";
 
 @Entity("module", { schema: "d" })
 export class Module {
-  @PrimaryGeneratedColumn({ type: "int", name: "moduleId" })
-  moduleId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  id: number;
 
-  @Column("varchar", { name: "moduleName", length: 45 })
-  moduleName: string;
+  @Column("varchar", { name: "name", length: 45 })
+  name: string;
 
   @Column("varchar", {
-    name: "modulePath",
+    name: "html_path",
     length: 100,
     default: () => "'Layouts/Modules/Unknown.html'"
   })
-  modulePath: string;
+  htmlPath: string;
 
   @OneToMany(
-    () => UserModulePermission,
-    userModulePermission => userModulePermission.module
+    () => Permission,
+    permission => permission.module
   )
-  userModulePermissions: UserModulePermission[];
+  permissions: Permission[];
 }

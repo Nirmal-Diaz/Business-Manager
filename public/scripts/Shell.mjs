@@ -7,7 +7,7 @@ import { PlatformComponent } from "./Utility.mjs";
 export class ShellInterface {
     constructor(shellView) {
         //FIELD DECLARATIONS
-        this.shellView = shellView;
+        this.view = shellView;
         this.currentScreenController = null;
         //Cache elements
         this.alertOverlayView = document.getElementById("alertOverlay");
@@ -19,20 +19,20 @@ export class ShellInterface {
         this.alertBoxFalseButton = this.alertOverlayView.querySelector("#alertBoxFalseButton");
         //INITIATION PROCEDURE
         //Add onclick to splashScreenView for initializing currentScreen
-        this.shellView.querySelector("#splashScreen").addEventListener("click", () => {
+        this.view.querySelector("#splashScreen").addEventListener("click", () => {
             //Fetch workspace
             fetch(`${location.protocol}//${location.host}/workspace`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.currentScreenController = new WorkspaceScreenController(this.shellView.querySelector("#workspaceScreen"));
+                        this.currentScreenController = new WorkspaceScreenController(this.view.querySelector("#workspaceScreen"));
                     } else {
-                        this.currentScreenController = new LogInScreenController(this.shellView.querySelector("#logInScreen"));
+                        this.currentScreenController = new LogInScreenController(this.view.querySelector("#logInScreen"));
                     }
                     //Animate out splashSCreen
-                    this.shellView.querySelector("#splashScreen").classList.replace("screen-popIn", "screen-popOut");
+                    this.view.querySelector("#splashScreen").classList.replace("screen-popIn", "screen-popOut");
                     //Animate in new screen
-                    this.currentScreenController.getScreenView().classList.replace("screen-popOut", "screen-popIn");
+                    this.currentScreenController.getView().classList.replace("screen-popOut", "screen-popIn");
                 })
                 .catch(error => {
                     this.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't ask the internal server if you are logged in. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
@@ -45,20 +45,20 @@ export class ShellInterface {
     }
 
     getAllFrames() {
-        return this.shellView.querySelectorAll("iframe");
+        return this.view.querySelectorAll("iframe");
     }
 
     transitScreen(newScreenController) {
         //Reset and animate out old screen
-        this.currentScreenController.getScreenView().classList.replace("screen-popIn", "screen-popOut");
+        this.currentScreenController.getView().classList.replace("screen-popIn", "screen-popOut");
         this.currentScreenController.resetView();
         //Animate in new screen
         this.currentScreenController = newScreenController;
-        this.currentScreenController.getScreenView().classList.replace("screen-popOut", "screen-popIn");
+        this.currentScreenController.getView().classList.replace("screen-popOut", "screen-popIn");
     }
 
-    getShellView() {
-        return this.shellView;
+    getView() {
+        return this.view;
     }
 
     //EVENT HANDLER METHODS
@@ -133,7 +133,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
         }).then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    window.shellInterface.transitScreen(new WorkspaceScreenController(window.shellInterface.getShellView().querySelector("#workspaceScreen")));
+                    window.shellInterface.transitScreen(new WorkspaceScreenController(window.shellInterface.getView().querySelector("#workspaceScreen")));
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -146,12 +146,12 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
 export class LogInScreenController {
     constructor(logInScreenView) {
         //FIELD DECLARATIONS
-        this.logInScreenView = logInScreenView;
-        this.logInScreenHTML = this.logInScreenView.innerHTML;
+        this.view = logInScreenView;
+        this.logInScreenHTML = this.view.innerHTML;
         this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternContainer"));
         //Cache elements
-        this.logInBox = this.logInScreenView.querySelector(".logInBox");
-        this.logInProfileImage = this.logInScreenView.querySelector(".logInProfileImage");
+        this.logInBox = this.view.querySelector(".logInBox");
+        this.logInAvatar = this.view.querySelector("#logInAvatar");
         //INITIATION PROCEDURE
         //Add onkeypress to logInBoxInputElement for loading relevant profileImage
         this.logInBox.children[1].addEventListener("keypress", (event) => {
@@ -162,16 +162,16 @@ export class LogInScreenController {
                     .then(response => {
                         if (response.status) {
                             this.patternAuthorizer.setUsername(this.logInBox.children[1].value);
-                            this.patternAuthorizer.getPatternView().style.visibility = "visible";
-                            this.logInProfileImage.style.opacity = "1";
-                            this.logInProfileImage.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.profileImage.data)]))})`;
-                            this.logInScreenView.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
+                            this.patternAuthorizer.getView().style.visibility = "visible";
+                            this.logInAvatar.style.opacity = "1";
+                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.avatar.data)]))})`;
+                            this.view.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
                             this.logInBox.children[0].children[0].innerText = "Let's see if it is really you";
                             this.logInBox.children[0].children[1].innerText = "Please mark your pattern";
                         } else {
-                            this.patternAuthorizer.getPatternView().style.visibility = "hidden";
-                            this.logInProfileImage.removeAttribute("style");
-                            this.logInScreenView.querySelector(".logInBoxBackground").removeAttribute("style");
+                            this.patternAuthorizer.getView().style.visibility = "hidden";
+                            this.logInAvatar.removeAttribute("style");
+                            this.view.querySelector(".logInBoxBackground").removeAttribute("style");
                             this.logInBox.children[0].children[0].innerText = response.error.title;
                             this.logInBox.children[0].children[1].innerText = response.error.titleDescription;
                         }
@@ -185,13 +185,13 @@ export class LogInScreenController {
         this.logInBox.children[1].focus();
     }
 
-    getScreenView() {
-        return this.logInScreenView;
+    getView() {
+        return this.view;
     }
 
     resetView() {
         //Restore HTML inside logInScreen
-        this.logInScreenView.innerHTML = this.logInScreenHTML;
+        this.view.innerHTML = this.logInScreenHTML;
     }
 }
 
@@ -223,11 +223,11 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Update sessionData displays
-                    this.headerArea.querySelector("#usernameDisplay").innerText = response.user.userPreference.name;
-                    this.headerArea.querySelector("#roleNameDisplay").innerText = response.user.role.roleName;
-                    this.headerArea.querySelector("#workspaceProfileImage").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.profileImage.data)]))})`;
+                    this.headerArea.querySelector("#usernameDisplay").innerText = response.user.userPreference.preferredName;
+                    this.headerArea.querySelector("#roleNameDisplay").innerText = response.user.role.name;
+                    this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.avatar.data)]))})`;
                     //Apply user preferences to the UI
-                    document.getElementsByTagName("link")[0].href = response.user.userPreference.theme.themePath;
+                    document.getElementsByTagName("link")[0].href = response.user.userPreference.theme.cssPath;
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -241,7 +241,7 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Create a card for the first permittedModule
-                    this.addCard(new Card(response.permittedModules[0].modulePath));
+                    this.addCard(new Card(response.permittedModules[0].htmlPath));
                     //Create actionOverlayChops for each permittedModule
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {
@@ -317,7 +317,7 @@ export class WorkspaceScreenController {
             //Get a reference of "this" for inner event handlers
             const workspaceScreenController = this;
             //Remove presentCard.last pointer events
-            this.presentCards[this.presentCards.length - 1].getCardView().style.pointerEvents = "none";
+            this.presentCards[this.presentCards.length - 1].getView().style.pointerEvents = "none";
             const navigatorControlOptionDisplay = workspaceScreenController.workspaceScreenView.querySelector("#navigatorControlOptionDisplay");
             //Cache the inner text of navigatorControlOptionDisplay
             const navigatorControlOptionDisplayInnerText = navigatorControlOptionDisplay.innerText;
@@ -379,7 +379,7 @@ export class WorkspaceScreenController {
                 //Reinstate presentCard.last pointer events
                 //WARNING: This becomes useless if the executed procedure is to removeCurrentCard
                 if (reEnablePointerEvents) {
-                    workspaceScreenController.presentCards[workspaceScreenController.presentCards.length - 1].getCardView().removeAttribute("style");
+                    workspaceScreenController.presentCards[workspaceScreenController.presentCards.length - 1].getView().removeAttribute("style");
                 }
                 //Restore navigatorControlOptionDisplay's inner text
                 navigatorControlOptionDisplay.innerText = navigatorControlOptionDisplayInnerText;
@@ -394,7 +394,7 @@ export class WorkspaceScreenController {
         });
     }
 
-    getScreenView() {
+    getView() {
         return this.workspaceScreenView;
     }
 
@@ -406,18 +406,18 @@ export class WorkspaceScreenController {
     addCard(card) {
         //Set cardView's style
         //NOTE: A user created card will always be treated as the pastCards[0]
-        card.getCardView().setAttribute("class", "card pastCard");
+        card.getView().setAttribute("class", "card pastCard");
         //Add onload to cardView's iFrame for scrolling viewport after creation
-        card.getCardView().querySelector("iframe").addEventListener("load", () => {
+        card.getView().querySelector("iframe").addEventListener("load", () => {
             //NOTE: The viewport must be scrolled backwards
             this.scrollViewport(-125);
         });
         //Append elements into HTML
         //NOTE: A card's appearance in the HTML DOM corresponds its z-index
         if (this.pastCards.length > 0) {
-            this.viewportArea.insertBefore(card.getCardView(), this.pastCards[0].getCardView());
+            this.viewportArea.insertBefore(card.getView(), this.pastCards[0].getView());
         } else {
-            this.viewportArea.appendChild(card.getCardView());
+            this.viewportArea.appendChild(card.getView());
         }
         //Add the card to relevant array
         this.pastCards.unshift(card);
@@ -431,7 +431,7 @@ export class WorkspaceScreenController {
             for (const openPopUpCard of currentCard.getOpenPopUpCards()) {
                 openPopUpCard.close();
             }
-            const currentCardView = currentCard.getCardView();
+            const currentCardView = currentCard.getView();
             currentCardView.style.animation = "removePresentCard 0.5s forwards";
             setTimeout(() => {
                 if (this.presentCards.length > 1) {
@@ -457,33 +457,33 @@ export class WorkspaceScreenController {
         //Set style for upcomingCards
         //NOTE: Only the upcomingCards[lastIndex] needs to be modified (if it exists)
         if (this.upcomingCards.length > 0) {
-            this.upcomingCards[this.upcomingCards.length - 1].getCardView().setAttribute("class", `card upcomingCard`);
+            this.upcomingCards[this.upcomingCards.length - 1].getView().setAttribute("class", `card upcomingCard`);
         }
         //Set style for presentCards
         for (let i = this.presentCards.length - 1, j = 2; i >= 0; i--) {
-            this.presentCards[i].getCardView().setAttribute("class", `card presentCard presentCard${j}`);
+            this.presentCards[i].getView().setAttribute("class", `card presentCard presentCard${j}`);
             j--;
         }
         //Set style for pastCards
         //NOTE: Only the pastCards[0] needs to be modified (if it exists)
         if (this.pastCards.length > 0) {
-            this.pastCards[0].getCardView().setAttribute("class", `card pastCard`);
+            this.pastCards[0].getView().setAttribute("class", `card pastCard`);
         }
     }
 
     addPopUpCard(popUpCard) {
         //NOTE: PopUpCards are not a part of viewportArea
-        this.workspaceScreenView.appendChild(popUpCard.getPopUpCardView());
+        this.workspaceScreenView.appendChild(popUpCard.getView());
         //Set popUpCardView's z-index to be the highest among popUpCards
         //NOTE: The relevant z-index matches openPopUpCards array's length
-        popUpCard.getPopUpCardView().style.zIndex = document.querySelectorAll(".popUpCard").length;
+        popUpCard.getView().style.zIndex = document.querySelectorAll(".popUpCard").length;
     }
 
     focusPopUpCard(popUpCard) {
         //Get all popUpCards
         const openPopUpCardViews = Array.from(document.querySelectorAll(".popUpCard"));
         //Move popUpCard's view to the last position of the openPopUpCards
-        openPopUpCardViews.push(openPopUpCardViews.splice(openPopUpCardViews.indexOf(popUpCard.getPopUpCardView()), 1)[0]);
+        openPopUpCardViews.push(openPopUpCardViews.splice(openPopUpCardViews.indexOf(popUpCard.getView()), 1)[0]);
         //Update z-indices of openPopUpCards according to the arrayIndex
         for (let i = 0; i < openPopUpCardViews.length; i++) {
             openPopUpCardViews[i].style.zIndex = i;
@@ -591,22 +591,22 @@ export class WorkspaceScreenController {
         }
     }
 
-    isCardExist(modulePath) {
+    isCardExist(cardLayoutFilePath) {
         let foundPopUpCard = false;
         for (const pastCard of this.pastCards) {
-            if (pastCard.getModulePath() === modulePath) {
+            if (pastCard.getLayoutFilePath() === cardLayoutFilePath) {
                 foundPopUpCard = pastCard;
                 break;
             }
         }
         for (const presentCard of this.presentCards) {
-            if (presentCard.getModulePath() === modulePath) {
+            if (presentCard.getLayoutFilePath() === cardLayoutFilePath) {
                 foundPopUpCard = presentCard;
                 break;
             }
         }
         for (const upcomingCard of this.upcomingCards) {
-            if (upcomingCard.getModulePath() === modulePath) {
+            if (upcomingCard.getLayoutFilePath() === cardLayoutFilePath) {
                 foundPopUpCard = upcomingCard;
                 break;
             }

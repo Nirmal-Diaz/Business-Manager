@@ -3,11 +3,11 @@ import { User } from "./User";
 
 @Entity("role", { schema: "d" })
 export class Role {
-  @PrimaryGeneratedColumn({ type: "int", name: "roleId" })
-  roleId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  id: number;
 
-  @Column("varchar", { name: "roleName", length: 45 })
-  roleName: string;
+  @Column("varchar", { name: "name", length: 45 })
+  name: string;
 
   @OneToMany(
     () => User,

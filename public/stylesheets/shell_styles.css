@@ -66,7 +66,7 @@
     -webkit-user-select: text;
 }
 
-.logInProfileImage {
+#logInAvatar {
     position: relative;
 
     opacity: 0;
@@ -242,7 +242,7 @@
     box-shadow: 0 0 5px black;
 }
 
-#workspaceProfileImage {
+#workspaceAvatar {
     margin: 0 5px 0 5px;
     height: 80px;
     width: 80px;
