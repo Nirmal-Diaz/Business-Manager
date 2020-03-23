@@ -64,8 +64,8 @@
 
     --actionOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
 
-    --actionOverlayChipBoxShadow: rgba(0, 100, 100, 1);
-    --actionOverlayChipBoxShadow-hover: darkcyan;
+    --actionOverlayChipBackgroundColor: royalblue;
+    --actionOverlayChipBackgroundColor-hover: rgb(60, 90, 200);
 
     --alertOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
 
