@@ -241,7 +241,7 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Create a card for the first permittedModule
-                    this.addCard(new Card(response.permittedModules[0].htmlPath));
+                    this.addCard(new Card(response.permittedModules[0].layoutFilePath));
                     //Create actionOverlayChops for each permittedModule
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {

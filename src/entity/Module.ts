@@ -10,11 +10,11 @@ export class Module {
   name: string;
 
   @Column("varchar", {
-    name: "html_path",
+    name: "layout_file_path",
     length: 100,
     default: () => "'Layouts/Modules/Unknown.html'"
   })
-  htmlPath: string;
+  layoutFilePath: string;
 
   @OneToMany(
     () => Permission,
