@@ -58,18 +58,14 @@
 
 
         class CardInterface {
-            constructor() {
-                //FIELD DECLARATIONS
-                this.openPopUpCards = [];
-                this.title = document.querySelector("title").textContent;
-                //Cache elements
-                this.quickAccessArea = document.getElementById("quickAccessArea");
-                this.createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
-                this.retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
-                this.updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
-                this.deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
-                //INITIATION PROCEDURE
-            }
+            openPopUpCards = [];
+            title = document.querySelector("title").textContent;
+
+            quickAccessArea = document.getElementById("quickAccessArea");
+            createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
+            retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
+            updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
+            deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
 
             getTitle() {
                 return this.title;

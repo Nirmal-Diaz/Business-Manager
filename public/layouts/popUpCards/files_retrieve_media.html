@@ -88,23 +88,22 @@
         });
 
         class PopUpCardInterface {
+            popUpCardObject = null;
+            mediaFileName = null;
+            boundedHandlers = {
+                updateInterface: this.updateInterface.bind(this),
+                seek: this.seek.bind(this)
+            };
+
+            closeButtons = document.querySelectorAll(".closeButton");
+            formControls = document.querySelector(".formControlsContainer").children;
+            mediaController = document.getElementById("mediaController");
+            seekSlider = document.getElementById("seekSlider");
+            volumeSlider = document.getElementById("volumeSlider");
+            fileNameDisplay = document.querySelector(".titleDescription");
+            statusDisplay = document.querySelector(".title");
+
             constructor() {
-                //FIELD DECLARATIONS
-                this.popUpCardObject = null;
-                this.closeButtons = document.querySelectorAll(".closeButton");
-                this.formControls = document.querySelector(".formControlsContainer").children;
-                this.boundedHandlers = {
-                    updateInterface: this.updateInterface.bind(this),
-                    seek: this.seek.bind(this)
-                };
-                this.mediaFileName = null;
-                //Cache elements
-                this.mediaController = document.getElementById("mediaController");
-                this.seekSlider = document.getElementById("seekSlider");
-                this.volumeSlider = document.getElementById("volumeSlider");
-                this.fileNameDisplay = document.querySelector(".titleDescription");
-                this.statusDisplay = document.querySelector(".title");
-                //INITIATION PROCEDURE
                 //Set initial volume of mediaController
                 this.mediaController.volume = 0.5;
                 //Add eventListeners to the mediaController and seekSlider

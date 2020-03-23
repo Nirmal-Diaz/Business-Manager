@@ -22,15 +22,15 @@
         });
 
         class PopUpCardInterface {
+            popUpCardObject = null;
+            title = document.querySelector("title").textContent;
+            
+            closeButtons = document.querySelectorAll(".closeButton");
+            usernameTextInput = document.getElementById("usernameTextInput");
+            roleDropDownInput = document.getElementById("roleDropDownInput");
+            moduleDropDownInput = document.getElementById("moduleDropDownInput");
+
             constructor() {
-                //FIELD DECLARATIONS
-                this.popUpCardObject = null;
-                this.title = document.querySelector("title").textContent;
-                this.closeButtons = document.querySelectorAll(".closeButton");
-                //Cache elements
-                this.usernameTextInput = document.getElementById("usernameTextInput");
-                this.roleDropDownInput = document.getElementById("roleDropDownInput");
-                this.moduleDropDownInput = document.getElementById("moduleDropDownInput");
                 //INITIATION PROCEDURE
                 this.loadRoles();
                 this.loadModules();

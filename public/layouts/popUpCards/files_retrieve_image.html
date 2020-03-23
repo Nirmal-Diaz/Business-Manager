@@ -48,14 +48,10 @@
         });
 
         class PopUpCardInterface {
-            constructor() {
-                //FIELD DECLARATIONS
-                this.popUpCardObject = null;
-                //Cache elements
-                this.closeButtons = document.querySelectorAll(".closeButton");
-                this.imageController = document.getElementById("imageController");
-                //INITIATION PROCEDURE
-            }
+            popUpCardObject = null;
+        
+            closeButtons = document.querySelectorAll(".closeButton");
+            imageController = document.getElementById("imageController");
 
             preview(imageFilePath) {
                 //Fetch itemPaths in the subDirectoryPath

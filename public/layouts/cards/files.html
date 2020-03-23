@@ -29,21 +29,20 @@
         });
 
         class CardInterface {
+            cardObject = null;
+            title = document.querySelector("title").textContent;
+            currentSubDirectoryPath = "/";
+            extensionsLibrary = null;
+            
+            selectedCardDivisionSectorItems = [];
+            quickAccessArea = document.getElementById("quickAccessArea");
+            createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
+            retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
+            updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
+            deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+            mainCardDivision = document.getElementById("mainCardDivision");
+
             constructor() {
-                //FIELD DECLARATIONS
-                this.cardObject = null;
-                this.title = document.querySelector("title").textContent;
-                this.currentSubDirectoryPath = "/";
-                this.selectedCardDivisionSectorItems = [];
-                this.extensionsLibrary = null;
-                //Cache elements
-                this.quickAccessArea = document.getElementById("quickAccessArea");
-                this.createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
-                this.retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
-                this.updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
-                this.deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
-                this.mainCardDivision = document.getElementById("mainCardDivision");
-                //INITIATION PROCEDURE
                 //Add onclick to retrieveFileButton for showing the retrieve file popUpCard
                 this.retrieveControls[0].addEventListener("click", this.determinePreviewPopUp.bind(this));
                 //Add onclick to returnFromDirectoryButton for return form current directory

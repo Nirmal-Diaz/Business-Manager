@@ -22,18 +22,17 @@
         });
 
         class CardInterface {
+            cardObject = null;
+            title = document.querySelector("title").textContent;
+            
+            selectedCardDivisionSectorItems = [];
+            quickAccessArea = document.getElementById("quickAccessArea");
+            createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
+            retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
+            updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
+            deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+
             constructor() {
-                //FIELD DECLARATIONS
-                this.cardObject = null;
-                this.title = document.querySelector("title").textContent;
-                this.selectedCardDivisionSectorItems = [];
-                //Cache elements
-                this.quickAccessArea = document.getElementById("quickAccessArea");
-                this.createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
-                this.retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
-                this.updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
-                this.deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
-                //INITIATION PROCEDURE
                 //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
                     this.cardObject.createPopUpCard("layouts/popUpCards/users_create.html");
