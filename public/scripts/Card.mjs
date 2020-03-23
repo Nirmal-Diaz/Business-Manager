@@ -4,13 +4,15 @@ export class Card {
     cardInterface = null;
     layoutFilePath = null;
     openPopUpCards = [];
+    moduleId = null;
     
     view = null;
     
-    constructor(layoutFilePath) {
+    constructor(layoutFilePath, moduleId) {
+        this.moduleId = moduleId;
+        this.layoutFilePath = layoutFilePath;
         //Initialize/cache view elements
         this.view = document.createElement("div");
-        this.layoutFilePath = layoutFilePath;
         //NOTE: A cardView's styling will be handled by the WorkspaceScreen
         //Create the iFrame to load the module
         const iFrame = document.createElement("iframe");
@@ -39,8 +41,8 @@ export class Card {
         return this.layoutFilePath;
     }
 
-    getModuleName() {
-        return this.cardInterface.title;
+    getModuleId() {
+        return this.moduleId;
     }
 
     getControls(controlsType) {

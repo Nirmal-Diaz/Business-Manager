@@ -41,7 +41,7 @@ export class PlatformComponent {
             if (workspaceScreenController.isCardExist(module.layoutFilePath)) {
                 window.shellInterface.throwAlert("Card already exists", "Continue work with the existing card", "The card you are trying to open already exists on the workspace. Two instances of the same card isn't allowed by the system", null, "OK", null);
             } else {
-                workspaceScreenController.addCard(new Card(module.layoutFilePath));
+                workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
                 workspaceScreenController.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
             }
         });

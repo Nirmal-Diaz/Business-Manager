@@ -262,7 +262,7 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Create a card for the first permittedModule
-                    this.addCard(new Card(response.permittedModules[0].layoutFilePath));
+                    this.addCard(new Card(response.permittedModules[0].layoutFilePath, response.permittedModules[0].id));
                     //Create actionOverlayChops for each permittedModule
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.permittedModules.length; i++) {
@@ -516,25 +516,19 @@ export class WorkspaceScreenController {
         this.quickAccessArea.innerHTML = "";
         //Get the presentCard2
         const presentCard2 = this.presentCards[this.presentCards.length - 1];
+        const moduleId = presentCard2.getModuleId();
         //Update moduleName display according to the presentCard2
-        const moduleName = presentCard2.getModuleName();
         this.headerArea.querySelector("#moduleNameDisplay").innerText = presentCard2.getTitle();
         //Check if the permittedModuleOperations are cached
-        if (!this.permittedModuleOperations.hasOwnProperty(moduleName)) {
+        if (this.permittedModuleOperations.hasOwnProperty(moduleId)) {
+            addQuickAccessControls.bind(this)();
+        } else {
             //Fetch permittedModuleOperations and cache them
-            fetch(`${location.protocol}//${location.host}/permission/permittedModuleOperations`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    moduleName: moduleName
-                })
-            })
+            fetch(`${location.protocol}//${location.host}/permission/permittedModuleOperations?moduleId=${moduleId}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.permittedModuleOperations[moduleName] = response.permittedModuleOperations;
+                        this.permittedModuleOperations[moduleId] = response.permittedModuleOperations;
                         addQuickAccessControls.bind(this)();
                     } else {
                         window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
@@ -543,34 +537,32 @@ export class WorkspaceScreenController {
                 .catch(error => {
                     window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your permitted operations for the current module from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                 });
-        } else {
-            addQuickAccessControls.bind(this)();
         }
 
         function addQuickAccessControls() {
             //Add createControls to the quickAccessArea if the user has "create" permissions
-            if (this.permittedModuleOperations[moduleName].includes("create")) {
+            if (this.permittedModuleOperations[moduleId].includes("create")) {
                 const createControls = presentCard2.getControls("create");
                 for (const createControl of createControls) {
                     this.quickAccessArea.appendChild(createControl);
                 }
             }
             //Add retrieveControls to the quickAccessArea if the user has "retrieve" permissions
-            if (this.permittedModuleOperations[moduleName].includes("retrieve")) {
+            if (this.permittedModuleOperations[moduleId].includes("retrieve")) {
                 const retrieveControls = presentCard2.getControls("retrieve");
                 for (const retrieveControl of retrieveControls) {
                     this.quickAccessArea.appendChild(retrieveControl);
                 }
             }
             //Add updateControls to the quickAccessArea if the user has "update" permissions
-            if (this.permittedModuleOperations[moduleName].includes("update")) {
+            if (this.permittedModuleOperations[moduleId].includes("update")) {
                 const updateControls = presentCard2.getControls("update");
                 for (const updateControl of updateControls) {
                     this.quickAccessArea.appendChild(updateControl);
                 }
             }
             //Add deleteControls to the quickAccessArea if the user has "delete" permissions
-            if (this.permittedModuleOperations[moduleName].includes("delete")) {
+            if (this.permittedModuleOperations[moduleId].includes("delete")) {
                 const deleteControls = presentCard2.getControls("delete");
                 for (const deleteControl of deleteControls) {
                     this.quickAccessArea.appendChild(deleteControl);

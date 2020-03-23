@@ -1,9 +1,8 @@
-//TYPESCRIPT
 import "reflect-metadata";
-//SERVER
+
 import * as express from "express";
 import * as session from "express-session";
-//CONTROLLERS
+
 import {
     UserController,
     SessionController,
@@ -118,9 +117,9 @@ app.route("/permission/permittedModules")
     });
 
 app.route("/permission/permittedModuleOperations")
-    .post(jsonParser, (request, response) => {
+    .get(jsonParser, (request, response) => {
         SessionController.checkLogIn(request.session)
-            .then(() => PermissionController.getPermittedOperations(request.session.userId, request.body.moduleName))
+            .then(() => PermissionController.getPermittedOperations(request.session.userId, parseInt(request.query.moduleId)))
             .then(data => {
                 response.json({
                     status: true,
@@ -160,7 +159,7 @@ app.route("/user")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(async () => {
-                return PermissionController.checkOperationPermissions(request.session.userId, "Users", "retrieve")
+                return PermissionController.checkOperation(request.session.userId, "users", "retrieve")
                 .then(() => UserController.getUser(request.session.userId));
             }, async () => {
                 const user = await UserController.getUserByUsername(request.query.username);
@@ -183,7 +182,7 @@ app.route("/user")
             });
     })
     .put(jsonParser, (request, response) => {
-        // PermissionController.checkOperationPermissions(request.session.username, "User", "create")
+        // PermissionController.checkOperationPermissions(request.session.username, "users", "create")
         //     .then(() => ValidationController.validateUserCreation(request.body.username, request.body.user, request.body.userModulePermissions))
         //     //User creation must be done first in order create preferences and permissions
         //     .then(() => UserController.createUser(request.body.username, request.body.user))
@@ -203,7 +202,7 @@ app.route("/user")
         //     });
     })
     .delete(jsonParser, (request, response) => {
-        // controller.Permission.checkOperationPermissions(request.session.username, "User", "delete").then(() => {
+        // controller.Permission.checkOperationPermissions(request.session.username, "users", "delete").then(() => {
 
         // }).then(() => {
         //     response.json({
@@ -220,7 +219,7 @@ app.route("/user")
 
 app.route("/users")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "Users", "retrieve")
+        PermissionController.checkOperation(request.session.userId, "users", "retrieve")
             .then(() => UserController.searchUsers(request.query.keyword))
             .then(data => {
                 response.json({
@@ -239,7 +238,7 @@ app.route("/users")
 
 app.route("/file/extensionsLibrary")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
+        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
             .then(() => FileController.getExtensionsLibrary())
             .then(data => {
                 response.json({
@@ -258,7 +257,7 @@ app.route("/file/extensionsLibrary")
 
 app.route("/file/itemPaths")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
+        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
             .then(() => FileController.getItemPaths(request.session.userId, request.query.subDirectoryPath))
             .then(data => {
                 response.json({
@@ -278,7 +277,7 @@ app.route("/file/itemPaths")
 
 app.route("/file/fileBuffer")
     .get((request, response) => {
-        PermissionController.checkOperationPermissions(request.session.userId, "Files", "retrieve")
+        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
             .then(() => FileController.getFileBuffer(request.session.userId, request.query.filePath))
             .then(data => {
                 response.json({

@@ -1,26 +1,14 @@
-import { getRepository, createConnection, Connection, getConnection, Like } from "typeorm";
+import * as crypto from "crypto";
+import * as fs from "fs";
+
+import { getRepository} from "typeorm";
 import { User } from "../entity/User";
 import { Permission } from "../entity/Permission";
-import { PermissionRepository, UserRepository } from "../repository/Repository";
+import { UserRepository } from "../repository/Repository";
 import { Role } from "../entity/Role";
 import { Module } from "../entity/Module";
 
-//CORE MODULES
-const crypto = require("crypto");
-const fs = require("fs");
-const DAO = require("../repository/Repository.ts");
-
 export class GeneralController {
-    static async createItems(tableName, rowData) {
-        // for (let i = 0; i < rowData.length; i++) {
-        //     await DAO.GeneralDAO.createRow(tableName, Object.keys(rowData[i]), Object.values(rowData[i]))
-        //     .catch(error => {
-        //         throw error;
-        //     });
-        // }
-        // return true;
-    }
-
     static async getItems(tableName: string, restrictNonGeneralData: boolean) {
         const generalEntities = {
             role: Role,
@@ -43,13 +31,6 @@ export class GeneralController {
                 throw { title: "Isn't it empty", titleDescription: "Add some items first", message: "Looks like the table you are requesting doesn't have any items in it", technicalMessage: "Requested an empty table" };
             }
         }
-    }
-
-    static async deleteItems(tableName, columnName, columnData) {
-        // for (let i = 0; i < columnData.length; i++) {
-        //     await DAO.GeneralDAO.deleteRowsByExactMatch(tableName, columnName, columnData[i])
-        // }
-        // return true;
     }
 }
 
@@ -78,84 +59,107 @@ export class SessionController {
 }
 
 export class PermissionController {
-    static async createPermissions(username, userModulePermissions) {
-        // //Finalize each userModulePermission by adding username property into every userModulePermission
-        // for (let i = 0; i < userModulePermissions.length; i++) {
-        //     userModulePermissions[i].username = username;
-        // }
-        // return GeneralController.createItems("userModulePermission", userModulePermissions);
-    }
-
-    static async checkOperationPermissions(userId, moduleName, moduleOperationName) {
-        const userModulePermission = await PermissionRepository.getPermissionsForModule(userId, moduleName);
-        if (userModulePermission) {
-            const operationIndexMap = {
-                create: 0,
-                retrieve: 1,
-                update: 2,
-                delete: 3
-            }
-    
-            if (userModulePermission.permissions[operationIndexMap[moduleOperationName]] === "1") {
-                return true;
-            } else {
-                throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: "Looks like you don't have permissions to the operation to be executed on the current module", technicalMessage: "Operation permissions denied" };
-            }
-        } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "We couldn't find any record of the queried permission data", technicalMessage: "No records about operation permissions on module" };
-        }
-    }
-
-    static async getPermittedOperations(userId: number, moduleName: string) {
-        const userModulePermission = await PermissionRepository.getPermissionsForModule(userId, moduleName);
-        if (userModulePermission) {
-            const permittedModuleOperations = [];
-    
-            if (userModulePermission.permissions[0] === "1") {
-                permittedModuleOperations.push("create");
-            }
-            if (userModulePermission.permissions[1] === "1") {
-                permittedModuleOperations.push("retrieve");
-            }
-            if (userModulePermission.permissions[2] === "1") {
-                permittedModuleOperations.push("update");
-            }
-            if (userModulePermission.permissions[3] === "1") {
-                permittedModuleOperations.push("delete");
-            }
-
-            return permittedModuleOperations;
-        } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the current module. Usually the system won't show such modules to the user", technicalMessage: "No records about permitted operations" };
-        }
-    }
-
-    static async getPermittedModules(userId) {
-        const userModulePermissions = await getRepository(Permission).find({
+    static async getPermission(roleId: number, moduleId: number) {
+        const permission = await getRepository(Permission).findOne({
             where: {
-                userId: userId
+                    roleId: roleId,
+                    moduleId: moduleId
             },
-            relations: ["module"]
+            relations: ["role", "module"]
         });
 
-        if (userModulePermissions.length > 0) {
-            //NOTE: Permitted modules are the ones that have "retrieve" permissions
-            const permittedModules = [];
-
-            for (let i = 0; i < userModulePermissions.length; i++) {
-                if (userModulePermissions[i].permissions[1] === "1") {
-                    permittedModules.push(userModulePermissions[i].module);
-                }
-            }
-
-            return permittedModules;
+        if (permission) {
+            return permission;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules that have retrieve access. Since every user must have at least a single module with retrieve access, this must be a database error", technicalMessage: "No records about permitted modules" };
+            throw { title: "Oops!", titleDescription: "Try a set of different arguments", message: "Your role doesn't have any permission records for this module", technicalMessage: "No permission for given arguments" };
         }
     }
 
-    static async deleteAllPermissions(username) {
-        // return DAO.GeneralDAO.deleteRowsByExactMatch("userModulePermission", "username", username);
+    static async getPermissionsForRole(roleId: number) {
+        const permissions = await getRepository(Permission).find({
+            where: {
+                roleId: roleId
+            },
+            relations: ["role", "module"]
+        });
+
+        if (permissions) {
+            return permissions;
+        } else {
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like your role doesn't have any permissions", technicalMessage: "No permissions for role" };
+        }
+    }
+
+    static async checkOperation(userId: number, moduleSelector: number|string, operationName: string) {
+        if (typeof moduleSelector === "string") {
+            const module = await getRepository(Module).findOne({
+                where: {
+                    name: moduleSelector
+                }
+            });
+            moduleSelector = module.id;
+        }
+
+        const user = await UserController.getUser(userId);
+        const permission = await PermissionController.getPermission(user.role.id, moduleSelector);
+
+        const operationIndexMap = {
+            create: 0,
+            retrieve: 1,
+            update: 2,
+            delete: 3
+        }
+
+        if (permission.value[operationIndexMap[operationName]] === "1") {
+            return true;
+        } else {
+            throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName} items in the current module`, technicalMessage: "Operation permissions denied" };
+        }
+    }
+
+    static async getPermittedOperations(userId: number, moduleId: number) {
+        const user = await UserController.getUser(userId);
+        const permission = await PermissionController.getPermission(user.role.id, moduleId);
+
+        const permittedOperations = [];
+
+        if (permission.value[0] === "1") {
+            permittedOperations.push("create");
+        }
+        if (permission.value[1] === "1") {
+            permittedOperations.push("retrieve");
+        }
+        if (permission.value[2] === "1") {
+            permittedOperations.push("update");
+        }
+        if (permission.value[3] === "1") {
+            permittedOperations.push("delete");
+        }
+
+        if (permittedOperations.length > 0) {
+            return permittedOperations;
+        } else {
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the this module. Usually the system won't show such modules to the user", technicalMessage: "No permitted operations for module" };
+        }
+    }
+
+    static async getPermittedModules(userId: number) {
+        const user = await UserController.getUser(userId);
+        const permissions = await PermissionController.getPermissionsForRole(user.role.id);
+
+        //NOTE: Permitted modules are the ones that have "retrieve" permissions
+        const permittedModules = [];
+        for (let i = 0; i < permissions.length; i++) {
+            if (permissions[i].value[1] === "1") {
+                permittedModules.push(permissions[i].module);
+            }
+        }
+
+        if (permittedModules.length > 0) {
+            return permittedModules;
+        } else {
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules to work with. Every user must have at least one assigned module. This could be a database error", technicalMessage: "No permitted modules for user" };
+        }
     }
 }
 
@@ -184,7 +188,7 @@ export class UserController {
         if (user) {
             return user;
         } else {
-            throw { title: "Hmmm... we couldn't find that user", titleDescription: "Please recheck your parameters", message: "There is no user matching the parameters you provided", technicalMessage: "No user for given parameters" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user that matches arguments you provided", technicalMessage: "No user for given arguments" };
         }
     }
 
@@ -198,11 +202,11 @@ export class UserController {
         if (user) {
             return user;
         } else {
-            throw { title: "Hmmm... we couldn't find you", titleDescription: "Please recheck your credentials", message: "There is no user matching the credentials you provided", technicalMessage: "No user for given credentials" };
+            throw { title: "Hmmm... we couldn't find you", titleDescription: "Please recheck your username", message: "There is no user matching the username you provided", technicalMessage: "No user for given username" };
         }
     }
 
-    static async searchUsers(keyword) {
+    static async searchUsers(keyword: string) {
         const users = await UserRepository.searchUsers(keyword);
 
         if (users.length > 0) {
@@ -284,7 +288,7 @@ export class FileController {
         return extensionsLibrary;
     }
 
-    static async getItemPaths(userId, subDirectoryPath) {
+    static async getItemPaths(userId: number, subDirectoryPath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
             throw { title: "What directory now?", titleDescription: "Recheck the directory path", message: "We couldn't find a directory for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested directory doesn't exist" };
@@ -338,7 +342,7 @@ export class FileController {
         }
     }
 
-    static async getFileBuffer(userId, filePath) {
+    static async getFileBuffer(userId: number, filePath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${filePath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
             throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };

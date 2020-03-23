@@ -31,13 +31,31 @@
             moduleDropDownInput = document.getElementById("moduleDropDownInput");
 
             constructor() {
-                //INITIATION PROCEDURE
-                this.loadRoles();
-                this.loadModules();
+                //Fetch roles
+                fetch(`${location.protocol}//${location.host}/general?tableName=role`)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status) {
+                        this.roleDropDownInput.innerHTML = "";
+                        //Create a dropDownInputOption for every role
+                        for (const role of response.items) {
+                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.name, JSON.stringify(role), null);
+                            this.roleDropDownInput.appendChild(dropDownInputOption);
+                        }
+                        //Make the first dropDownOption selected
+                        this.roleDropDownInput.firstElementChild.click();
+                    } else {
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    }
+                })
+                .catch(error => {
+                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                });
+                //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
                     const username = this.usernameTextInput.value;
                     const user = {
-                        roleId: this.roleDropDownInput.children[parseInt(this.roleDropDownInput.dataset.selectedOptionIndex)].dataset.roleId,
+                        roleId: this.roleDropDownInput.value,
                     };
                     const userModulePermissions = [];
                     for (const moduleDropDownInputOption of this.moduleDropDownInput.children) {
@@ -77,100 +95,6 @@
                     });
                 });
             }
-
-            loadRoles() {
-                //Fetch roles
-                fetch(`${location.protocol}//${location.host}/general?tableName=role`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        this.roleDropDownInput.innerHTML = "";
-                        //Create a dropDownInputOption for every role
-                        for (const role of response.items) {
-                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.name);
-                            //Store relevant data in the dropDownOption
-                            dropDownInputOption.dataset.roleId = role.roleId;
-                            //Add onclick to dropDownInputOption for toggling dropDownInput
-                            dropDownInputOption.addEventListener("click", () => {
-                                PlatformComponent.toggleDropDownInput(dropDownInputOption);
-                            });
-                            this.roleDropDownInput.appendChild(dropDownInputOption);
-                        }
-                        //Make the first dropDownOption selected
-                        this.roleDropDownInput.firstElementChild.click();
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                });
-            }
-
-            loadModules() {
-                //Fetch modules
-                fetch(`${location.protocol}//${location.host}/general?tableName=module`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        this.moduleDropDownInput.innerHTML = "";
-                        //Get the permissionCheckInputs
-                        const permissionCheckInputs = document.getElementById("permissionCheckInputContainer").children;
-                        //Create a dropDownInputOption for every module
-                        for (const module of response.items) {
-                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(module.name);
-                            //Store relevant data in the dropDownOption
-                            dropDownInputOption.dataset.moduleId = module.id;
-                            dropDownInputOption.dataset.permissions = "0000";
-                            //Add onclick to dropDownInput for updating permissionCheckInputs according to the currently given permissions
-                            dropDownInputOption.addEventListener("click", (event) => {
-                                //Toggle dropDownInput and check if it is collapsed
-                                const selectedOption = PlatformComponent.toggleDropDownInput(dropDownInputOption);
-                                if (selectedOption) {
-                                    //Update permissionCheckInputs according to the currently given permissions (if the dropDown is collapsed)
-                                    for (let i = 0; i <= 3; i++) {
-                                        //Update textContent of all permissionCheckInputs
-                                        permissionCheckInputs[i].children[1].children[1].textContent = selectedOption.textContent;
-                                        //Update checkRadioInputControls to match the selectedOption's permission string
-                                        if (selectedOption.dataset.permissions[i] === "1") {
-                                            permissionCheckInputs[i].children[0].classList.add("checkRadioInputControl-active");
-                                        } else {
-                                            permissionCheckInputs[i].children[0].classList.remove("checkRadioInputControl-active");
-                                        }
-                                    }
-                                }
-                            });
-                            this.moduleDropDownInput.appendChild(dropDownInputOption);
-                        }
-                        //Add onclick to checkboxInputs for updating permissions for the currently selected module
-                        for (const permissionCheckInput of permissionCheckInputs) {
-                            permissionCheckInput.addEventListener("click", () => {
-                                if (this.moduleDropDownInput.dataset.selectedOptionIndex !== "null") {
-                                    //Get the selected dropDownInputOption
-                                    const selectedDropDownOption = this.moduleDropDownInput.children[parseInt(this.moduleDropDownInput.dataset.selectedOptionIndex)];
-                                    const splitPermissions = selectedDropDownOption.dataset.permissions.split("");
-                                    //NOTE: permissionCheckInput have the relevant splitPermissionIndex stored in it
-                                    if (PlatformComponent.toggleCheckInput(permissionCheckInput)) {
-                                        splitPermissions[parseInt(permissionCheckInput.dataset.permissionIndex)] = "1";
-                                    } else {
-                                        splitPermissions[parseInt(permissionCheckInput.dataset.permissionIndex)] = "0";
-                                    }
-                                    selectedDropDownOption.dataset.permissions = splitPermissions.join("");
-                                } else {
-                                    window.parent.shellInterface.throwAlert("No module selected", "Please select a module first", "You have to select a module first in order to assign permissions to it", null, "OK", null);
-                                }
-                            });
-                        }
-                        //Make the first dropDownOption selected
-                        this.moduleDropDownInput.firstElementChild.click();
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch modules list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                });
-            }
         }
     </script>
 </head>
@@ -197,17 +121,17 @@
                 <h1 class="title">Role</h1>
             </div>
             <di class="inputContainer">
-                <div id="roleDropDownInput" class="dropDownInput" data-selected-option-index="null">
+                <div id="roleDropDownInput" class="dropDownInput" data-value="null">
 
                 </div>
             </di>
-            <div class="titleContainer">
+            <!-- <div class="titleContainer">
                 <h1 class="title">Modules + Operations</h1>
             </div>
             <p>Every module has four operations. Create, retrieve, update and delete. Although you can apply other
                 permissions without "retrieve" permission, The user won't be able to view the module</p>
             <div class="inputContainer">
-                <div id="moduleDropDownInput" class="dropDownInput" data-selected-option-index="null">
+                <div id="moduleDropDownInput" class="dropDownInput" data-value="null">
 
                 </div>
             </div>
@@ -240,7 +164,7 @@
                         <span>Module Name</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- formControlsContainer -->

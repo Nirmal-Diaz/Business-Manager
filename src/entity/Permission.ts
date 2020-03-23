@@ -1,18 +1,18 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { Module } from "./Module";
-import { User } from "./User";
+import { Role } from "./Role";
 
 @Index("fk_user_has_module_module1_idx", ["moduleId"], {})
 @Entity("permission", { schema: "d" })
 export class Permission {
-  @Column("int", { primary: true, name: "user_id" })
-  userId: number;
+  @Column("int", { primary: true, name: "role_id" })
+  roleId: number;
 
   @Column("int", { primary: true, name: "module_id" })
   moduleId: number;
 
-  @Column("char", { name: "permissions", length: 4 })
-  permissions: string;
+  @Column("char", { name: "value", length: 4 })
+  value: string;
 
   @ManyToOne(
     () => Module,
@@ -23,10 +23,10 @@ export class Permission {
   module: Module;
 
   @ManyToOne(
-    () => User,
-    user => user.permissions,
+    () => Role,
+    role => role.permissions,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
+  @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
+  role: Role;
 }

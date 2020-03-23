@@ -4,16 +4,14 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { UserPreference } from "./UserPreference";
-import { Permission } from "./Permission";
 import { Role } from "./Role";
 
-@Index("username_UNIQUE", ["username"], { unique: true })
 @Index("fk_user_occupation1_idx", ["roleId"], {})
+@Index("username_UNIQUE", ["username"], { unique: true })
 @Entity("user", { schema: "d" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -39,12 +37,6 @@ export class User {
     userPreference => userPreference.user
   )
   userPreference: UserPreference;
-
-  @OneToMany(
-    () => Permission,
-    permission => permission.user
-  )
-  permissions: Permission[];
 
   @ManyToOne(
     () => Role,
