@@ -16,16 +16,15 @@ export class PlatformUtil {
 }
 
 export class PlatformComponent {
-    static createDropDownInputOption(textContent, value, customClickHandler = null) {
+    static createDropDownInputOption(textContent, value, hasCustomClickHandler = false) {
         const dropDownInputOption = document.createElement("div");
         dropDownInputOption.setAttribute("class", "dropDownInputOption");
         dropDownInputOption.dataset.value = value;
-        dropDownInputOption.addEventListener("click", (event) => {
-            if (customClickHandler) {
-                customClickHandler(event);
-            }
-            PlatformComponent.toggleDropDownInput(dropDownInputOption);
-        });
+        if (!hasCustomClickHandler) {
+            dropDownInputOption.addEventListener("click", (event) => {
+                PlatformComponent.toggleDropDownInput(dropDownInputOption);
+            });
+        }
 
         const dropDownOptionContent = document.createElement("span");
         dropDownOptionContent.textContent = textContent;
@@ -137,7 +136,7 @@ export class CardComponent {
                 //Add styles tho the selectedCardDivisionSectorItem
                 cardDivisionSectorItem.classList.add("cardDivisionSectorItem-active");
             }
-            
+
         });
         const itemPreview = document.createElement("div");
         itemPreview.setAttribute("class", "itemPreview");
