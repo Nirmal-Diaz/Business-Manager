@@ -116,6 +116,7 @@ body {
 .inputContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-content: flex-start;
 
     margin: 10px 0 10px 0;
