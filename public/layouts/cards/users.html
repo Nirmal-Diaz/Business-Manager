@@ -43,10 +43,8 @@
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
                         this.searchItems("", "All users", "Double tap to find out more");
-                        this.retrieveControls[0].click();
                     } else if (event.key === 'Enter') {
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
-                        this.retrieveControls[0].click();
                     }
                 });
                 //Initially load every user without specifying a keyword
