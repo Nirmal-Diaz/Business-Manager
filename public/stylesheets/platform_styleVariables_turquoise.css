@@ -69,7 +69,7 @@
 
     --alertOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
 
-    --alertBoxBackgroundBackgroundColor: rgba(10, 100, 100, 0.9);
+    --alertBoxBackgroundBackgroundColor: rgba(10, 100, 100, 1);
     --alertBoxBackgroundBoxShadowColor: black;
 
     /* cardStyleVariables */
