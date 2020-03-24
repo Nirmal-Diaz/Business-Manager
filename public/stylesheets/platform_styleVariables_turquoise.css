@@ -11,9 +11,9 @@
     --titleColor: rgba(102, 205, 170, 1);
     --titleDescriptionColor: rgba(102, 205, 170, 1);
 
-    --textInputBackgroundColor: transparent;
-    --textInputBackgroundColor-hover: rgba(102, 205, 170, 1);
-    --textInputBorderColor: white;
+    --textFileInputBackgroundColor: transparent;
+    --textFileInputBackgroundColor-hover: rgba(102, 205, 170, 1);
+    --textFileInputBorderColor: white;
     --textInputPlaceholderColor: rgb(140, 140, 140);
 
     --dropDownInputBackgroundColor: transparent;

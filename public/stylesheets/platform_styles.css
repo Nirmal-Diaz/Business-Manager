@@ -123,7 +123,7 @@ body {
     width: 100%;
 }
 
-.textInput {
+.textInput, .fileInput {
     margin: 10px 0 10px 0;
     height: 40px;
     width: 100%;
@@ -131,20 +131,29 @@ body {
 
     font-weight: bolder;
 
-    background-color: var(--textInputBackgroundColor);
-    border: 2px solid var(--textInputBorderColor);
+    background-color: var(--textFileInputBackgroundColor);
+    border: 2px solid var(--textFileInputBorderColor);
     border-radius: 5px;
     outline: none;
 
     -webkit-user-select: text;
 }
 
-.textInput:hover {
-    background-color: var(--textInputBackgroundColor-hover);
+.textInput:hover, .fileInput:hover {
+    background-color: var(--textFileInputBackgroundColor-hover);
 }
 
 .textInput::placeholder {
     color: var(--textInputPlaceholderColor);
+}
+
+.fileInput {
+    display: flex;
+    align-items: center;
+}
+
+.fileInput>input {
+    display: none;
 }
 
 .checkInput,
