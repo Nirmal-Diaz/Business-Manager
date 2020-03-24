@@ -18,6 +18,7 @@ export class PlatformUtil {
 export class PlatformComponent {
     static createDropDownInputOption(textContent, value, hasCustomClickHandler = false) {
         const dropDownInputOption = document.createElement("div");
+        dropDownInputOption.textContent = textContent;
         dropDownInputOption.setAttribute("class", "dropDownInputOption");
         dropDownInputOption.dataset.value = value;
         if (!hasCustomClickHandler) {
@@ -25,11 +26,6 @@ export class PlatformComponent {
                 PlatformComponent.toggleDropDownInput(dropDownInputOption);
             });
         }
-
-        const dropDownOptionContent = document.createElement("span");
-        dropDownOptionContent.textContent = textContent;
-        //Append into HTML
-        dropDownInputOption.appendChild(dropDownOptionContent);
         return dropDownInputOption;
     }
 
