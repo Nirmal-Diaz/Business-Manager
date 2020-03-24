@@ -7,12 +7,14 @@ import { Permission } from "../entity/Permission";
 import { UserRepository } from "../repository/Repository";
 import { Role } from "../entity/Role";
 import { Module } from "../entity/Module";
+import { Theme } from "../entity/Theme";
 
 export class GeneralController {
     static async getItems(tableName: string, restrictNonGeneralData: boolean) {
         const generalEntities = {
             role: Role,
-            module: Module
+            module: Module,
+            theme: Theme
         };
         if (restrictNonGeneralData && generalEntities.hasOwnProperty(tableName)) {
             const items = await getRepository(generalEntities[tableName]).find();
