@@ -114,13 +114,11 @@ export class PatternAuthorizer {
             strokePath(null, false);
             //Execute attemptAuthorization()
             patternAuthorizer.attemptAuthorization();
-            //Reset pattern
-            patternAuthorizer.resetPattern();
         }
     }
-
+    
     //WARNING: This method must be overridden
     attemptAuthorization() {
-
+        
     }
 }

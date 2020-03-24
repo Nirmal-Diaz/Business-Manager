@@ -148,6 +148,9 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
             }).catch(error => {
                 window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
+            
+        //Reset pattern
+        this.resetPattern();
     }
 }
 
