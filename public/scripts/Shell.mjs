@@ -177,7 +177,7 @@ export class LogInScreenController {
                             this.patternAuthorizer.setUsername(this.logInBox.children[1].value);
                             this.patternAuthorizer.getView().style.visibility = "visible";
                             this.logInAvatar.style.opacity = "1";
-                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.avatar.data)]))})`;
+                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.avatar.data)]))})`;
                             this.view.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
                             this.logInBox.children[0].children[0].innerText = "Let's see if it is really you";
                             this.logInBox.children[0].children[1].innerText = "Please mark your pattern";
@@ -244,11 +244,11 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Update sessionData displays
-                    this.headerArea.querySelector("#usernameDisplay").innerText = response.user.userPreference.preferredName;
-                    this.headerArea.querySelector("#roleNameDisplay").innerText = response.user.role.name;
-                    this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.user.avatar.data)]))})`;
+                    this.headerArea.querySelector("#usernameDisplay").innerText = response.data.userPreference.preferredName;
+                    this.headerArea.querySelector("#roleNameDisplay").innerText = response.data.role.name;
+                    this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.avatar.data)]))})`;
                     //Apply user preferences to the UI
-                    document.getElementsByTagName("link")[0].href = response.user.userPreference.theme.cssPath;
+                    document.getElementsByTagName("link")[0].href = response.data.userPreference.theme.cssPath;
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -262,11 +262,11 @@ export class WorkspaceScreenController {
             .then(response => {
                 if (response.status) {
                     //Create a card for the first permittedModule
-                    this.addCard(new Card(response.permittedModules[0].layoutFilePath, response.permittedModules[0].id));
+                    this.addCard(new Card(response.data[0].layoutFilePath, response.data[0].id));
                     //Create actionOverlayChops for each permittedModule
                     const actionOverlayChipPaneFragment = new DocumentFragment();
-                    for (let i = 0; i < response.permittedModules.length; i++) {
-                        const actionOverlayChip = PlatformComponent.createActionOverlayChip(response.permittedModules[i], this);
+                    for (let i = 0; i < response.data.length; i++) {
+                        const actionOverlayChip = PlatformComponent.createActionOverlayChip(response.data[i], this);
                         actionOverlayChipPaneFragment.appendChild(actionOverlayChip);
                     }
                     document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);
@@ -524,11 +524,11 @@ export class WorkspaceScreenController {
             addQuickAccessControls.bind(this)();
         } else {
             //Fetch permittedModuleOperations and cache them
-            fetch(`${location.protocol}//${location.host}/permission/permittedModuleOperations?moduleId=${moduleId}`)
+            fetch(`${location.protocol}//${location.host}/permission/permittedOperations?moduleId=${moduleId}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.permittedModuleOperations[moduleId] = response.permittedModuleOperations;
+                        this.permittedModuleOperations[moduleId] = response.data;
                         addQuickAccessControls.bind(this)();
                     } else {
                         window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);

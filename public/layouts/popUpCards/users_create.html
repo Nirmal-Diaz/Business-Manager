@@ -38,7 +38,7 @@
                     if (response.status) {
                         this.roleDropDownInput.innerHTML = "";
                         //Create a dropDownInputOption for every role
-                        for (const role of response.items) {
+                        for (const role of response.data) {
                             const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.name, JSON.stringify(role), null);
                             this.roleDropDownInput.appendChild(dropDownInputOption);
                         }

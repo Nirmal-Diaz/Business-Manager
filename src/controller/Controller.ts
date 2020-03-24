@@ -296,49 +296,52 @@ export class FileController {
             throw { title: "Files aren't directories!", titleDescription: "Make sure the path leads to a directory", message: "We couldn't find a directory for the path you sent. It leads to a file. Make sure that the path is correct and try again", technicalMessage: "Found a file at directory path" };
         } else {
             const itemNames = fs.readdirSync(fullRelativeDirectoryPath);
-            const directoryData = [];
-            const fileData = [];
+            const directories = [];
+            const files = [];
             for (const itemName of itemNames) {
                 const stats = fs.statSync(`${fullRelativeDirectoryPath}/${itemName}`);
                 if (stats.isDirectory()) {
-                    const directoryDatum = {
+                    const directory = {
                         //A "/" will be appended to every directory name
                         name: itemName + "/"
                     };
-                    directoryData.push(directoryDatum);
+                    directories.push(directory);
                 } else {
                     const fileExtension = itemName.slice(itemName.lastIndexOf(".")).toLowerCase();
-                    const fileDatum = {
+                    const file = {
                         name: itemName,
                         size: stats.size,
-                        fileType: null,
-                        fileExtensionCategory: null,
-                        fileExtension: fileExtension
+                        type: null,
+                        extensionCategory: null,
+                        extension: fileExtension
                     };
                     if (audioExtensions.includes(fileExtension)) {
-                        fileDatum.fileType = extensionsLibrary.audioExtensions[fileExtension].fileType;
-                        fileDatum.fileExtensionCategory = "audioExtensions";
+                        file.type = extensionsLibrary.audioExtensions[fileExtension].fileType;
+                        file.extensionCategory = "audioExtensions";
                     } else if (imageExtensions.includes(fileExtension)) {
-                        fileDatum.fileType = extensionsLibrary.imageExtensions[fileExtension].fileType;
-                        fileDatum.fileExtensionCategory = "imageExtensions";
+                        file.type = extensionsLibrary.imageExtensions[fileExtension].fileType;
+                        file.extensionCategory = "imageExtensions";
                     } else if (videoExtensions.includes(fileExtension)) {
-                        fileDatum.fileType = extensionsLibrary.videoExtensions[fileExtension].fileType;
-                        fileDatum.fileExtensionCategory = "videoExtensions";
+                        file.type = extensionsLibrary.videoExtensions[fileExtension].fileType;
+                        file.extensionCategory = "videoExtensions";
                     } else if (containerExtensions.includes(fileExtension)) {
-                        fileDatum.fileType = extensionsLibrary.containerExtensions[fileExtension].fileType;
-                        fileDatum.fileExtensionCategory = "containerExtensions";
+                        file.type = extensionsLibrary.containerExtensions[fileExtension].fileType;
+                        file.extensionCategory = "containerExtensions";
                     } else if (textExtensions.includes(fileExtension)) {
-                        fileDatum.fileType = extensionsLibrary.textExtensions[fileExtension].fileType;
-                        fileDatum.fileExtensionCategory = "textExtensions";
+                        file.type = extensionsLibrary.textExtensions[fileExtension].fileType;
+                        file.extensionCategory = "textExtensions";
                     } else {
-                        fileDatum.fileType = extensionsLibrary.unknownExtensions.unknownExtension.fileType;
-                        fileDatum.fileExtensionCategory = "unknownExtensions";
-                        fileDatum.fileExtension = "unknownExtension";
+                        file.type = extensionsLibrary.unknownExtensions.unknownExtension.fileType;
+                        file.extensionCategory = "unknownExtensions";
+                        file.extension = "unknownExtension";
                     }
-                    fileData.push(fileDatum);
+                    files.push(file);
                 }
             }
-            return [directoryData, fileData];
+            return {
+                directories: directories,
+                files: files
+            };
         }
     }
 

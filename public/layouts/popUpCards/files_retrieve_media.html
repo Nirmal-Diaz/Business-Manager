@@ -162,7 +162,7 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.mediaController.src = URL.createObjectURL(new Blob([new Uint8Array(response.fileBuffer.data)]));
+                        this.mediaController.src = URL.createObjectURL(new Blob([new Uint8Array(response.data.data)]));
                         //Update titleDescription with fileName
                         document.querySelector(".titleDescription").textContent = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1, mediaFilePath.lastIndexOf("."));
                     } else {

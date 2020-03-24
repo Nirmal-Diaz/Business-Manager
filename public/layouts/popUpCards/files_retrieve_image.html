@@ -59,7 +59,7 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.imageController.src = URL.createObjectURL(new Blob([new Uint8Array(response.fileBuffer.data)]));
+                        this.imageController.src = URL.createObjectURL(new Blob([new Uint8Array(response.data.data)]));
                         //Update titleDescription with fileName
                         document.querySelector(".title").textContent = imageFilePath.slice(imageFilePath.lastIndexOf("/") + 1, imageFilePath.lastIndexOf("."));
                     } else {

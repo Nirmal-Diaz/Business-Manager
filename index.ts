@@ -83,9 +83,11 @@ app.route("/session/currentUser")
         SessionController.checkLogIn(request.session)
             .then(() => UserController.getUser(request.session.userId))
             .then(data => {
+                //Remove hash for security reasons
+                data.hash = "";
                 response.json({
                     status: true,
-                    user: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -104,7 +106,7 @@ app.route("/permission/permittedModules")
             .then(data => {
                 response.json({
                     status: true,
-                    permittedModules: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -116,14 +118,14 @@ app.route("/permission/permittedModules")
             });
     });
 
-app.route("/permission/permittedModuleOperations")
+app.route("/permission/permittedOperations")
     .get(jsonParser, (request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => PermissionController.getPermittedOperations(request.session.userId, parseInt(request.query.moduleId)))
             .then(data => {
                 response.json({
                     status: true,
-                    permittedModuleOperations: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -143,7 +145,7 @@ app.route("/general")
             .then(data => {
                 response.json({
                     status: true,
-                    items: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -170,7 +172,7 @@ app.route("/user")
             .then(data => {
                 response.json({
                     status: true,
-                    user: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -224,7 +226,7 @@ app.route("/users")
             .then(data => {
                 response.json({
                     status: true,
-                    users: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -243,7 +245,7 @@ app.route("/file/extensionsLibrary")
             .then(data => {
                 response.json({
                     status: true,
-                    extensionsLibrary: data
+                    data: data
                 });
             })
             .catch(error => {
@@ -262,8 +264,7 @@ app.route("/file/itemPaths")
             .then(data => {
                 response.json({
                     status: true,
-                    directoryData: data[0],
-                    fileData: data[1]
+                    data: data
                 });
             })
             .catch(error => {
@@ -282,7 +283,7 @@ app.route("/file/fileBuffer")
             .then(data => {
                 response.json({
                     status: true,
-                    fileBuffer: data,
+                    data: data,
                 });
             })
             .catch(error => {

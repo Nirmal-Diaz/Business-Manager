@@ -52,7 +52,7 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.extensionsLibrary = response.extensionsLibrary;
+                        this.extensionsLibrary = response.data;
                     }
                 }).catch(error => {
                     window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch the extensions library from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
@@ -72,19 +72,19 @@
                         this.selectedCardDivisionSectorItems.length = 0;
                         //Add a cardDivisionSector for viewing currentSubDirectoryPath
                         CardComponent.createCardDivisionSector(parentCardDivision, "", this.currentSubDirectoryPath.replace(/\//g, " > "));
-                        if (response.directoryData.length === 0 && response.fileData.length === 0) {
+                        if (response.data.directories.length === 0 && response.data.files.length === 0) {
                             CardComponent.createCardDivisionSector(parentCardDivision, "Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
                         } else {
-                            if (response.directoryData.length > 0) {
+                            if (response.data.directories.length > 0) {
                                 //Create a cardDivisionSector for directories
                                 const cardDivisionSector = CardComponent.createCardDivisionSector("Directories", "Double tap to navigate in");
                                 //Create a cardDivisionSectorItem for each directoryDatum
-                                for (const directoryDatum of response.directoryData) {
+                                for (const directory of response.data.directories) {
                                     //NOTE: Bounded method is immediately invoked
-                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary.directory.iconPath, directoryDatum.name.slice(0, -1), [])();
+                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary.directory.iconPath, directory.name.slice(0, -1), [])();
                                     //Store itemExtensionCategory, directoryPath in the cardDivisionSectorItem
                                     //NOTE: Every directory name has a "/" appended to it
-                                    cardDivisionSectorItem.dataset.directoryPath = subDirectoryPath + directoryDatum.name;
+                                    cardDivisionSectorItem.dataset.directoryPath = subDirectoryPath + directory.name;
                                     cardDivisionSectorItem.dataset.itemExtensionCategory = "directories";
                                     //Add ondblclick to cardDirectorySectorItem for navigating in to the corresponding directory
                                     cardDivisionSectorItem.addEventListener("dblclick", () => {
@@ -95,16 +95,16 @@
                                 }
                                 parentCardDivision.appendChild(cardDivisionSector);
                             }
-                            if (response.fileData.length > 0) {
+                            if (response.data.files.length > 0) {
                                 //Create a cardDivisionSector for files
                                 const cardDivisionSector = CardComponent.createCardDivisionSector("Files", "Double tap to preview");
                                 //Create a cardDivisionSector for each fileDatum
-                                for (const fileDatum of response.fileData) {
+                                for (const file of response.data.files) {
                                     //NOTE: Bounded method is immediately invoked
-                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary[fileDatum.fileExtensionCategory][fileDatum.fileExtension].iconPath, fileDatum.name, [fileDatum.fileType, `${(fileDatum.size / 1049000).toFixed(2)} MiB`])();
+                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary[file.extensionCategory][file.extension].iconPath, file.name, [file.type, `${(file.size / 1049000).toFixed(2)} MiB`])();
                                     //Store itemExtensionCategory, filePath in the cardDivisionSector
-                                    cardDivisionSectorItem.dataset.filePath = subDirectoryPath + fileDatum.name;
-                                    cardDivisionSectorItem.dataset.itemExtensionCategory = fileDatum.fileExtensionCategory;
+                                    cardDivisionSectorItem.dataset.filePath = subDirectoryPath + file.name;
+                                    cardDivisionSectorItem.dataset.itemExtensionCategory = file.extensionCategory;
                                     //Add ondblclick to cardDirectorySectorItem for previewing
                                     cardDivisionSectorItem.addEventListener("dblclick", this.determinePreviewPopUp.bind(this));
                                     cardDivisionSector.appendChild(cardDivisionSectorItem);
