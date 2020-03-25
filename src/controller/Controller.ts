@@ -36,6 +36,22 @@ export class GeneralController {
     }
 }
 
+export class RegistryController {
+    static async getFile(fileName: string) {
+        if (/^[a-zA-Z]{1,}[.]{1}json$/.test(fileName)) {
+            //fileName is valid and is in the format "someFile.json"
+            const fullRelativeFilePath = `./src/registry/${fileName}`;
+            if (fs.existsSync(fullRelativeFilePath)) {
+                return fs.readFileSync(fullRelativeFilePath, "utf-8");
+            } else {
+                throw { title: "Oops! Couldn't find that", titleDescription: "Ensure that you are requesting the right file", message: "Our file registry doesn't have the file you are requesting. Make sure that you provided the file name along with its extension", technicalMessage: "File doesn't exist in registry" };
+            }
+        } else {
+            throw { title: "Oops! Invalid file name", titleDescription: "Try again with a valid file name", message: "Our file registry didn't understand the file name pattern. Make sure that you provided the file name along with its extension", technicalMessage: "Invalid file name" };
+        }
+    }
+}
+
 export class SessionController {
     static async createSession(session, username: string, cellCombination: string) {
         const user = await UserController.getUserByUsername(username);
@@ -349,13 +365,13 @@ export class FileController {
     }
 
     static async getFileBuffer(userId: number, filePath: string) {
-        const fullRelativeDirectoryPath = `./private/${userId}/${filePath}`;
-        if (!fs.existsSync(fullRelativeDirectoryPath)) {
+        const fullRelativeFilePath = `./private/${userId}/${filePath}`;
+        if (!fs.existsSync(fullRelativeFilePath)) {
             throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };
-        } else if (fs.statSync(fullRelativeDirectoryPath).isDirectory()) {
+        } else if (fs.statSync(fullRelativeFilePath).isDirectory()) {
             throw { title: "Directories aren't files!", titleDescription: "Make sure the path leads to a file", message: "We couldn't find a file for the path you sent. It leads to a directory. Make sure that the path is correct and try again", technicalMessage: "Found a directory at file path" };
         } else {
-            return fs.readFileSync(fullRelativeDirectoryPath);
+            return fs.readFileSync(fullRelativeFilePath);
         }
     }
 }

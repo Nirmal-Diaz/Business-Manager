@@ -8,7 +8,8 @@ import {
     SessionController,
     PermissionController,
     GeneralController,
-    FileController
+    FileController,
+    RegistryController
 } from "./src/controller/Controller";
 
 /** ================================================================================== */
@@ -119,7 +120,7 @@ app.route("/permission/permittedModules")
     });
 
 app.route("/permission/permittedOperations")
-    .get(jsonParser, (request, response) => {
+    .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(() => PermissionController.getPermittedOperations(request.session.userId, parseInt(request.query.moduleId)))
             .then(data => {
@@ -137,7 +138,6 @@ app.route("/permission/permittedOperations")
             });
     });
 
-//EXPRESS ROUTING (WITH LOGIN + PERMISSION VALIDATION)
 app.route("/general")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
@@ -157,6 +157,26 @@ app.route("/general")
             });
     });
 
+app.route("/registry")
+    .get((request, response) => {
+        SessionController.checkLogIn(request.session)
+            .then(() => RegistryController.getFile(request.query.fileName))
+            .then(data => {
+                response.json({
+                    status: true,
+                    data: data
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                response.json({
+                    status: false,
+                    error: error
+                });
+            });
+    });
+
+//EXPRESS ROUTING (WITH LOGIN + PERMISSION VALIDATION)
 app.route("/user")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
