@@ -1,0 +1,14 @@
+{
+    "username": {
+        "inputQuery": "#username",
+        "inputClass": "textInput",
+        "pattern": "^[0-9a-zA-Z]{3,15}$",
+        "value": null
+    },
+    "roleId": {
+        "inputQuery": "#roleId",
+        "inputClass": "dropDownInput",
+        "pattern": "^[1-9]{1,}",
+        "value": null
+    }
+}
