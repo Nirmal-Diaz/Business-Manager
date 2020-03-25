@@ -84,7 +84,7 @@ app.route("/session/currentUser")
             .then(() => UserController.getUser(request.session.userId))
             .then(data => {
                 //Remove hash for security reasons
-                data.hash = "";
+                data.userPreference.hash = "";
                 response.json({
                     status: true,
                     data: data
@@ -161,12 +161,18 @@ app.route("/user")
     .get((request, response) => {
         SessionController.checkLogIn(request.session)
             .then(async () => {
+                //Case: Successfully logged in
+                //Return the whole user
                 return PermissionController.checkOperation(request.session.userId, "users", "retrieve")
                 .then(() => UserController.getUser(request.session.userId));
             }, async () => {
+                //Case: Not logged in
+                //Return only the avatar keeping the structure of the user object
                 const user = await UserController.getUserByUsername(request.query.username);
                 return {
-                    avatar: user.avatar
+                    userPreference: {
+                        avatar: user.userPreference.avatar
+                    }
                 };
             })
             .then(data => {

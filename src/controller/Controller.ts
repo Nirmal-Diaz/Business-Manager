@@ -42,7 +42,7 @@ export class SessionController {
 
         const generatedHash = crypto.createHash("sha256").update(`${username} : ${cellCombination}`).digest("hex");
 
-        if (user.hash === generatedHash) {
+        if (user.userPreference.hash === generatedHash) {
             session.logged = true;
             session.userId = user.id;
             return true;

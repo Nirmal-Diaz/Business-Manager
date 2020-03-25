@@ -15,6 +15,9 @@ export class UserPreference {
   @Column("int", { primary: true, name: "user_id" })
   userId: number;
 
+  @Column("char", { name: "hash", length: 64 })
+  hash: string;
+
   @Column("varchar", { name: "preferred_name", length: 45 })
   preferredName: string;
 

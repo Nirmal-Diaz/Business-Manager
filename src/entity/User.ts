@@ -20,9 +20,6 @@ export class User {
   @Column("varchar", { name: "username", unique: true, length: 45 })
   username: string;
 
-  @Column("char", { name: "hash", length: 64 })
-  hash: string;
-
   @Column("tinyint", { name: "new_user", default: () => "'1'" })
   newUser: number;
 
