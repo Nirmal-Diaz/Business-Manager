@@ -123,6 +123,10 @@ body {
     width: 100%;
 }
 
+.inputContainer-invalid > input:first-child, .inputContainer-invalid > div:first-child{
+    border-color: var(--inputContainerBorderColor-invalid);
+}
+
 .textInput, .fileInput {
     margin: 10px 0 10px 0;
     height: 40px;

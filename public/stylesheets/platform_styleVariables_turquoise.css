@@ -11,6 +11,8 @@
     --titleColor: rgba(102, 205, 170, 1);
     --titleDescriptionColor: rgba(102, 205, 170, 1);
 
+    --inputContainerBorderColor-invalid: indianred;
+
     --textFileInputBackgroundColor: transparent;
     --textFileInputBackgroundColor-hover: rgba(102, 205, 170, 1);
     --textFileInputBorderColor: white;
