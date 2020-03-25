@@ -11,7 +11,8 @@
 
     <script type="module">
         //@ts-check
-        import {PlatformComponent} from "../../scripts/Utility.mjs";
+        import { FormUtil } from "../../scripts/Utility.mjs";
+        import { Form } from "../../scripts/Form.mjs";
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
             event.preventDefault();
@@ -24,75 +25,19 @@
         class PopUpCardInterface {
             popUpCardObject = null;
             title = document.querySelector("title").textContent;
-            
+            form = new Form(document.querySelector("form"));
+
             closeButtons = document.querySelectorAll(".closeButton");
-            usernameTextInput = document.getElementById("usernameTextInput");
-            roleDropDownInput = document.getElementById("roleDropDownInput");
-            moduleDropDownInput = document.getElementById("moduleDropDownInput");
 
             constructor() {
-                //Fetch roles
-                fetch(`${location.protocol}//${location.host}/general?tableName=role`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        this.roleDropDownInput.innerHTML = "";
-                        //Create a dropDownInputOption for every role
-                        for (const role of response.data) {
-                            const dropDownInputOption = PlatformComponent.createDropDownInputOption(role.name, JSON.stringify(role), null);
-                            this.roleDropDownInput.appendChild(dropDownInputOption);
-                        }
-                        //Make the first dropDownOption selected
-                        this.roleDropDownInput.firstElementChild.click();
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                //Load roles and select option with value "1"
+                FormUtil.populateDropDownInput("/general?tableName=role", this.form.getView().querySelector("#roleId"), "name", "id")
+                .then(() => {
+                    FormUtil.syncInputWithValue(this.form.getView(), this.form.getBindingObject().roleId, "1");
                 });
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    const username = this.usernameTextInput.value;
-                    const user = {
-                        roleId: this.roleDropDownInput.value,
-                    };
-                    const userModulePermissions = [];
-                    for (const moduleDropDownInputOption of this.moduleDropDownInput.children) {
-                        //UserModulePermissions with "0000" must be ignored
-                        if (moduleDropDownInputOption.dataset.permissions !== "0000") {
-                            const userModulePermission = {
-                                moduleId: moduleDropDownInputOption.dataset.moduleId,
-                                permissions: moduleDropDownInputOption.dataset.permissions
-                            };
-                            userModulePermissions.push(userModulePermission);
-                        }
-                    }
-                    //Send data to server
-                    fetch(`${location.protocol}//${location.host}/user`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            username: username,
-                            user: user,
-                            userModulePermissions: userModulePermissions
-                        })
-                    }).then((response) => {
-                        return response.json();
-                    }).then((response) => {
-                        if (response.status) {
-                            //Re-fetch users list
-                            this.popUpCardObject.parentCardInterface.searchItems("", "Users", "Double tap to find out more");
-                            //Close the popUpCard
-                            this.popUpCardObject.close();
-                        } else {
-                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                        }
-                    }).catch((error) => {
-                        window.parent.shellInterface.throwAlert("Oops! We couldn't send that", "Contact your system administrator", "We couldn't send new user details to the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                    });
+                    this.form.submit();
                 });
             }
         }
@@ -109,22 +54,30 @@
         </div>
 
         <!-- formFieldsContainer -->
-        <div class="formFieldsContainer">
+        <form class="formFieldsContainer">
             <div class="titleContainer">
                 <h1 class="title">Username</h1>
             </div>
-            <p>The username must consist only of letters. Try using at most two names</p>
-            <div class="inputContainer" data-submit="true">
-                <input id="usernameTextInput" type="text" class="textInput" placeholder="eg: John Doe" />
+            <ul>
+                <li>Must be unique</li>
+                <li>Must consist only of letters and numbers</li>
+                <li>Both uppercase and lowercase letters are allowed</li>
+                <li>No spaces are allowed</li>
+            </ul>
+            <div class="inputContainer">
+                <input id="username" type="text" class="textInput" placeholder="eg: johnDoe123" data-value="null" />
             </div>
+
             <div class="titleContainer">
                 <h1 class="title">Role</h1>
             </div>
-            <di class="inputContainer">
-                <div id="roleDropDownInput" class="dropDownInput" data-value="null">
+            <p>The role determines a user's permissions on each module</p>
+            <p>If the role you want isn't listed below, go and add it in before proceeding</p>
+            <div class="inputContainer">
+                <div id="roleId" class="dropDownInput" data-value="null">
 
                 </div>
-            </di>
+            </div>
             <!-- <div class="titleContainer">
                 <h1 class="title">Modules + Operations</h1>
             </div>
@@ -165,7 +118,7 @@
                     </div>
                 </div>
             </div> -->
-        </div>
+        </form>
 
         <!-- formControlsContainer -->
         <div class="formControlsContainer">

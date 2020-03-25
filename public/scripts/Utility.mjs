@@ -16,19 +16,6 @@ export class PlatformUtil {
 }
 
 export class PlatformComponent {
-    static createDropDownInputOption(textContent, value, hasCustomClickHandler = false) {
-        const dropDownInputOption = document.createElement("div");
-        dropDownInputOption.textContent = textContent;
-        dropDownInputOption.setAttribute("class", "dropDownInputOption");
-        dropDownInputOption.dataset.value = value;
-        if (!hasCustomClickHandler) {
-            dropDownInputOption.addEventListener("click", (event) => {
-                PlatformComponent.toggleDropDownInput(dropDownInputOption);
-            });
-        }
-        return dropDownInputOption;
-    }
-
     static createActionOverlayChip(module, workspaceScreenController) {
         const actionOverlayChip = document.createElement("div");
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
@@ -46,29 +33,6 @@ export class PlatformComponent {
         title.textContent = module.name;
         actionOverlayChip.appendChild(title);
         return actionOverlayChip;
-    }
-
-    //EVENT HANDLER METHODS
-    //NOTE: This method toggles the parent dropDownInput by using a child dropDownInputOption
-    static toggleDropDownInput(dropDownInputOption) {
-        if (dropDownInputOption.parentElement.classList.toggle("dropDownInput-collapsed")) {
-            dropDownInputOption.style.display = "flex";
-            //Store the selectedOption's value in its parent's dataset
-            dropDownInputOption.parentElement.dataset.value = dropDownInputOption.dataset.value;
-            return true;
-        } else {
-            for (const dropDownOption of dropDownInputOption.parentElement.children) {
-                dropDownOption.removeAttribute("style");
-            }
-            //Set the parent's value as "null"
-            dropDownInputOption.parentElement.dataset.value = "null";
-            return false;
-        }
-    }
-
-    static toggleCheckInput(checkInput) {
-        //Return if the checkInput is inactive
-        return checkInput.children[0].classList.toggle("checkRadioInputControl-active");
     }
 
     static toggleButtonGlyph(event) {
@@ -155,5 +119,100 @@ export class CardComponent {
         cardDivisionSectorItem.appendChild(itemPreview);
         cardDivisionSectorItem.appendChild(itemDetails);
         return cardDivisionSectorItem;
+    }
+}
+
+export class FormUtil {
+    static visualizeValidation(formView, formField, prioritizeInputValue = false) {
+        let input = formView.querySelector(formField.inputQuery);
+        let value;
+        if (prioritizeInputValue) {
+            value = input.dataset.value;
+        } else {
+            value = formField.value;
+        }
+        const regexp = new RegExp(formField.pattern);
+        if (!regexp.test(value) || value === "null") {
+            input.parentElement.classList.add("inputContainer-invalid");
+        } else {
+            input.parentElement.classList.remove("inputContainer-invalid");
+        }
+    }
+
+    static syncInputWithValue(formView, formField, overrideValue = null) {
+        const input = formView.querySelector(formField.inputQuery);
+        let value = formField.value;
+        //Override the formField.value if there is an overrideValue provided
+        if (overrideValue) {
+            value = overrideValue;
+        }
+
+        //Handle synchronization according to the inputClass
+        if (formField.inputClass === "textInput") {
+            input.dataset.value = value;
+            input.value = formField.value;
+        } else if (formField.inputClass === "dropDownInput") {
+            //Query the dropDOwnInputOption with the value in the formField
+            const dropDownInputOption = input.querySelector(`.dropDownInputOption[data-value="${value}"]`);
+            //Click the dropDownInputOption to select it
+            //WARNING: Only works when the dropDOwnInputOption is expanded
+            dropDownInputOption.click();
+        }
+    }
+
+    static createDropDownInputOption(textContent, value, hasCustomClickHandler = false) {
+        const dropDownInputOption = document.createElement("div");
+        dropDownInputOption.textContent = textContent;
+        dropDownInputOption.setAttribute("class", "dropDownInputOption");
+        dropDownInputOption.dataset.value = value;
+        if (!hasCustomClickHandler) {
+            dropDownInputOption.addEventListener("click", (event) => {
+                FormUtil.toggleDropDownInput(dropDownInputOption);
+            });
+        }
+        return dropDownInputOption;
+    }
+
+    static populateDropDownInput(requestPath, dropDownInput, textContentField, valueField) {
+        //Fetch items
+        return fetch(`${location.protocol}//${location.host}${requestPath}`)
+            .then(response => response.json())
+            .then(response => {
+                if (response.status) {
+                    dropDownInput.innerHTML = "";
+                    //Create a dropDownInputOption for every item
+                    for (const item of response.data) {
+                        const dropDownInputOption = FormUtil.createDropDownInputOption(item[textContentField], item[valueField], false);
+                        dropDownInput.appendChild(dropDownInputOption);
+                    }
+                } else {
+                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                }
+            })
+            .catch(error => {
+                window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
+    }
+
+    //EVENT HANDLER METHODS
+    static toggleDropDownInput(dropDownInputOption) {
+        if (dropDownInputOption.parentElement.classList.toggle("dropDownInput-collapsed")) {
+            dropDownInputOption.style.display = "flex";
+            //Store the selectedOption's value in its parent's dataset
+            dropDownInputOption.parentElement.dataset.value = dropDownInputOption.dataset.value;
+            return true;
+        } else {
+            for (const dropDownOption of dropDownInputOption.parentElement.children) {
+                dropDownOption.removeAttribute("style");
+            }
+            //Set the parent's value as "null"
+            dropDownInputOption.parentElement.dataset.value = "null";
+            return false;
+        }
+    }
+
+    static toggleCheckInput(checkInput) {
+        //Return if the checkInput is inactive
+        return checkInput.children[0].classList.toggle("checkRadioInputControl-active");
     }
 }
