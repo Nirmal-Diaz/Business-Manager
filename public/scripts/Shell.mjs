@@ -180,7 +180,7 @@ export class LogInScreenController {
                             this.patternAuthorizer.setUsername(this.logInBox.children[1].value);
                             this.patternAuthorizer.getView().style.visibility = "visible";
                             this.logInAvatar.style.opacity = "1";
-                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.avatar.data)]))})`;
+                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.userPreference.avatar.data)]))})`;
                             this.view.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
                             this.logInBox.children[0].children[0].innerText = "Let's see if it is really you";
                             this.logInBox.children[0].children[1].innerText = "Please mark your pattern";
@@ -249,7 +249,7 @@ export class WorkspaceScreenController {
                     //Update sessionData displays
                     this.headerArea.querySelector("#usernameDisplay").innerText = response.data.userPreference.preferredName;
                     this.headerArea.querySelector("#roleNameDisplay").innerText = response.data.role.name;
-                    this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.avatar.data)]))})`;
+                    this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.userPreference.avatar.data)]))})`;
                     //Apply user preferences to the UI
                     document.getElementsByTagName("link")[0].href = response.data.userPreference.theme.cssPath;
                 } else {

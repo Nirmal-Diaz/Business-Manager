@@ -198,7 +198,8 @@ export class UserController {
         const user = await getRepository(User).findOne({
             where: {
                 username: username
-            }
+            },
+            relations: ["userPreference"]
         });
 
         if (user) {

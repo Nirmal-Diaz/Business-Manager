@@ -23,14 +23,11 @@ export class User {
   @Column("char", { name: "hash", length: 64 })
   hash: string;
 
-  @Column("blob", { name: "avatar", nullable: true })
-  avatar: Buffer | null;
+  @Column("tinyint", { name: "new_user", default: () => "'1'" })
+  newUser: number;
 
   @Column("int", { name: "role_id" })
   roleId: number;
-
-  @Column("tinyint", { name: "new_user" })
-  newUser: number;
 
   @OneToOne(
     () => UserPreference,

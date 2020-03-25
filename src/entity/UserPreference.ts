@@ -18,8 +18,11 @@ export class UserPreference {
   @Column("varchar", { name: "preferred_name", length: 45 })
   preferredName: string;
 
-  @Column("int", { name: "theme_id" })
+  @Column("int", { name: "theme_id", default: () => "'1'" })
   themeId: number;
+
+  @Column("blob", { name: "avatar", nullable: true })
+  avatar: Buffer | null;
 
   @OneToOne(
     () => User,
