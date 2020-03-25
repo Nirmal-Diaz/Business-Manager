@@ -1,41 +1,43 @@
 import { FormUtil } from "../../scripts/Utility.mjs";
 
 export class Form {
-    bindingObject = {
-        username: {
-            inputQuery: "#username",
-            inputClass: "textInput",
-            pattern: "^[0-9a-zA-Z]{3,15}$",
-            value: null
-        },
-        roleId: {
-            inputQuery: "#roleId",
-            inputClass: "dropDownInput",
-            pattern: "^[1-9]{1,}",
-            value: null
-        }
-    };
+    bindingObject = null;
 
     view = null;
 
-    constructor(formView) {
+    //WARNING: This constructor() returns a promise. Use it asynchronously
+    //NOTE: It is done because of there are other methods on popUpCardInterfaces that rely on the bindingObject
+    constructor(formView, bindingObjectFileName = null) {
         this.view = formView;
 
-        //Add onkeyup to each textInput for syncing its value with dataset.value and for validate itself in realtime
-        const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
-        for (const textInput of textInputs) {
-            textInput.addEventListener("keyup", () => {
-                textInput.dataset.value = textInput.value;
-                FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
-            });
-        }
-        //Add onclick to each dropDownInput for validate itself in realtime
-        const dropDownInputs = this.view.querySelectorAll(".inputContainer .dropDownInput");
-        for (const dropDownInput of dropDownInputs) {
-            dropDownInput.addEventListener("click", () => {
-                FormUtil.visualizeValidation(this.view, this.bindingObject[dropDownInput.id], true);
-            });
-        }
+        //Load bindingObject
+        return fetch(`${location.protocol}//${location.host}/registry?fileName=${bindingObjectFileName}`)
+        .then(response => response.json())
+        .then(response => {
+            if (response.status) {
+                //NOTE: response.data is a stringified JSON and must be parsed
+                this.bindingObject = JSON.parse(response.data);
+                //Add onkeyup to each textInput for syncing its value with dataset.value and for validate itself in realtime
+                const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
+                for (const textInput of textInputs) {
+                    textInput.addEventListener("keyup", () => {
+                        textInput.dataset.value = textInput.value;
+                        FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
+                    });
+                }
+                //Add onclick to each dropDownInput for validate itself in realtime
+                const dropDownInputs = this.view.querySelectorAll(".inputContainer .dropDownInput");
+                for (const dropDownInput of dropDownInputs) {
+                    dropDownInput.addEventListener("click", () => {
+                        FormUtil.visualizeValidation(this.view, this.bindingObject[dropDownInput.id], true);
+                    });
+                }
+                return this;
+            } 
+        })
+        .catch(error => {
+            window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch required file from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+        });
     }
 
     getView() {
