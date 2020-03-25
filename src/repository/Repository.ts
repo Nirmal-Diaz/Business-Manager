@@ -12,6 +12,7 @@ export class UserRepository {
         return getRepository(User)
         .createQueryBuilder("u")
         .leftJoinAndSelect("u.role", "r")
+        .leftJoinAndSelect("u.userPreference", "up")
         .where("u.username LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("r.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();

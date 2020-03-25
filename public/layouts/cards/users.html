@@ -65,7 +65,7 @@
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
                             //Create a cardDivisionSector for each user
                             for (const user of response.data) {
-                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(user.avatar.data)]));
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(user.userPreference.avatar.data)]));
                                 //NOTE: Bounded method is immediately invoked
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, user.username, [user.role.name])();
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
