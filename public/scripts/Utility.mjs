@@ -21,7 +21,7 @@ export class PlatformComponent {
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
         actionOverlayChip.addEventListener("click", (event) => {
             if (workspaceScreenController.isCardExist(module.layoutFilePath)) {
-                window.shellInterface.throwAlert("Card already exists", "Continue work with the existing card", "The card you are trying to open already exists on the workspace. Two instances of the same card isn't allowed by the system", null, "OK", null);
+                window.shellInterface.throwAlert("Card already open", "Close it before opening another", "An instance of the card that you are trying to open already exists. You aren't allowed to open more than one instance of a card", null, "OK", null);
             } else {
                 workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
                 workspaceScreenController.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");

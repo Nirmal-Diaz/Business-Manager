@@ -104,7 +104,7 @@ export class Form {
                 }
             }
             if (hasInvalidValues) {
-                window.parent.shellInterface.throwAlert("Oops! Invalid values", "Please correct the invalid values", "Your form includes one or more fields with invalid values. Correcting them is compulsory before submitting the form", null, "OK", null);
+                window.parent.shellInterface.throwAlert("There are invalid values", "Please correct them", "Your form includes one or more fields with invalid values. Correcting them is compulsory before submitting the form. Check for red bounding boxes to find inputs with invalid values", null, "OK", null);
             }
         }
     }
