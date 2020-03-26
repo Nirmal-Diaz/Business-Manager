@@ -108,7 +108,7 @@ export class PermissionController {
         }
     }
 
-    static async checkOperation(userId: number, moduleSelector: number|string, operationName: string) {
+    static async checkPermission(userId: number, moduleSelector: number|string, operationName: string) {
         if (typeof moduleSelector === "string") {
             const module = await getRepository(Module).findOne({
                 where: {
