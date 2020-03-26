@@ -265,9 +265,6 @@ export class UserPreferenceController {
     }
 }
 
-//GLOBAL VARIABLES FOR VALIDATION
-const regExpLibrary = JSON.parse(fs.readFileSync("./public/registry/library_regExp.json", "utf-8"));
-
 export class ValidationController {
     static async getValidationExpressions(moduleName) {
         // return regExpLibrary[moduleName];
@@ -295,7 +292,7 @@ export class ValidationController {
 }
 
 //GLOBAL VARIABLES FOR FILE
-const extensionsLibrary = JSON.parse(fs.readFileSync("./public/registry/library_extensions.json", "utf-8"));
+const extensionsLibrary = JSON.parse(fs.readFileSync("./src/registry/extensions.json", "utf-8"));
 const audioExtensions = Object.keys(extensionsLibrary.audioExtensions);
 const imageExtensions = Object.keys(extensionsLibrary.imageExtensions);
 const videoExtensions = Object.keys(extensionsLibrary.videoExtensions);
