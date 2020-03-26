@@ -354,7 +354,7 @@ export class WorkspaceScreenController {
 
             let differenceX = 0;
             let differenceY = 0;
-            let procedureToExecute = null;
+            let procedureToExecute = () => {};
             let reEnablePointerEvents = true;
 
             //INNER EVENT HANDLER FUNCTIONS
@@ -368,10 +368,12 @@ export class WorkspaceScreenController {
                 if (absoluteDifferenceX >= absoluteDifferenceY) {
                     //Case: x axis must be prioritized
                     if (differenceX > 0) {
+                        //Logout session
                         workspaceScreenController.navigationControl.style.borderColor = "transparent var(--headerAreaColor) transparent transparent";
                         navigatorControlOptionDisplay.innerText = "Logout";
                         procedureToExecute = workspaceScreenController.logoutSession;
                     } else if (differenceX < 0) {
+                        //Show actionOverlay
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
                         navigatorControlOptionDisplay.innerText = "View action overlay";
                         procedureToExecute = () => {
@@ -381,11 +383,13 @@ export class WorkspaceScreenController {
                 } else {
                     //Case: y axis must be prioritized
                     if (differenceY > 0) {
+                        //Remove presentCard[2]
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent var(--headerAreaColor) transparent";
                         navigatorControlOptionDisplay.innerText = "Close current card";
                         procedureToExecute = workspaceScreenController.removeCurrentCard.bind(workspaceScreenController);
                         reEnablePointerEvents = false;
                     } else if (differenceY < 0) {
+                        //WARNING: Not implemented
                         workspaceScreenController.navigationControl.style.borderColor = "var(--headerAreaColor) transparent transparent transparent";
                         navigatorControlOptionDisplay.innerText = "Settings and preferences";
                         procedureToExecute = () => {
