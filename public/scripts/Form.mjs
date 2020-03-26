@@ -12,32 +12,32 @@ export class Form {
 
         //Load bindingObject
         return fetch(`${location.protocol}//${location.host}/registry?fileName=${bindingObjectFileName}`)
-        .then(response => response.json())
-        .then(response => {
-            if (response.status) {
-                //NOTE: response.data is a stringified JSON and must be parsed
-                this.bindingObject = JSON.parse(response.data);
-                //Add onkeyup to each textInput for syncing its value with dataset.value and for validate itself in realtime
-                const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
-                for (const textInput of textInputs) {
-                    textInput.addEventListener("keyup", () => {
-                        textInput.dataset.value = textInput.value;
-                        FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
-                    });
+            .then(response => response.json())
+            .then(response => {
+                if (response.status) {
+                    //NOTE: response.data is a stringified JSON and must be parsed
+                    this.bindingObject = JSON.parse(response.data);
+                    //Add onkeyup to each textInput for syncing its value with dataset.value and for validate itself in realtime
+                    const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
+                    for (const textInput of textInputs) {
+                        textInput.addEventListener("keyup", () => {
+                            textInput.dataset.value = textInput.value;
+                            FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
+                        });
+                    }
+                    //Add onclick to each dropDownInput for validate itself in realtime
+                    const dropDownInputs = this.view.querySelectorAll(".inputContainer .dropDownInput");
+                    for (const dropDownInput of dropDownInputs) {
+                        dropDownInput.addEventListener("click", () => {
+                            FormUtil.visualizeValidation(this.view, this.bindingObject[dropDownInput.id], true);
+                        });
+                    }
+                    return this;
                 }
-                //Add onclick to each dropDownInput for validate itself in realtime
-                const dropDownInputs = this.view.querySelectorAll(".inputContainer .dropDownInput");
-                for (const dropDownInput of dropDownInputs) {
-                    dropDownInput.addEventListener("click", () => {
-                        FormUtil.visualizeValidation(this.view, this.bindingObject[dropDownInput.id], true);
-                    });
-                }
-                return this;
-            } 
-        })
-        .catch(error => {
-            window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch required file from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-        });
+            })
+            .catch(error => {
+                window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch required file from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
     }
 
     getView() {
@@ -107,10 +107,28 @@ export class Form {
                 window.parent.shellInterface.throwAlert("There are invalid values", "Please correct them", "Your form includes one or more fields with invalid values. Correcting them is compulsory before submitting the form. Check for red bounding boxes to find inputs with invalid values", null, "OK", null);
             }
         }
+        return hasInvalidValues;
     }
 
-    submit() {
+    submit(urlPath) {
         this.updateBindingObject();
-        this.validateBindingObject();
+        const hasInvalidValues = this.validateBindingObject();
+        if (!hasInvalidValues) {
+            fetch(`${location.protocol}//${location.host}${urlPath}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bindingObject: this.bindingObject
+                })
+            }).then(response => response.json()).then(response => {
+                if (response.status) {
+                    console.log("OK");
+                }
+            }).catch(error => {
+                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't create that user in our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
+        }
     }
 }
