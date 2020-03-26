@@ -38,7 +38,8 @@
 
     <script type="module">
         //@ts-check
-        import {PopUpCard} from "../../scripts/PopUpCard.mjs";
+        import {PopUpCard} from "../../scripts/PopUpCard.js";
+        
         //Add onload to window for initializing cardInterface
         window.addEventListener("load", () => {
             window.cardInterface = new CardInterface();

@@ -1,3 +1,4 @@
+//@ts-check
 export class ScreenController {
     view = null;
     viewHTML = null;

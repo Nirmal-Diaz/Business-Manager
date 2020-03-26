@@ -1,4 +1,5 @@
-import { FormUtil } from "../../scripts/Utility.mjs";
+//@ts-check
+import { FormUtil } from "../../scripts/Utility.js";
 
 export class Form {
     bindingObject = null;

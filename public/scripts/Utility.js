@@ -1,5 +1,5 @@
 //@ts-check
-import { Card } from "./Card.mjs";
+import { Card } from "./Card.js";
 
 export class PlatformUtil {
     static getCurrentTime() {

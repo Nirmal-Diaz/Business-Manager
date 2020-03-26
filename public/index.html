@@ -27,7 +27,8 @@
 
     <script type="module">
         //@ts-check
-        import {ShellInterface} from "./scripts/Shell.mjs";
+        import {ShellInterface} from "./scripts/Shell.js";
+        
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
             event.preventDefault();

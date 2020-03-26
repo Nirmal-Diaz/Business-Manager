@@ -1,8 +1,8 @@
 //@ts-check
-import { Card } from "./Card.mjs";
-import { PatternAuthorizer } from "./PatternAuthorizer.mjs";
-import { PlatformComponent, PlatformUtil } from "./Utility.mjs";
-import { ScreenController } from "./ScreenController.mjs"
+import { Card } from "./Card.js";
+import { PatternAuthorizer } from "./PatternAuthorizer.js";
+import { PlatformComponent, PlatformUtil } from "./Utility.js";
+import { ScreenController } from "./ScreenController.js"
 
 export class ShellInterface {
     currentScreenController = null;

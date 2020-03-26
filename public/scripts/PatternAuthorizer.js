@@ -1,3 +1,4 @@
+//@ts-check
 //WARNING: This class must be extended with an implementation of attemptAuthorization() before use
 export class PatternAuthorizer {
     username = "";

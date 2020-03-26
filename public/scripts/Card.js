@@ -1,4 +1,5 @@
-import {PopUpCard} from "./PopUpCard.mjs";
+//@ts-check
+import {PopUpCard} from "./PopUpCard.js";
 
 export class Card {
     cardInterface = null;
