@@ -1,8 +1,8 @@
 //@ts-check
-import { PlatformUtil } from "./Utility.mjs";
 import { Card } from "./Card.mjs";
 import { PatternAuthorizer } from "./PatternAuthorizer.mjs";
-import { PlatformComponent } from "./Utility.mjs";
+import { PlatformComponent, PlatformUtil } from "./Utility.mjs";
+import { ScreenController } from "./ScreenController.mjs"
 
 export class ShellInterface {
     currentScreenController = null;
@@ -154,17 +154,14 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
     }
 }
 
-export class LogInScreenController {
+export class LogInScreenController extends ScreenController {
     patternAuthorizer = null;
 
-    view = null;
-    viewHTML = null;
     logInBox = null;
     logInAvatar = null;
 
     constructor(logInScreenView) {
-        this.view = logInScreenView;
-        this.viewHTML = this.view.innerHTML;
+        super(logInScreenView);
         this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternContainer"));
         //Initialize/Cache elements
         this.logInBox = this.view.querySelector(".logInBox");
@@ -200,18 +197,9 @@ export class LogInScreenController {
         //Focus logInBoxInputElement in the beginning
         this.logInBox.children[1].focus();
     }
-
-    getView() {
-        return this.view;
-    }
-
-    resetView() {
-        //Restore HTML inside logInScreen
-        this.view.innerHTML = this.viewHTML;
-    }
 }
 
-export class WorkspaceScreenController {
+export class WorkspaceScreenController extends ScreenController {
     //NOTE: Following declarations are aligned with the z-indexes of the cards where last of the pastCards have the highest z-index
     //NOTE: In the beginning there are no pastCards
     //NOTE: In the beginning last 3 cards are considered presentCards
@@ -222,8 +210,6 @@ export class WorkspaceScreenController {
     pastCards = [];
     permittedModuleOperations = {};
 
-    view = null;
-    viewHTML = null;
     headerArea = null;
     navigationControl = null;
     timeDisplay = null;
@@ -232,8 +218,7 @@ export class WorkspaceScreenController {
     actionOverlayView = null;
 
     constructor(workspaceScreenView) {
-        this.view = workspaceScreenView;
-        this.viewHTML = this.view.innerHTML;
+        super(workspaceScreenView);
         //Initialize/cache elements
         this.headerArea = this.view.querySelector(".headerArea");
         this.navigationControl = this.headerArea.querySelector("#navigationControl")
