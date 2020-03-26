@@ -407,15 +407,6 @@ export class WorkspaceScreenController extends ScreenController {
         });
     }
 
-    getView() {
-        return this.view;
-    }
-
-    resetView() {
-        //Restore HTML inside workspaceScreen
-        this.view.innerHTML = this.viewHTML;
-    }
-
     addCard(card) {
         //Set cardView's style
         //NOTE: A user created card will always be treated as the pastCards[0]
