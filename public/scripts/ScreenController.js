@@ -5,6 +5,7 @@ export class ScreenController {
 
     constructor(screenView) {
         this.view = screenView;
+        this.viewHTML = this.view.innerHTML;
     }
 
     getView() {
