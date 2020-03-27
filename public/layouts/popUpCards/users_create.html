@@ -26,15 +26,13 @@
         class PopUpCardInterface {
             popUpCardObject = null;
             title = document.querySelector("title").textContent;
-            form = null;
+            form = new Form(document.querySelector("form"));
 
             closeButtons = document.querySelectorAll(".closeButton");
 
             constructor() {
-                //NOTE: The Form() is asynchronous. It resolves with an instance of the Form class
-                (new Form(document.querySelector("form"), "user.json"))
-                .then((form) => {
-                    this.form = form;
+                //Initialize form
+                this.form.init("user.json").then((form) => {
                     //Load roles and select option with value "1"
                     FormUtil.populateDropDownInput("/general?tableName=role", this.form.getView().querySelector("#roleId"), "name", "id")
                     .then(() => {

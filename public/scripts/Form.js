@@ -6,11 +6,13 @@ export class Form {
 
     view = null;
 
-    //WARNING: This constructor() returns a promise. Use it asynchronously
-    //NOTE: It is done because of there are other methods on popUpCardInterfaces that rely on the bindingObject
-    constructor(formView, bindingObjectFileName = null) {
+    constructor(formView) {
         this.view = formView;
+    }
 
+    //WARNING: This method returns a promise that resolves to "this". Use it asynchronously
+    //NOTE: It is done because of there are other methods on popUpCardInterfaces that rely on the bindingObject
+    init(bindingObjectFileName) {
         //Load bindingObject
         return fetch(`${location.protocol}//${location.host}/registry?fileName=${bindingObjectFileName}`)
             .then(response => response.json())
@@ -34,6 +36,8 @@ export class Form {
                         });
                     }
                     return this;
+                } else {
+                    return null;
                 }
             })
             .catch(error => {
