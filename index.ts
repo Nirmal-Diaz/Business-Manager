@@ -11,70 +11,113 @@ import {
     FileController,
     RegistryController
 } from "./src/controller/Controller";
-
-/** ================================================================================== */
-
-//EXPRESS
+/* 
+=====================================================================================
+Express.js: Setup
+=====================================================================================
+*/
 const port: number = 8080;
-const jsonParser = express.json();
 const app = express();
-//EXPRESS: SESSION
-const sessionMiddleware = session({
+/* 
+=====================================================================================
+Express.js: Middleware Setup
+=====================================================================================
+*/
+const jsonParser = express.json();
+
+app.use(express.static("./public"));
+
+app.use(session({
     secret: Math.random().toString(),
     saveUninitialized: false,
     resave: false
+}));
+
+app.use((req, res, next) => {
+    //Skip paths that need no checking
+    if (["/", "/session", "/user/avatar"].includes(req.path)) {
+        next();
+        return;
+    }
+    
+    //Check all other paths for session validation
+    SessionController.checkLogIn(req.session).then(() => {
+        next();
+    }).catch(error => {
+        console.log("System error resolved:", error);
+        res.json({
+            status: false,
+            error: error
+        });
+    });
 });
-//EXPRESS INITIALIZATION
-app.use(express.static("./public"));
-app.use(sessionMiddleware);
+
 app.listen(port);
-
-/** ================================================================================== */
-
-//EXPRESS ROUTING (WITH NO VALIDATION)
+/* 
+=====================================================================================
+Express.js: Routing (Without permission validation)
+=====================================================================================
+*/
 app.route("/")
-    .all((request, response) => {
-        response.sendFile(__dirname + "/public/index.html");
+    .all((req, res) => {
+        res.sendFile(__dirname + "/public/index.html");
     });
 
 app.route("/session")
-    .put(jsonParser, (request, response) => {
-        SessionController.createSession(request.session, request.body.username, request.body.cellCombination)
+    .get((req, res) => {
+        SessionController.checkLogIn(req.session)
             .then(() => {
-                response.json({
+                res.json({
                     status: true
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
             });
     })
-    .delete((request, response) => {
-        request.session.destroy(() => {
-            response.json({
-                status: true
-            });
-        });
-    });
-
-/** ================================================================================== */
-
-//EXPRESS ROUTING (WITH LOGIN VALIDATION)
-app.route("/workspace")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
+    .put(jsonParser, (req, res) => {
+        SessionController.createSession(req.session, req.body.username, req.body.cellCombination)
             .then(() => {
-                response.json({
+                res.json({
                     status: true
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
+                    status: false,
+                    error: error
+                });
+            });
+    })
+    .delete((req, res) => {
+        req.session.destroy(() => {
+            res.json({
+                status: true
+            });
+        });
+    });
+
+app.route("/user/avatar")
+    .get((req, res) => {
+        UserController.getUserByUsername(req.query.username)
+            .then(data => {
+                res.json({
+                    status: true,
+                    data: {
+                        userPreference: {
+                            avatar: data.userPreference.avatar
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                res.json({
                     status: false,
                     error: error
                 });
@@ -82,20 +125,19 @@ app.route("/workspace")
     });
 
 app.route("/session/currentUser")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(() => UserController.getUser(request.session.userId))
+    .get((req, res) => {
+        UserController.getUser(req.session.userId)
             .then(data => {
                 //Remove hash for security reasons
                 data.userPreference.hash = "";
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -103,18 +145,17 @@ app.route("/session/currentUser")
     });
 
 app.route("/permission/permittedModules")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(() => PermissionController.getPermittedModules(request.session.userId))
+    .get((req, res) => {
+        PermissionController.getPermittedModules(req.session.userId)
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -122,18 +163,17 @@ app.route("/permission/permittedModules")
     });
 
 app.route("/permission/permittedOperations")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(() => PermissionController.getPermittedOperations(request.session.userId, parseInt(request.query.moduleId)))
+    .get((req, res) => {
+        PermissionController.getPermittedOperations(req.session.userId, parseInt(req.query.moduleId))
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -141,18 +181,17 @@ app.route("/permission/permittedOperations")
     });
 
 app.route("/general")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(() => GeneralController.getItems(request.query.tableName, true))
+    .get((req, res) => {
+        GeneralController.getItems(req.query.tableName, true)
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -160,85 +199,71 @@ app.route("/general")
     });
 
 app.route("/registry")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(() => RegistryController.getFile(request.query.fileName))
+    .get((req, res) => {
+        RegistryController.getFile(req.query.fileName)
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
             });
     });
-
-/** ================================================================================== */
-
-//EXPRESS ROUTING (WITH LOGIN + PERMISSION VALIDATION)
+/* 
+=====================================================================================
+Express.js: Routing (With permission validation)
+=====================================================================================
+*/
 app.route("/user")
-    .get((request, response) => {
-        SessionController.checkLogIn(request.session)
-            .then(async () => {
-                //Case: Successfully logged in
-                //Return the whole user
-                return PermissionController.checkPermission(request.session.userId, "users", "retrieve")
-                    .then(() => UserController.getUser(request.session.userId));
-            }, async () => {
-                //Case: Not logged in
-                //Return only the avatar keeping the structure of the user object
-                const user = await UserController.getUserByUsername(request.query.username);
-                return {
-                    userPreference: {
-                        avatar: user.userPreference.avatar
-                    }
-                };
-            })
+    .get((req, res) => {
+        PermissionController.checkPermission(req.session.userId, "users", "retrieve")
+            .then(() => UserController.getUser(req.session.userId))
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
-            });
+            })
     })
-    .put(jsonParser, (request, response) => {
-        PermissionController.checkPermission(request.session.userId, "users", "create")
-            .then(() => UserController.createUser(request.body.bindingObject))
+    .put(jsonParser, (req, res) => {
+        PermissionController.checkPermission(req.session.userId, "users", "create")
+            .then(() => UserController.createUser(req.body.bindingObject))
             .then(() => {
-                response.json({
+                res.json({
                     status: true
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
             });
     })
-    .delete(jsonParser, (request, response) => {
-        // controller.Permission.checkOperationPermissions(request.session.username, "users", "delete").then(() => {
+    .delete(jsonParser, (req, res) => {
+        // controller.Permission.checkOperationPermissions(req.session.username, "users", "delete").then(() => {
 
         // }).then(() => {
-        //     response.json({
+        //     res.json({
         //         status: true
         //     });
         // }).catch((error) => {
         //     console.log("System error resolved:", error);
-        //     response.json({
+        //     res.json({
         //         status: false,
         //         error: error
         //     });
@@ -246,18 +271,18 @@ app.route("/user")
     });
 
 app.route("/users")
-    .get((request, response) => {
-        PermissionController.checkPermission(request.session.userId, "users", "retrieve")
-            .then(() => UserController.searchUsers(request.query.keyword))
+    .get((req, res) => {
+        PermissionController.checkPermission(req.session.userId, "users", "retrieve")
+            .then(() => UserController.searchUsers(req.query.keyword))
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -265,18 +290,18 @@ app.route("/users")
     });
 
 app.route("/file/itemPaths")
-    .get((request, response) => {
-        PermissionController.checkPermission(request.session.userId, "files", "retrieve")
-            .then(() => FileController.getItemPaths(request.session.userId, request.query.subDirectoryPath))
+    .get((req, res) => {
+        PermissionController.checkPermission(req.session.userId, "files", "retrieve")
+            .then(() => FileController.getItemPaths(req.session.userId, req.query.subDirectoryPath))
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
@@ -284,18 +309,18 @@ app.route("/file/itemPaths")
     });
 
 app.route("/file/fileBuffer")
-    .get((request, response) => {
-        PermissionController.checkPermission(request.session.userId, "files", "retrieve")
-            .then(() => FileController.getFileBuffer(request.session.userId, request.query.filePath))
+    .get((req, res) => {
+        PermissionController.checkPermission(req.session.userId, "files", "retrieve")
+            .then(() => FileController.getFileBuffer(req.session.userId, req.query.filePath))
             .then(data => {
-                response.json({
+                res.json({
                     status: true,
                     data: data,
                 });
             })
             .catch(error => {
                 console.log("System error resolved:", error);
-                response.json({
+                res.json({
                     status: false,
                     error: error
                 });
