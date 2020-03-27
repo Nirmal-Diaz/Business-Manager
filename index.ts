@@ -61,6 +61,8 @@ app.route("/session")
         });
     });
 
+/** ================================================================================== */
+
 //EXPRESS ROUTING (WITH LOGIN VALIDATION)
 app.route("/workspace")
     .get((request, response) => {
@@ -176,6 +178,8 @@ app.route("/registry")
             });
     });
 
+/** ================================================================================== */
+
 //EXPRESS ROUTING (WITH LOGIN + PERMISSION VALIDATION)
 app.route("/user")
     .get((request, response) => {
@@ -183,8 +187,8 @@ app.route("/user")
             .then(async () => {
                 //Case: Successfully logged in
                 //Return the whole user
-                return PermissionController.checkOperation(request.session.userId, "users", "retrieve")
-                .then(() => UserController.getUser(request.session.userId));
+                return PermissionController.checkPermission(request.session.userId, "users", "retrieve")
+                    .then(() => UserController.getUser(request.session.userId));
             }, async () => {
                 //Case: Not logged in
                 //Return only the avatar keeping the structure of the user object
@@ -210,24 +214,20 @@ app.route("/user")
             });
     })
     .put(jsonParser, (request, response) => {
-        // PermissionController.checkOperationPermissions(request.session.username, "users", "create")
-        //     .then(() => ValidationController.validateUserCreation(request.body.username, request.body.user, request.body.userModulePermissions))
-        //     //User creation must be done first in order create preferences and permissions
-        //     .then(() => UserController.createUser(request.body.username, request.body.user))
-        //     .then(() => PermissionController.createPermissions(request.body.username, request.body.userModulePermissions))
-        //     .then(() => UserPreferenceController.createUserPreference(request.body.username))
-        //     .then(() => {
-        //         response.json({
-        //             status: true
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.log("System error resolved:", error);
-        //         response.json({
-        //             status: false,
-        //             error: error
-        //         });
-        //     });
+        PermissionController.checkPermission(request.session.userId, "users", "create")
+            .then(() => UserController.createUser(request.body.bindingObject))
+            .then(() => {
+                response.json({
+                    status: true
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                response.json({
+                    status: false,
+                    error: error
+                });
+            });
     })
     .delete(jsonParser, (request, response) => {
         // controller.Permission.checkOperationPermissions(request.session.username, "users", "delete").then(() => {
@@ -247,27 +247,8 @@ app.route("/user")
 
 app.route("/users")
     .get((request, response) => {
-        PermissionController.checkOperation(request.session.userId, "users", "retrieve")
+        PermissionController.checkPermission(request.session.userId, "users", "retrieve")
             .then(() => UserController.searchUsers(request.query.keyword))
-            .then(data => {
-                response.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                response.json({
-                    status: false,
-                    error: error
-                });
-            });
-    });
-
-app.route("/file/extensionsLibrary")
-    .get((request, response) => {
-        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
-            .then(() => FileController.getExtensionsLibrary())
             .then(data => {
                 response.json({
                     status: true,
@@ -285,7 +266,7 @@ app.route("/file/extensionsLibrary")
 
 app.route("/file/itemPaths")
     .get((request, response) => {
-        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
+        PermissionController.checkPermission(request.session.userId, "files", "retrieve")
             .then(() => FileController.getItemPaths(request.session.userId, request.query.subDirectoryPath))
             .then(data => {
                 response.json({
@@ -304,7 +285,7 @@ app.route("/file/itemPaths")
 
 app.route("/file/fileBuffer")
     .get((request, response) => {
-        PermissionController.checkOperation(request.session.userId, "files", "retrieve")
+        PermissionController.checkPermission(request.session.userId, "files", "retrieve")
             .then(() => FileController.getFileBuffer(request.session.userId, request.query.filePath))
             .then(data => {
                 response.json({
