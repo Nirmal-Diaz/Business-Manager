@@ -323,7 +323,7 @@ body {
     background-color: initial;
 }
 
-.patternContainer {
+.patternInput {
     position: relative;
 
     display: flex;

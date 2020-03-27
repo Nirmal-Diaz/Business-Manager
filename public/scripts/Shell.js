@@ -162,7 +162,7 @@ export class LogInScreenController extends ScreenController {
 
     constructor(logInScreenView) {
         super(logInScreenView);
-        this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternContainer"));
+        this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternInput"));
         //Initialize/Cache elements
         this.logInBox = this.view.querySelector(".logInBox");
         this.logInAvatar = this.view.querySelector("#logInAvatar");

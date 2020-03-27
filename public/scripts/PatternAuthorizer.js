@@ -10,9 +10,9 @@ export class PatternAuthorizer {
     context2D = null;
     cellPoints = null;
     
-    constructor(patternView) {
+    constructor(patternInput) {
         //Initialize/cache view elements
-        this.view = patternView;
+        this.view = patternInput;
         this.patternCanvas = this.view.querySelector(".patternCanvas");
         this.context2D = this.patternCanvas.getContext("2d");
         this.cellPoints = this.view.querySelectorAll(".cellPoint");
