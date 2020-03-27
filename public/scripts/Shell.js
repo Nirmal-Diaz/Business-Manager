@@ -29,7 +29,7 @@ export class ShellInterface {
         //Add onclick to splashScreenView for initializing currentScreen
         this.view.querySelector("#splashScreen").addEventListener("click", () => {
             //Fetch workspace
-            fetch(`${location.protocol}//${location.host}/workspace`)
+            fetch(`${location.protocol}//${location.host}/session`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -170,7 +170,7 @@ export class LogInScreenController extends ScreenController {
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
             if (event.key === "Enter") {
-                fetch(`${location.protocol}//${location.host}/user?username=${this.logInBox.children[1].value}`)
+                fetch(`${location.protocol}//${location.host}/user/avatar?username=${this.logInBox.children[1].value}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
