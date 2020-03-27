@@ -4,8 +4,9 @@ export class ScreenController {
     viewHTML = null;
 
     constructor(screenView) {
+        this.viewHTML = screenView.innerHTML;
+        //Initialize/cache view elements
         this.view = screenView;
-        this.viewHTML = this.view.innerHTML;
     }
 
     getView() {

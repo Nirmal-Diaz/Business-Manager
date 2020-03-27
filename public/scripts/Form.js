@@ -7,6 +7,7 @@ export class Form {
     view = null;
 
     constructor(formView) {
+        //Initialize/cache view elements
         this.view = formView;
     }
 

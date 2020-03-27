@@ -9,7 +9,7 @@ export class PopUpCard {
     constructor(layoutFilePath, parentCardInterface) {
         this.layoutFilePath = layoutFilePath;
         this.parentCardInterface = parentCardInterface;
-        //Setup view
+        //Initialize/cache view elements
         this.view.setAttribute("class", "popUpCard popUpCard-popIn");
         this.view.addEventListener("mousedown", (event) => {
             this.startDrag(event);
