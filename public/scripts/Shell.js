@@ -432,7 +432,12 @@ export class WorkspaceScreenController extends ScreenController {
             //Case: There are more then one card open
             const currentCard = this.presentCards[this.presentCards.length - 1];
             //Remove all popUpCards of currentCard
-            for (const openPopUpCard of currentCard.getOpenPopUpCards()) {
+            //NOTE: Closing one popUpCard will alter the openPopUpCards[]. Therefore we must copy that array to a temporary array
+            const tempOpenPopUpCards = [];
+            for (let i = 0; i < currentCard.getOpenPopUpCards().length; i++) {
+                tempOpenPopUpCards[i] = currentCard.getOpenPopUpCards()[i];
+            }
+            for (const openPopUpCard of tempOpenPopUpCards) {
                 openPopUpCard.close();
             }
             const currentCardView = currentCard.getView();
