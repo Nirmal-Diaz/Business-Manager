@@ -34,8 +34,9 @@
                 //Initialize form
                 this.form.init("user.json").then((form) => {
                     //Load roles and select option with value "1"
-                    FormUtil.populateDropDownInput("/general?tableName=role", this.form.getView().querySelector("#roleId"), "name", "id")
-                    .then(() => {
+                    FormUtil.createDropDownInputFragment("/general?tableName=role", "name", "id")
+                    .then((dropDownInputFragment) => {
+                        this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
                         FormUtil.syncInputWithValue(this.form.getView(), this.form.getBindingObject().roleId, "1");
                     });
                 });
@@ -70,7 +71,7 @@
                 <li>No spaces are allowed</li>
             </ul>
             <div class="inputContainer">
-                <input id="username" type="text" class="textInput" placeholder="eg: johnDoe123" data-value="null" />
+                <input id="username" type="text" class="textInput" placeholder="eg: johnDoe123" />
             </div>
 
             <div class="titleContainer">
@@ -79,9 +80,9 @@
             <p>The role determines a user's permissions on each module</p>
             <p>If the role you want isn't listed below, go and add it in before proceeding</p>
             <div class="inputContainer">
-                <div id="roleId" class="dropDownInput" data-value="null">
+                <select id="roleId" class="dropDownInput" data-value="null">
 
-                </div>
+                </select>
             </div>
             <!-- <div class="titleContainer">
                 <h1 class="title">Modules + Operations</h1>

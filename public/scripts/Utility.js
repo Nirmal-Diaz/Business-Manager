@@ -127,7 +127,7 @@ export class FormUtil {
         let input = formView.querySelector(formField.inputQuery);
         let value;
         if (prioritizeInputValue) {
-            value = input.dataset.value;
+            value = input.value;
         } else {
             value = formField.value;
         }
@@ -149,70 +149,35 @@ export class FormUtil {
 
         //Handle synchronization according to the inputClass
         if (formField.inputClass === "textInput") {
-            input.dataset.value = value;
-            input.value = formField.value;
+            input.value = value;
         } else if (formField.inputClass === "dropDownInput") {
-            //Query the dropDOwnInputOption with the value in the formField
-            const dropDownInputOption = input.querySelector(`.dropDownInputOption[data-value="${value}"]`);
-            //Click the dropDownInputOption to select it
-            //WARNING: Only works when the dropDOwnInputOption is expanded
-            dropDownInputOption.click();
+            input.value = value;
         }
     }
 
-    static createDropDownInputOption(textContent, value, hasCustomClickHandler = false) {
-        const dropDownInputOption = document.createElement("div");
-        dropDownInputOption.textContent = textContent;
-        dropDownInputOption.setAttribute("class", "dropDownInputOption");
-        dropDownInputOption.dataset.value = value;
-        if (!hasCustomClickHandler) {
-            dropDownInputOption.addEventListener("click", (event) => {
-                FormUtil.toggleDropDownInput(dropDownInputOption);
-            });
-        }
-        return dropDownInputOption;
-    }
-
-    static populateDropDownInput(requestPath, dropDownInput, textContentField, valueField) {
+    static createDropDownInputFragment(requestPath, textContentField, valueField) {
         //Fetch items
         return fetch(`${location.protocol}//${location.host}${requestPath}`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    dropDownInput.innerHTML = "";
+                    const dropDownInputFragment = new DocumentFragment();
                     //Create a dropDownInputOption for every item
                     for (const item of response.data) {
-                        const dropDownInputOption = FormUtil.createDropDownInputOption(item[textContentField], item[valueField], false);
-                        dropDownInput.appendChild(dropDownInputOption);
+                        const dropDownInputOption = document.createElement("option");
+                        dropDownInputOption.textContent = item[textContentField];
+                        dropDownInputOption.value = item[valueField];
+
+                        dropDownInputFragment.appendChild(dropDownInputOption);
                     }
+                    return dropDownInputFragment;
                 } else {
                     window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    return null;
                 }
             })
             .catch(error => {
                 window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
-    }
-
-    //EVENT HANDLER METHODS
-    static toggleDropDownInput(dropDownInputOption) {
-        if (dropDownInputOption.parentElement.classList.toggle("dropDownInput-collapsed")) {
-            dropDownInputOption.style.display = "flex";
-            //Store the selectedOption's value in its parent's dataset
-            dropDownInputOption.parentElement.dataset.value = dropDownInputOption.dataset.value;
-            return true;
-        } else {
-            for (const dropDownOption of dropDownInputOption.parentElement.children) {
-                dropDownOption.removeAttribute("style");
-            }
-            //Set the parent's value as "null"
-            dropDownInputOption.parentElement.dataset.value = "null";
-            return false;
-        }
-    }
-
-    static toggleCheckInput(checkInput) {
-        //Return if the checkInput is inactive
-        return checkInput.children[0].classList.toggle("checkRadioInputControl-active");
     }
 }

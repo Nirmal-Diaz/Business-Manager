@@ -123,11 +123,11 @@ body {
     width: 100%;
 }
 
-.inputContainer-invalid > input:first-child, .inputContainer-invalid > div:first-child{
+.inputContainer-invalid > input:first-child {
     border-color: var(--inputContainerBorderColor-invalid);
 }
 
-.textInput, .fileInput {
+.textInput, .dropDownInput, .fileInput {
     margin: 10px 0 10px 0;
     height: 40px;
     width: 100%;
@@ -135,20 +135,26 @@ body {
 
     font-weight: bolder;
 
-    background-color: var(--textFileInputBackgroundColor);
-    border: 2px solid var(--textFileInputBorderColor);
+    background-color: var(--inputBackgroundColor);
+    border: 2px solid var(--inputBorderColor);
     border-radius: 5px;
     outline: none;
 
     -webkit-user-select: text;
 }
 
-.textInput:hover, .fileInput:hover {
-    background-color: var(--textFileInputBackgroundColor-hover);
+.textInput:hover, .dropDownInput:hover, .fileInput:hover {
+    background-color: var(--inputBackgroundColor-hover);
 }
 
 .textInput::placeholder {
     color: var(--textInputPlaceholderColor);
+}
+
+.dropDownInput {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
 }
 
 .fileInput {
@@ -160,7 +166,7 @@ body {
     display: none;
 }
 
-.checkInput,
+/* .checkInput,
 .radioInput {
     display: flex;
     align-items: center;
@@ -208,49 +214,7 @@ body {
 
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.dropDownInput {
-    position: relative;
-
-    margin: 10px 0 10px 0;
-    height: auto;
-    width: 100%;
-
-    background-color: var(--dropDownInputBackgroundColor);
-    border: 2px solid var(--dropDownInputBorderColor);
-    border-radius: 5px;
-}
-
-.dropDownInput::after {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    content: "\025B4";
-}
-
-.dropDownInput-collapsed::after {
-    content: "\025BE";
-}
-
-.dropDownInput-collapsed > .dropDownInputOption {
-    display: none;
-}
-
-.dropDownInputOption {
-    display: flex;
-    align-items: center;
-
-    height: 40px;
-    width: 100%;
-    padding: 0 20px 0 20px;
-
-    font-weight: bolder;
-}
-
-.dropDownInputOption:hover {
-    background-color: var(--dropDownInputOptionBackgroundColor-hover);
-}
+} */
 
 .buttonGlyph {
     margin: 10px 15px 10px 15px;

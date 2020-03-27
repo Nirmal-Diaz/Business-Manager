@@ -21,19 +21,11 @@ export class Form {
                 if (response.status) {
                     //NOTE: response.data is a stringified JSON and must be parsed
                     this.bindingObject = JSON.parse(response.data);
-                    //Add onkeyup to each textInput for syncing its value with dataset.value and for validate itself in realtime
+                    //Add onkeyup to each textInput for validate itself in realtime
                     const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
                     for (const textInput of textInputs) {
                         textInput.addEventListener("keyup", () => {
-                            textInput.dataset.value = textInput.value;
                             FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
-                        });
-                    }
-                    //Add onclick to each dropDownInput for validate itself in realtime
-                    const dropDownInputs = this.view.querySelectorAll(".inputContainer .dropDownInput");
-                    for (const dropDownInput of dropDownInputs) {
-                        dropDownInput.addEventListener("click", () => {
-                            FormUtil.visualizeValidation(this.view, this.bindingObject[dropDownInput.id], true);
                         });
                     }
                     return this;
@@ -65,7 +57,7 @@ export class Form {
                 if (formObject[key].inputQuery !== null) {
                     //Case: Field of the formObject have a binding input
                     //Load the value of the input to the binding field
-                    formObject[key].value = this.view.querySelector(formObject[key].inputQuery).dataset.value;
+                    formObject[key].value = this.view.querySelector(formObject[key].inputQuery).value;
                 }
             }
         }
@@ -116,11 +108,11 @@ export class Form {
         return hasInvalidValues;
     }
 
-    submit(urlPath) {
+    submit(requestPath) {
         this.updateBindingObject();
         const hasInvalidValues = this.validateBindingObject();
         if (!hasInvalidValues) {
-            return fetch(`${location.protocol}//${location.host}${urlPath}`, {
+            return fetch(`${location.protocol}//${location.host}${requestPath}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
