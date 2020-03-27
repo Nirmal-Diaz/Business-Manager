@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import * as fs from "fs";
 
-import { getRepository} from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 import { Permission } from "../entity/Permission";
 import { UserRepository } from "../repository/Repository";
@@ -80,8 +80,8 @@ export class PermissionController {
     static async getPermission(roleId: number, moduleId: number) {
         const permission = await getRepository(Permission).findOne({
             where: {
-                    roleId: roleId,
-                    moduleId: moduleId
+                roleId: roleId,
+                moduleId: moduleId
             },
             relations: ["role", "module"]
         });
@@ -108,7 +108,7 @@ export class PermissionController {
         }
     }
 
-    static async checkPermission(userId: number, moduleSelector: number|string, operationName: string) {
+    static async checkPermission(userId: number, moduleSelector: number | string, operationName: string) {
         if (typeof moduleSelector === "string") {
             const module = await getRepository(Module).findOne({
                 where: {
@@ -182,7 +182,17 @@ export class PermissionController {
 }
 
 export class UserController {
-    static async createUser(username: string, user: User) {
+    static async createUser(clientBindingObject) {
+        const serverBindingObject = JSON.parse(fs.readFileSync("./src/registry/user.json", "utf-8"));
+        ValidationController.validateBindingObject(serverBindingObject, clientBindingObject);
+
+        const newUser = new User();
+        ValidationController.populateEntityInstance(newUser, serverBindingObject);
+
+        return getRepository(User).save(newUser)
+        .catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
         // //Finalize user object
         // user.username = username;
         // user.hash = crypto.createHash("sha256").update(`${username} : A9E5I1`).digest("hex");
@@ -266,8 +276,59 @@ export class UserPreferenceController {
 }
 
 export class ValidationController {
-    static async getValidationExpressions(moduleName) {
-        // return regExpLibrary[moduleName];
+    //WARNING: Not an async method. This method directly alters the parameters provided
+    static validateBindingObject(serverBindingObject, clientBindingObject) {
+        //NOTE: Key iteration is done with the serverBindingObject
+        //NOTE: serverBindingObject has the correct patterns. clientBindingObject's patterns may be altered
+        //NOTE: clientBindingObject's values will be copied to serverBindingObject
+        for (const key of Object.keys(serverBindingObject)) {
+            if (clientBindingObject.hasOwnProperty(key)) {
+                //Case: clientBindingObject has the same key as serverBindingObject
+                if (serverBindingObject[key].hasOwnProperty("childFormObject") && serverBindingObject[key].childFormObject === true) {
+                    //Case: Key holds an entire new formObject
+                    ValidationController.validateBindingObject(serverBindingObject[key], clientBindingObject[key]);
+                } else {
+                    //Case: Key holds a formField object
+                    //Check if the clientFormField has its pattern and value properties present
+                    if (clientBindingObject[key].hasOwnProperty("pattern") && clientBindingObject[key].hasOwnProperty("value")) {
+                        if (serverBindingObject[key].pattern !== null) {
+                            //Case: formField object have a pattern to validate its value
+                            //Validate the clientFormField.value against serverFormField.pattern
+                            const regexp = new RegExp(serverBindingObject[key].pattern);
+                            if (regexp.test(clientBindingObject[key].value)) {
+                                //Case: clientFormField.value is valid
+                                //Copy that value to serverFormField.value
+                                serverBindingObject[key].value = clientBindingObject[key].value;
+                            } else {
+                                //Case: clientFormField.value is invalid
+                                throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };
+                            }
+                        }
+                    } else {
+                        throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form field objects detected" };
+                    }
+
+                }
+            } else {
+                throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form objects detected" };
+            }
+        }
+    }
+
+    //WARNING: Not an async method. This method directly alters the parameters provided
+    static populateEntityInstance(entityInstance, validatedBindingObject) {
+        //Just copy values from validatedBindingObject to entityInstance
+        for (const key of Object.keys(validatedBindingObject)) {
+            //Case: clientBindingObject has the same key as serverBindingObject
+            if (validatedBindingObject[key].hasOwnProperty("childFormObject") && validatedBindingObject[key].childFormObject === true) {
+                //Case: Key holds an entire new formObject
+                ValidationController.validateBindingObject(entityInstance[key], validatedBindingObject[key]);
+            } else {
+                //Case: Key holds a formField object
+                //Copy the validatedBindingObject[key].value to entityInstance[key]
+                entityInstance[key] = validatedBindingObject[key].value;
+            }
+        }
     }
 
     static async validateUserCreation(username = "", user = {}, userModulePermissions = [{}]) {
@@ -292,18 +353,14 @@ export class ValidationController {
 }
 
 //GLOBAL VARIABLES FOR FILE
-const extensionsLibrary = JSON.parse(fs.readFileSync("./src/registry/extensions.json", "utf-8"));
-const audioExtensions = Object.keys(extensionsLibrary.audioExtensions);
-const imageExtensions = Object.keys(extensionsLibrary.imageExtensions);
-const videoExtensions = Object.keys(extensionsLibrary.videoExtensions);
-const containerExtensions = Object.keys(extensionsLibrary.containerExtensions);
-const textExtensions = Object.keys(extensionsLibrary.textExtensions);
+const extensions = JSON.parse(fs.readFileSync("./src/registry/extensions.json", "utf-8"));
+const audioExtensions = Object.keys(extensions.audioExtensions);
+const imageExtensions = Object.keys(extensions.imageExtensions);
+const videoExtensions = Object.keys(extensions.videoExtensions);
+const containerExtensions = Object.keys(extensions.containerExtensions);
+const textExtensions = Object.keys(extensions.textExtensions);
 
 export class FileController {
-    static async getExtensionsLibrary() {
-        return extensionsLibrary;
-    }
-
     static async getItemPaths(userId: number, subDirectoryPath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
@@ -332,22 +389,22 @@ export class FileController {
                         extension: fileExtension
                     };
                     if (audioExtensions.includes(fileExtension)) {
-                        file.type = extensionsLibrary.audioExtensions[fileExtension].fileType;
+                        file.type = extensions.audioExtensions[fileExtension].fileType;
                         file.extensionCategory = "audioExtensions";
                     } else if (imageExtensions.includes(fileExtension)) {
-                        file.type = extensionsLibrary.imageExtensions[fileExtension].fileType;
+                        file.type = extensions.imageExtensions[fileExtension].fileType;
                         file.extensionCategory = "imageExtensions";
                     } else if (videoExtensions.includes(fileExtension)) {
-                        file.type = extensionsLibrary.videoExtensions[fileExtension].fileType;
+                        file.type = extensions.videoExtensions[fileExtension].fileType;
                         file.extensionCategory = "videoExtensions";
                     } else if (containerExtensions.includes(fileExtension)) {
-                        file.type = extensionsLibrary.containerExtensions[fileExtension].fileType;
+                        file.type = extensions.containerExtensions[fileExtension].fileType;
                         file.extensionCategory = "containerExtensions";
                     } else if (textExtensions.includes(fileExtension)) {
-                        file.type = extensionsLibrary.textExtensions[fileExtension].fileType;
+                        file.type = extensions.textExtensions[fileExtension].fileType;
                         file.extensionCategory = "textExtensions";
                     } else {
-                        file.type = extensionsLibrary.unknownExtensions.unknownExtension.fileType;
+                        file.type = extensions.unknownExtensions.unknownExtension.fileType;
                         file.extensionCategory = "unknownExtensions";
                         file.extension = "unknownExtension";
                     }
