@@ -115,7 +115,7 @@ export class Form {
         this.updateBindingObject();
         const hasInvalidValues = this.validateBindingObject();
         if (!hasInvalidValues) {
-            fetch(`${location.protocol}//${location.host}${urlPath}`, {
+            return fetch(`${location.protocol}//${location.host}${urlPath}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
