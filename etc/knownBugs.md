@@ -1,5 +1,6 @@
 #Known Bugs
 * Text box inside loginScreenView doesn't focus immediately
+* Most of the pointer-based events won't work with touch screens on Chrome (entirely a Chrome bug)
 
 #Solved
 * Closing a card won't close its child popUpCards
