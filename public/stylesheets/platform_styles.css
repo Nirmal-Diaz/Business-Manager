@@ -229,8 +229,12 @@ body {
     content: "\025B4";
 }
 
-.dropDownInput.dropDownInput-collapsed::after {
+.dropDownInput-collapsed::after {
     content: "\025BE";
+}
+
+.dropDownInput-collapsed > .dropDownInputOption {
+    display: none;
 }
 
 .dropDownInputOption {
@@ -248,14 +252,10 @@ body {
     background-color: var(--dropDownInputOptionBackgroundColor-hover);
 }
 
-.dropDownInput-collapsed > .dropDownInputOption {
-    display: none;
-}
-
 .buttonGlyph {
     margin: 10px 15px 10px 15px;
-    height: 8vh;
-    width: 8vh;
+    height: 8vmin;
+    width: 8vmin;
 
     background-image: var(--buttonGlyphBackgroundImage);
     border: none;
@@ -370,11 +370,4 @@ body {
 .cellPoint-active {
     background-color: var(--cellPointBackgroundColor-active);
     border: 10px solid var(--cellPointBorderColor-active);
-}
-
-@media (orientation: portrait) {
-    .buttonGlyph {
-        height: 8vw;
-        width: 8vw;
-    }
 }
