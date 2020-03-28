@@ -278,11 +278,11 @@ export class WorkspaceScreenController extends ScreenController {
                 this.scrollViewport(-100);
             }
         });
-        //Add onwheel and ontouchstart to workspaceScreen for scrolling cards
+        //Add onwheel and onpointerdown to workspaceScreen for scrolling cards
         this.view.addEventListener("wheel", (event) => {
             this.scrollViewport(event.deltaY);
         });
-        this.viewportArea.addEventListener("touchstart", (event) => {
+        this.viewportArea.addEventListener("pointerdown", (event) => {
             //Prevent browser's default event handlers from executing
             event.preventDefault();
             //Get a reference of "this" for inner event handlers
@@ -293,21 +293,21 @@ export class WorkspaceScreenController extends ScreenController {
                 iFrames[i].style.pointerEvents = "none";
             }
             //Add eventListeners
-            window.addEventListener("touchmove", doScrollViewPort);
-            window.addEventListener("touchend", endScrollViewport);
+            window.addEventListener("pointermove", doScrollViewPort);
+            window.addEventListener("pointerup", endScrollViewport);
             //Declare and initialize variables
-            let previousTouchPositionY = event.touches[0].screenY;
+            let previousTouchPositionY = event.screenY;
 
             //INNER EVENT HANDLER FUNCTIONS
             function doScrollViewPort(event) {
                 //Calculate the travelled distance of the finger as a vector
-                const differenceY = previousTouchPositionY - event.touches[0].screenY;
+                const differenceY = previousTouchPositionY - event.screenY;
                 if (differenceY < -100) {
                     workspaceScreenController.scrollViewport(125);
-                    previousTouchPositionY = event.touches[0].screenY;
+                    previousTouchPositionY = event.screenY;
                 } else if (differenceY > 100) {
                     workspaceScreenController.scrollViewport(-125);
-                    previousTouchPositionY = event.touches[0].screenY;
+                    previousTouchPositionY = event.screenY;
                 }
             }
 
@@ -317,8 +317,8 @@ export class WorkspaceScreenController extends ScreenController {
                     iFrames[i].removeAttribute("style");
                 }
                 //Remove all previously added eventListeners
-                window.removeEventListener("touchmove", doScrollViewPort);
-                window.removeEventListener("touchend", endScrollViewport);
+                window.removeEventListener("pointermove", doScrollViewPort);
+                window.removeEventListener("pointerup", endScrollViewport);
             }
         });
         //Add onpointerdown to navigationControl for start navigation
