@@ -325,8 +325,11 @@ export class WorkspaceScreenController extends ScreenController {
         this.navigationControl.addEventListener("pointerdown", (event) => {
             //Get a reference of "this" for inner event handlers
             const workspaceScreenController = this;
-            //Remove presentCard.last pointer events
-            this.presentCards[this.presentCards.length - 1].getView().style.pointerEvents = "none";
+            //Turn off pointer events for all iFrames
+            const iFrames = window.shellInterface.getAllFrames();
+            for (let i = 0; i < iFrames.length; i++) {
+                iFrames[i].style.pointerEvents = "none";
+            }
             const navigatorControlOptionDisplay = workspaceScreenController.view.querySelector("#navigatorControlOptionDisplay");
             //Cache the inner text of navigatorControlOptionDisplay
             const navigatorControlOptionDisplayInnerText = navigatorControlOptionDisplay.innerText;
@@ -340,7 +343,6 @@ export class WorkspaceScreenController extends ScreenController {
             let differenceX = 0;
             let differenceY = 0;
             let procedureToExecute = () => {};
-            let reEnablePointerEvents = true;
 
             //INNER EVENT HANDLER FUNCTIONS
             function determineOption(event) {
@@ -372,7 +374,6 @@ export class WorkspaceScreenController extends ScreenController {
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent var(--headerAreaColor) transparent";
                         navigatorControlOptionDisplay.innerText = "Close current card";
                         procedureToExecute = workspaceScreenController.removeCurrentCard.bind(workspaceScreenController);
-                        reEnablePointerEvents = false;
                     } else if (differenceY < 0) {
                         //WARNING: Not implemented
                         workspaceScreenController.navigationControl.style.borderColor = "var(--headerAreaColor) transparent transparent transparent";
@@ -389,10 +390,9 @@ export class WorkspaceScreenController extends ScreenController {
                 procedureToExecute();
                 //Remove styling
                 workspaceScreenController.navigationControl.removeAttribute("style");
-                //Reinstate presentCard.last pointer events
-                //WARNING: This becomes useless if the executed procedure is to removeCurrentCard
-                if (reEnablePointerEvents) {
-                    workspaceScreenController.presentCards[workspaceScreenController.presentCards.length - 1].getView().removeAttribute("style");
+                //Turn back on all pointer events for all iFrames
+                for (let i = 0; i < iFrames.length; i++) {
+                    iFrames[i].removeAttribute("style");
                 }
                 //Restore navigatorControlOptionDisplay's inner text
                 navigatorControlOptionDisplay.innerText = navigatorControlOptionDisplayInnerText;
