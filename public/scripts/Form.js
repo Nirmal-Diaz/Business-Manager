@@ -101,17 +101,16 @@ export class Form {
                     }
                 }
             }
-            if (hasInvalidValues) {
-                window.parent.shellInterface.throwAlert("There are invalid values", "Please correct them", "Your form includes one or more fields with invalid values. Correcting them is compulsory before submitting the form. Check for red bounding boxes to find inputs with invalid values", null, "OK", null);
-            }
         }
         return hasInvalidValues;
     }
 
-    submit(requestPath) {
+    submit(requestPath, callback) {
         this.updateBindingObject();
         const hasInvalidValues = this.validateBindingObject();
-        if (!hasInvalidValues) {
+        if (hasInvalidValues) {
+            window.parent.shellInterface.throwAlert("There are invalid values", "Please correct them", "Your form includes one or more fields with invalid values. Correcting them is compulsory before submitting the form. Check for red bounding boxes to find inputs with invalid values", null, "OK", null);
+        } else {
             return fetch(`${location.protocol}//${location.host}${requestPath}`, {
                 method: "PUT",
                 headers: {
@@ -122,7 +121,7 @@ export class Form {
                 })
             }).then(response => response.json()).then(response => {
                 if (response.status) {
-                    console.log("OK");
+                    callback();
                 } else {
                     window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }

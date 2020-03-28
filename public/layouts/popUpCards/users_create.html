@@ -43,7 +43,12 @@
                 
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit("/user");
+                    this.form.submit("/user", () => {
+                        //Refresh (not reload) the parentCardInterface
+                        this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");
+                        //Close this popUpCard
+                        this.popUpCardObject.close();
+                    });
                 });
             }
         }
