@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import * as fs from "fs";
 
-import { getRepository } from "typeorm";
+import { getRepository, Like } from "typeorm";
 import { User } from "../entity/User";
 import { Permission } from "../entity/Permission";
 import { UserRepository } from "../repository/Repository";
@@ -166,7 +166,8 @@ export class PermissionController {
         const user = await UserController.getUser(userId);
         const permissions = await PermissionController.getPermissionsForRole(user.role.id);
 
-        //NOTE: Permitted modules are the ones that have "retrieve" permissions
+        //NOTE: Permitted modules are the ones that have explicit "retrieve" permissions
+        //NOTE: Although every user have "retrieve" permissions for general modules, They aren't considered permittedModules unless that user have a permissions record with retrieve access for that module
         const permittedModules = [];
         for (let i = 0; i < permissions.length; i++) {
             if (permissions[i].value[1] === "1") {
