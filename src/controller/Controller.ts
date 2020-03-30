@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { getRepository, Like } from "typeorm";
 import { User } from "../entity/User";
 import { Permission } from "../entity/Permission";
-import { UserRepository } from "../repository/Repository";
+import { UserRepository, RoleRepository } from "../repository/Repository";
 import { Role } from "../entity/Role";
 import { Module } from "../entity/Module";
 import { Theme } from "../entity/Theme";
@@ -225,7 +225,7 @@ export class UserController {
         if (user) {
             return user;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user that matches arguments you provided", technicalMessage: "No user for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user that matches your arguments", technicalMessage: "No user for given arguments" };
         }
     }
 
@@ -244,8 +244,8 @@ export class UserController {
         }
     }
 
-    static async searchUsers(keyword: string) {
-        const users = await UserRepository.searchUsers(keyword);
+    static async search(keyword: string) {
+        const users = await UserRepository.search(keyword);
 
         if (users.length > 0) {
             return users;
@@ -281,6 +281,33 @@ export class UserPreferenceController {
 
     static async deleteUserPreference(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("userPreference", "username", username);
+    }
+}
+
+export class RoleController {
+    static async getRole(roleId: number) {
+        const role = await getRepository(Role).findOne({
+            where: {
+                id: roleId
+            },
+            relations: ["permissions", "permissions.module"]
+        });
+
+        if (role) {
+            return role;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a role that matches your arguments", technicalMessage: "No user for given arguments" };
+        }
+    }
+
+    static async search(keyword: string) {
+        const roles = await RoleRepository.search(keyword);
+
+        if (roles.length > 0) {
+            return roles;
+        } else {
+            throw { title: "Hmmm... couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
+        }
     }
 }
 

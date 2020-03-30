@@ -9,7 +9,8 @@ import {
     PermissionController,
     GeneralController,
     FileController,
-    RegistryController
+    RegistryController,
+    RoleController
 } from "./src/controller/Controller";
 import { request } from "http";
 /*
@@ -273,7 +274,26 @@ app.route("/user")
 app.route("/users")
     .get((req, res) => {
         PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.searchUsers(req.query.keyword))
+            .then(() => UserController.search(req.query.keyword))
+            .then(data => {
+                res.json({
+                    status: true,
+                    data: data
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                res.json({
+                    status: false,
+                    error: error
+                });
+            });
+    });
+
+app.route("/roles")
+    .get((req, res) => {
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+            .then(() => RoleController.search(req.query.keyword))
             .then(data => {
                 res.json({
                     status: true,
