@@ -123,16 +123,16 @@ export class PermissionController {
         const permission = await PermissionController.getPermission(user.role.id, moduleSelector);
 
         const operationIndexMap = {
-            create: 0,
-            retrieve: 1,
-            update: 2,
-            delete: 3
+            PUT: 0,
+            GET: 1,
+            PATCH: 2,
+            DELETE: 3
         }
 
         if (permission.value[operationIndexMap[operationName]] === "1") {
             return true;
         } else {
-            throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName} items in the current module`, technicalMessage: "Operation permissions denied" };
+            throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName.toLowerCase()} items in the current module`, technicalMessage: "Operation permissions denied" };
         }
     }
 

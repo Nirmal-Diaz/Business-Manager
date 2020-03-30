@@ -11,6 +11,7 @@ import {
     FileController,
     RegistryController
 } from "./src/controller/Controller";
+import { request } from "http";
 /*
 =====================================================================================
 Express.js: Setup
@@ -221,7 +222,7 @@ Express.js: Routing (With permission validation)
 */
 app.route("/user")
     .get((req, res) => {
-        PermissionController.checkPermission(req.session.userId, "users", "retrieve")
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => UserController.getUser(req.session.userId))
             .then(data => {
                 res.json({
@@ -238,7 +239,7 @@ app.route("/user")
             })
     })
     .put(jsonParser, (req, res) => {
-        PermissionController.checkPermission(req.session.userId, "users", "create")
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => UserController.createUser(req.body.bindingObject))
             .then(() => {
                 res.json({
@@ -254,7 +255,7 @@ app.route("/user")
             });
     })
     .delete(jsonParser, (req, res) => {
-        // controller.Permission.checkOperationPermissions(req.session.username, "users", "delete").then(() => {
+        // controller.Permission.checkOperationPermissions(req.session.username, "users", req.method).then(() => {
 
         // }).then(() => {
         //     res.json({
@@ -271,7 +272,7 @@ app.route("/user")
 
 app.route("/users")
     .get((req, res) => {
-        PermissionController.checkPermission(req.session.userId, "users", "retrieve")
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => UserController.searchUsers(req.query.keyword))
             .then(data => {
                 res.json({
@@ -290,7 +291,7 @@ app.route("/users")
 
 app.route("/file/itemPaths")
     .get((req, res) => {
-        PermissionController.checkPermission(req.session.userId, "files", "retrieve")
+        PermissionController.checkPermission(req.session.userId, "files", req.method)
             .then(() => FileController.getItemPaths(req.session.userId, req.query.subDirectoryPath))
             .then(data => {
                 res.json({
@@ -309,7 +310,7 @@ app.route("/file/itemPaths")
 
 app.route("/file/fileBuffer")
     .get((req, res) => {
-        PermissionController.checkPermission(req.session.userId, "files", "retrieve")
+        PermissionController.checkPermission(req.session.userId, "files", req.method)
             .then(() => FileController.getFileBuffer(req.session.userId, req.query.filePath))
             .then(data => {
                 res.json({
