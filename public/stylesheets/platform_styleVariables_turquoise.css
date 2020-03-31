@@ -42,15 +42,15 @@
     --checkRadioInputControlBackgroundColor-activeChild: black; */
 
     --buttonGlyphBackgroundColor: var(--color1-1);
-    --buttonGlyphBackgroundColor-hover: var(--color1-2);
+    --buttonGlyphBackgroundColor-hover: var(--color1-3);
     --buttonGlyphBoxShadowColor: var(--color2-2);
 
     --buttonTextBackgroundColor: var(--color1-1);
-    --buttonTextBackgroundColor-hover: var(--color1-2);
+    --buttonTextBackgroundColor-hover: var(--color1-3);
     --buttonTextBoxShadowColor: var(--color2-2);
 
     --buttonTextLinkColor: var(--color0-1);
-    --buttonTextLinkColor-hover: var(--color1-1);
+    --buttonTextLinkColor-hover: var(--color1-3);
 
     --cellPointBackgroundColor: var(--color0-1);
     --cellPointBackgroundColor-active: var(--color3-1);
