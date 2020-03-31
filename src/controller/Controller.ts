@@ -250,7 +250,7 @@ export class UserController {
         if (users.length > 0) {
             return users;
         } else {
-            throw { title: "Hmmm... couldn't find anyone", titleDescription: "Try single words instead of phrases", message: "There is no user matching the keyword you provided", technicalMessage: "No users for given keyword" };
+            throw { title: "Couldn't find anyone", titleDescription: "Try single words instead of phrases", message: "There is no user matching the keyword you provided", technicalMessage: "No users for given keyword" };
         }
     }
 
@@ -306,7 +306,7 @@ export class RoleController {
         if (roles.length > 0) {
             return roles;
         } else {
-            throw { title: "Hmmm... couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
         }
     }
 }
