@@ -4,20 +4,36 @@
 }
 
 :root {
+    --color0-1: white;
+    --color0-2: indianred;
+    --color0-3: transparent;
+
+    --color1-5: rgb(65, 200, 130);
+    --color1-1: rgba(60, 180, 115, 1);
+    --color1-2: rgba(0, 140, 140, 1);
+    --color1-3: rgba(0, 120, 120, 1);
+    --color1-4: rgba(0, 100, 100, 1);
+
+    --color2-1: rgba(0, 0, 0, 0.9);
+    --color2-2: black;
+    
+    --color3-1: rgba(65, 105, 225, 1);
+    --color3-2: rgb(50, 90, 200);
+
     /* platformStyleVariables */
     --defaultFontFamily: "OpenSans";
-    --defaultColor: white;
+    --defaultColor: var(--color0-1);
 
-    --titleColor: rgba(102, 205, 170, 1);
-    --titleDescriptionColor: rgba(102, 205, 170, 1);
+    --titleColor: var(--color1-5);
+    --titleDescriptionColor: var(--color1-5);
 
-    --inputContainerBorderColor-invalid: indianred;
+    --inputContainerBorderColor-invalid: var(--color0-2);
 
-    --inputBackgroundColor: transparent;
-    --inputBackgroundColor-hover: rgba(102, 205, 170, 1);
-    --inputBorderColor: white;
+    --inputBackgroundColor: var(--color0-3);
+    --inputBackgroundColor-hover: var(--color1-1);
+    --inputBorderColor: var(--color0-1);
 
-    --textInputPlaceholderColor: rgb(140, 140, 140);
+    --textInputPlaceholderColor: var(--color2-2);
 
     /* --checkRadioInputControlBackgroundColor: transparent;
     --checkRadioInputControlBackgroundColor-hover: rgba(102, 205, 170, 1);
@@ -25,65 +41,65 @@
     --checkRadioInputControlBackgroundColor-active: white;
     --checkRadioInputControlBackgroundColor-activeChild: black; */
 
-    --buttonGlyphBackgroundImage: radial-gradient(rgba(102, 205, 170, 1), rgba(60, 179, 113, 1));
-    --buttonGlyphBackgroundImage-hover: radial-gradient(rgba(0, 100, 100, 1), rgba(0, 140, 140, 1));
-    --buttonGlyphBoxShadowColor: black;
+    --buttonGlyphBackgroundColor: var(--color1-1);
+    --buttonGlyphBackgroundColor-hover: var(--color1-2);
+    --buttonGlyphBoxShadowColor: var(--color2-2);
 
-    --buttonTextBackgroundColor: rgba(60, 179, 113, 1);
-    --buttonTextBackgroundColor-hover: darkcyan;
-    --buttonTextBoxShadowColor: black;
+    --buttonTextBackgroundColor: var(--color1-1);
+    --buttonTextBackgroundColor-hover: var(--color1-2);
+    --buttonTextBoxShadowColor: var(--color2-2);
 
-    --buttonTextLinkColor: white;
-    --buttonTextLinkColor-hover: rgba(102, 205, 170, 1);
+    --buttonTextLinkColor: var(--color0-1);
+    --buttonTextLinkColor-hover: var(--color1-1);
 
-    --cellPointBackgroundColor: white;
-    --cellPointBackgroundColor-active: royalblue;
-    --cellPointBorderColor-active: white;
+    --cellPointBackgroundColor: var(--color0-1);
+    --cellPointBackgroundColor-active: var(--color3-1);
+    --cellPointBorderColor-active: var(--color0-1);
 
     /* shellStyleVariables */
-    --logInScreenBackgroundColor: royalblue;
+    --logInScreenBackgroundColor: var(--color3-1);
 
-    --logInBoxBackgroundBackgroundColor: rgba(10, 100, 100, 0.9);
-    --logInBoxBackgroundBoxShadowColor: black;
+    --logInBoxBackgroundBackgroundColor: var(--color1-3);
+    --logInBoxBackgroundBoxShadowColor: var(--color2-2);
 
-    --logInBoxInputBackgroundColor: transparent;
+    --logInBoxInputBackgroundColor: var(--color0-3);
 
     --workspaceScreenBackgroundImage: url("/images/image_background_workspaceScreen.jpg");
 
-    --cardBackgroundColor: rgba(60, 179, 113, 0.7);
+    --cardBackgroundColor: var(--color1-1);
     --cardBackdropFilter: blur(5px);
-    --cardBoxShadowColor: black;
+    --cardBoxShadowColor: var(--color2-2);
 
-    --headerAreaColor: white;
-    --HeaderAreaTextShadowColor: black;
+    --headerAreaColor: var(--color0-1);
+    --HeaderAreaTextShadowColor: var(--color2-2);
 
-    --popUpCardBackgroundColor: rgba(60, 179, 113, 0.9);
+    --popUpCardBackgroundColor: var(--color1-1);
     --popUpCardBackdropFilter: blur(5px);
-    --popUpCardBoxShadowColor: black;
+    --popUpCardBoxShadowColor: var(--color2-2);
 
-    --actionOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
+    --actionOverlayBackgroundColor: var(--color2-1);
 
-    --actionOverlayChipBackgroundColor: royalblue;
-    --actionOverlayChipBackgroundColor-hover: rgb(60, 90, 200);
+    --actionOverlayChipBackgroundColor: var(--color3-1);
+    --actionOverlayChipBackgroundColor-hover: var(--color3-2);
 
-    --alertOverlayBackgroundColor: rgba(0, 0, 0, 0.8);
+    --alertOverlayBackgroundColor: var(--color2-1);
 
-    --alertBoxBackgroundBackgroundColor: rgba(10, 100, 100, 1);
-    --alertBoxBackgroundBoxShadowColor: black;
+    --alertBoxBackgroundBackgroundColor: var(--color1-3);
+    --alertBoxBackgroundBoxShadowColor: var(--color2-2);
 
     /* cardStyleVariables */
-    --cardDivisionBackgroundImage: linear-gradient(rgba(0, 140, 140, 1), rgba(0, 120, 120, 1), rgba(0, 100, 100, 1), rgba(0, 100, 100, 1), rgba(0, 120, 120, 1));
+    --cardDivisionBackgroundColor: var(--color1-3);
 
-    --cardDivisionSectorItemBackgroundColor-hover: darkcyan;
-    --cardDivisionSectorItemBoxShadowColor-active:  rgba(0, 100, 100, 1);
+    --cardDivisionSectorItemBackgroundColor-hover: var(--color1-2);
+    --cardDivisionSectorItemBoxShadowColor-active: var(--color1-4);
 
     /* popUpCardStyleVariables */
-    --formTitleContainerBoxShadow: black;
-    --formTitleContainerColor_child: rgba(102, 205, 170, 1);
+    --formTitleContainerBoxShadow: var(--color2-2);
+    --formTitleContainerColor_child: var(--color1-1);
 
-    --formTitleControlsContainerBackgroundColor: rgba(0, 128, 128, 0.8);
+    --formTitleControlsContainerBackgroundColor: var(--color15);
 
-    --formFieldsContainerBackgroundColor: rgba(0, 100, 100, 0.8);
+    --formFieldsContainerBackgroundColor: var(--color1-3);
 
-    --formControlsContainerBoxShadow: rgba(0, 100, 100, 0.8);
+    --formControlsContainerBoxShadow: var(--color1-3);
 }
