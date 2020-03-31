@@ -4,11 +4,9 @@
     justify-content: center;
     align-items: center;
 
-    /* background-image: url("/ImageRes/LogInScreen_BackgroundImage.png"); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    /* background-color: royalblue; */
 }
 
 /* logInScreenStyles */
@@ -113,7 +111,7 @@
     background-color: var(--cardBackgroundColor);
     backdrop-filter: var(--cardBackdropFilter);
     border-radius: 10px;
-    box-shadow: 0 0 30px 0 var(--cardBoxShadowColor);
+    box-shadow: 0 0 30px var(--cardBoxShadowColor);
 
     transition: transform 0.3s, opacity 0.3s, visibility 0.3s, filter 0.3s;
 
@@ -292,7 +290,7 @@
     background-color: var(--popUpCardBackgroundColor);
     backdrop-filter: var(--popUpCardBackdropFilter);
     border-radius: 10px;
-    box-shadow: 0 0 30px 0 var(--popUpCardBoxShadowColor);
+    box-shadow: 0 0 30px var(--popUpCardBoxShadowColor);
 }
 
 .popUpCard-popIn {

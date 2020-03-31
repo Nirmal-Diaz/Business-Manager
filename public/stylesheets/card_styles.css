@@ -7,7 +7,7 @@
     height: 100%;
     width: 100%;
 
-    background-image: var(--cardDivisionBackgroundImage);
+    background-color: var(--cardDivisionBackgroundColor);
 }
 
 .cardDivisionSector {
@@ -37,7 +37,7 @@
 }
 
 .cardDivisionSectorItem-active {
-    box-shadow: 0 0 5px 5px var(--cardDivisionSectorItemBoxShadowColor-active);
+    box-shadow: 0 0 3px 3px var(--cardDivisionSectorItemBoxShadowColor-active);
 }
 
 .itemPreview {

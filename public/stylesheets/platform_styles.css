@@ -221,7 +221,7 @@ body {
     height: 8vmin;
     width: 8vmin;
 
-    background-image: var(--buttonGlyphBackgroundImage);
+    background-color: var(--buttonGlyphBackgroundColor);
     border: none;
     border-radius: 4vh;
     box-shadow: 0 0 10px 0 var(--buttonGlyphBoxShadowColor);
@@ -231,7 +231,7 @@ body {
 }
 
 .buttonGlyph:hover {
-    background-image: var(--buttonGlyphBackgroundImage-hover);
+    background-color: var(--buttonGlyphBackgroundColor-hover);
 
     transform: scale(1.1);
 }
@@ -241,7 +241,7 @@ body {
 }
 
 .buttonGlyph-revealed:hover {
-    background-image: var(--buttonGlyphBackgroundImage);
+    background-color: var(--buttonGlyphBackgroundColor);
 }
 
 .buttonGlyph-revealed > span {
