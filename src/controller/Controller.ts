@@ -193,22 +193,7 @@ export class UserController {
         ValidationController.populateEntityInstance(newUser, userServerObject);
 
         return getRepository(User).save(newUser)
-        .then(user => {
-            //Create userPreference with system defaults
-            const newUserPreference = new UserPreference();
-            newUserPreference.userId = user.id;
-            newUserPreference.hash = crypto.createHash("sha256").update(`${user.username} : A9E5I1`).digest("hex");
-            newUserPreference.preferredName = user.username;
-            newUserPreference.themeId = 1;
-            newUserPreference.avatar = fs.readFileSync("./public/images/icon_user_default.png");
-
-            //Create a private storage for user
-            if (!fs.existsSync(`./private/${user.id}`)) {
-                fs.mkdirSync(`./private/${user.id}`);
-            }
-
-            return getRepository(UserPreference).save(newUserPreference);
-        })
+        .then(user => UserPreferenceController.createUserPreference(user))
         .catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
@@ -260,14 +245,21 @@ export class UserController {
 }
 
 export class UserPreferenceController {
-    static async createUserPreference(username) {
-        // //Create and Finalize preference object
-        // const preference = {
-        //     username: username,
-        //     themeId: 1,
-        //     name: username
-        // };
-        // return DAO.GeneralDAO.createRow("userPreference", Object.keys(preference), Object.values(preference));
+    static async createUserPreference(user: User) {
+        //Create userPreference with system defaults
+        const newUserPreference = new UserPreference();
+        newUserPreference.userId = user.id;
+        newUserPreference.hash = crypto.createHash("sha256").update(`${user.username} : A9E5I1`).digest("hex");
+        newUserPreference.preferredName = user.username;
+        newUserPreference.themeId = 1;
+        newUserPreference.avatar = fs.readFileSync("./public/images/icon_user_default.png");
+
+        //Create a private storage for user
+        if (!fs.existsSync(`./private/${user.id}`)) {
+            fs.mkdirSync(`./private/${user.id}`);
+        }
+
+        return getRepository(UserPreference).save(newUserPreference);
     }
 
     static async getUserPreference(username) {
