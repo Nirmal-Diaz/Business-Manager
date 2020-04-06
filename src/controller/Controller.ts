@@ -185,14 +185,11 @@ export class PermissionController {
 
 export class UserController {
     static async createUser(userClientObject) {
-        //Create User
+        //Validate User
         const userServerObject = JSON.parse(fs.readFileSync("./src/registry/user.json", "utf-8"));
         ValidationController.validateBindingObject(userServerObject, userClientObject);
 
-        const newUser = new User();
-        ValidationController.populateEntityInstance(newUser, userServerObject);
-
-        return getRepository(User).save(newUser)
+        return getRepository(User).save(userServerObject as User)
         .then(user => UserPreferenceController.createUserPreference(user))
         .catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
@@ -326,7 +323,11 @@ export class ValidationController {
                             if (regexp.test(clientObject[key].value)) {
                                 //Case: clientFormField.value is valid
                                 //Copy that value to serverFormField.value
-                                serverObject[key].value = clientObject[key].value;
+
+                                //WARNING: serverObject's structure will be altered here
+                                //NOTE: serverObject[key] will no longer hold a formFiled object
+                                //NOTE: serverObject[key] will hold it's relevant value directly
+                                serverObject[key] = clientObject[key].value;
                             } else {
                                 //Case: clientFormField.value is invalid
                                 throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };
@@ -344,40 +345,20 @@ export class ValidationController {
     }
 
     //WARNING: Not an async method. This method directly alters the parameters provided
-    static populateEntityInstance(entityInstance, validatedObject) {
-        //Just copy values from validatedBindingObject to entityInstance
-        for (const key of Object.keys(validatedObject)) {
-            //Case: clientBindingObject has the same key as serverBindingObject
-            if (validatedObject[key].hasOwnProperty("childFormObject") && validatedObject[key].childFormObject === true) {
-                //Case: Key holds an entire new formObject
-                ValidationController.validateBindingObject(entityInstance[key], validatedObject[key]);
-            } else {
-                //Case: Key holds a formField object
-                //Copy the validatedBindingObject[key].value to entityInstance[key]
-                entityInstance[key] = validatedObject[key].value;
-            }
-        }
-    }
-
-    static async validateUserCreation(username = "", user = {}, userModulePermissions = [{}]) {
-        // //Check major: Username is invalid
-        // if (!(new RegExp(regExpLibrary.User.username).test(username))) {
-        //     throw { title: "Oops! Invalid username", titleDescription: "Make sure the username is valid", message: "A username must only contain a-z, A-Z, 0-9 and optionally a single whitespace in between", technicalMessage: "Invalid username" };
-        // }
-        // //Check major: User already exists
-        // if ((await DAO.GeneralDAO.getRows("user", [["username", "true", username]], "")).length !== 0) {
-        //     throw { title: "Already taken", titleDescription: "Try a different username", message: "A user already exists with the username that you are trying to create. Since usernames must be unique, you cannot use an existing one", technicalMessage: "User already exists" };
-        // }
-        // //Check major: No userModulePermissions
-        // if (userModulePermissions.length === 0) {
-        //     throw { title: "Forgot permissions?", titleDescription: "Give the user some permissions", message: "A user is someone who have at least one operation permission on a module. If there are no permissions there is no use of the user", technicalMessage: "No permissions for user" };
-        // }
-        // //Check minor: user.roleId doesn't exist or invalid
-        // //Check minor: userModulePermission.moduleId and userModulePermission.permissions doesn't exist or invalid
-
-        // //All cases passed
-        // return true;
-    }
+    // static populateEntityInstance(entityInstance, validatedObject) {
+    //     //Just copy values from validatedBindingObject to entityInstance
+    //     for (const key of Object.keys(validatedObject)) {
+    //         //Case: clientBindingObject has the same key as serverBindingObject
+    //         if (validatedObject[key].hasOwnProperty("childFormObject") && validatedObject[key].childFormObject === true) {
+    //             //Case: Key holds an entire new formObject
+    //             ValidationController.validateBindingObject(entityInstance[key], validatedObject[key]);
+    //         } else {
+    //             //Case: Key holds a formField object
+    //             //Copy the validatedBindingObject[key].value to entityInstance[key]
+    //             entityInstance[key] = validatedObject[key].value;
+    //         }
+    //     }
+    // }
 }
 
 //GLOBAL VARIABLES FOR FILE
