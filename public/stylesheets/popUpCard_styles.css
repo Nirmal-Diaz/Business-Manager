@@ -19,7 +19,7 @@
     color: var(--formTitleContainerColor_child);
 }
 
-.formFieldsContainer {
+.formsContainer {
     overflow: auto;
     overflow: overlay;
     
