@@ -1,0 +1,16 @@
+[
+    {
+        "moduleId": {
+            "inputQuery": "#moduleId",
+            "inputClass": null,
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "value": {
+            "inputQuery": null,
+            "inputClass": null,
+            "pattern": "^[01]{4}$",
+            "value": "0000"
+        }
+    }
+]

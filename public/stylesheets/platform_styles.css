@@ -113,10 +113,18 @@ body {
     white-space: nowrap;
 }
 
+.inputGroup {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
 .inputContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     align-content: flex-start;
 
     margin: 10px 0 10px 0;
@@ -127,7 +135,13 @@ body {
     border-color: var(--inputContainerBorderColor-invalid);
 }
 
-.textInput, .dropDownInput, .fileInput {
+.inputGroup>.inputContainer {
+    justify-content: flex-start;
+
+    width: 50%;
+}
+
+.input {
     margin: 10px 0 10px 0;
     height: 40px;
     width: 100%;
@@ -143,7 +157,7 @@ body {
     -webkit-user-select: text;
 }
 
-.textInput:hover, .dropDownInput:hover, .fileInput:hover {
+.input:hover {
     background-color: var(--inputBackgroundColor-hover);
 }
 
@@ -151,9 +165,8 @@ body {
     color: var(--textInputPlaceholderColor);
 }
 
-.dropDownInput {
+.dropDownInput, .checkInput, .radioInput {
     appearance: none;
-    -moz-appearance: none;
     -webkit-appearance: none;
 }
 
@@ -166,55 +179,22 @@ body {
     display: none;
 }
 
-/* .checkInput,
+.checkInput,
 .radioInput {
-    display: flex;
-    align-items: center;
-
-    margin: 10px 10px 10px 0;
-}
-
-.checkRadioInputControl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-right: 10px;
+    margin: 0 20px 0 0;
     height: 50px;
     width: 50px;
 
-    background-color: var(--checkRadioInputControlBackgroundColor);
-    border: 2px solid var(--checkRadioInputControlBorderColor);
     border-radius: 50%;
 }
 
-.checkRadioInputControl:hover {
-    background-color: var(--checkRadioInputControlBackgroundColor-hover);
+.checkInput:checked,.radioInput:checked {
+    background-color: var(--inputBackgroundColor-active);
 }
 
-.checkRadioInputControl-active {
-    background-color: var(--checkRadioInputControlBackgroundColor-active) !important;
+.checkInput:checked:hover,.radioInput:checked:hover {
+    background-color: var(--inputBackgroundColor-active-hover);
 }
-
-.checkRadioInputControl-active>span {
-    color: var(--checkRadioInputControlBackgroundColor-activeChild);
-}
-
-.checkRadioInputLabel {
-    display: flex;
-    flex-direction: column;
-
-    width: 100px;
-
-    font-weight: bolder;
-}
-
-.checkRadioInputLabel>span {
-    width: 100%;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-} */
 
 .buttonGlyph {
     margin: 10px 15px 10px 15px;
