@@ -11,28 +11,22 @@ import { Theme } from "../entity/Theme";
 import { UserPreference } from "../entity/UserPreference";
 
 export class GeneralController {
-    static async getItems(tableName: string, restrictNonGeneralData: boolean) {
+    static async getItems(tableName: string) {
         const generalEntities = {
             role: Role,
             module: Module,
             theme: Theme
         };
-        if (restrictNonGeneralData && generalEntities.hasOwnProperty(tableName)) {
+
+        if (generalEntities.hasOwnProperty(tableName)) {
             const items = await getRepository(generalEntities[tableName]).find();
             if (items.length > 0) {
                 return items;
             } else {
                 throw { title: "Isn't it empty", titleDescription: "Add some items first", message: "Looks like the table you are requesting doesn't have any items in it", technicalMessage: "Requested an empty table" };
             }
-        } else if (restrictNonGeneralData) {
-            throw { title: "Whoa! Stop right there", titleDescription: "Try logging in first", message: "Looks like you don't have access to the requested data. Only general data is available for retrieving without logging in", technicalMessage: "Requested access to a non-general entity" };
         } else {
-            const items = await getRepository(generalEntities[tableName]).find();
-            if (items.length > 0) {
-                return items;
-            } else {
-                throw { title: "Isn't it empty", titleDescription: "Add some items first", message: "Looks like the table you are requesting doesn't have any items in it", technicalMessage: "Requested an empty table" };
-            }
+            throw { title: "Whoa! Stop right there", titleDescription: "Try logging in as a privileged role first", message: "Looks like your role don't have access to the requested data. Only general data is available for anyone that's logged in", technicalMessage: "Requested access to a non-general entity" };
         }
     }
 }

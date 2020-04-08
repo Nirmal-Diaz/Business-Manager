@@ -183,7 +183,7 @@ app.route("/permission/permittedOperations")
 
 app.route("/general")
     .get((req, res) => {
-        GeneralController.getItems(req.query.tableName, true)
+        GeneralController.getItems(req.query.tableName)
             .then(data => {
                 res.json({
                     status: true,
