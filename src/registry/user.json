@@ -10,5 +10,11 @@
         "inputClass": "dropDownInput",
         "pattern": "^[1-9]{1,}$",
         "value": null
+    },
+    "employeeCode": {
+        "inputQuery": "#employeeCode",
+        "inputClass": "textInput",
+        "pattern": "^[A-Z]{3}[0-9]{1,7}$",
+        "value": null
     }
 }

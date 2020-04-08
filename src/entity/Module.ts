@@ -12,9 +12,6 @@ export class Module {
   @Column("varchar", { name: "layout_file_path", length: 100 })
   layoutFilePath: string;
 
-  @OneToMany(
-    () => Permission,
-    permission => permission.module
-  )
+  @OneToMany(() => Permission, (permission) => permission.module)
   permissions: Permission[];
 }

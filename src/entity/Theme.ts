@@ -12,9 +12,6 @@ export class Theme {
   @Column("varchar", { name: "css_path", length: 100 })
   cssPath: string;
 
-  @OneToMany(
-    () => UserPreference,
-    userPreference => userPreference.theme
-  )
+  @OneToMany(() => UserPreference, (userPreference) => userPreference.theme)
   userPreferences: UserPreference[];
 }

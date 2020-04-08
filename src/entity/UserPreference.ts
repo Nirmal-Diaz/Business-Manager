@@ -4,7 +4,7 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToOne
+  OneToOne,
 } from "typeorm";
 import { User } from "./User";
 import { Theme } from "./Theme";
@@ -27,19 +27,17 @@ export class UserPreference {
   @Column("blob", { name: "avatar", nullable: true })
   avatar: Buffer | null;
 
-  @OneToOne(
-    () => User,
-    user => user.userPreference,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
+  @OneToOne(() => User, (user) => user.userPreference, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
 
-  @ManyToOne(
-    () => Theme,
-    theme => theme.userPreferences,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
+  @ManyToOne(() => Theme, (theme) => theme.userPreferences, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
   @JoinColumn([{ name: "theme_id", referencedColumnName: "id" }])
   theme: Theme;
 }

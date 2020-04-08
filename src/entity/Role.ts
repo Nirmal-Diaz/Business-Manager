@@ -10,15 +10,9 @@ export class Role {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @OneToMany(
-    () => Permission,
-    permission => permission.role
-  )
+  @OneToMany(() => Permission, (permission) => permission.role)
   permissions: Permission[];
 
-  @OneToMany(
-    () => User,
-    user => user.role
-  )
+  @OneToMany(() => User, (user) => user.role)
   users: User[];
 }
