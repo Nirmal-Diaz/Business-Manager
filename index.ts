@@ -12,7 +12,6 @@ import {
     RegistryController,
     RoleController
 } from "./src/controller/Controller";
-import { request } from "http";
 /*
 =====================================================================================
 Express.js: Setup
