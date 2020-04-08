@@ -2,13 +2,13 @@ import * as crypto from "crypto";
 import * as fs from "fs";
 
 import { getRepository, Like } from "typeorm";
-import { User } from "../entity/User";
-import { Permission } from "../entity/Permission";
-import { UserRepository, RoleRepository } from "../repository/Repository";
-import { Role } from "../entity/Role";
-import { Module } from "../entity/Module";
-import { Theme } from "../entity/Theme";
-import { UserPreference } from "../entity/UserPreference";
+import { User } from "../entities/User";
+import { Permission } from "../entities/Permission";
+import { UserRepository, RoleRepository } from "../repositories/Repository";
+import { Role } from "../entities/Role";
+import { Module } from "../entities/Module";
+import { Theme } from "../entities/Theme";
+import { UserPreference } from "../entities/UserPreference";
 
 export class GeneralController {
     static async getItems(tableName: string) {
@@ -35,7 +35,7 @@ export class RegistryController {
     static async getFile(fileName: string) {
         if (/^[a-zA-Z]{1,}[.]{1}json$/.test(fileName)) {
             //fileName is valid and is in the format "someFile.json"
-            const fullRelativeFilePath = `./src/registry/${fileName}`;
+            const fullRelativeFilePath = `./src/registries/${fileName}`;
             if (fs.existsSync(fullRelativeFilePath)) {
                 return fs.readFileSync(fullRelativeFilePath, "utf-8");
             } else {
@@ -356,7 +356,7 @@ export class ValidationController {
 }
 
 //GLOBAL VARIABLES FOR FILE
-const extensions = JSON.parse(fs.readFileSync("./src/registry/extensions.json", "utf-8"));
+const extensions = JSON.parse(fs.readFileSync("./src/registries/extensions.json", "utf-8"));
 const audioExtensions = Object.keys(extensions.audioExtensions);
 const imageExtensions = Object.keys(extensions.imageExtensions);
 const videoExtensions = Object.keys(extensions.videoExtensions);

@@ -9,7 +9,7 @@
         "database": "d",
         "synchronize": false,
         "entities": [
-            "src/entity/*.ts"
+            "src/entities/*.ts"
         ]
     }
 ]

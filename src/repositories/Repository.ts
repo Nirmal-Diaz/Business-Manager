@@ -1,6 +1,6 @@
 import { getRepository, createConnection } from "typeorm";
-import { User } from "../entity/User";
-import { Role } from "../entity/Role";
+import { User } from "../entities/User";
+import { Role } from "../entities/Role";
 
 createConnection().then(() => {
     console.log("Connection status: Successful");

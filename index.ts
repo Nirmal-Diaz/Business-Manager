@@ -11,7 +11,7 @@ import {
     FileController,
     RegistryController,
     RoleController
-} from "./src/controller/Controller";
+} from "./src/controllers/Controller";
 /*
 =====================================================================================
 Express.js: Setup
