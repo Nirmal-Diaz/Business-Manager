@@ -119,13 +119,10 @@ export class Form {
                 body: JSON.stringify({
                     bindingObject: this.bindingObject
                 })
-            }).then(response => response.json()).then(response => {
-                if (response.status) {
-                    callback();
-                } else {
-                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                }
-            }).catch(error => {
+            })
+            .then(response => response.json())
+            .then(response => response)
+            .catch(error => {
                 window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't create that user in our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         }

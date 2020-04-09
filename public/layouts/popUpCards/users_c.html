@@ -43,11 +43,15 @@
                 
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit("/user", () => {
-                        //Refresh (not reload) the parentCardInterface
-                        this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");
-                        //Close this popUpCard
-                        this.popUpCardObject.close();
+                    this.form.submit("/user").then(submission => {
+                        if (submission.status) {
+                            //Refresh (not reload) the parentCardInterface
+                            this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");
+                            //Close this popUpCard
+                            this.popUpCardObject.close();
+                        } else {
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                        }
                     });
                 });
             }
