@@ -289,6 +289,44 @@ app.route("/users")
             });
     });
 
+app.route("/role")
+    .put(jsonParser, (req, res) => {
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+            .then(() => RoleController.createRole(req.body.bindingObject))
+            .then(data => {
+                res.json({
+                    status: true,
+                    data: data
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                res.json({
+                    status: false,
+                    error: error
+                });
+            });
+    });
+
+app.route("/permission")
+    .put(jsonParser, (req, res) => {
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+            .then(() => PermissionController.createPermissions(req.body.bindingObject))
+            .then(data => {
+                res.json({
+                    status: true,
+                    data: data
+                });
+            })
+            .catch(error => {
+                console.log("System error resolved:", error);
+                res.json({
+                    status: false,
+                    error: error
+                });
+            });
+    });
+
 app.route("/roles")
     .get((req, res) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)

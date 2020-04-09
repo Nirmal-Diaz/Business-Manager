@@ -72,6 +72,24 @@ export class SessionController {
 }
 
 export class PermissionController {
+    static async createPermissions(clientBindingObject) {
+        //Remove permission objects with "0000" ath the value
+        for (let i = 0; i < clientBindingObject.length; i++) {
+            if (clientBindingObject[i].value.value === "0000") {
+                clientBindingObject.splice(i, 1);
+            }
+        }
+
+        //Validate clientBindingObject
+        const serverBindingObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
+        ValidationController.validateBindingObject(serverBindingObject, clientBindingObject);
+
+        return getRepository(Permission).save(serverBindingObject as Permission[])
+            .catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+    }
+
     static async getPermission(roleId: number, moduleId: number) {
         const permission = await getRepository(Permission).findOne({
             where: {
@@ -180,14 +198,14 @@ export class PermissionController {
 export class UserController {
     static async createUser(userClientObject) {
         //Validate User
-        const userServerObject = JSON.parse(fs.readFileSync("./src/registry/user.json", "utf-8"));
+        const userServerObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
         ValidationController.validateBindingObject(userServerObject, userClientObject);
 
         return getRepository(User).save(userServerObject as User)
-        .then(user => UserPreferenceController.createUserPreference(user))
-        .catch((error) => {
-            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-        });
+            .then(user => UserPreferenceController.createUserPreference(user))
+            .catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
     }
 
     static async getUser(userId: number) {
@@ -268,6 +286,18 @@ export class UserPreferenceController {
 }
 
 export class RoleController {
+    static async createRole(clientBindingObject) {
+        //Validate clientBindingObject
+        const serverObject = JSON.parse(fs.readFileSync("./src/registries/role.json", "utf-8"));
+        ValidationController.validateBindingObject(serverObject, clientBindingObject);
+
+        return getRepository(Role).save(serverObject as Role)
+            .then(role => role)
+            .catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+    }
+
     static async getRole(roleId: number) {
         const role = await getRepository(Role).findOne({
             where: {
@@ -297,62 +327,55 @@ export class RoleController {
 export class ValidationController {
     //WARNING: Not an async method. This method directly alters the parameters provided
     static validateBindingObject(serverObject, clientObject) {
-        //NOTE: Key iteration is done with the serverBindingObject
-        //NOTE: serverBindingObject has the correct patterns. clientBindingObject's patterns may be altered
-        //NOTE: clientBindingObject's values will be copied to serverBindingObject
-        for (const key of Object.keys(serverObject)) {
-            if (clientObject.hasOwnProperty(key)) {
-                //Case: clientBindingObject has the same key as serverBindingObject
-                if (serverObject[key].hasOwnProperty("childFormObject") && serverObject[key].childFormObject === true) {
-                    //Case: Key holds an entire new formObject
-                    ValidationController.validateBindingObject(serverObject[key], clientObject[key]);
-                } else {
-                    //Case: Key holds a formField object
-                    //Check if the clientFormField has its pattern and value properties present
-                    if (clientObject[key].hasOwnProperty("pattern") && clientObject[key].hasOwnProperty("value")) {
-                        if (serverObject[key].pattern !== null) {
-                            //Case: formField object have a pattern to validate its value
-                            //Validate the clientFormField.value against serverFormField.pattern
-                            const regexp = new RegExp(serverObject[key].pattern);
-                            if (regexp.test(clientObject[key].value)) {
-                                //Case: clientFormField.value is valid
-                                //Copy that value to serverFormField.value
-
-                                //WARNING: serverObject's structure will be altered here
-                                //NOTE: serverObject[key] will no longer hold a formFiled object
-                                //NOTE: serverObject[key] will hold it's relevant value directly
-                                serverObject[key] = clientObject[key].value;
-                            } else {
-                                //Case: clientFormField.value is invalid
-                                throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };
-                            }
-                        }
+        //NOTE: Validation is done considering the serverBindingObject as it always has the correct structure
+        if (Array.isArray(serverObject)) {
+            //Case: serverBindingObject is an array
+            //NOTE: serverBindingObject only contains one reference element for all the elements inside clientBindingObject
+            const referenceElement = serverObject[0];
+            //Validate each element inside clientBindingObject against referenceElement
+            for (const clientObjectElement of clientObject) {
+                this.validateBindingObject(referenceElement, clientObjectElement)
+            }
+        } else {
+            //NOTE: serverBindingObject has the correct patterns. clientBindingObject's patterns may be altered
+            //NOTE: clientBindingObject's values will be copied to serverBindingObject
+            for (const key of Object.keys(serverObject)) {
+                if (clientObject.hasOwnProperty(key)) {
+                    //Case: clientBindingObject has the same key as serverBindingObject
+                    if (serverObject[key].hasOwnProperty("childFormObject") && serverObject[key].childFormObject === true) {
+                        //Case: Key holds an entire new formObject
+                        ValidationController.validateBindingObject(serverObject[key], clientObject[key]);
                     } else {
-                        throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form field objects detected" };
-                    }
+                        //Case: Key holds a formField object
+                        //Check if the clientFormField has its pattern and value properties present
+                        if (clientObject[key].hasOwnProperty("pattern") && clientObject[key].hasOwnProperty("value")) {
+                            if (serverObject[key].pattern !== null) {
+                                //Case: formField object have a pattern to validate its value
+                                //Validate the clientFormField.value against serverFormField.pattern
+                                const regexp = new RegExp(serverObject[key].pattern);
+                                if (regexp.test(clientObject[key].value)) {
+                                    //Case: clientFormField.value is valid
+                                    //Copy that value to serverFormField.value
 
+                                    //WARNING: serverObject's structure will be altered here
+                                    //NOTE: serverObject[key] will no longer hold a formFiled object
+                                    //NOTE: serverObject[key] will hold it's relevant value directly
+                                    serverObject[key] = clientObject[key].value;
+                                } else {
+                                    //Case: clientFormField.value is invalid
+                                    throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };
+                                }
+                            }
+                        } else {
+                            throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form field objects detected" };
+                        }
+                    }
+                } else {
+                    throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form objects detected" };
                 }
-            } else {
-                throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form objects detected" };
             }
         }
     }
-
-    //WARNING: Not an async method. This method directly alters the parameters provided
-    // static populateEntityInstance(entityInstance, validatedObject) {
-    //     //Just copy values from validatedBindingObject to entityInstance
-    //     for (const key of Object.keys(validatedObject)) {
-    //         //Case: clientBindingObject has the same key as serverBindingObject
-    //         if (validatedObject[key].hasOwnProperty("childFormObject") && validatedObject[key].childFormObject === true) {
-    //             //Case: Key holds an entire new formObject
-    //             ValidationController.validateBindingObject(entityInstance[key], validatedObject[key]);
-    //         } else {
-    //             //Case: Key holds a formField object
-    //             //Copy the validatedBindingObject[key].value to entityInstance[key]
-    //             entityInstance[key] = validatedObject[key].value;
-    //         }
-    //     }
-    // }
 }
 
 //GLOBAL VARIABLES FOR FILE

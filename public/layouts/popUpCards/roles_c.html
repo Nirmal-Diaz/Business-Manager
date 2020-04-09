@@ -37,8 +37,8 @@
                 this.permissionForm.init("permissions.json").then((form) => {
                     //NOTE: The form.bindingObject is an array. It contains a reference permission object
                     //NOTE: That reference object must be backed up and removed from the array (Removal will be done automatically)
-                    const stringifiedRefPermission = JSON.stringify(form.getBindingObject()[0]);
-                    //Load modules and select option with value "1"
+                    const stringifiedRefPermission = JSON.stringify(form.getReferenceBindingObject()[0]);
+                    //Load modules
                     FormUtil.createDropDownInputFragment("/general?tableName=module", "name", "id")
                         .then((dropDownInputFragment) => {
                             const dropDownInput = form.getView().querySelector("#moduleId");
@@ -51,8 +51,11 @@
 
                             //Create a moduleId2BindingObjectIndex entry and a permission object for each option tag
                             for (let i = 0; i < dropDownInput.childElementCount; i++) {
-                                moduleId2BindingObjectIndex[dropDownInput.children[i].value] = i;
+                                const moduleId = dropDownInput.children[i].value;
+                                moduleId2BindingObjectIndex[moduleId] = i;
                                 form.getBindingObject()[i] = JSON.parse(stringifiedRefPermission);
+                                //Update the moduleId of the newly parsed permission object
+                                form.getBindingObject()[i].moduleId.value = moduleId;
                             }
 
                             //Add onchange to DropDownInput for updating checkInputs with the current value
@@ -85,60 +88,39 @@
                                         splitPermissionValue[i] = "0";
                                     }
                                     form.getBindingObject()[bindingObjectIndex].value.value = splitPermissionValue.join("");
-                                    console.log(form.getBindingObject()[bindingObjectIndex]);
                                 });
                             }
                         });
                 });
 
-
-                //Get the list of modules and create relevant input for each module
-                // fetch(`${location.protocol}//${location.host}/general?tableName=module`)
-                //     .then(response => response.json())
-                //     .then(response => {
-                //         if (response.status) {
-                //             const inputGroupsFragment = new DocumentFragment();
-                //             //Create a dropDownInputOption for every item
-                //             for (const item of response.data) {
-                //                 const inputGroup = this.templateContainerFragment.querySelector("#moduleId2ValueInputGroup").cloneNode(true);
-                //                 inputGroup.querySelector(".titleDescription").textContent = item.name;
-                //                 inputGroup.querySelector(".inputContainer").dataset.moduleId = item.id;
-
-                //                 const checkInputs = inputGroup.querySelectorAll(".input");
-                //                 for (const checkInput of checkInputs) {
-                //                     checkInput.addEventListener("change", (event) => {
-                //                         const inputCrudIndex = Number.parseInt(checkInput.dataset.crudIndex);
-                //                         const splitValue = checkInput.parentElement.dataset.value.split("");
-                //                         if (checkInput.checked) {
-                //                             splitValue[inputCrudIndex] = "1";
-                //                         } else {
-                //                             splitValue[inputCrudIndex] = "0";
-                //                         }
-                //                         checkInput.parentElement.dataset.value = splitValue.join("");
-                //                     });
-                //                 }
-
-                //                 inputGroupsFragment.appendChild(inputGroup);
-                //             }
-                //             document.querySelector(".formFieldsContainer").appendChild(inputGroupsFragment);
-                //         } else {
-                //             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                //             return null;
-                //         }
-                //     })
-                //     .catch(error => {
-                //         window.parent.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                //     });
-
-                // //Add onclick to saveButton for submitting the form
-                // document.getElementById("saveButton").addEventListener("click", () => {
-                //     this.form.submit("/user", () => {
-                //         //Refresh (not reload) the parentCardInterface
-                //         this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");
-                //         //Close this popUpCard
-                //         this.popUpCardObject.close();
-                //     });
-                // });
+                //Add onclick to saveButton for submitting the form
+                document.getElementById("saveButton").addEventListener("click", () => {
+                    this.roleForm.submit("/role")
+                    .then(submission => {
+                        if (submission.status) {
+                            //Fill the roleId of each permission with the newly created role.id
+                            for (const permission of this.permissionForm.getBindingObject()) {
+                                permission.roleId.value = submission.data.id;
+                            }
+                            return true;
+                        } else {
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                            return false;
+                        }
+                        
+                    })
+                    .then(() => this.permissionForm.submit("/permission"))
+                    .then(submission => {
+                        if (submission.status) {
+                            //Refresh (not reload) the parentCardInterface
+                            this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new role", "Double tap to find out more");
+                            //Close this popUpCard
+                            this.popUpCardObject.close();
+                        } else {
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                        }
+                    });
+                })
             }
         }
     </script>
