@@ -34,7 +34,7 @@
                 //Initialize form
                 this.form.init("user.json").then((form) => {
                     //Load roles and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/general?tableName=role", "name", "id")
+                    FormUtil.createDropDownInputFragment("/tables/role", "name", "id")
                     .then((dropDownInputFragment) => {
                         this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
                         FormUtil.syncInputWithValue(this.form.getView(), this.form.getBindingObject().roleId, "1");
@@ -43,7 +43,7 @@
                 
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit("/user").then(submission => {
+                    this.form.submit("/users").then(submission => {
                         if (submission.status) {
                             //Refresh (not reload) the parentCardInterface
                             this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");

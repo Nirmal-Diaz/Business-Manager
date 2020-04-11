@@ -29,7 +29,7 @@ export class ShellInterface {
         //Add onclick to splashScreenView for initializing currentScreen
         this.view.querySelector("#splashScreen").addEventListener("click", () => {
             //Fetch workspace
-            fetch(`${location.protocol}//${location.host}/session`)
+            fetch(`${location.protocol}//${location.host}/sessions`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -129,7 +129,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
 
     attemptAuthorization() {
         //Create a session
-        fetch(`${location.protocol}//${location.host}/session`, {
+        fetch(`${location.protocol}//${location.host}/sessions`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -170,14 +170,14 @@ export class LogInScreenController extends ScreenController {
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
             if (event.key === "Enter") {
-                fetch(`${location.protocol}//${location.host}/user/avatar?username=${this.logInBox.children[1].value}`)
+                fetch(`${location.protocol}//${location.host}/users/${encodeURIComponent(this.logInBox.children[1].value)}/avatar`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
                             this.patternAuthorizer.setUsername(this.logInBox.children[1].value);
                             this.patternAuthorizer.getView().style.visibility = "visible";
                             this.logInAvatar.style.opacity = "1";
-                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.userPreference.avatar.data)]))})`;
+                            this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.data)]))})`;
                             this.view.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
                             this.logInBox.children[0].children[0].innerText = "Let's see if it is really you";
                             this.logInBox.children[0].children[1].innerText = "Please mark your pattern";
@@ -227,7 +227,7 @@ export class WorkspaceScreenController extends ScreenController {
         this.quickAccessArea = this.view.querySelector(".quickAccessArea");
         this.actionOverlayView = document.getElementById("actionOverlay");
         //Fetch username, roleName and profileImage and apply user preferences
-        fetch(`${location.protocol}//${location.host}/session/currentUser`)
+        fetch(`${location.protocol}//${location.host}/users/@me`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -244,14 +244,14 @@ export class WorkspaceScreenController extends ScreenController {
             .catch(error => {
                 window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
-        //Fetch modules with "retrieve" permission
-        fetch(`${location.protocol}//${location.host}/permission/permittedModules`)
+        //Fetch all permittedModules
+        fetch(`${location.protocol}//${location.host}/users/@me/modules`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    //Create a card for the first permittedModule
+                    //Create a card for the first actionOverlayChip
                     this.addCard(new Card(response.data[0].layoutFilePath, response.data[0].id));
-                    //Create actionOverlayChops for each permittedModule
+                    //Create actionOverlayChips for each permission if its value[1] === "1"
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.data.length; i++) {
                         const actionOverlayChip = PlatformComponent.createActionOverlayChip(response.data[i], this);
@@ -512,11 +512,11 @@ export class WorkspaceScreenController extends ScreenController {
             addQuickAccessControls.bind(this)();
         } else {
             //Fetch permittedModuleOperations and cache them
-            fetch(`${location.protocol}//${location.host}/permission/permittedOperations?moduleId=${moduleId}`)
+            fetch(`${location.protocol}//${location.host}/users/@me/modules/${moduleId}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
-                        this.permittedModuleOperations[moduleId] = response.data;
+                        this.permittedModuleOperations[moduleId] = response.data.value;
                         addQuickAccessControls.bind(this)();
                     } else {
                         window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
@@ -529,28 +529,28 @@ export class WorkspaceScreenController extends ScreenController {
 
         function addQuickAccessControls() {
             //Add createControls to the quickAccessArea if the user has "create" permissions
-            if (this.permittedModuleOperations[moduleId].includes("create")) {
+            if (this.permittedModuleOperations[moduleId][0] === "1") {
                 const createControls = presentCard2.getControls("create");
                 for (const createControl of createControls) {
                     this.quickAccessArea.appendChild(createControl);
                 }
             }
             //Add retrieveControls to the quickAccessArea if the user has "retrieve" permissions
-            if (this.permittedModuleOperations[moduleId].includes("retrieve")) {
+            if (this.permittedModuleOperations[moduleId][1] === "1") {
                 const retrieveControls = presentCard2.getControls("retrieve");
                 for (const retrieveControl of retrieveControls) {
                     this.quickAccessArea.appendChild(retrieveControl);
                 }
             }
             //Add updateControls to the quickAccessArea if the user has "update" permissions
-            if (this.permittedModuleOperations[moduleId].includes("update")) {
+            if (this.permittedModuleOperations[moduleId][2] === "1") {
                 const updateControls = presentCard2.getControls("update");
                 for (const updateControl of updateControls) {
                     this.quickAccessArea.appendChild(updateControl);
                 }
             }
             //Add deleteControls to the quickAccessArea if the user has "delete" permissions
-            if (this.permittedModuleOperations[moduleId].includes("delete")) {
+            if (this.permittedModuleOperations[moduleId][3] === "1") {
                 const deleteControls = presentCard2.getControls("delete");
                 for (const deleteControl of deleteControls) {
                     this.quickAccessArea.appendChild(deleteControl);
@@ -616,7 +616,7 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        fetch(`${location.protocol}//${location.host}/session`, {
+        fetch(`${location.protocol}//${location.host}/sessions`, {
             method: "DELETE"
         })
             .then(response => response.json())

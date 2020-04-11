@@ -17,7 +17,7 @@ export class Form {
     //NOTE: It is done because of there are other methods on popUpCardInterfaces that rely on the bindingObject
     init(bindingObjectFileName) {
         //Load bindingObject
-        return fetch(`${location.protocol}//${location.host}/registry?fileName=${bindingObjectFileName}`)
+        return fetch(`${location.protocol}//${location.host}/registries/${bindingObjectFileName}`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {

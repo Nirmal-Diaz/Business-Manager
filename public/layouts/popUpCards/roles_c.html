@@ -39,7 +39,7 @@
                     //NOTE: That reference object must be backed up and removed from the array (Removal will be done automatically)
                     const stringifiedRefPermission = JSON.stringify(form.getReferenceBindingObject()[0]);
                     //Load modules
-                    FormUtil.createDropDownInputFragment("/general?tableName=module", "name", "id")
+                    FormUtil.createDropDownInputFragment("/tables/module", "name", "id")
                         .then((dropDownInputFragment) => {
                             const dropDownInput = form.getView().querySelector("#moduleId");
 
@@ -95,7 +95,7 @@
 
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    this.roleForm.submit("/role")
+                    this.roleForm.submit("/roles")
                     .then(submission => {
                         if (submission.status) {
                             //Fill the roleId of each permission with the newly created role.id
@@ -109,7 +109,7 @@
                         }
                         
                     })
-                    .then(() => this.permissionForm.submit("/permission"))
+                    .then(() => this.permissionForm.submit("/permissions"))
                     .then(submission => {
                         if (submission.status) {
                             //Refresh (not reload) the parentCardInterface

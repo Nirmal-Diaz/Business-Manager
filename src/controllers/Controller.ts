@@ -10,10 +10,9 @@ import { Module } from "../entities/Module";
 import { Theme } from "../entities/Theme";
 import { UserPreference } from "../entities/UserPreference";
 
-export class GeneralController {
-    static async getItems(tableName: string) {
+export class TableController {
+    static async getMany(tableName: string) {
         const generalEntities = {
-            role: Role,
             module: Module,
             theme: Theme
         };
@@ -48,8 +47,8 @@ export class RegistryController {
 }
 
 export class SessionController {
-    static async createSession(session, username: string, cellCombination: string) {
-        const user = await UserController.getUserByUsername(username);
+    static async createOne(session, username: string, cellCombination: string) {
+        const user = await UserController.getOneByUsername(username);
 
         const generatedHash = crypto.createHash("sha256").update(`${username} : ${cellCombination}`).digest("hex");
 
@@ -72,7 +71,7 @@ export class SessionController {
 }
 
 export class PermissionController {
-    static async createPermissions(clientBindingObject) {
+    static async cerateMany(clientBindingObject) {
         //Remove permission objects with "0000" ath the value
         for (let i = 0; i < clientBindingObject.length; i++) {
             if (clientBindingObject[i].value.value === "0000") {
@@ -90,7 +89,7 @@ export class PermissionController {
             });
     }
 
-    static async getPermission(roleId: number, moduleId: number) {
+    static async getOne(roleId: number, moduleId: number) {
         const permission = await getRepository(Permission).findOne({
             where: {
                 roleId: roleId,
@@ -105,13 +104,18 @@ export class PermissionController {
             throw { title: "Oops!", titleDescription: "Try a set of different arguments", message: "Your role doesn't have any permission records for this module", technicalMessage: "No permission for given arguments" };
         }
     }
+    
+    static async getOneByUser(userId: number, moduleId: number) {
+        const user = await UserController.getOne(userId);
+        return PermissionController.getOne(user.role.id, moduleId);
+    }
 
-    static async getPermissionsForRole(roleId: number) {
+    static async getAllByRole(roleId: number) {
         const permissions = await getRepository(Permission).find({
             where: {
                 roleId: roleId
             },
-            relations: ["role", "module"]
+            relations: ["module"]
         });
 
         if (permissions) {
@@ -121,62 +125,9 @@ export class PermissionController {
         }
     }
 
-    static async checkPermission(userId: number, moduleSelector: number | string, operationName: string) {
-        if (typeof moduleSelector === "string") {
-            const module = await getRepository(Module).findOne({
-                where: {
-                    name: moduleSelector
-                }
-            });
-            moduleSelector = module.id;
-        }
-
-        const user = await UserController.getUser(userId);
-        const permission = await PermissionController.getPermission(user.role.id, moduleSelector);
-
-        const operationIndexMap = {
-            PUT: 0,
-            GET: 1,
-            PATCH: 2,
-            DELETE: 3
-        }
-
-        if (permission.value[operationIndexMap[operationName]] === "1") {
-            return true;
-        } else {
-            throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName.toLowerCase()} items in the current module`, technicalMessage: "Operation permissions denied" };
-        }
-    }
-
-    static async getPermittedOperations(userId: number, moduleId: number) {
-        const user = await UserController.getUser(userId);
-        const permission = await PermissionController.getPermission(user.role.id, moduleId);
-
-        const permittedOperations = [];
-
-        if (permission.value[0] === "1") {
-            permittedOperations.push("create");
-        }
-        if (permission.value[1] === "1") {
-            permittedOperations.push("retrieve");
-        }
-        if (permission.value[2] === "1") {
-            permittedOperations.push("update");
-        }
-        if (permission.value[3] === "1") {
-            permittedOperations.push("delete");
-        }
-
-        if (permittedOperations.length > 0) {
-            return permittedOperations;
-        } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any permissions to the this module. Usually the system won't show such modules to the user", technicalMessage: "No permitted operations for module" };
-        }
-    }
-
     static async getPermittedModules(userId: number) {
-        const user = await UserController.getUser(userId);
-        const permissions = await PermissionController.getPermissionsForRole(user.role.id);
+        const user = await UserController.getOne(userId);
+        const permissions = await PermissionController.getAllByRole(user.role.id);
 
         //NOTE: Permitted modules are the ones that have explicit "retrieve" permissions
         //NOTE: Although every user have "retrieve" permissions for general modules, They aren't considered permittedModules unless that user have a permissions record with retrieve access for that module
@@ -193,22 +144,49 @@ export class PermissionController {
             throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules to work with. Every user must have at least one assigned module. This could be a database error", technicalMessage: "No permitted modules for user" };
         }
     }
+
+    static async checkPermission(userId: number, moduleSelector: number | string, operationName: string) {
+        if (typeof moduleSelector === "string") {
+            const module = await getRepository(Module).findOne({
+                where: {
+                    name: moduleSelector
+                }
+            });
+            moduleSelector = module.id;
+        }
+
+        const user = await UserController.getOne(userId);
+        const permission = await PermissionController.getOne(user.role.id, moduleSelector);
+
+        const operationIndexMap = {
+            PUT: 0,
+            GET: 1,
+            PATCH: 2,
+            DELETE: 3
+        }
+
+        if (permission.value[operationIndexMap[operationName]] === "1") {
+            return true;
+        } else {
+            throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName.toLowerCase()} items in the current module`, technicalMessage: "Operation permissions denied" };
+        }
+    }
 }
 
 export class UserController {
-    static async createUser(userClientObject) {
+    static async createOne(userClientObject) {
         //Validate User
         const userServerObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
         ValidationController.validateBindingObject(userServerObject, userClientObject);
 
         return getRepository(User).save(userServerObject as User)
-            .then(user => UserPreferenceController.createUserPreference(user))
+            .then(user => UserPreferenceController.createOne(user))
             .catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
     }
 
-    static async getUser(userId: number) {
+    static async getOne(userId: number) {
         const user = await getRepository(User).findOne({
             where: {
                 id: userId
@@ -223,7 +201,7 @@ export class UserController {
         }
     }
 
-    static async getUserByUsername(username: string) {
+    static async getOneByUsername(username: string) {
         const user = await getRepository(User).findOne({
             where: {
                 username: username
@@ -238,7 +216,7 @@ export class UserController {
         }
     }
 
-    static async search(keyword: string) {
+    static async getMany(keyword: string) {
         const users = await UserRepository.search(keyword);
 
         if (users.length > 0) {
@@ -248,13 +226,13 @@ export class UserController {
         }
     }
 
-    static async deleteUser(username) {
+    static async deleteOne(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("user", "username", username);
     }
 }
 
 export class UserPreferenceController {
-    static async createUserPreference(user: User) {
+    static async createOne(user: User) {
         //Create userPreference with system defaults
         const newUserPreference = new UserPreference();
         newUserPreference.userId = user.id;
@@ -271,7 +249,7 @@ export class UserPreferenceController {
         return getRepository(UserPreference).save(newUserPreference);
     }
 
-    static async getUserPreference(username) {
+    static async getOne(username) {
         // const preferences = await DAO.GeneralDAO.getRows("userPreference", [["username", "true", username]], "");
         // if (preferences.length === 0) {
         //     throw { title: "Hmm...Something's wrong", titleDescription: "Recheck to username", message: "We couldn't find a set of preferences for the username that you sent. Make sure that the username is correct and try again", technicalMessage: "Cannot find user" };
@@ -280,13 +258,13 @@ export class UserPreferenceController {
         // }
     }
 
-    static async deleteUserPreference(username) {
+    static async deleteOne(username) {
         // return DAO.GeneralDAO.deleteRowsByExactMatch("userPreference", "username", username);
     }
 }
 
 export class RoleController {
-    static async createRole(clientBindingObject) {
+    static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = JSON.parse(fs.readFileSync("./src/registries/role.json", "utf-8"));
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
@@ -298,7 +276,7 @@ export class RoleController {
             });
     }
 
-    static async getRole(roleId: number) {
+    static async getOne(roleId: number) {
         const role = await getRepository(Role).findOne({
             where: {
                 id: roleId
@@ -313,7 +291,7 @@ export class RoleController {
         }
     }
 
-    static async search(keyword: string) {
+    static async getMany(keyword: string) {
         const roles = await RoleRepository.search(keyword);
 
         if (roles.length > 0) {
@@ -387,7 +365,7 @@ const containerExtensions = Object.keys(extensions.containerExtensions);
 const textExtensions = Object.keys(extensions.textExtensions);
 
 export class FileController {
-    static async getItemPaths(userId: number, subDirectoryPath: string) {
+    static async getDirectory(userId: number, subDirectoryPath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
         if (!fs.existsSync(fullRelativeDirectoryPath)) {
             throw { title: "What directory now?", titleDescription: "Recheck the directory path", message: "We couldn't find a directory for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested directory doesn't exist" };
@@ -444,7 +422,7 @@ export class FileController {
         }
     }
 
-    static async getFileBuffer(userId: number, filePath: string) {
+    static async getFile(userId: number, filePath: string) {
         const fullRelativeFilePath = `./private/${userId}/${filePath}`;
         if (!fs.existsSync(fullRelativeFilePath)) {
             throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };

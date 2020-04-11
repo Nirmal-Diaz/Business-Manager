@@ -7,7 +7,7 @@ import {
     UserController,
     SessionController,
     PermissionController,
-    GeneralController,
+    TableController,
     FileController,
     RegistryController,
     RoleController
@@ -22,40 +22,43 @@ const app = express();
 app.listen(port);
 /*
 =====================================================================================
-Express.js: Middleware Setup
+Express.js: Middleware Setup (Pre routing)
 =====================================================================================
 */
+//Cache JSON parser
 const jsonParser = express.json();
 
+//Set static directory
 app.use(express.static("./public"));
 
+//Initiate session
 app.use(session({
     secret: Math.random().toString(),
     saveUninitialized: false,
     resave: false
 }));
 
+//Initialize login validator
 app.use((req, res, next) => {
-    //Skip paths that need no checking
-    if (["/", "/session", "/user/avatar"].includes(req.path)) {
+    if (["/", "/sessions"].includes(req.path) || /^\/users\/.*\/avatar$/.test(req.path)) {
+        //Case: Path must be excluded
         next();
-        return;
-    }
-    
-    //Check all other paths for session validation
-    SessionController.checkLogIn(req.session).then(() => {
-        next();
-    }).catch(error => {
-        console.log("System error resolved:", error);
-        res.json({
-            status: false,
-            error: error
+    } else {
+        //Case: Path must be included
+        SessionController.checkLogIn(req.session).then(() => {
+            next();
+        }).catch(error => {
+            console.log("System error resolved:", error);
+            res.json({
+                status: false,
+                error: error
+            });
         });
-    });
+    }
 });
 /* 
 =====================================================================================
-Express.js: Routing (Without permission validation)
+Express.js: Routing (No validation)
 =====================================================================================
 */
 app.route("/")
@@ -63,195 +66,96 @@ app.route("/")
         res.sendFile(__dirname + "/public/index.html");
     });
 
-app.route("/session")
-    .get((req, res) => {
-        SessionController.checkLogIn(req.session)
-            .then(() => {
-                res.json({
-                    status: true
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+app.route("/sessions")
+    .get((req, res, next) => {
+        SessionController.checkLogIn(req.session).then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     })
-    .put(jsonParser, (req, res) => {
-        SessionController.createSession(req.session, req.body.username, req.body.cellCombination)
-            .then(() => {
-                res.json({
-                    status: true
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+    .put(jsonParser, (req, res, next) => {
+        SessionController.createOne(req.session, req.body.username, req.body.cellCombination).then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     })
-    .delete((req, res) => {
+    .delete((req, res, next) => {
         req.session.destroy(() => {
-            res.json({
-                status: true
-            });
+            res.locals.data = true; next();
         });
     });
 
-app.route("/user/avatar")
-    .get((req, res) => {
-        UserController.getUserByUsername(req.query.username)
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: {
-                        userPreference: {
-                            avatar: data.userPreference.avatar
-                        }
-                    }
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+//TODO: Change path to honor REST
+app.route("/users/:username/avatar")
+    .get((req, res, next) => {
+        UserController.getOneByUsername(req.params.username).then(data => {
+            res.locals.data = data.userPreference.avatar; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        })
     });
 
-app.route("/session/currentUser")
-    .get((req, res) => {
-        UserController.getUser(req.session.userId)
-            .then(data => {
-                //Remove hash for security reasons
-                data.userPreference.hash = "";
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+/* 
+=====================================================================================
+Express.js: Routing (Only login validation)
+=====================================================================================
+*/
+app.route("/tables/:tableName")
+    .get((req, res, next) => {
+        TableController.getMany(req.params.tableName).then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     });
 
-app.route("/permission/permittedModules")
-    .get((req, res) => {
-        PermissionController.getPermittedModules(req.session.userId)
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
-    });
-
-app.route("/permission/permittedOperations")
-    .get((req, res) => {
-        PermissionController.getPermittedOperations(req.session.userId, parseInt(req.query.moduleId))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
-    });
-
-app.route("/general")
-    .get((req, res) => {
-        GeneralController.getItems(req.query.tableName)
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
-    });
-
-app.route("/registry")
-    .get((req, res) => {
-        RegistryController.getFile(req.query.fileName)
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+app.route("/registries/:registryFile")
+    .get((req, res, next) => {
+        RegistryController.getFile(req.params.registryFile).then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     });
 /* 
 =====================================================================================
-Express.js: Routing (With permission validation)
+Express.js: Routing (Both login and permission validation)
 =====================================================================================
 */
-app.route("/user")
-    .get((req, res) => {
+//USERS
+app.route("/users/:userId")
+    .get((req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return UserController.getOne(req.session.userId);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "users", req.method)
+                    .then(() => UserController.getOne(parseInt(req.params.userId)));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
+    });
+
+app.route("/users")
+    .put(jsonParser, (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.getUser(req.session.userId))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            })
+            .then(() => UserController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
     })
-    .put(jsonParser, (req, res) => {
+    .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.createUser(req.body.bindingObject))
-            .then(() => {
-                res.json({
-                    status: true
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
+            .then(() => UserController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
             });
     })
     .delete(jsonParser, (req, res) => {
@@ -270,118 +174,122 @@ app.route("/user")
         // });
     });
 
-app.route("/users")
-    .get((req, res) => {
-        PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.search(req.query.keyword))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+//ROLES AND PERMISSIONS
+app.route("/users/:userId/modules")
+    .get((req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return PermissionController.getPermittedModules(req.session.userId);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
+                    .then(() => PermissionController.getPermittedModules(parseInt(req.params.userId)));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     });
 
-app.route("/role")
-    .put(jsonParser, (req, res) => {
-        PermissionController.checkPermission(req.session.userId, "roles", req.method)
-            .then(() => RoleController.createRole(req.body.bindingObject))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
-    });
-
-app.route("/permission")
-    .put(jsonParser, (req, res) => {
-        PermissionController.checkPermission(req.session.userId, "roles", req.method)
-            .then(() => PermissionController.createPermissions(req.body.bindingObject))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
-            });
+app.route("/users/:userId/modules/:moduleId")
+    .get((req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return PermissionController.getOneByUser(parseInt(req.session.userId), parseInt(req.params.moduleId));
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
+                    .then(() => PermissionController.getOneByUser(parseInt(req.params.userId), parseInt(req.params.moduleId)));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
     });
 
 app.route("/roles")
-    .get((req, res) => {
+    .put(jsonParser, (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)
-            .then(() => RoleController.search(req.query.keyword))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
+            .then(() => RoleController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+            .then(() => RoleController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
             });
     });
 
+app.route("/permissions")
+    .put(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+            .then(() => PermissionController.cerateMany(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//FILES AND DIRECTORIES
+//TODO: Change path to honor REST
 app.route("/file/itemPaths")
-    .get((req, res) => {
+    .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getItemPaths(req.session.userId, req.query.subDirectoryPath))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
+            .then(() => FileController.getDirectory(req.session.userId, req.query.subDirectoryPath)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
             });
     });
 
+//TODO: Change path to honor REST
 app.route("/file/fileBuffer")
-    .get((req, res) => {
+    .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getFileBuffer(req.session.userId, req.query.filePath))
-            .then(data => {
-                res.json({
-                    status: true,
-                    data: data,
-                });
-            })
-            .catch(error => {
-                console.log("System error resolved:", error);
-                res.json({
-                    status: false,
-                    error: error
-                });
+            .then(() => FileController.getFile(req.session.userId, req.query.filePath)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
             });
     });
+
+/*
+=====================================================================================
+Express.js: Middleware Setup (Post routing)
+=====================================================================================
+*/
+//Initiate handler for successful responses
+app.use((req, res, next) => {
+    if (res.locals.data) {
+        //Case: res.locales.data is present with data
+        //Send data
+        res.json({
+            status: true,
+            data: res.locals.data
+        });
+    } else {
+        //Case: res.locales.data is not present
+        next();
+    }
+});
+
+//Initiate handler for unsuccessful responses
+app.use((req, res, next) => {
+    //WARNING: This "else" is unnecessary as res.locales.error must be present by now
+    if (res.locals.error) {
+        //Case: res.locales.error is present with data
+        //Send data
+        console.log("System error resolved:", res.locals.error);
+        res.json({
+            status: false,
+            error: res.locals.error
+        });
+    }
+})
 
 console.log(`Express server status: Ready. Listening on port ${port}`);
