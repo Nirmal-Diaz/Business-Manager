@@ -110,7 +110,7 @@ export class PermissionController {
         return PermissionController.getOne(user.role.id, moduleId);
     }
 
-    static async getAllByRole(roleId: number) {
+    static async getManyByRole(roleId: number) {
         const permissions = await getRepository(Permission).find({
             where: {
                 roleId: roleId
@@ -127,7 +127,7 @@ export class PermissionController {
 
     static async getPermittedModules(userId: number) {
         const user = await UserController.getOne(userId);
-        const permissions = await PermissionController.getAllByRole(user.role.id);
+        const permissions = await PermissionController.getManyByRole(user.role.id);
 
         //NOTE: Permitted modules are the ones that have explicit "retrieve" permissions
         //NOTE: Although every user have "retrieve" permissions for general modules, They aren't considered permittedModules unless that user have a permissions record with retrieve access for that module
