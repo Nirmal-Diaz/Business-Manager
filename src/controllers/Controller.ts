@@ -72,12 +72,14 @@ export class SessionController {
 
 export class PermissionController {
     static async cerateMany(clientBindingObject) {
-        //Remove permission objects with "0000" ath the value
+        //Remove permission objects with "0000" as the value
+        const tempClientBindingObject = [];
         for (let i = 0; i < clientBindingObject.length; i++) {
-            if (clientBindingObject[i].value.value === "0000") {
-                clientBindingObject.splice(i, 1);
+            if (clientBindingObject[i].value.value !== "0000") {
+                tempClientBindingObject.push(clientBindingObject[i]);
             }
         }
+        clientBindingObject = tempClientBindingObject;
 
         //Validate clientBindingObject
         const serverBindingObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
@@ -85,7 +87,7 @@ export class PermissionController {
 
         return getRepository(Permission).save(serverBindingObject as Permission[])
             .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
             });
     }
 
