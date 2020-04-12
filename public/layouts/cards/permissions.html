@@ -34,13 +34,12 @@
             deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
-                //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
                     this.cardObject.createPopUpCard("layouts/popUpCards/permissions_c.html");
                 });
-                //Add onclick to searchButton for toggling search UI
+                
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
-                //Add onkeypress to searchButtonInput for searching the card
+                
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
                         this.searchItems("", "All roles", "Double tap to find out more");
@@ -48,13 +47,12 @@
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
                     }
                 });
-                //Initially load every user without specifying a keyword
+                
                 this.searchItems("", "Roles", "Double tap to find out more");
             }
 
             //EVENT HANDLER METHODS
             searchItems(keyword, titleText, titleDescriptionText) {
-                //Fetch registered users of the system
                 fetch(`${location.protocol}//${location.host}/roles?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
