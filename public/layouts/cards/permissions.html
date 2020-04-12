@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Roles and Permissions</title>
+    <title>Permissions and Roles</title>
 
     <link rel="stylesheet" href="../../stylesheets/platform_styleVariables_turquoise.css" />
     <link rel="stylesheet" href="../../stylesheets/platform_styles.css">
@@ -36,7 +36,7 @@
             constructor() {
                 //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
-                    this.cardObject.createPopUpCard("layouts/popUpCards/roles_c.html");
+                    this.cardObject.createPopUpCard("layouts/popUpCards/permissions_c.html");
                 });
                 //Add onclick to searchButton for toggling search UI
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);

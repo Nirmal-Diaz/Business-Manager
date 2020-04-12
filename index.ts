@@ -174,14 +174,14 @@ app.route("/users")
         // });
     });
 
-//ROLES AND PERMISSIONS
+//PERMISSIONS AND ROLES
 app.route("/users/:userId/modules")
     .get((req, res, next) => {
         (() => {
             if (req.params.userId === "@me") {
                 return PermissionController.getPermittedModules(req.session.userId);
             } else {
-                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
+                return PermissionController.checkPermission(req.session.userId, "permissions", req.method)
                     .then(() => PermissionController.getPermittedModules(parseInt(req.params.userId)));
             }
         })().then(data => {
@@ -197,7 +197,7 @@ app.route("/users/:userId/modules/:moduleId")
             if (req.params.userId === "@me") {
                 return PermissionController.getOneByUser(parseInt(req.session.userId), parseInt(req.params.moduleId));
             } else {
-                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
+                return PermissionController.checkPermission(req.session.userId, "permissions", req.method)
                     .then(() => PermissionController.getOneByUser(parseInt(req.params.userId), parseInt(req.params.moduleId)));
             }
         })().then(data => {
@@ -209,7 +209,7 @@ app.route("/users/:userId/modules/:moduleId")
 
 app.route("/roles")
     .put(jsonParser, (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
             .then(() => RoleController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -217,7 +217,7 @@ app.route("/roles")
             });
     })
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
             .then(() => RoleController.getMany(req.query.keyword)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -227,7 +227,7 @@ app.route("/roles")
 
 app.route("/permissions")
     .put(jsonParser, (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "roles", req.method)
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
             .then(() => PermissionController.cerateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
