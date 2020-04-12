@@ -34,10 +34,9 @@
                 //Initialize form
                 this.form.init("user.json").then((form) => {
                     //Load roles and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/tables/role", "name", "id")
+                    FormUtil.createDropDownInputFragment("/roles?keyword=", "name", "id")
                     .then((dropDownInputFragment) => {
                         this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
-                        FormUtil.syncInputWithValue(this.form.getView(), this.form.getBindingObject().roleId, "1");
                     });
                 });
                 
