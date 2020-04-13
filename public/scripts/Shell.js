@@ -43,7 +43,7 @@ export class ShellInterface {
                     this.currentScreenController.getView().classList.replace("screen-popOut", "screen-popIn");
                 })
                 .catch(error => {
-                    this.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't ask the internal server if you are logged in. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    this.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't ask the internal server if you are logged in. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                 });
         });
     }
@@ -69,8 +69,7 @@ export class ShellInterface {
         return this.view;
     }
 
-    //EVENT HANDLER METHODS
-    //NOTE: This method returns a promise. So it is not synchronous
+    //NOTE: This method is asynchronous
     throwAlert(title, titleDescription, message, placeholder, trueButtonText, falseButtonText) {
         //Animate out alertOverlayView and set its title, titleDescription and message
         this.alertOverlayView.classList.replace("overlay-popOut", "overlay-popIn");
@@ -146,7 +145,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
             }).catch(error => {
-                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
             
         //Reset pattern
@@ -190,7 +189,7 @@ export class LogInScreenController extends ScreenController {
                         }
                     })
                     .catch(error => {
-                        window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't validate your username. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                        window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't validate your username. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                     });
             }
         });
@@ -242,7 +241,7 @@ export class WorkspaceScreenController extends ScreenController {
                 }
             })
             .catch(error => {
-                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         //Fetch all permittedModules
         fetch(`${location.protocol}//${location.host}/users/@me/modules`)
@@ -263,7 +262,7 @@ export class WorkspaceScreenController extends ScreenController {
                 }
             })
             .catch(error => {
-                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your permitted modules list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch your permitted modules list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         //Add a timer for updating time in the headerArea
         this.timeDisplay.innerText = PlatformUtil.getCurrentTime();
@@ -523,7 +522,7 @@ export class WorkspaceScreenController extends ScreenController {
                     }
                 })
                 .catch(error => {
-                    window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't fetch your permitted operations for the current module from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch your permitted operations for the current module from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                 });
         }
 
@@ -629,7 +628,7 @@ export class WorkspaceScreenController extends ScreenController {
                 }
             })
             .catch(error => {
-                window.shellInterface.throwAlert("Oops! We couldn't fetch that", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
     }
 }
