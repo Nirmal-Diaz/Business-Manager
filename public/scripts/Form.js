@@ -71,7 +71,7 @@ export class Form {
                         //Case: Field of the formObject have a binding input
                         //Load the value of the input to the binding field
                         bindingObject[key].value = this.view.querySelector(bindingObject[key].inputQuery).value;
-                        console.log("UPDATED", key, "WITH", bindingObject[key].value);
+                        // console.log("UPDATED", key, "WITH", bindingObject[key].value);
                     }
                 }
             }
@@ -115,7 +115,7 @@ export class Form {
                     //Case: Key holds a formField object
                     if (referenceBindingObject[key].regex !== null) {
                         //Case: formField object must have a pattern to match
-                        console.log("VALIDATED", key, "DATA", alteredBindingObject[key].value);
+                        // console.log("VALIDATED", key, "DATA", alteredBindingObject[key].value);
                         const regexp = new RegExp(referenceBindingObject[key].pattern);
                         if (!regexp.test(alteredBindingObject[key].value) || alteredBindingObject[key].value === "null") {
                             //Case: Invalid value found
