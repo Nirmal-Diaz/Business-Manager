@@ -132,6 +132,14 @@ export class PopUpCard {
         window.parent.shellInterface.getCurrentScreenController().addPopUpCard(this);
     }
 
+    getInterface() {
+        return this.popUpCardInterface;
+    }
+
+    getParentInterface() {
+        return this.parentCardInterface;
+    }
+
     getView() {
         return this.view;
     }

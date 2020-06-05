@@ -38,6 +38,10 @@ export class Card {
         return this.cardInterface.title;
     }
 
+    getInterface() {
+        return this.cardInterface;
+    }
+
     getLayoutFilePath() {
         return this.layoutFilePath;
     }
