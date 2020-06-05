@@ -10,12 +10,20 @@ import { Module } from "../entities/Module";
 import { Theme } from "../entities/Theme";
 import { UserPreference } from "../entities/UserPreference";
 import { Employee } from "../entities/Employee";
+import { Gender } from "../entities/Gender";
+import { CivilStatus } from "../entities/CivilStatus";
+import { EmployeeStatus } from "../entities/EmployeeStatus";
+import { Designation } from "../entities/Designation";
 
 export class TableController {
     static async getMany(tableName: string) {
         const generalEntities = {
             module: Module,
-            theme: Theme
+            theme: Theme,
+            gender: Gender,
+            civilStatus: CivilStatus,
+            employeeStatus: EmployeeStatus,
+            designation: Designation,
         };
 
         if (generalEntities.hasOwnProperty(tableName)) {
