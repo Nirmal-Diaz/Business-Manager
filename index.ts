@@ -10,7 +10,8 @@ import {
     TableController,
     FileController,
     RegistryController,
-    RoleController
+    RoleController,
+    EmployeeController
 } from "./src/controllers/Controller";
 /*
 =====================================================================================
@@ -124,6 +125,25 @@ app.route("/registries/:registryFile")
 Express.js: Routing (Both login and permission validation)
 =====================================================================================
 */
+//EMPLOYEES
+app.route("/employees")
+    .put(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //USERS
 app.route("/users/:userId")
     .get((req, res, next) => {

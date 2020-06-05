@@ -4,11 +4,12 @@ import * as fs from "fs";
 import { getRepository, Like } from "typeorm";
 import { User } from "../entities/User";
 import { Permission } from "../entities/Permission";
-import { UserRepository, RoleRepository } from "../repositories/Repository";
+import { UserRepository, RoleRepository, EmployeeRepository } from "../repositories/Repository";
 import { Role } from "../entities/Role";
 import { Module } from "../entities/Module";
 import { Theme } from "../entities/Theme";
 import { UserPreference } from "../entities/UserPreference";
+import { Employee } from "../entities/Employee";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -300,6 +301,45 @@ export class RoleController {
             return roles;
         } else {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
+        }
+    }
+}
+
+export class EmployeeController {
+    static async createOne(clientBindingObject) {
+        //Validate clientBindingObject
+        const serverObject = JSON.parse(fs.readFileSync("./src/registries/employee.json", "utf-8"));
+        ValidationController.validateBindingObject(serverObject, clientBindingObject);
+
+        return getRepository(Employee).save(serverObject as Employee)
+            .then(employee => employee)
+            .catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+    }
+
+    static async getOne(employeeId: number) {
+        const employee = await getRepository(Employee).findOne({
+            where: {
+                id: employeeId
+            },
+            relations: ["employee.gender", "employee.employeeStatus", "employee.civilStatus", "employee.designation"]
+        });
+
+        if (employee) {
+            return employee;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
+        }
+    }
+
+    static async getMany(keyword: string) {
+        const employees = await EmployeeRepository.search(keyword);
+
+        if (employees.length > 0) {
+            return employees;
+        } else {
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no employee matching the keyword you provided", technicalMessage: "No employees for given keyword" };
         }
     }
 }
