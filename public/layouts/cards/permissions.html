@@ -42,13 +42,13 @@
                 
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
-                        this.searchItems("", "All roles", "Double tap to find out more");
+                        this.searchItems("", "All roles", "Double tap to view and update");
                     } else if (event.key === 'Enter') {
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
                     }
                 });
                 
-                this.searchItems("", "Roles", "Double tap to find out more");
+                this.searchItems("", "Roles", "Double tap to view and update");
             }
 
             //EVENT HANDLER METHODS

@@ -43,13 +43,13 @@
                 //Add onkeypress to searchButtonInput for searching the card
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
-                        this.searchItems("", "All users", "Double tap to find out more");
+                        this.searchItems("", "All users", "Double tap to view and update");
                     } else if (event.key === 'Enter') {
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
                     }
                 });
                 //Initially load every user without specifying a keyword
-                this.searchItems("", "Users", "Double tap to find out more");
+                this.searchItems("", "Users", "Double tap to view and update");
             }
 
             //EVENT HANDLER METHODS
