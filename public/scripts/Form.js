@@ -5,6 +5,8 @@ export class Form {
     bindingObject = null;
     referenceBindingObject = null;
     invalidBindingObject = false;
+    submissionMethod = "";
+    submissionURL = "";
 
     view = null;
 
@@ -15,9 +17,11 @@ export class Form {
 
     //WARNING: This method returns a promise that resolves to "this". Use it asynchronously
     //NOTE: It is done because of there are other methods on popUpCardInterfaces that rely on the bindingObject
-    init(bindingObjectFileName) {
+    init(bindingObjectURL, submissionURL, submissionMethod) {
+        this.submissionURL = submissionURL;
+        this.submissionMethod = submissionMethod;
         //Load bindingObject
-        return fetch(`${location.protocol}//${location.host}/registries/${bindingObjectFileName}`)
+        return fetch(`${location.protocol}//${location.host}${bindingObjectURL}`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -131,7 +135,7 @@ export class Form {
         }
     }
 
-    async submit(requestPath) {
+    async submit() {
         this.updateBindingObject(this.bindingObject);
 
         //Reset invalidBindingObject flag
@@ -146,8 +150,8 @@ export class Form {
                 }
             };
         } else {
-            return fetch(`${location.protocol}//${location.host}${requestPath}`, {
-                method: "PUT",
+            return fetch(`${location.protocol}//${location.host}${this.submissionURL}`, {
+                method: this.submissionMethod,
                 headers: {
                     "Content-Type": "application/json"
                 },
