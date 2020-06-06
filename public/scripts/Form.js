@@ -25,9 +25,8 @@ export class Form {
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    //NOTE: response.data is a stringified JSON and must be parsed
-                    this.bindingObject = JSON.parse(response.data);
-                    this.referenceBindingObject = JSON.parse(response.data);
+                    this.bindingObject = response.data;
+                    this.referenceBindingObject = response.data;
                     //Add onkeyup to each textInput for validate itself in realtime
                     const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
                     for (const textInput of textInputs) {
@@ -41,7 +40,7 @@ export class Form {
                 }
             })
             .catch(error => {
-                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch required file from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch required binding object from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
     }
 
@@ -55,6 +54,20 @@ export class Form {
 
     getReferenceBindingObject() {
         return this.referenceBindingObject;
+    }
+
+    //NOTE: Use this before updating inputs of an "update" form
+    //NOTE: When requesting objects from the server, they are plain objects (objects with only data). But forms work with bindingObjects (objects that have validation and view binding capabilities along with data)
+    mapToBindingObject(bindingObject = this.bindingObject, plainObject) {
+        for (const key of Object.keys(bindingObject)) {
+            if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
+                //Case: Key holds an entire new formObject
+                this.mapToBindingObject(bindingObject[key].value, plainObject[key]);
+            } else {
+                //Case: Key holds a formField object
+                bindingObject[key].value = plainObject[key];
+            }
+        }
     }
 
     //WARNING: Doesn't work when deSyncedObject is an array
