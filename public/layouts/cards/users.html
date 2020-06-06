@@ -11,7 +11,8 @@
 
     <script type="module">
         //@ts-check
-        import {PlatformComponent, CardComponent} from "../../scripts/Utility.js";
+        import { PlatformComponent, CardComponent } from "../../scripts/Utility.js";
+        import { PopUpCard } from "../../scripts/PopUpCard.js";
 
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
@@ -25,7 +26,7 @@
         class CardInterface {
             cardObject = null;
             title = document.querySelector("title").textContent;
-            
+
             selectedCardDivisionSectorItems = [];
             quickAccessArea = document.getElementById("quickAccessArea");
             createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
@@ -36,7 +37,39 @@
             constructor() {
                 //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
-                    this.cardObject.createPopUpCard("layouts/popUpCards/users_c.html");
+                    //NOTE: Since we use custom procedure we cannot use this.cardObject.createPopUpCard()
+                    const existingPopUpCard = this.cardObject.isPopUpCardExists("layouts/popUpCards/users_cu.html");
+                    if (existingPopUpCard) {
+                        window.parent.shellInterface.throwAlert("Pop-up card already open", "Look in the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
+                    } else {
+                        const popUpCard = new PopUpCard("layouts/popUpCards/users_cu.html", this);
+                        this.cardObject.openPopUpCards.push(popUpCard);
+                        //Add onload to iframe for initializing update form
+                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                            popUpCard.popUpCardInterface.initCreateForm();
+                        });
+                    }
+                });
+                //Add onclick to updateUserButton for showing update user popUpCard
+                this.updateControls[0].addEventListener("click", () => {
+                    if (this.selectedCardDivisionSectorItems.length === 0) {
+                        window.parent.shellInterface.throwAlert("Update what?", "Select an item to update", null, null, "OK", null);
+                    } else if (this.selectedCardDivisionSectorItems.length > 1) {
+                        window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
+                    } else {
+                        //NOTE: Since we use custom procedure we cannot use this.cardObject.createPopUpCard()
+                        const existingPopUpCard = this.cardObject.isPopUpCardExists("layouts/popUpCards/users_cu.html");
+                        if (existingPopUpCard) {
+                            window.parent.shellInterface.throwAlert("Pop-up card already open", "Look in the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
+                        } else {
+                            const popUpCard = new PopUpCard("layouts/popUpCards/users_cu.html", this);
+                            this.cardObject.openPopUpCards.push(popUpCard);
+                            //Add onload to iframe for initializing update form
+                            popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                                popUpCard.popUpCardInterface.initUpdateForm(this.selectedCardDivisionSectorItems[0]);
+                            });
+                        }
+                    }
                 });
                 //Add onclick to searchButton for toggling search UI
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
@@ -56,28 +89,29 @@
             searchItems(keyword, titleText, titleDescriptionText) {
                 //Fetch registered users of the system
                 fetch(`${location.protocol}//${location.host}/users?keyword=${keyword}`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        //Get the main cardDivision
-                        const cardDivision = document.getElementById("mainCardDivision");
-                        cardDivision.innerHTML = "";
-                        const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                        //Create a cardDivisionSector for each user
-                        for (const item of response.data) {
-                            const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.userPreference.avatar.data)]));
-                            //NOTE: Bounded method is immediately invoked
-                            const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.username, [item.role.name])();
-                            cardDivisionSector.appendChild(cardDivisionSectorItem);
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            //Get the main cardDivision
+                            const cardDivision = document.getElementById("mainCardDivision");
+                            cardDivision.innerHTML = "";
+                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+                            //Create a cardDivisionSector for each user
+                            for (const item of response.data) {
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.userPreference.avatar.data)]));
+                                //NOTE: Bounded method is immediately invoked
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.username, [item.role.name])();
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                cardDivisionSector.appendChild(cardDivisionSectorItem);
+                            }
+                            cardDivision.appendChild(cardDivisionSector);
+                        } else {
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
-                        cardDivision.appendChild(cardDivisionSector);
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch users list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                });
+                    })
+                    .catch(error => {
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch users list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    });
             }
         }
     </script>
@@ -89,7 +123,7 @@
 
     <!-- quickAccessArea -->
     <div id="quickAccessArea" style="display: none;">
-            <div id="createControlsContainer">
+        <div id="createControlsContainer">
             <!-- createUser -->
             <button class="buttonGlyph">
                 <span>C</span>
