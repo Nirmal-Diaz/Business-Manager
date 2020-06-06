@@ -114,7 +114,7 @@ app.route("/tables/:tableName")
 
 app.route("/registries/:registryFile")
     .get((req, res, next) => {
-        RegistryController.getFile(req.params.registryFile).then(data => {
+        RegistryController.getParsedFile(req.params.registryFile).then(data => {
             res.locals.data = data; next();
         }).catch(error => {
             res.locals.error = error; next();
