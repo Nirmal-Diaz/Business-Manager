@@ -122,6 +122,10 @@ export class PopUpCard {
             for (const closeButton of this.popUpCardInterface.closeButtons) {
                 closeButton.addEventListener("click", this.close.bind(this));
             }
+            //Execute after load procedure if defined
+            if (this.popUpCardInterface.executeAfterLoad) {
+                this.popUpCardInterface.executeAfterLoad();
+            }
         });
         //Set the popUpCardView's id to match its iFrame's src
         this.view.id = layoutFilePath.slice(layoutFilePath.lastIndexOf("/") + 1, -5);
