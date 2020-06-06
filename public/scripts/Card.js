@@ -76,7 +76,7 @@ export class Card {
 
     createPopUpCard(popUpCardLayoutFilePath) {
         if (this.isPopUpCardExists(popUpCardLayoutFilePath)) {
-            window.parent.shellInterface.throwAlert("Pop-up card already open", "Scroll the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
+            window.parent.shellInterface.throwAlert("Pop-up card already open", "Look in the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
         } else {
             const popUpCard = new PopUpCard(popUpCardLayoutFilePath, this.cardInterface);
             this.openPopUpCards.push(popUpCard);
