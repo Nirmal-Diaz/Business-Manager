@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Update User</title>
 
     <link rel="stylesheet" href="../../stylesheets/platform_styleVariables_turquoise.css" />
     <link rel="stylesheet" href="../../stylesheets/platform_styles.css">
@@ -13,7 +13,7 @@
         //@ts-check
         import { FormUtil } from "../../scripts/Utility.js";
         import { Form } from "../../scripts/Form.js";
-        
+
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
             event.preventDefault();
@@ -29,29 +29,59 @@
             form = new Form(document.querySelector("form"));
 
             closeButtons = document.querySelectorAll(".closeButton");
+            selectedCardDivisionSectorItem = null;
 
             constructor() {
-                //Initialize form
-                this.form.init("user.json").then((form) => {
-                    //Load roles and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/roles?keyword=", "name", "id")
-                    .then((dropDownInputFragment) => {
-                        this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
-                    });
-                });
-                
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit("/users").then(submission => {
+                    this.form.submit().then(submission => {
                         if (submission.status) {
                             //Refresh (not reload) the parentCardInterface
-                            this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new user", "Double tap to find out more");
+                            this.popUpCardObject.parentCardInterface.searchItems("", "Recently updated a user", "Double tap to view and update");
                             //Close this popUpCard
                             this.popUpCardObject.close();
                         } else {
                             window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
                         }
                     });
+                });
+            }
+
+            initCreateForm() {
+                //Initialize form
+                this.form.init("/registries/user.json", "/users", "PUT").then((form) => {
+                    //Load roles and select option with value "1"
+                    FormUtil.createDropDownInputFragment("/roles?keyword=", "name", "id")
+                        .then((dropDownInputFragment) => {
+                            this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
+                        });
+                });
+            }
+
+            initUpdateForm(selectedCardDivisionSectorItem) {
+                //Cache the selectedCardDivisionSectorItem to replace it after the update
+                this.selectedCardDivisionSectorItem = selectedCardDivisionSectorItem;
+                const selectedUserId = this.selectedCardDivisionSectorItem.dataset.bindingObjectId;
+
+                this.form.init(`/registries/user.json`, `/users/${selectedUserId}`, "POST").then((form) => {
+                    //Load plainObject
+                    fetch(`${location.protocol}//${location.host}/users/${selectedUserId}`)
+                        .then(response => response.json())
+                        .then(response => {
+                            this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                        })
+                        .catch(error => {
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required user from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                        }).then(() => {
+                            //Load roles and select option with value "1"
+                            FormUtil.createDropDownInputFragment("/roles?keyword=", "name", "id")
+                                .then((dropDownInputFragment) => {
+                                    this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment);
+
+                                    //Update the inputs according to the binding object
+                                    this.form.updateInputs(this.form.getBindingObject());
+                                });
+                        });
                 });
             }
         }
@@ -84,13 +114,13 @@
                 </div>
 
                 <div class="titleContainer">
-                    <h1 class="title">Employee Number</h1>
+                    <h1 class="title">Employee Code</h1>
                 </div>
                 <p>Every user has a corresponding employee</p>
                 <div class="inputContainer">
-                    <input id="employeeCode" type="text" class="input textInput" placeholder="eg: 1125" >
+                    <input id="employeeCode" type="text" class="input textInput" placeholder="eg: PCB1125">
                 </div>
-    
+
                 <div class="titleContainer">
                     <h1 class="title">Role</h1>
                 </div>
@@ -98,7 +128,7 @@
                 <p>If the role you want isn't listed below, go and add it in before proceeding</p>
                 <div class="inputContainer">
                     <select id="roleId" class="input dropDownInput">
-    
+
                     </select>
                 </div>
             </form>
