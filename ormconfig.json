@@ -6,7 +6,7 @@
         "port": 3306,
         "username": "root",
         "password": "root",
-        "database": "d",
+        "database": "business_manager",
         "synchronize": false,
         "entities": [
             "src/entities/*.ts"
