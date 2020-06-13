@@ -37,14 +37,9 @@
             constructor() {
                 //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
-                    //NOTE: Since we use custom procedure we cannot use this.cardObject.createPopUpCard()
-                    const existingPopUpCard = this.cardObject.isPopUpCardExists("layouts/popUpCards/users_cu.html");
-                    if (existingPopUpCard) {
-                        window.parent.shellInterface.throwAlert("Pop-up card already open", "Look in the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
-                    } else {
-                        const popUpCard = new PopUpCard("layouts/popUpCards/users_cu.html", this);
-                        this.cardObject.openPopUpCards.push(popUpCard);
-                        //Add onload to iframe for initializing update form
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
+                    if (popUpCard !== null) {
                         popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                             popUpCard.popUpCardInterface.initCreateForm();
                         });
@@ -57,14 +52,9 @@
                     } else if (this.selectedCardDivisionSectorItems.length > 1) {
                         window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
                     } else {
-                        //NOTE: Since we use custom procedure we cannot use this.cardObject.createPopUpCard()
-                        const existingPopUpCard = this.cardObject.isPopUpCardExists("layouts/popUpCards/users_cu.html");
-                        if (existingPopUpCard) {
-                            window.parent.shellInterface.throwAlert("Pop-up card already open", "Look in the workspace to find it", "An instance of the pop-up card that you are trying to open already exists. You aren't allowed to open more than one instance of a pop-up card", null, "OK", null);
-                        } else {
-                            const popUpCard = new PopUpCard("layouts/popUpCards/users_cu.html", this);
-                            this.cardObject.openPopUpCards.push(popUpCard);
-                            //Add onload to iframe for initializing update form
+                        //Add onload to iframe for initializing update form
+                        const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
+                        if (popUpCard !== null) {
                             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                                 popUpCard.popUpCardInterface.initUpdateForm(this.selectedCardDivisionSectorItems[0]);
                             });

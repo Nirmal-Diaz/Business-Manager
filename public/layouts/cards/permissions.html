@@ -35,7 +35,13 @@
 
             constructor() {
                 this.createControls[0].addEventListener("click", () => {
-                    this.cardObject.createPopUpCard("layouts/popUpCards/permissions_c.html");
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/permissions_cu.html");
+                    if (popUpCard !== null) {
+                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                            popUpCard.popUpCardInterface.initCreateForm();
+                        });
+                    }
                 });
                 
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
