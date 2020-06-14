@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permission } from "./Permission";
 
-@Entity("module", { schema: "d" })
+@Entity("module", { schema: "business_manager" })
 export class Module {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

@@ -3,7 +3,7 @@ import { Module } from "./Module";
 import { Role } from "./Role";
 
 @Index("fk_user_has_module_module1_idx", ["moduleId"], {})
-@Entity("permission", { schema: "d" })
+@Entity("permission", { schema: "business_manager" })
 export class Permission {
   @Column("int", { primary: true, name: "role_id" })
   roleId: number;

@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permission } from "./Permission";
 import { User } from "./User";
 
-@Entity("role", { schema: "d" })
+@Entity("role", { schema: "business_manager" })
 export class Role {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

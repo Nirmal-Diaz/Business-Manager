@@ -14,6 +14,7 @@ import { Gender } from "../entities/Gender";
 import { CivilStatus } from "../entities/CivilStatus";
 import { EmployeeStatus } from "../entities/EmployeeStatus";
 import { Designation } from "../entities/Designation";
+import { isArray } from "util";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -173,6 +174,7 @@ export class PermissionController {
             PUT: 0,
             GET: 1,
             PATCH: 2,
+            POST: 2,
             DELETE: 3
         }
 
@@ -237,8 +239,40 @@ export class UserController {
         }
     }
 
-    static async deleteOne(username) {
-        // return DAO.GeneralDAO.deleteRowsByExactMatch("user", "username", username);
+    static async updateOne(userClientObject) {
+        //Validate User
+        const userOriginalObject = await getRepository(User).findOne({
+            id: userClientObject.id.value
+        });
+
+        if (userOriginalObject) {
+            const userServerObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
+            ValidationController.validateBindingObject(userServerObject, userClientObject);
+            ValidationController.updateOriginalObject(userOriginalObject, userServerObject);
+
+            return await getRepository(User).save(userOriginalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user that matches your arguments", technicalMessage: "No user for given arguments" };
+        }
+    }
+
+    static async deleteOne(userId: number) {
+        //User preference must be deleted first
+        await UserPreferenceController.deleteOne(userId).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
+
+        const user = await getRepository(User).findOne({
+            id: userId
+        });
+
+        if (user) {
+            return getRepository(User).delete(user);
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
+        }
     }
 }
 
@@ -269,8 +303,18 @@ export class UserPreferenceController {
         // }
     }
 
-    static async deleteOne(username) {
-        // return DAO.GeneralDAO.deleteRowsByExactMatch("userPreference", "username", username);
+    static async deleteOne(userId: number) {
+        const userPreference = await getRepository(UserPreference).findOne({
+            where: {
+                userId: userId
+            }
+        });
+
+        if (userPreference) {
+            return getRepository(UserPreference).delete(userPreference);
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
+        }
     }
 }
 
@@ -353,7 +397,7 @@ export class EmployeeController {
 }
 
 export class ValidationController {
-    //WARNING: Not an async method. This method directly alters the parameters provided
+    //WARNING: This method directly alters the parameters provided
     static validateBindingObject(serverObject, clientObject) {
         //NOTE: Validation is done considering the serverBindingObject as it always has the correct structure
         if (Array.isArray(serverObject)) {
@@ -401,6 +445,19 @@ export class ValidationController {
                 } else {
                     throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form objects detected" };
                 }
+            }
+        }
+    }
+
+    //WARNING: This method requires a validated serverBindingObject
+    static updateOriginalObject(originalObject, serverObject) {
+        for (const key of Object.keys(serverObject)) {
+            if (typeof serverObject[key] === "object" && !Array.isArray(serverObject[key])) {
+                //Case: Key holds an entire new formObject
+                this.updateOriginalObject(originalObject[key], serverObject[key]);
+            } else {
+                //Case: Key holds just a value
+                originalObject[key] = serverObject[key];
             }
         }
     }

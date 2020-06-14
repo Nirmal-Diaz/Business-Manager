@@ -19,7 +19,7 @@ import { User } from "./User";
 @Index("fk_employee_civil_status1_idx", ["civilStatusId"], {})
 @Index("fk_employee_employee_status1_idx", ["employeeStatusId"], {})
 @Index("fk_employee_designation1_idx", ["designationId"], {})
-@Entity("employee", { schema: "d" })
+@Entity("employee", { schema: "business_manager" })
 export class Employee {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

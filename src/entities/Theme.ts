@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserPreference } from "./UserPreference";
 
-@Entity("theme", { schema: "d" })
+@Entity("theme", { schema: "business_manager" })
 export class Theme {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

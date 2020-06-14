@@ -14,7 +14,7 @@ import { Role } from "./Role";
 @Index("username_UNIQUE", ["username"], { unique: true })
 @Index("fk_user_occupation1_idx", ["roleId"], {})
 @Index("fk_user_employee1_idx", ["employeeCode"], {})
-@Entity("user", { schema: "d" })
+@Entity("user", { schema: "business_manager" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

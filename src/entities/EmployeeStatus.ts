@@ -8,7 +8,7 @@ import {
 import { Employee } from "./Employee";
 
 @Index("name_UNIQUE", ["name"], { unique: true })
-@Entity("employee_status", { schema: "d" })
+@Entity("employee_status", { schema: "business_manager" })
 export class EmployeeStatus {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;

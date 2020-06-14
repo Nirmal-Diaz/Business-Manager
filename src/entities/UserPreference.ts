@@ -10,7 +10,7 @@ import { User } from "./User";
 import { Theme } from "./Theme";
 
 @Index("fk_userPreference_theme1_idx", ["themeId"], {})
-@Entity("user_preference", { schema: "d" })
+@Entity("user_preference", { schema: "business_manager" })
 export class UserPreference {
   @Column("int", { primary: true, name: "user_id" })
   userId: number;
