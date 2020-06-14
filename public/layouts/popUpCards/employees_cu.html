@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+
+    <link rel="stylesheet" href="../../stylesheets/platform_styleVariables_turquoise.css" />
+    <link rel="stylesheet" href="../../stylesheets/platform_styles.css">
+    <link rel="stylesheet" href="../../stylesheets/popUpCard_styles.css" />
+
+    <script type="module">
+        //@ts-check
+        import { FormUtil } from "../../scripts/Utility.js";
+        import { Form } from "../../scripts/Form.js";
+
+        //Prevent contextMenu
+        window.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+        //Add onload to window for initializing popUpCardInterface
+        window.addEventListener("load", () => {
+            window.popUpCardInterface = new PopUpCardInterface();
+        });
+
+        class PopUpCardInterface {
+            popUpCardObject = null;
+            title = document.querySelector("title").textContent;
+            form = new Form(document.querySelector("form"));
+
+            closeButtons = document.querySelectorAll(".closeButton");
+
+            constructor() {
+                document.getElementById("saveButton").addEventListener("click", () => {
+                    this.form.submit().then(submission => {
+                        if (submission.status) {
+                            //Refresh (not reload) the parentCardInterface
+                            if (this.form.getSubmissionMethod() === "PUT") {
+                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new employee", "Double tap to view and update");
+                            } else if (this.form.getSubmissionMethod() === "POST") {
+                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated an employee recently", "Double tap to view");
+                            }
+
+                            this.popUpCardObject.close();
+                        } else {
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                        }
+                    });
+                });
+            }
+
+            initInputs() {
+                return Promise.all([
+                    //Load genders and select option with value "1"
+                    FormUtil.createDropDownInputFragment("/tables/gender", "name", "id")
+                        .then(dropDownInputFragment => this.form.getView().querySelector("#genderId").appendChild(dropDownInputFragment)),
+                    //Load civil statuses and select option with value "1"
+                    FormUtil.createDropDownInputFragment("/tables/civilStatus", "name", "id")
+                        .then(dropDownInputFragment => this.form.getView().querySelector("#civilStatusId").appendChild(dropDownInputFragment)),
+                    //Load employee statuses and select option with value "1"
+                    FormUtil.createDropDownInputFragment("/tables/employeeStatus", "name", "id")
+                        .then(dropDownInputFragment => this.form.getView().querySelector("#employeeStatusId").appendChild(dropDownInputFragment)),
+                    //Load designations and select option with value "1"
+                    FormUtil.createDropDownInputFragment("/tables/designation", "name", "id")
+                        .then(dropDownInputFragment => this.form.getView().querySelector("#designationId").appendChild(dropDownInputFragment)),
+                ]);
+            }
+
+            initCreateForm() {
+                return this.form.init("/registries/employee.json", "/employees", "PUT");
+            }
+
+            initUpdateForm(selectedCardDivisionSectorItem) {
+                const selectedEmployeeId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
+
+                return this.form.init(`/registries/employee.json`, `/employees/${selectedEmployeeId}`, "POST").then((form) => {
+                    fetch(`${location.protocol}//${location.host}/employees/${selectedEmployeeId}`)
+                        .then(response => response.json())
+                        .then(response => {
+                            this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                            //Update the inputs according to the binding object
+                            this.form.updateInputs(this.form.getBindingObject());
+                        })
+                        .catch(error => {
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required user from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                        });
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="popUpDivision">
+        <!-- formTitleContainer -->
+        <div class="formTitleContainer">
+            <div class="titleContainer">
+                <div class="title">Create Employee</div>
+            </div>
+        </div>
+
+        <!-- formsContainer -->
+        <div class="formsContainer">
+            <form>
+                <div class="titleContainer">
+                    <h1 class="title">Code</h1>
+                </div>
+                <ul>
+                    <li>Must be unique</li>
+                    <li>Must consist only of letters and numbers</li>
+                    <li>Both uppercase and lowercase letters are allowed</li>
+                    <li>No spaces are allowed</li>
+                </ul>
+                <div class="inputContainer">
+                    <input id="code" type="text" class="input textInput" placeholder="eg: PCB1125" />
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Full Name</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="fullName" type="text" class="input textInput" placeholder="eg: John Adam Doe">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Preferred Name</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="preferredName" type="text" class="input textInput" placeholder="eg: John">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Birth Date</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="birthDate" type="text" class="input textInput" placeholder="eg: 1970.01.01">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">NIC Number</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="nicNumber" type="text" class="input textInput" placeholder="eg: 952000662V">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Address</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="address" type="text" class="input textInput"
+                        placeholder="eg: Broadway New York, NY 10012">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Mobile Number</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="mobile" type="text" class="input textInput" placeholder="0711234567">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Landline Number</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="land" type="text" class="input textInput" placeholder="0331234567">
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Gender</h1>
+                </div>
+                <div class="inputContainer">
+                    <select id="genderId" class="input dropDownInput">
+
+                    </select>
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Civil Status</h1>
+                </div>
+                <div class="inputContainer">
+                    <select id="civilStatusId" class="input dropDownInput">
+
+                    </select>
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Employee Status</h1>
+                </div>
+                <div class="inputContainer">
+                    <select id="employeeStatusId" class="input dropDownInput">
+
+                    </select>
+                </div>
+
+                <div class="titleContainer">
+                    <h1 class="title">Designation</h1>
+                </div>
+                <div class="inputContainer">
+                    <select id="designationId" class="input dropDownInput">
+
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- formControlsContainer -->
+        <div class="formControlsContainer">
+            <button id="saveButton" class="buttonText buttonText-link">SAVE</button>
+            <button class="buttonText buttonText-link">CLEAR</button>
+            <button class="buttonText buttonText-link closeButton">CLOSE</button>
+        </div>
+    </div>
+</body>
+
+</html>

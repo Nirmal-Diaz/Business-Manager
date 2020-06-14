@@ -11,8 +11,7 @@ import {
     FileController,
     RegistryController,
     RoleController,
-    EmployeeController,
-    UserPreferenceController
+    EmployeeController
 } from "./src/controllers/Controller";
 /*
 =====================================================================================
@@ -144,6 +143,24 @@ app.route("/employees")
             });
     });
 
+app.route("/employees/:employeeId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.getOne(parseInt(req.params.employeeId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //USERS
 app.route("/users/:userId")
     .get((req, res, next) => {
@@ -200,21 +217,6 @@ app.route("/users")
             }).catch(error => {
                 res.locals.error = error; next();
             });
-    })
-    .delete(jsonParser, (req, res) => {
-        // controller.Permission.checkOperationPermissions(req.session.username, "users", req.method).then(() => {
-
-        // }).then(() => {
-        //     res.json({
-        //         status: true
-        //     });
-        // }).catch((error) => {
-        //     console.log("System error resolved:", error);
-        //     res.json({
-        //         status: false,
-        //         error: error
-        //     });
-        // });
     });
 
 //PERMISSIONS AND ROLES

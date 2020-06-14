@@ -375,7 +375,7 @@ export class EmployeeController {
             where: {
                 id: employeeId
             },
-            relations: ["employee.gender", "employee.employeeStatus", "employee.civilStatus", "employee.designation"]
+            relations: ["gender", "employeeStatus", "civilStatus", "designation"]
         });
 
         if (employee) {
@@ -392,6 +392,25 @@ export class EmployeeController {
             return employees;
         } else {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no employee matching the keyword you provided", technicalMessage: "No employees for given keyword" };
+        }
+    }
+
+    static async updateOne(employeeClientObject) {
+        //Validate User
+        const employeeOriginalObject = await getRepository(Employee).findOne({
+            id: employeeClientObject.id.value
+        });
+
+        if (employeeOriginalObject) {
+            const employeeServerObject = JSON.parse(fs.readFileSync("./src/registries/employee.json", "utf-8"));
+            ValidationController.validateBindingObject(employeeServerObject, employeeClientObject);
+            ValidationController.updateOriginalObject(employeeOriginalObject, employeeServerObject);
+
+            return await getRepository(Employee).save(employeeOriginalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
         }
     }
 }

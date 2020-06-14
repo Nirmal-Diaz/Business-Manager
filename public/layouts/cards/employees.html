@@ -34,13 +34,19 @@
             deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
-                //Add onclick to createUserButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
-                    this.cardObject.createPopUpCard("layouts/popUpCards/employees_c.html");
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/employees_cu.html");
+                    if (popUpCard !== null) {
+                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                            popUpCard.popUpCardInterface.initInputs().then(() => {
+                                popUpCard.popUpCardInterface.initCreateForm();
+                            });
+                        });
+                    }
                 });
-                //Add onclick to searchButton for toggling search UI
+
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
-                //Add onkeypress to searchButtonInput for searching the card
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
                         this.searchItems("", "All employees", "Double tap to view and update");
@@ -48,8 +54,30 @@
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
                     }
                 });
-                //Initially load every user without specifying a keyword
+
+                this.updateControls[0].addEventListener("click", () => {
+                    if (this.selectedCardDivisionSectorItems.length === 0) {
+                        window.parent.shellInterface.throwAlert("Update what?", "Select an item to update", null, null, "OK", null);
+                    } else if (this.selectedCardDivisionSectorItems.length > 1) {
+                        window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
+                    } else {
+                        this.updateItem(this.selectedCardDivisionSectorItems[0]);
+                    }
+                });
+                
                 this.searchItems("", "Employees", "Double tap to view and update");
+            }
+
+            updateItem(selectedCardDivisionSectorItem) {
+                //Add onload to iframe for initializing update form
+                const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/employees_cu.html");
+                if (popUpCard !== null) {
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
+                        });
+                    });
+                }
             }
 
             //EVENT HANDLER METHODS
@@ -64,6 +92,8 @@
                         for (const item of response.data) {
                             const iconURL = `${location.protocol}//${location.host}/images/icon_user_default.png`;
                             const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.preferredName, [item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name])();
+                            cardDivisionSectorItem.addEventListener("dblclick", this.updateItem.bind(this, cardDivisionSectorItem));
+                            cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                             cardDivisionSector.appendChild(cardDivisionSectorItem);
                         }
                         cardDivision.appendChild(cardDivisionSector);
