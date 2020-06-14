@@ -67,14 +67,14 @@
             }
 
             initCreateForm() {
-                return this.form.init("/registries/employee.json", "/employees", "PUT");
+                this.form.init("/registries/employee.json", "/employees", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
-                const selectedEmployeeId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
+                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
 
-                return this.form.init(`/registries/employee.json`, `/employees/${selectedEmployeeId}`, "POST").then((form) => {
-                    fetch(`${location.protocol}//${location.host}/employees/${selectedEmployeeId}`)
+                this.form.init("/registries/employee.json", `/employees/${selectedItemId}`, "POST").then((form) => {
+                    fetch(`${location.protocol}//${location.host}/employees/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
                             this.form.mapToBindingObject(this.form.getBindingObject(), response.data);

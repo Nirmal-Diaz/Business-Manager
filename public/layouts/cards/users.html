@@ -35,7 +35,7 @@
             deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
-                //Add onclick to createUserButton for showing create user popUpCard
+                //Add onclick to createButton for showing create user popUpCard
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
@@ -59,7 +59,7 @@
                     }
                 });
 
-                //Add onclick to updateUserButton for showing update user popUpCard
+                //Add onclick to updateButton for showing update user popUpCard
                 this.updateControls[0].addEventListener("click", () => {
                     if (this.selectedCardDivisionSectorItems.length === 0) {
                         window.parent.shellInterface.throwAlert("Update what?", "Select an item to update", null, null, "OK", null);
@@ -70,7 +70,7 @@
                     }
                 });
 
-                //Add onclick to deleteUserButton for delete the selected user
+                //Add onclick to deleteButton for delete the selected user
                 this.deleteControls[0].addEventListener("click", () => {
                     if (this.selectedCardDivisionSectorItems.length === 0) {
                         window.parent.shellInterface.throwAlert("Delete what?", "Select an item to delete", null, null, "OK", null);
@@ -93,8 +93,7 @@
                                             }
                                         })
                                         .catch(error => {
-                                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required user from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                                        }).then(() => {
+                                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't delete the required user from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                                         });
                                 }
                             });

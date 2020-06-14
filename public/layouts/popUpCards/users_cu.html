@@ -63,16 +63,17 @@
 
             initCreateForm() {
                 //Initialize form
-                return this.form.init("/registries/user.json", "/users", "PUT");
+                this.form.init("/registries/user.json", "/users", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
                 //Cache the selectedCardDivisionSectorItem to replace it after the update
-                const selectedUserId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
+                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
 
-                return this.form.init(`/registries/user.json`, `/users/${selectedUserId}`, "POST").then((form) => {
+                //Initialize form
+                this.form.init("/registries/user.json", `/users/${selectedItemId}`, "POST").then((form) => {
                     //Load plainObject
-                    fetch(`${location.protocol}//${location.host}/users/${selectedUserId}`)
+                    fetch(`${location.protocol}//${location.host}/users/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
                             this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
