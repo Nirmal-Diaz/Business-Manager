@@ -48,6 +48,10 @@ export class Form {
         return this.view;
     }
 
+    getSubmissionMethod() {
+        return this.submissionMethod;
+    }
+
     getBindingObject() {
         return this.bindingObject;
     }

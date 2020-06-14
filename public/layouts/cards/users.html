@@ -41,7 +41,9 @@
                     const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
                     if (popUpCard !== null) {
                         popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                            popUpCard.popUpCardInterface.initCreateForm();
+                            popUpCard.popUpCardInterface.initInputs().then(() => {
+                                popUpCard.popUpCardInterface.initCreateForm();
+                            });
                         });
                     }
                 });
@@ -64,13 +66,7 @@
                     } else if (this.selectedCardDivisionSectorItems.length > 1) {
                         window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
                     } else {
-                        //Add onload to iframe for initializing update form
-                        const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
-                        if (popUpCard !== null) {
-                            popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                                popUpCard.popUpCardInterface.initUpdateForm(this.selectedCardDivisionSectorItems[0]);
-                            });
-                        }
+                        this.updateItem(this.selectedCardDivisionSectorItems[0]);
                     }
                 });
 
@@ -109,6 +105,18 @@
                 this.searchItems("", "Users", "Double tap to view and update");
             }
 
+            updateItem(selectedCardDivisionSectorItem) {
+                //Add onload to iframe for initializing update form
+                const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
+                if (popUpCard !== null) {
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
+                        });
+                    });
+                }
+            }
+
             //EVENT HANDLER METHODS
             searchItems(keyword, titleText, titleDescriptionText) {
                 //Fetch registered users of the system
@@ -125,6 +133,7 @@
                                 const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.userPreference.avatar.data)]));
                                 //NOTE: Bounded method is immediately invoked
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.username, [item.role.name])();
+                                cardDivisionSectorItem.addEventListener("dblclick", this.updateItem.bind(this, cardDivisionSectorItem));
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
