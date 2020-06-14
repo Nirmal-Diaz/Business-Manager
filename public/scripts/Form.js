@@ -59,6 +59,14 @@ export class Form {
     //NOTE: Use this before updating inputs of an "update" form
     //NOTE: When requesting objects from the server, they are plain objects (objects with only data). But forms work with bindingObjects (objects that have validation and view binding capabilities along with data)
     mapToBindingObject(bindingObject = this.bindingObject, plainObject) {
+        //NOTE: Binding object doesn't have an "id" formField. But the plain object has it
+        //Add the id formField to bindingObject
+        bindingObject.id = {
+            inputQuery: null,
+            inputClass: null,
+            pattern: "^[1-9]{1,}$",
+            value: plainObject.id
+        }
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
                 //Case: Key holds an entire new formObject

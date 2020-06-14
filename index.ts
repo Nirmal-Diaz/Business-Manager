@@ -11,7 +11,8 @@ import {
     FileController,
     RegistryController,
     RoleController,
-    EmployeeController
+    EmployeeController,
+    UserPreferenceController
 } from "./src/controllers/Controller";
 /*
 =====================================================================================
@@ -88,7 +89,6 @@ app.route("/sessions")
         });
     });
 
-//TODO: Change path to honor REST
 app.route("/users/:username/avatar")
     .get((req, res, next) => {
         UserController.getOneByUsername(req.params.username).then(data => {
@@ -159,6 +159,29 @@ app.route("/users/:userId")
         }).catch(error => {
             res.locals.error = error; next();
         });
+    })
+    .post(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
+            .then(() => UserController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
+            .then(() => {
+                if (parseInt(req.params.userId) === req.session.userId) {
+                    throw { title: "Cannot delete self", titleDescription: "Ask another user to delete you", message: "You cannot delete a user when logged in as that user. You can long in as another user to delete this user", technicalMessage: "Attempted self user deletion" };
+                } else {
+                    return UserController.deleteOne(parseInt(req.params.userId));
+                }
+            })
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
     });
 
 app.route("/users")

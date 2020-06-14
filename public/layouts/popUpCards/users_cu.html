@@ -32,6 +32,7 @@
             selectedCardDivisionSectorItem = null;
 
             constructor() {
+                //TODO: Only update the selectedCardDivisionSectorItem when updating an item
                 //Add onclick to saveButton for submitting the form
                 document.getElementById("saveButton").addEventListener("click", () => {
                     this.form.submit().then(submission => {
