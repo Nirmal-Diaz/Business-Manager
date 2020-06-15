@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import * as fs from "fs";
 
-import { getRepository, Like } from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "../entities/User";
 import { Permission } from "../entities/Permission";
 import { UserRepository, RoleRepository, EmployeeRepository } from "../repositories/Repository";
@@ -14,7 +14,6 @@ import { Gender } from "../entities/Gender";
 import { CivilStatus } from "../entities/CivilStatus";
 import { EmployeeStatus } from "../entities/EmployeeStatus";
 import { Designation } from "../entities/Designation";
-import { isArray } from "util";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -92,10 +91,10 @@ export class PermissionController {
         clientBindingObject = tempClientBindingObject;
 
         //Validate clientBindingObject
-        const serverBindingObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
-        ValidationController.validateBindingObject(serverBindingObject, clientBindingObject);
+        const serverObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
+        ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        return getRepository(Permission).save(serverBindingObject as Permission[])
+        return getRepository(Permission).save(serverObject as Permission[])
             .catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
             });
@@ -184,15 +183,38 @@ export class PermissionController {
             throw { title: "Whoa! Stop right there", titleDescription: "Contact your system administrator", message: `Looks like you don't have permissions to ${operationName.toLowerCase()} items in the current module`, technicalMessage: "Operation permissions denied" };
         }
     }
+
+    //WARNING: This method deletes current permissions and recreates new ones
+    static async updateMany(clientBindingObject) {
+        //Remove old permission objects and create new ones
+        return PermissionController.deleteMany(parseInt(clientBindingObject[0].roleId.value))
+        .then(() => PermissionController.cerateMany(clientBindingObject));
+    }
+
+    static async deleteMany(roleId: number) {
+        const permissions = await getRepository(Permission).find({
+            where: {
+                roleId: roleId
+            }
+        });
+
+        if (permissions.length > 0) {
+            return getRepository(Permission).remove(permissions).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find any permissions that matches your arguments", technicalMessage: "No permissions for given arguments" };
+        }
+    }
 }
 
 export class UserController {
-    static async createOne(userClientObject) {
+    static async createOne(clientBindingObject) {
         //Validate User
-        const userServerObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
-        ValidationController.validateBindingObject(userServerObject, userClientObject);
+        const serverObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
+        ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        return getRepository(User).save(userServerObject as User)
+        return getRepository(User).save(serverObject as User)
             .then(user => UserPreferenceController.createOne(user))
             .catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
@@ -239,18 +261,17 @@ export class UserController {
         }
     }
 
-    static async updateOne(userClientObject) {
-        //Validate User
-        const userOriginalObject = await getRepository(User).findOne({
-            id: userClientObject.id.value
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(User).findOne({
+            id: clientBindingObject.id.value
         });
 
-        if (userOriginalObject) {
-            const userServerObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
-            ValidationController.validateBindingObject(userServerObject, userClientObject);
-            ValidationController.updateOriginalObject(userOriginalObject, userServerObject);
+        if (originalObject) {
+            const serverObject = JSON.parse(fs.readFileSync("./src/registries/user.json", "utf-8"));
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(User).save(userOriginalObject).catch((error) => {
+            return await getRepository(User).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
@@ -260,16 +281,16 @@ export class UserController {
 
     static async deleteOne(userId: number) {
         //User preference must be deleted first
-        await UserPreferenceController.deleteOne(userId).catch((error) => {
-            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-        });
+        await UserPreferenceController.deleteOne(userId);
 
         const user = await getRepository(User).findOne({
             id: userId
         });
 
         if (user) {
-            return getRepository(User).delete(user);
+            return getRepository(User).delete(user).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
         }
@@ -291,7 +312,9 @@ export class UserPreferenceController {
             fs.mkdirSync(`./private/${user.id}`);
         }
 
-        return getRepository(UserPreference).save(newUserPreference);
+        return getRepository(UserPreference).save(newUserPreference).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
     static async getOne(username) {
@@ -311,7 +334,9 @@ export class UserPreferenceController {
         });
 
         if (userPreference) {
-            return getRepository(UserPreference).delete(userPreference);
+            return getRepository(UserPreference).delete(userPreference).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
         }
@@ -355,6 +380,24 @@ export class RoleController {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
         }
     }
+
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(Role).findOne({
+            id: clientBindingObject.id.value
+        });
+        
+        if (originalObject) {
+            const serverObject = JSON.parse(fs.readFileSync("./src/registries/role.json", "utf-8"));
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            return await getRepository(Role).save(originalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a role that matches your arguments", technicalMessage: "No role for given arguments" };
+        }
+    }
 }
 
 export class EmployeeController {
@@ -395,18 +438,31 @@ export class EmployeeController {
         }
     }
 
-    static async updateOne(employeeClientObject) {
-        //Validate User
-        const employeeOriginalObject = await getRepository(Employee).findOne({
-            id: employeeClientObject.id.value
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(Employee).findOne({
+            id: clientBindingObject.id.value
         });
 
-        if (employeeOriginalObject) {
-            const employeeServerObject = JSON.parse(fs.readFileSync("./src/registries/employee.json", "utf-8"));
-            ValidationController.validateBindingObject(employeeServerObject, employeeClientObject);
-            ValidationController.updateOriginalObject(employeeOriginalObject, employeeServerObject);
+        if (originalObject) {
+            const serverObject = JSON.parse(fs.readFileSync("./src/registries/employee.json", "utf-8"));
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Employee).save(employeeOriginalObject).catch((error) => {
+            return await getRepository(Employee).save(originalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
+        }
+    }
+
+    static async deleteOne(employeeId: number) {
+        const employee = await getRepository(Employee).findOne({
+            id: employeeId
+        });
+
+        if (employee) {
+            return getRepository(Employee).delete(employee).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
@@ -417,41 +473,42 @@ export class EmployeeController {
 
 export class ValidationController {
     //WARNING: This method directly alters the parameters provided
-    static validateBindingObject(serverObject, clientObject) {
+    static validateBindingObject(serverObject, clientBindingObject) {
         //NOTE: Validation is done considering the serverBindingObject as it always has the correct structure
         if (Array.isArray(serverObject)) {
             //Case: serverBindingObject is an array
             //NOTE: serverBindingObject only contains one reference element for all the elements inside clientBindingObject
-            const referenceElement = serverObject[0];
+            const stringifiedReferenceElement = JSON.stringify(serverObject[0]);
             //Validate each element inside clientBindingObject against referenceElement
-            for (const clientObjectElement of clientObject) {
-                this.validateBindingObject(referenceElement, clientObjectElement)
+            for (let i = 0; i < clientBindingObject.length; i++) {
+                serverObject[i] = JSON.parse(stringifiedReferenceElement);
+                this.validateBindingObject(serverObject[i], clientBindingObject[i]);
             }
         } else {
             //NOTE: serverBindingObject has the correct patterns. clientBindingObject's patterns may be altered
             //NOTE: clientBindingObject's values will be copied to serverBindingObject
             for (const key of Object.keys(serverObject)) {
-                if (clientObject.hasOwnProperty(key)) {
+                if (clientBindingObject.hasOwnProperty(key)) {
                     //Case: clientBindingObject has the same key as serverBindingObject
                     if (serverObject[key].hasOwnProperty("childFormObject") && serverObject[key].childFormObject === true) {
                         //Case: Key holds an entire new formObject
-                        ValidationController.validateBindingObject(serverObject[key], clientObject[key]);
+                        ValidationController.validateBindingObject(serverObject[key], clientBindingObject[key]);
                     } else {
                         //Case: Key holds a formField object
                         //Check if the clientFormField has its pattern and value properties present
-                        if (clientObject[key].hasOwnProperty("pattern") && clientObject[key].hasOwnProperty("value")) {
+                        if (clientBindingObject[key].hasOwnProperty("pattern") && clientBindingObject[key].hasOwnProperty("value")) {
                             if (serverObject[key].pattern !== null) {
                                 //Case: formField object have a pattern to validate its value
                                 //Validate the clientFormField.value against serverFormField.pattern
                                 const regexp = new RegExp(serverObject[key].pattern);
-                                if (regexp.test(clientObject[key].value)) {
+                                if (regexp.test(clientBindingObject[key].value)) {
                                     //Case: clientFormField.value is valid
                                     //Copy that value to serverFormField.value
 
                                     //WARNING: serverObject's structure will be altered here
                                     //NOTE: serverObject[key] will no longer hold a formFiled object
                                     //NOTE: serverObject[key] will hold it's relevant value directly
-                                    serverObject[key] = clientObject[key].value;
+                                    serverObject[key] = clientBindingObject[key].value;
                                 } else {
                                     //Case: clientFormField.value is invalid
                                     throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };

@@ -159,9 +159,36 @@ app.route("/employees/:employeeId")
             }).catch(error => {
                 res.locals.error = error; next();
             });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.deleteOne(parseInt(req.params.employeeId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
     });
 
 //USERS
+app.route("/users")
+    .put(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
+            .then(() => UserController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "users", req.method)
+            .then(() => UserController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 app.route("/users/:userId")
     .get((req, res, next) => {
         (() => {
@@ -195,24 +222,6 @@ app.route("/users/:userId")
                 }
             })
             .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-app.route("/users")
-    .put(jsonParser, (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.createOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "users", req.method)
-            .then(() => UserController.getMany(req.query.keyword)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -270,10 +279,46 @@ app.route("/roles")
             });
     });
 
+app.route("/roles/:roleId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+            .then(() => RoleController.getOne(parseInt(req.params.roleId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+            .then(() => RoleController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 app.route("/permissions")
     .put(jsonParser, (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "permissions", req.method)
             .then(() => PermissionController.cerateMany(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+app.route("/permissions/:roleId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+            .then(() => PermissionController.getManyByRole(parseInt(req.params.roleId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(jsonParser, (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+            .then(() => PermissionController.updateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
