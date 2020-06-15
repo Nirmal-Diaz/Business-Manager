@@ -80,6 +80,7 @@ export class SessionController {
 }
 
 export class PermissionController {
+    //WARNING: This method has cases that fails silently
     static async cerateMany(clientBindingObject) {
         //Remove permission objects with "0000" as the value
         const tempClientBindingObject = [];
@@ -90,14 +91,18 @@ export class PermissionController {
         }
         clientBindingObject = tempClientBindingObject;
 
-        //Validate clientBindingObject
-        const serverObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
-        ValidationController.validateBindingObject(serverObject, clientBindingObject);
+        if (clientBindingObject.length !== 0) {
+            //Validate clientBindingObject
+            const serverObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        return getRepository(Permission).save(serverObject as Permission[])
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
-            });
+            return getRepository(Permission).save(serverObject as Permission[])
+                .catch((error) => {
+                    throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
+                });
+        } else {
+            return true;
+        }
     }
 
     static async getOne(roleId: number, moduleId: number) {
@@ -115,7 +120,7 @@ export class PermissionController {
             throw { title: "Oops!", titleDescription: "Try a set of different arguments", message: "Your role doesn't have any permission records for this module", technicalMessage: "No permission for given arguments" };
         }
     }
-    
+
     static async getOneByUser(userId: number, moduleId: number) {
         const user = await UserController.getOne(userId);
         return PermissionController.getOne(user.role.id, moduleId);
@@ -129,10 +134,10 @@ export class PermissionController {
             relations: ["module"]
         });
 
-        if (permissions) {
+        if (permissions.length > 0) {
             return permissions;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like your role doesn't have any permissions", technicalMessage: "No permissions for role" };
+            throw { title: "You've got no permissions", titleDescription: "Contact your system administrator", message: "Looks like your role doesn't have any permissions. It may be a temporal situation or ask your system administrator for some permissions", technicalMessage: "No permissions for role" };
         }
     }
 
@@ -188,9 +193,13 @@ export class PermissionController {
     static async updateMany(clientBindingObject) {
         //Remove old permission objects and create new ones
         return PermissionController.deleteMany(parseInt(clientBindingObject[0].roleId.value))
-        .then(() => PermissionController.cerateMany(clientBindingObject));
+            .then(() => PermissionController.cerateMany(clientBindingObject))
+            .catch((error) => {
+                throw error;
+            });
     }
 
+    //WARNING: This method has cases that fails silently
     static async deleteMany(roleId: number) {
         const permissions = await getRepository(Permission).find({
             where: {
@@ -203,7 +212,7 @@ export class PermissionController {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find any permissions that matches your arguments", technicalMessage: "No permissions for given arguments" };
+            return true;
         }
     }
 }
@@ -283,17 +292,9 @@ export class UserController {
         //User preference must be deleted first
         await UserPreferenceController.deleteOne(userId);
 
-        const user = await getRepository(User).findOne({
-            id: userId
+        return getRepository(User).delete(userId).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
-
-        if (user) {
-            return getRepository(User).delete(user).catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
-        } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
-        }
     }
 }
 
@@ -385,7 +386,7 @@ export class RoleController {
         const originalObject = await getRepository(Role).findOne({
             id: clientBindingObject.id.value
         });
-        
+
         if (originalObject) {
             const serverObject = JSON.parse(fs.readFileSync("./src/registries/role.json", "utf-8"));
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
@@ -397,6 +398,14 @@ export class RoleController {
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a role that matches your arguments", technicalMessage: "No role for given arguments" };
         }
+    }
+
+    static async deleteOne(roleId: number) {
+        return PermissionController.deleteMany(roleId).then(() => getRepository(Role).delete(roleId))
+            .catch((error) => {
+                //WARNING: This error is thrown based on a possible error and not on the actual error
+                throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are users that have this role assigned. Please remove those users before removing this role", technicalMessage: error.sqlMessage }
+            });
     }
 }
 
@@ -457,17 +466,10 @@ export class EmployeeController {
     }
 
     static async deleteOne(employeeId: number) {
-        const employee = await getRepository(Employee).findOne({
-            id: employeeId
+        return getRepository(Employee).delete(employeeId).catch((error) => {
+            //WARNING: This error is thrown based on a possible error and not on the actual error
+            throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are system users assigned to this employee. Please remove those users before removing this employee", technicalMessage: error.sqlMessage }
         });
-
-        if (employee) {
-            return getRepository(Employee).delete(employee).catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
-        } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
-        }
     }
 }
 

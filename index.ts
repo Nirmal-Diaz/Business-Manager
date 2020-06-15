@@ -295,6 +295,14 @@ app.route("/roles/:roleId")
             }).catch(error => {
                 res.locals.error = error; next();
             });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+            .then(() => RoleController.deleteOne(parseInt(req.params.roleId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
     });
 
 app.route("/permissions")
