@@ -39,13 +39,14 @@
                     const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/permissions_cu.html");
                     if (popUpCard !== null) {
                         popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                            popUpCard.popUpCardInterface.initCreateForm();
+                            popUpCard.popUpCardInterface.initInputs().then(() => {
+                                popUpCard.popUpCardInterface.initCreateForm();
+                            });
                         });
                     }
                 });
                 
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
-                
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
                         this.searchItems("", "All roles", "Double tap to view and update");
@@ -53,8 +54,30 @@
                         this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
                     }
                 });
+
+                this.updateControls[0].addEventListener("click", () => {
+                    if (this.selectedCardDivisionSectorItems.length === 0) {
+                        window.parent.shellInterface.throwAlert("Update what?", "Select an item to update", null, null, "OK", null);
+                    } else if (this.selectedCardDivisionSectorItems.length > 1) {
+                        window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
+                    } else {
+                        this.updateItem(this.selectedCardDivisionSectorItems[0]);
+                    }
+                });
                 
                 this.searchItems("", "Roles", "Double tap to view and update");
+            }
+
+            updateItem(selectedCardDivisionSectorItem) {
+                //Add onload to iframe for initializing update form
+                const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/permissions_cu.html");
+                if (popUpCard !== null) {
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
+                        });
+                    });
+                }
             }
 
             //EVENT HANDLER METHODS
@@ -72,6 +95,8 @@
                                 const iconURL = `${location.protocol}//${location.host}/images/icon_user_default.png`;
                                 //NOTE: Bounded method is immediately invoked
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [])();
+                                cardDivisionSectorItem.addEventListener("dblclick", this.updateItem.bind(this, cardDivisionSectorItem));
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
                             cardDivision.appendChild(cardDivisionSector);
