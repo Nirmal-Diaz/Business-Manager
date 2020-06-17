@@ -401,11 +401,20 @@ export class RoleController {
     }
 
     static async deleteOne(roleId: number) {
-        return PermissionController.deleteMany(roleId).then(() => getRepository(Role).delete(roleId))
-            .catch((error) => {
-                //WARNING: This error is thrown based on a possible error and not on the actual error
-                throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are users that have this role assigned. Please remove those users before removing this role", technicalMessage: error.sqlMessage }
-            });
+        const users = await getRepository(User).find({
+            roleId: roleId
+        });
+
+        if (users.length > 0) {
+            throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are users that have this role assigned. Please remove those users before removing this role", technicalMessage: "Role to be deleted is still in use" }
+        } else {
+            return PermissionController.deleteMany(roleId).then(() => getRepository(Role).delete(roleId))
+                .catch((error) => {
+                    throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+                });
+        }
+
+
     }
 }
 
