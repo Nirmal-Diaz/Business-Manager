@@ -10,7 +10,7 @@ export class PopUpCard {
         this.layoutFilePath = layoutFilePath;
         this.parentCardInterface = parentCardInterface;
         //Initialize/cache view elements
-        this.view.setAttribute("class", "popUpCard popUpCard-popIn");
+        this.view.setAttribute("class", "popUpCard popIn");
         this.view.addEventListener("pointerdown", (event) => {
             //Focus popUpCard
             window.parent.shellInterface.getCurrentScreenController().focusPopUpCard(this);
@@ -62,7 +62,7 @@ export class PopUpCard {
         });
         //Resize handle creation
         const popUpCardResizeHandle = document.createElement("div");
-        popUpCardResizeHandle.setAttribute("class", "popUpCardResizeHandle");
+        popUpCardResizeHandle.setAttribute("class", "resizeHandle");
         popUpCardResizeHandle.addEventListener("pointerdown", (event) => {
             //Prevent browser's default event handlers from executing
             event.preventDefault();
@@ -112,7 +112,6 @@ export class PopUpCard {
         });
         //Create the iFrame to load the moduleComponent
         const iFrame = document.createElement("iframe");
-        iFrame.setAttribute("class", "popUpCardIFrame");
         iFrame.src = `${location.protocol}//${location.host}/${layoutFilePath}`;
         //Add onload to iFrame for connecting popUpCardObject with popUpCardInterface
         iFrame.addEventListener("load", () => {
@@ -154,7 +153,7 @@ export class PopUpCard {
 
     close() {
         this.parentCardInterface.cardObject.getOpenPopUpCards().splice(this.parentCardInterface.cardObject.getOpenPopUpCards().indexOf(this), 1);
-        this.view.classList.replace("popUpCard-popIn", "popUpCard-popOut");
+        this.view.classList.replace("popIn", "popOut");
         setTimeout(() => {
             this.view.remove();
         }, 250);

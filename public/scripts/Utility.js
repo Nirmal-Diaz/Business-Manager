@@ -24,7 +24,7 @@ export class PlatformComponent {
                 window.shellInterface.throwAlert("Card already open", "Close it before opening another", "An instance of the card that you are trying to open already exists. You aren't allowed to open more than one instance of a card", null, "OK", null);
             } else {
                 workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
-                workspaceScreenController.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+                workspaceScreenController.actionOverlayView.classList.replace("popIn", "popOut");
             }
         });
 
@@ -36,7 +36,7 @@ export class PlatformComponent {
     }
 
     static toggleButtonGlyph(event) {
-        if (event.currentTarget.classList.toggle("buttonGlyph-revealed")) {
+        if (event.currentTarget.classList.toggle("revealed")) {
             event.currentTarget.children[1].style.display = "block";
             event.currentTarget.children[1].focus();
         } else {
@@ -78,23 +78,23 @@ export class CardComponent {
                     //Just add the cardDivisionSectorItem to selected cardDivisionSectorItems
                     this.selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
                     //Add styles tho the selectedCardDivisionSectorItem
-                    cardDivisionSectorItem.classList.add("cardDivisionSectorItem-active");
+                    cardDivisionSectorItem.classList.add("active");
                 } else {
                     //Remove cardDivisionSectorItem from selectedCardDivisionSectorItems along with its styles
                     this.selectedCardDivisionSectorItems.splice(existingLocation, 1)
-                    cardDivisionSectorItem.classList.remove("cardDivisionSectorItem-active");
+                    cardDivisionSectorItem.classList.remove("active");
                 }
             } else {
                 //Remove styles of each selectedCardDivisionSectorItems
                 for (const selectedCardDivisionSectorItem of this.selectedCardDivisionSectorItems) {
-                    selectedCardDivisionSectorItem.classList.remove("cardDivisionSectorItem-active");
+                    selectedCardDivisionSectorItem.classList.remove("active");
                 }
                 //Empty the selectedCardDivisionSectorItems
                 this.selectedCardDivisionSectorItems.length = 0;
                 //Finally add the cardDivisionSectorItem to selected cardDivisionSectorItems
                 this.selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
                 //Add styles tho the selectedCardDivisionSectorItem
-                cardDivisionSectorItem.classList.add("cardDivisionSectorItem-active");
+                cardDivisionSectorItem.classList.add("active");
             }
 
         });
@@ -133,9 +133,9 @@ export class FormUtil {
         }
         const regexp = new RegExp(formField.pattern);
         if (!regexp.test(value) || value === "null") {
-            input.parentElement.classList.add("inputContainer-invalid");
+            input.parentElement.classList.add("invalid");
         } else {
-            input.parentElement.classList.remove("inputContainer-invalid");
+            input.parentElement.classList.remove("invalid");
         }
     }
 

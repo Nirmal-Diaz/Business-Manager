@@ -36,7 +36,7 @@
     background-color: var(--cardDivisionSectorItemBackgroundColor-hover);
 }
 
-.cardDivisionSectorItem-active {
+.cardDivisionSectorItem.active {
     box-shadow: 0 0 3px 3px var(--cardDivisionSectorItemBoxShadowColor-active);
 }
 

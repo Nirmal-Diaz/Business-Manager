@@ -1,5 +1,5 @@
 /* splashScreenStyles */
-.splashScreen {
+#splashScreen {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
 }
 
 /* logInScreenStyles */
-.logInScreen {
+#logInScreen {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@
     background-color: var(--logInScreenBackgroundColor);
 }
 
-.logInBoxBackground {
+#logInBoxBackground {
     position: absolute;
 
     display: flex;
@@ -37,7 +37,7 @@
     transition: transform 0.3s;
 }
 
-.logInBox {
+#logInBox {
     position: absolute;
     left: 50px;
 
@@ -49,7 +49,7 @@
     width: 40vw;
 }
 
-.logInBoxInput {
+#logInBoxInput {
     position: relative;
 
     height: auto;
@@ -79,14 +79,14 @@
 }
 
 /* workspaceScreenStyles */
-.workspaceScreen {
+#workspaceScreen {
     background-image: var(--workspaceScreenBackgroundImage);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 }
 
-.viewportArea {
+#viewportArea {
     position: fixed;
 
     display: flex;
@@ -154,14 +154,14 @@
     transform: scale(1.2) translateY(6vh);
 }
 
-.cardIFrame {
+.card>iframe {
     height: 100%;
     width: 100%;
 
     border: none;
 }
 
-.statusArea {
+#statusArea {
     position: fixed;
     bottom: 3vh;
     left: 0;
@@ -179,11 +179,11 @@
     animation: none;
 }
 
-.statusArea-popOut {
+#statusArea.popOut {
     transform: scale(2) translateY(20vh);
 }
 
-.quickAccessArea {
+#quickAccessArea {
     display: flex;
     align-items: center;
 
@@ -191,7 +191,7 @@
     padding: 10px;
 }
 
-.headerArea {
+#headerArea {
     position: fixed;
     top: 3vh;
     left: 0;
@@ -203,7 +203,7 @@
     width: 100%;
 }
 
-.headerArea * {
+#headerArea * {
     overflow: visible;
 
     color: var(--headerAreaColor);
@@ -293,15 +293,15 @@
     box-shadow: 0 0 30px var(--popUpCardBoxShadowColor);
 }
 
-.popUpCard-popIn {
+.popUpCard.popIn {
     animation: createPopUpCard 0.3s;
 }
 
-.popUpCard-popOut {
+.popUpCard.popOut {
     animation: closePopUpCard 0.3s;
 }
 
-.popUpCardIFrame {
+.popUpCard>iframe {
     align-self: stretch;
 
     height: 100%;
@@ -310,26 +310,27 @@
     border: none;
 }
 
-.popUpCardResizeHandle {
+.popUpCard>.resizeHandle {
     height: 10px;
     width: 100%;
 }
 
 /* actionOverlayStyles */
-.actionOverlay {
+#actionOverlay {
+    background-color: var(--actionOverlayBackgroundColor);
+}
+
+#actionOverlay>.overlayBackground {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    background-color: var(--actionOverlayBackgroundColor);
+    height: 100%;
+    width: 100%;
 }
 
-.actionOverlay>* {
-    width: 50%;
-}
-
-.actionOverlay>.titleContainer>* {
+#actionOverlay>.overlayBackground>.titleContainer>* {
     text-align: center;
 }
 
@@ -356,11 +357,11 @@
 }
 
 /* alertOverlayStyles */
-.alertOverlay {
+#alertOverlay {
     background-color: var(--alertOverlayBackgroundColor);
 }
 
-.alertBoxBackground {
+#alertOverlay>.overlayBackground {
     position: absolute;
     bottom: -20vh;
     left: -20vh;
@@ -379,29 +380,30 @@
     transform: rotate(45deg);
 }
 
-@keyframes popInAlertBoxBackground {
+/* NOTE: Custom animation is needed for actionOverlayBackground because of it is rotated*/
+@keyframes popInActionOverlayBackground {
     0% {
         opacity: 0;
         transform: rotate(45deg) scale(0.8, 0.8);
     }
 }
 
-@keyframes popOutAlertBoxBackground {
+@keyframes popOutActionOverlayBackground {
     100% {
         opacity: 0;
         transform: rotate(45deg) scale(0.8, 0.8);
     }
 }
 
-.alertBoxBackground-popIn {
-    animation: popInAlertBoxBackground 0.3s;
+#alertOverlay>.overlayBackground.popIn {
+    animation: popInActionOverlayBackground 0.3s;
 }
 
-.alertBoxBackground-popOut {
-    animation: popOutAlertBoxBackground 0.3s;
+#alertOverlay>.overlayBackground.popOut {
+    animation: popOutActionOverlayBackground 0.3s;
 }
 
-.alertBox {
+#alertBox {
     overflow: visible;
 
     height: 50%;

@@ -54,9 +54,9 @@
                         .then(submission => {
                             if (submission.status) {
                                 //Refresh (not reload) the parentCardInterface
-                                if (this.form.getSubmissionMethod() === "PUT") {
+                                if (this.permissionForm.getSubmissionMethod() === "PUT") {
                                     this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new role", "Double tap to view and update");
-                                } else if (this.form.getSubmissionMethod() === "POST") {
+                                } else if (this.permissionForm.getSubmissionMethod() === "POST") {
                                     this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a role recently", "Double tap to view");
                                 }
                                 
@@ -260,9 +260,9 @@
 
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
-            <button id="saveButton" class="buttonText buttonText-link">SAVE</button>
-            <button class="buttonText buttonText-link">CLEAR</button>
-            <button class="buttonText buttonText-link closeButton">CLOSE</button>
+            <button id="saveButton" class="buttonText link">SAVE</button>
+            <button class="buttonText link">CLEAR</button>
+            <button class="buttonText link closeButton">CLOSE</button>
         </div>
     </div>
 </body>

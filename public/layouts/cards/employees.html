@@ -71,8 +71,7 @@
                     } else if (this.selectedCardDivisionSectorItems.length > 1) {
                         window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot delete multiple items at the same time. Please select a single item and try again", null, "OK", null);
                     } else {
-                        //TODO: Fix UI error when attempting two immediate alerts
-                        window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", null, null, "YES", "NO")
+                        window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", "The action of deleting an item isn't reversible. Think carefully and proceed", null, "YES", "NO")
                             .then((value) => {
                                 if (value) {
                                     fetch(`${location.protocol}//${location.host}/employees/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {

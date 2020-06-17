@@ -64,7 +64,7 @@ export class PatternAuthorizer {
         //Add onpointermove to patternView for drawing the pattern path on the patternCanvas
         this.view.addEventListener("pointermove", strokePath);
         //Change appearance of the initial cellPoint
-        event.currentTarget.classList.add("cellPoint-active");
+        event.currentTarget.classList.add("active");
         //Initialize activatedCellPositions by adding the initial cell's position
         const cellPointRect = event.currentTarget.getBoundingClientRect();
         this.activatedCellPositions.push([cellPointRect.left + (cellPointRect.width / 2) - patternViewRect.left, cellPointRect.top + (cellPointRect.height / 2) - patternViewRect.top]);
@@ -74,7 +74,7 @@ export class PatternAuthorizer {
         //INNER EVENT HANDLER FUNCTIONS
         function pointerEnterCellPoint(event) {
             //Change appearance of the current cellPoint
-            event.currentTarget.classList.add("cellPoint-active");
+            event.currentTarget.classList.add("active");
             //Append the current cell's position to activatedCellPositions
             const cellPointRect = event.currentTarget.getBoundingClientRect();
             patternAuthorizer.activatedCellPositions.push([cellPointRect.left + (cellPointRect.width / 2) - patternViewRect.left, cellPointRect.top + (cellPointRect.height / 2) - patternViewRect.top]);
@@ -83,7 +83,7 @@ export class PatternAuthorizer {
         }
 
         function pointerLeaveCellPoint(event) {
-            event.currentTarget.classList.remove("cellPoint-active");
+            event.currentTarget.classList.remove("active");
         }
     
         function strokePath(event, includeMousePosition = true) {

@@ -23,7 +23,7 @@ export class ShellInterface {
         this.titleContainer = this.alertOverlayView.querySelector(".titleContainer");
         this.alertBoxMessage = this.alertOverlayView.querySelector("#alertBoxMessage");
         this.textInput = this.alertOverlayView.querySelector(".textInput");
-        this.alertBoxBackground = this.alertOverlayView.querySelector(".alertBoxBackground");
+        this.alertBoxBackground = this.alertOverlayView.querySelector(".overlayBackground");
         this.alertBoxTrueButton = this.alertOverlayView.querySelector("#alertBoxTrueButton");
         this.alertBoxFalseButton = this.alertOverlayView.querySelector("#alertBoxFalseButton");
         //Add onclick to splashScreenView for initializing currentScreen
@@ -38,9 +38,9 @@ export class ShellInterface {
                         this.currentScreenController = new LogInScreenController(this.view.querySelector("#logInScreen"));
                     }
                     //Animate out splashSCreen
-                    this.view.querySelector("#splashScreen").classList.replace("screen-popIn", "screen-popOut");
+                    this.view.querySelector("#splashScreen").classList.replace("popIn", "popOut");
                     //Animate in new screen
-                    this.currentScreenController.getView().classList.replace("screen-popOut", "screen-popIn");
+                    this.currentScreenController.getView().classList.replace("popOut", "popIn");
                 })
                 .catch(error => {
                     this.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't ask the internal server if you are logged in. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
@@ -58,11 +58,11 @@ export class ShellInterface {
 
     transitScreen(newScreenController) {
         //Reset and animate out old screen
-        this.currentScreenController.getView().classList.replace("screen-popIn", "screen-popOut");
+        this.currentScreenController.getView().classList.replace("popIn", "popOut");
         this.currentScreenController.resetView();
         //Animate in new screen
         this.currentScreenController = newScreenController;
-        this.currentScreenController.getView().classList.replace("screen-popOut", "screen-popIn");
+        this.currentScreenController.getView().classList.replace("popOut", "popIn");
     }
 
     getView() {
@@ -72,7 +72,7 @@ export class ShellInterface {
     //NOTE: This method is asynchronous
     throwAlert(title, titleDescription, message, placeholder, trueButtonText, falseButtonText) {
         //Animate out alertOverlayView and set its title, titleDescription and message
-        this.alertOverlayView.classList.replace("overlay-popOut", "overlay-popIn");
+        this.alertOverlayView.classList.replace("popOut", "popIn");
         this.titleContainer.children[0].innerText = title;
         this.titleContainer.children[1].innerText = titleDescription;
         this.alertBoxMessage.innerText = message;
@@ -83,14 +83,14 @@ export class ShellInterface {
             this.textInput.removeAttribute("style");
             this.textInput.placeholder = placeholder;
         }
-        this.alertBoxBackground.classList.replace("alertBoxBackground-popOut", "alertBoxBackground-popIn");
+        this.alertBoxBackground.classList.replace("popOut", "popIn");
         //Return alert promise
         return new Promise(
             (resolve, reject) => {
                 //NOTE: trueButton is always included no matter the type of alertOverlay
                 this.alertBoxTrueButton.innerText = trueButtonText;
                 this.alertBoxTrueButton.addEventListener("click", () => {
-                    this.alertBoxBackground.classList.replace("alertBoxBackground-popIn", "alertBoxBackground-popOut");
+                    this.alertBoxBackground.classList.replace("popIn", "popOut");
                     setTimeout(() => {
                         //NOTE: If there is a placeholder there is a textInput
                         //NOTE: Then the trueButton returns textInput's value, otherwise simply "true"
@@ -99,7 +99,7 @@ export class ShellInterface {
                         } else {
                             resolve(this.textInput.value);
                         }
-                        this.alertOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+                        this.alertOverlayView.classList.replace("popIn", "popOut");
                         this.alertTimeout = null;
                     }, 250);
                 });
@@ -110,10 +110,10 @@ export class ShellInterface {
                     this.alertBoxFalseButton.style.display = "initial";
                     this.alertBoxFalseButton.innerText = falseButtonText;
                     this.alertBoxFalseButton.addEventListener("click", () => {
-                        this.alertBoxBackground.classList.replace("alertBoxBackground-popIn", "alertBoxBackground-popOut");
+                        this.alertBoxBackground.classList.replace("popIn", "popOut");
                         setTimeout(() => {
                             reject(false);
-                            this.alertOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+                            this.alertOverlayView.classList.replace("popIn", "popOut");
                             this.alertTimeout = null;
                         }, 250);
                     });
@@ -165,7 +165,7 @@ export class LogInScreenController extends ScreenController {
         super(logInScreenView);
         this.patternAuthorizer = new LogInPatternAuthorizer(logInScreenView.querySelector(".patternInput"));
         //Initialize/Cache elements
-        this.logInBox = this.view.querySelector(".logInBox");
+        this.logInBox = this.view.querySelector("#logInBox");
         this.logInAvatar = this.view.querySelector("#logInAvatar");
         //Add onkeypress to logInBoxInputElement for loading relevant profileImage
         this.logInBox.children[1].addEventListener("keypress", (event) => {
@@ -179,13 +179,13 @@ export class LogInScreenController extends ScreenController {
                             this.patternAuthorizer.getView().style.visibility = "visible";
                             this.logInAvatar.style.opacity = "1";
                             this.logInAvatar.style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.data)]))})`;
-                            this.view.querySelector(".logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
+                            this.view.querySelector("#logInBoxBackground").style.transform = "translateX(-55vw) rotate(45deg)";
                             this.logInBox.children[0].children[0].innerText = "Let's see if it is really you";
                             this.logInBox.children[0].children[1].innerText = "Please mark your pattern";
                         } else {
                             this.patternAuthorizer.getView().style.visibility = "hidden";
                             this.logInAvatar.removeAttribute("style");
-                            this.view.querySelector(".logInBoxBackground").removeAttribute("style");
+                            this.view.querySelector("#logInBoxBackground").removeAttribute("style");
                             this.logInBox.children[0].children[0].innerText = response.error.title;
                             this.logInBox.children[0].children[1].innerText = response.error.titleDescription;
                         }
@@ -221,12 +221,13 @@ export class WorkspaceScreenController extends ScreenController {
     constructor(workspaceScreenView) {
         super(workspaceScreenView);
         //Initialize/cache elements
-        this.headerArea = this.view.querySelector(".headerArea");
+        this.headerArea = this.view.querySelector("#headerArea");
         this.navigationControl = this.headerArea.querySelector("#navigationControl")
         this.timeDisplay = this.headerArea.querySelector("#timeDisplay");
-        this.viewportArea = this.view.querySelector(".viewportArea");
-        this.quickAccessArea = this.view.querySelector(".quickAccessArea");
+        this.viewportArea = this.view.querySelector("#viewportArea");
+        this.quickAccessArea = this.view.querySelector("#quickAccessArea");
         this.actionOverlayView = document.getElementById("actionOverlay");
+        this.actionOverlayBackground = this.actionOverlayView.querySelector(".overlayBackground");
         //Fetch username, roleName and profileImage and apply user preferences
         fetch(`${location.protocol}//${location.host}/users/@me`)
             .then(response => response.json())
@@ -365,7 +366,8 @@ export class WorkspaceScreenController extends ScreenController {
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
                         navigatorControlOptionDisplay.innerText = "View action overlay";
                         procedureToExecute = () => {
-                            workspaceScreenController.actionOverlayView.classList.replace("overlay-popOut", "overlay-popIn");
+                            workspaceScreenController.actionOverlayView.classList.replace("popOut", "popIn");
+                            workspaceScreenController.actionOverlayBackground.classList.replace("popOut", "popIn");
                         }
                     }
                 } else {
@@ -403,8 +405,12 @@ export class WorkspaceScreenController extends ScreenController {
             }
         });
         //Add onclick to the close button in actionOverlay for closing actionOverlay
-        this.actionOverlayView.children[2].firstElementChild.addEventListener("click", () => {
-            this.actionOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+        this.actionOverlayView.firstElementChild.children[2].firstElementChild.addEventListener("click", () => {
+            this.actionOverlayBackground.classList.replace("popIn", "popOut");
+            setTimeout(() => {
+                this.actionOverlayView.classList.replace("popIn", "popOut");
+                this.alertTimeout = null;
+            }, 250);
         });
     }
 
@@ -584,11 +590,11 @@ export class WorkspaceScreenController extends ScreenController {
         if ((this.upcomingCards.length !== upcomingCardsLength) || (this.pastCards.length !== pastCardsLength)) {
             this.updateCardStyles();
             //Animate out statusArea
-            this.quickAccessArea.parentElement.classList.add("statusArea-popOut");
+            this.quickAccessArea.parentElement.classList.add("popOut");
             //UpdateQuickAccessArea and animate in statusArea
             setTimeout(() => {
                 this.updateQuickAccessArea();
-                this.quickAccessArea.parentElement.classList.remove("statusArea-popOut");
+                this.quickAccessArea.parentElement.classList.remove("popOut");
             }, 300);
         }
     }
