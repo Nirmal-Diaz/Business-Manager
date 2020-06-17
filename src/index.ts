@@ -65,7 +65,7 @@ Express.js: Routing (No validation)
 */
 app.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../public/index.html"));
+        res.sendFile(path.resolve(__dirname + "/../public/layouts/index.html"));
     });
 
 app.route("/sessions")
