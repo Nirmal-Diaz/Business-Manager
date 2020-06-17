@@ -100,7 +100,6 @@ export class ShellInterface {
                             resolve(this.textInput.value);
                         }
                         this.alertOverlayView.classList.replace("popIn", "popOut");
-                        this.alertTimeout = null;
                     }, 250);
                 });
                 //NOTE: If there is a falseButton it always returns "false"
@@ -114,7 +113,6 @@ export class ShellInterface {
                         setTimeout(() => {
                             reject(false);
                             this.alertOverlayView.classList.replace("popIn", "popOut");
-                            this.alertTimeout = null;
                         }, 250);
                     });
                 }
@@ -409,7 +407,6 @@ export class WorkspaceScreenController extends ScreenController {
             this.actionOverlayBackground.classList.replace("popIn", "popOut");
             setTimeout(() => {
                 this.actionOverlayView.classList.replace("popIn", "popOut");
-                this.alertTimeout = null;
             }, 250);
         });
     }

@@ -24,7 +24,9 @@ export class PlatformComponent {
                 window.shellInterface.throwAlert("Card already open", "Close it before opening another", "An instance of the card that you are trying to open already exists. You aren't allowed to open more than one instance of a card", null, "OK", null);
             } else {
                 workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
+                //NOTE: Since we don't care about the closing animation of action overlay when a chip is clicked (We care about the card insertion animation), actionOverlayView must be popped out first
                 workspaceScreenController.actionOverlayView.classList.replace("popIn", "popOut");
+                workspaceScreenController.actionOverlayBackground.classList.replace("popIn", "popOut");
             }
         });
 
