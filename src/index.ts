@@ -217,7 +217,7 @@ app.route("/users/:userId")
         PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => {
                 if (parseInt(req.params.userId) === req.session.userId) {
-                    throw { title: "Cannot delete self", titleDescription: "Ask another user to delete you", message: "You cannot delete a user when logged in as that user. You can long in as another user to delete this user", technicalMessage: "Attempted self user deletion" };
+                    throw { title: "Cannot delete self", titleDescription: "Ask another user to delete you", message: "You are logged in as the user you are trying to delete. You cannot delete a user when logged in as that user. You can log in as another user to delete this user", technicalMessage: "Attempted self user deletion" };
                 } else {
                     return UserController.deleteOne(parseInt(req.params.userId));
                 }
