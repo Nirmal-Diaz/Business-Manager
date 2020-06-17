@@ -90,16 +90,17 @@ export class ShellInterface {
                 //NOTE: trueButton is always included no matter the type of alertOverlay
                 this.alertBoxTrueButton.innerText = trueButtonText;
                 this.alertBoxTrueButton.addEventListener("click", () => {
-                    //NOTE: If there is a placeholder there is a textInput
-                    //NOTE: Then the trueButton returns textInput's value, otherwise simply "true"
-                    if (placeholder === null) {
-                        resolve(true);
-                    } else {
-                        resolve(this.textInput.value);
-                    }
                     this.alertBoxBackground.classList.replace("alertBoxBackground-popIn", "alertBoxBackground-popOut");
                     setTimeout(() => {
+                        //NOTE: If there is a placeholder there is a textInput
+                        //NOTE: Then the trueButton returns textInput's value, otherwise simply "true"
+                        if (placeholder === null) {
+                            resolve(true);
+                        } else {
+                            resolve(this.textInput.value);
+                        }
                         this.alertOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+                        this.alertTimeout = null;
                     }, 250);
                 });
                 //NOTE: If there is a falseButton it always returns "false"
@@ -109,10 +110,11 @@ export class ShellInterface {
                     this.alertBoxFalseButton.style.display = "initial";
                     this.alertBoxFalseButton.innerText = falseButtonText;
                     this.alertBoxFalseButton.addEventListener("click", () => {
-                        reject(false);
                         this.alertBoxBackground.classList.replace("alertBoxBackground-popIn", "alertBoxBackground-popOut");
                         setTimeout(() => {
+                            reject(false);
                             this.alertOverlayView.classList.replace("overlay-popIn", "overlay-popOut");
+                            this.alertTimeout = null;
                         }, 250);
                     });
                 }
