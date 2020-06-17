@@ -54,8 +54,12 @@
                         .then(submission => {
                             if (submission.status) {
                                 //Refresh (not reload) the parentCardInterface
-                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new role", "Double tap to view and update");
-                                //Close this popUpCard
+                                if (this.form.getSubmissionMethod() === "PUT") {
+                                    this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new role", "Double tap to view and update");
+                                } else if (this.form.getSubmissionMethod() === "POST") {
+                                    this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a role recently", "Double tap to view");
+                                }
+                                
                                 this.popUpCardObject.close();
                             } else {
                                 window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
