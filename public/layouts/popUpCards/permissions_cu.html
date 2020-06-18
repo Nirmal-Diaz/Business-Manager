@@ -69,6 +69,13 @@
 
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.roleForm.resetInputs();
+                    for (const permission of this.permissionForm.getBindingObject()) {
+                        permission.value.value = "0000";
+                    }
+                    const checkInputs = this.permissionForm.getView().querySelectorAll(".checkInput");
+                    for (let i = 0; i < 4; i++) {
+                        checkInputs[i].checked = false;
+                    }
                 });
             }
 
