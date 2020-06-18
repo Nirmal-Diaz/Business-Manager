@@ -37,15 +37,13 @@
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/permissions_cu.html");
-                    if (popUpCard !== null) {
-                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                            popUpCard.popUpCardInterface.initInputs().then(() => {
-                                popUpCard.popUpCardInterface.initCreateForm();
-                            });
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initCreateForm();
                         });
-                    }
+                    });
                 });
-                
+
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
@@ -92,20 +90,18 @@
                             });
                     }
                 });
-                
+
                 this.searchItems("", "Roles", "Double tap to view and update");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
                 //Add onload to iframe for initializing update form
                 const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/permissions_cu.html");
-                if (popUpCard !== null) {
-                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
-                            popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
-                        });
+                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                    popUpCard.popUpCardInterface.initInputs().then(() => {
+                        popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
                     });
-                }
+                });
             }
 
             //EVENT HANDLER METHODS

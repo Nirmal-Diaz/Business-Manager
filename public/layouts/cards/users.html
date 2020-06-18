@@ -39,13 +39,11 @@
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
-                    if (popUpCard !== null) {
-                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                            popUpCard.popUpCardInterface.initInputs().then(() => {
-                                popUpCard.popUpCardInterface.initCreateForm();
-                            });
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initCreateForm();
                         });
-                    }
+                    });
                 });
 
                 //Add onclick to searchButton for toggling search UI
@@ -106,13 +104,11 @@
             updateItem(selectedCardDivisionSectorItem) {
                 //Add onload to iframe for initializing update form
                 const popUpCard = this.cardObject.createPopUpCard("layouts/popUpCards/users_cu.html");
-                if (popUpCard !== null) {
-                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
-                            popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
-                        });
+                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                    popUpCard.popUpCardInterface.initInputs().then(() => {
+                        popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
                     });
-                }
+                });
             }
 
             //EVENT HANDLER METHODS
