@@ -21,7 +21,7 @@ export class PlatformComponent {
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
         actionOverlayChip.addEventListener("click", (event) => {
             if (workspaceScreenController.isCardExist(module.layoutFilePath)) {
-                window.shellInterface.throwAlert("Card already open", "Close it before opening another", "An instance of the card that you are trying to open already exists. You aren't allowed to open more than one instance of a card", null, "OK", null);
+                window.shellInterface.throwAlert("Card already open", "Scroll on the viewport to find it", "An instance of the card that you are trying to open already exists. You can find it by scrolling the stack of cards. You aren't allowed to open more than one instance of a card", null, "OK", null);
             } else {
                 workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
                 //NOTE: Since we don't care about the closing animation of action overlay when a chip is clicked (We care about the card insertion animation), actionOverlayView must be popped out first
