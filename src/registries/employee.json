@@ -7,7 +7,7 @@
     },
     "fullName": {
         "inputQuery": "#fullName",
-        "inputClass": "dropDownInput",
+        "inputClass": "textInput",
         "pattern": "^[\\w\\s]{3,150}$",
         "value": null
     },
