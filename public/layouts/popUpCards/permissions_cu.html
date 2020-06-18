@@ -65,7 +65,11 @@
                                 window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
                             }
                         });
-                })
+                });
+
+                document.getElementById("resetButton").addEventListener("click", () => {
+                    this.roleForm.resetInputs();
+                });
             }
 
             initInputs() {
@@ -136,6 +140,7 @@
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
+                document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
                 //Cache the selectedCardDivisionSectorItem to replace it after the update
                 const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
 
@@ -207,7 +212,8 @@
         <!-- formTitleContainer -->
         <div class="formTitleContainer">
             <div class="titleContainer">
-                <div class="title">Create Role</div>
+                <div class="titleDescription">Create</div>
+                <div class="title">Role</div>
             </div>
         </div>
 
@@ -261,7 +267,7 @@
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
-            <button class="buttonText link">CLEAR</button>
+            <button id="resetButton" class="buttonText link">RESET</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
     </div>

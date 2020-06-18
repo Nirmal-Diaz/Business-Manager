@@ -47,6 +47,10 @@
                         }
                     });
                 });
+
+                document.getElementById("resetButton").addEventListener("click", () => {
+                    this.form.resetInputs();
+                });
             }
 
             initInputs() {
@@ -71,6 +75,7 @@
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
+                document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
                 const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
 
                 this.form.init("/registries/employee.json", `/employees/${selectedItemId}`, "POST").then((form) => {
@@ -99,7 +104,8 @@
         <!-- formTitleContainer -->
         <div class="formTitleContainer">
             <div class="titleContainer">
-                <div class="title">Create Employee</div>
+                <div class="titleDescription">Create</div>
+                <div class="title">Employee</div>
             </div>
         </div>
 
@@ -210,7 +216,7 @@
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
-            <button class="buttonText link">CLEAR</button>
+            <button id="resetButton" class="buttonText link">RESET</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
     </div>

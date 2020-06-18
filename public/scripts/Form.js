@@ -52,12 +52,12 @@ export class Form {
         return this.submissionMethod;
     }
 
-    getBindingObject() {
-        return this.bindingObject;
-    }
-
     getReferenceBindingObject() {
         return this.referenceBindingObject;
+    }
+
+    getBindingObject() {
+        return this.bindingObject;
     }
 
     //NOTE: Use this before updating inputs of an "update" form
@@ -108,16 +108,34 @@ export class Form {
     }
 
     //NOTE: Use this immediately after constructing an "update" form
-    updateInputs(formObject = this.bindingObject) {
-        for (const key of Object.keys(formObject)) {
-            if (formObject[key].hasOwnProperty("childFormObject") && formObject[key].childFormObject === true) {
+    updateInputs(bindingObject = this.bindingObject) {
+        for (const key of Object.keys(bindingObject)) {
+            if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
                 //Case: Key holds an entire new formObject
-                this.updateInputs(formObject[key].value);
+                this.updateInputs(bindingObject[key].value);
             } else {
                 //Case: Key holds a formField object
-                if (formObject[key].inputQuery !== null) {
+                if (bindingObject[key].inputQuery !== null) {
                     //Case: Field of the formObject have a binding input
-                    FormUtil.syncInputWithValue(this.view, formObject[key], null);
+                    FormUtil.syncInputWithValue(this.view, bindingObject[key], null);
+                }
+            }
+        }
+    }
+
+    resetInputs(bindingObject = this.bindingObject) {
+        for (const key of Object.keys(bindingObject)) {
+            if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
+                //Case: Key holds an entire new formObject
+                this.resetInputs(bindingObject[key].value);
+            } else {
+                //Case: Key holds a formField object
+                if (bindingObject[key].inputClass !== null) {
+                    if (bindingObject[key].inputClass === "textInput") {
+                        this.view.querySelector(bindingObject[key].inputQuery).value = "";
+                    } else if (bindingObject[key].inputClass === "dropDownInput") {
+                        this.view.querySelector(bindingObject[key].inputQuery).value = "1";
+                    }
                 }
             }
         }
