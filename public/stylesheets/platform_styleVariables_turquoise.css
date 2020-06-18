@@ -97,7 +97,7 @@
 
     /* popUpCardStyleVariables */
     --formTitleContainerBoxShadow: var(--color2-2);
-    --formTitleContainerColor_child: var(--color1-1);
+    --formTitleContainerColor_child: var(--color1-3);
 
     --formTitleControlsContainerBackgroundColor: var(--color15);
 
