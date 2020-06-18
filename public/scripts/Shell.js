@@ -15,7 +15,7 @@ export class ShellInterface {
     alertBoxBackground = null;
     alertBoxTrueButton = null;
     alertBoxFalseButton = null;
-    
+
     constructor(shellView) {
         //Initialize/cache view elements
         this.view = shellView;
@@ -147,7 +147,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
             }).catch(error => {
                 window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
-            
+
         //Reset pattern
         this.resetPattern();
     }
@@ -342,7 +342,7 @@ export class WorkspaceScreenController extends ScreenController {
 
             let differenceX = 0;
             let differenceY = 0;
-            let procedureToExecute = () => {};
+            let procedureToExecute = () => { };
 
             //INNER EVENT HANDLER FUNCTIONS
             function determineOption(event) {
@@ -620,20 +620,24 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        fetch(`${location.protocol}//${location.host}/sessions`, {
-            method: "DELETE"
-        })
-            .then(response => response.json())
-            .then(response => {
-                if (response.status) {
-                    //Transit screen
-                    window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
-                    //Remove actionOverlayChips
-                    document.getElementById("actionOverlayChipPane").innerHTML = "";
-                }
-            })
-            .catch(error => {
-                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-            });
+        window.shellInterface.throwAlert("You're about to logout", "Confirm your decision", "You are about to logout from the system. Make sure if all of your work is saved as all of the unsaved work will be lost. After a successful logout you can login as a new user or the current one", null, "LOGOUT", "CANCEL").then((value) => {
+            if (value) {
+                fetch(`${location.protocol}//${location.host}/sessions`, {
+                    method: "DELETE"
+                })
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            //Transit screen
+                            window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
+                            //Remove actionOverlayChips
+                            document.getElementById("actionOverlayChipPane").innerHTML = "";
+                        }
+                    })
+                    .catch(error => {
+                        window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    });
+            }
+        });
     }
 }
