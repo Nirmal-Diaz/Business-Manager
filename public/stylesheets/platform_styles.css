@@ -153,6 +153,18 @@ body {
     width: 100%;
 }
 
+.inputContainer.dropDown {
+    position: relative;
+}
+
+.inputContainer.dropDown::after {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    content: "\25BC";
+}
+
 .inputContainer.invalid > input:first-child {
     border-color: var(--inputContainerBorderColor-invalid);
 }
