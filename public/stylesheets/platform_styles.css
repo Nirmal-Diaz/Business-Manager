@@ -1,27 +1,3 @@
-/* Checkbox Input Structure
-<div class="checkInput">
-    <div class="checkRadioInputControl"><span>K</span></div>
-    <div class="checkRadioInputLabel">
-        <span>Create</span>
-        <span>User</span>
-    </div>
-</div>
-*/
-
-/* Dropdown Input Structure
-<div class="dropDownInput dropDownInput-collapsed">
-    <div class="dropDownInputOption">
-        <span>Test</span>
-    </div>
-</div>
-*/
-
-/* Glyph Button Structure
-<button class="buttonGlyph">
-    <span>U</span>
-</button>
-*/
-
 * {
     /* border: thin solid red !important; */
     box-sizing: border-box;
@@ -159,9 +135,10 @@ body {
 
 .inputContainer.dropDown::after {
     position: absolute;
-    top: 20px;
+    top: 23px;
     right: 20px;
 
+    font-size: xx-small;
     content: "\25BC";
 }
 
