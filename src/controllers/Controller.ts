@@ -542,7 +542,7 @@ export class ValidationController {
 }
 
 export class FileController {
-    static async getWholeDirectory(userId: number, subDirectoryPath: string) {
+    static async readDirectory(userId: number, subDirectoryPath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
         if (fullRelativeDirectoryPath.includes("..")) {
             throw { title: "Path isn't valid", titleDescription: "Recheck the directory path", message: "There are invalid characters in the directory path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };

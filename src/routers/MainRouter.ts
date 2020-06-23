@@ -331,7 +331,7 @@ mainRouter.route("/permissions/:roleId")
 mainRouter.route("/directories/:subDirectoryPath/items")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getWholeDirectory(req.session.userId, req.params.subDirectoryPath)).then(data => {
+            .then(() => FileController.readDirectory(req.session.userId, req.params.subDirectoryPath)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
