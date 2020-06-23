@@ -10,19 +10,7 @@
     <link rel="stylesheet" href="../../stylesheets/popUpCard_styles.css" />
 
     <style>
-        .popUpDivision {
-            padding: 0;
-        }
-
-        .formTitleContainer {
-            padding: 20px;
-        }
-
-        .formTitleContainer, .formControlsContainer {
-            background-color: var(--formTitleControlsContainerBackgroundColor);
-        }
-        
-        .formFieldsContainer {
+        .formsContainer {
             overflow: hidden;
             padding: 0;
         }
@@ -54,8 +42,10 @@
             imageController = document.getElementById("imageController");
 
             preview(imageFilePath) {
+                const fileName = imageFilePath.slice(imageFilePath.lastIndexOf("/") + 1);
+                const subDirectoryPath = imageFilePath.slice(0, imageFilePath.lastIndexOf("/"));
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/fileBuffer?filePath=${encodeURIComponent(imageFilePath)}`)
+                fetch(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -79,12 +69,13 @@
         <!-- formTitleContainer -->
         <div class="formTitleContainer">
             <div class="titleContainer">
+                <div class="titleDescription">Preview</div>
                 <div class="title">Loading...</div>
             </div>
         </div>
 
         <!-- formFieldsContainer -->
-        <div class="formFieldsContainer">
+        <div class="formsContainer">
             <img id="imageController" class="imageController" />
         </div>
 

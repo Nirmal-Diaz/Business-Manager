@@ -10,22 +10,10 @@
     <link rel="stylesheet" href="../../stylesheets/popUpCard_styles.css" />
 
     <style>
-        .popUpDivision {
-            padding: 0;
-        }
-
-        .formTitleContainer {
-            padding: 20px;
-        }
-
-        .formTitleContainer, .formControlsContainer {
-            background-color: var(--formTitleControlsContainerBackgroundColor);
-        }
-
-        .formFieldsContainer {
+        .formsContainer {
             position: relative;
-
             overflow: hidden;
+
             padding: 0;
         }
 
@@ -156,9 +144,10 @@
             }
 
             preview(mediaFilePath) {
-                this.mediaFileName = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1, mediaFilePath.lastIndexOf("."));
+                const fileName = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1);
+                const subDirectoryPath = mediaFilePath.slice(0, mediaFilePath.lastIndexOf("/"));
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/fileBuffer?filePath=${encodeURIComponent(mediaFilePath)}`)
+                fetch(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -301,20 +290,20 @@
 
 <body>
     <div class="popUpDivision">
+        <!-- formTitleContainer -->
+        <div class="formTitleContainer">
+            <div class="titleContainer">
+                <div class="titleDescription">Please wait</div>
+                <div class="title">Buffering...</div>
+            </div>
+        </div>
+
         <!-- formFieldsContainer -->
-        <div class="formFieldsContainer">
+        <div class="formsContainer">
             <video id="mediaController" class="mediaController" autoplay="autoplay"></video>
             <div id="mediaControls" class="mediaControls">
                 <div id="seekSlider" class="seekSlider"></div>
                 <div id="volumeSlider" class="volumeSlider" style="transform: rotate(180deg)"></div>
-            </div>
-        </div>
-
-        <!-- formTitleContainer -->
-        <div class="formTitleContainer">
-            <div class="titleContainer">
-                <div class="title">Buffering...</div>
-                <div class="titleDescription">Please wait</div>
             </div>
         </div>
 

@@ -335,22 +335,20 @@ app.route("/permissions/:roleId")
     });
 
 //FILES AND DIRECTORIES
-//TODO: Change path to honor REST
-app.route("/file/itemPaths")
+app.route("/directories/:subDirectoryPath/items")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getDirectory(req.session.userId, req.query.subDirectoryPath)).then(data => {
+            .then(() => FileController.getWholeDirectory(req.session.userId, req.params.subDirectoryPath)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     });
 
-//TODO: Change path to honor REST
-app.route("/file/fileBuffer")
+app.route("/directories/:subDirectoryPath/files/:fileName")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getFile(req.session.userId, req.query.filePath)).then(data => {
+            .then(() => FileController.getFile(req.session.userId, req.params.subDirectoryPath + req.params.fileName)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

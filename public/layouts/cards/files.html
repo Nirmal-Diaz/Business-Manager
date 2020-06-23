@@ -17,8 +17,8 @@
 
     <script type="module">
         //@ts-check
-        import {CardComponent} from "../../scripts/Utility.js";
-        import {PopUpCard} from "../../scripts/PopUpCard.js";
+        import { CardComponent } from "../../scripts/Utility.js";
+        import { PopUpCard } from "../../scripts/PopUpCard.js";
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
             event.preventDefault();
@@ -31,9 +31,9 @@
         class CardInterface {
             cardObject = null;
             title = document.querySelector("title").textContent;
-            currentSubDirectoryPath = "/";
-            extensionsLibrary = null;
-            
+            presentWorkingDirectoryPath = "/";
+            fileMetadata = null;
+
             selectedCardDivisionSectorItems = [];
             quickAccessArea = document.getElementById("quickAccessArea");
             createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
@@ -43,82 +43,96 @@
             mainCardDivision = document.getElementById("mainCardDivision");
 
             constructor() {
-                //Add onclick to retrieveFileButton for showing the retrieve file popUpCard
-                this.retrieveControls[0].addEventListener("click", this.determinePreviewPopUp.bind(this));
+                //Add onclick to retrieveFileButton for determining and showing the relevant retrieve file popUpCard
+                this.retrieveControls[0].addEventListener("click", () => {
+                    this.determinePreviewPopUp();
+                });
                 //Add onclick to returnFromDirectoryButton for return form current directory
                 this.retrieveControls[1].addEventListener("click", this.returnFromDirectory.bind(this));
-                //Initially cache the extensionsLibrary and navigate the root user directory
-                fetch(`${location.protocol}//${location.host}/registries/extensions.json`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        this.extensionsLibrary = JSON.parse(response.data);
-                    }
-                }).catch(error => {
-                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the extensions library from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                })
-                .then(() => this.navigateDirectory(this.mainCardDivision, this.currentSubDirectoryPath));
+                //Initially cache the fileMetadata and navigate the root user directory
+                fetch(`${location.protocol}//${location.host}/registries/fileMetadata.json`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            this.fileMetadata = response.data;
+                            this.navigateDirectory(this.mainCardDivision, this.presentWorkingDirectoryPath);
+                        } else {
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                        }
+                    }).catch(error => {
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the fileMetadata library from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    });
             }
 
             //EVENT HANDLER METHODS
             navigateDirectory(parentCardDivision, subDirectoryPath) {
                 //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/file/itemPaths?subDirectoryPath=${encodeURIComponent(subDirectoryPath)}`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        parentCardDivision.innerHTML = "";
-                        //Clear the selectedCardDivisionSectorItems
-                        this.selectedCardDivisionSectorItems.length = 0;
-                        //Add a cardDivisionSector for viewing currentSubDirectoryPath
-                        CardComponent.createCardDivisionSector(parentCardDivision, "", this.currentSubDirectoryPath.replace(/\//g, " > "));
-                        if (response.data.directories.length === 0 && response.data.files.length === 0) {
-                            CardComponent.createCardDivisionSector(parentCardDivision, "Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
+                fetch(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/items`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            parentCardDivision.innerHTML = "";
+                            //Clear the selectedCardDivisionSectorItems
+                            this.selectedCardDivisionSectorItems.length = 0;
+                            //Add a cardDivisionSector for viewing presentWorkingDirectoryPath
+                            CardComponent.createCardDivisionSector(parentCardDivision, "", this.presentWorkingDirectoryPath.replace(/\//g, " > "));
+                            if (response.data.directories.length === 0 && response.data.files.length === 0) {
+                                CardComponent.createCardDivisionSector(parentCardDivision, "Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
+                            } else {
+                                if (response.data.directories.length > 0) {
+                                    //Create a cardDivisionSector for directories
+                                    const cardDivisionSector = CardComponent.createCardDivisionSector("Directories", "Double tap to navigate in");
+                                    //Create a cardDivisionSectorItem for each directoryDatum
+                                    for (const directory of response.data.directories) {
+                                        //NOTE: Every directory name has a "/" appended to it
+                                        //NOTE: Bounded method is immediately invoked
+                                        const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.fileMetadata.directory.iconPath, directory.name.slice(0, -1), [])();
+                                        //Store itemCategory, directoryPath in the cardDivisionSectorItem
+                                        cardDivisionSectorItem.dataset.directoryPath = subDirectoryPath + directory.name;
+                                        cardDivisionSectorItem.dataset.itemCategory = "directories";
+                                        //Add ondblclick to cardDirectorySectorItem for navigating in to the corresponding directory
+                                        cardDivisionSectorItem.addEventListener("dblclick", () => {
+                                            this.presentWorkingDirectoryPath = cardDivisionSectorItem.dataset.directoryPath;
+                                            this.navigateDirectory(this.mainCardDivision, cardDivisionSectorItem.dataset.directoryPath);
+                                        });
+                                        cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                    }
+                                    parentCardDivision.appendChild(cardDivisionSector);
+                                }
+                                if (response.data.files.length > 0) {
+                                    //Create a cardDivisionSector for files
+                                    const cardDivisionSector = CardComponent.createCardDivisionSector("Files", "Double tap to preview");
+                                    //Create a cardDivisionSector for each fileDatum
+                                    for (const file of response.data.files) {
+                                        //NOTE: Bounded method is immediately invoked
+                                        let cardDivisionSectorItem = null;
+                                        if (this.fileMetadata.hasOwnProperty(file.extension)) {
+                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.fileMetadata[file.extension].iconPath, file.name, [this.fileMetadata[file.extension].fileType, `${(file.size / 1049000).toFixed(2)} MiB`])();
+                                            //Store itemCategory in the cardDivisionSector
+                                            cardDivisionSectorItem.dataset.fileCategory = this.fileMetadata[file.extension].category;
+                                        } else {
+                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.fileMetadata.unknown.iconPath, file.name, [this.fileMetadata.unknown.fileType, `${(file.size / 1049000).toFixed(2)} MiB`])();
+                                            //Store itemCategory in the cardDivisionSector
+                                            cardDivisionSectorItem.dataset.fileCategory = this.fileMetadata.unknown.category;
+                                        }
+                                        //Store filePath in the cardDivisionSector
+                                        cardDivisionSectorItem.dataset.filePath = subDirectoryPath + file.name;
+                                        //Add ondblclick to cardDirectorySectorItem for previewing
+                                        cardDivisionSectorItem.addEventListener("dblclick", () => {
+                                            this.determinePreviewPopUp();
+                                        });
+                                        cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                    }
+                                    parentCardDivision.appendChild(cardDivisionSector);
+                                }
+                            }
                         } else {
-                            if (response.data.directories.length > 0) {
-                                //Create a cardDivisionSector for directories
-                                const cardDivisionSector = CardComponent.createCardDivisionSector("Directories", "Double tap to navigate in");
-                                //Create a cardDivisionSectorItem for each directoryDatum
-                                for (const directory of response.data.directories) {
-                                    //NOTE: Bounded method is immediately invoked
-                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary.directory.iconPath, directory.name.slice(0, -1), [])();
-                                    //Store itemExtensionCategory, directoryPath in the cardDivisionSectorItem
-                                    //NOTE: Every directory name has a "/" appended to it
-                                    cardDivisionSectorItem.dataset.directoryPath = subDirectoryPath + directory.name;
-                                    cardDivisionSectorItem.dataset.itemExtensionCategory = "directories";
-                                    //Add ondblclick to cardDirectorySectorItem for navigating in to the corresponding directory
-                                    cardDivisionSectorItem.addEventListener("dblclick", () => {
-                                        this.currentSubDirectoryPath = cardDivisionSectorItem.dataset.directoryPath;
-                                        this.navigateDirectory(this.mainCardDivision, cardDivisionSectorItem.dataset.directoryPath);
-                                    });
-                                    cardDivisionSector.appendChild(cardDivisionSectorItem);
-                                }
-                                parentCardDivision.appendChild(cardDivisionSector);
-                            }
-                            if (response.data.files.length > 0) {
-                                //Create a cardDivisionSector for files
-                                const cardDivisionSector = CardComponent.createCardDivisionSector("Files", "Double tap to preview");
-                                //Create a cardDivisionSector for each fileDatum
-                                for (const file of response.data.files) {
-                                    //NOTE: Bounded method is immediately invoked
-                                    const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, "../../" + this.extensionsLibrary[file.extensionCategory][file.extension].iconPath, file.name, [file.type, `${(file.size / 1049000).toFixed(2)} MiB`])();
-                                    //Store itemExtensionCategory, filePath in the cardDivisionSector
-                                    cardDivisionSectorItem.dataset.filePath = subDirectoryPath + file.name;
-                                    cardDivisionSectorItem.dataset.itemExtensionCategory = file.extensionCategory;
-                                    //Add ondblclick to cardDirectorySectorItem for previewing
-                                    cardDivisionSectorItem.addEventListener("dblclick", this.determinePreviewPopUp.bind(this));
-                                    cardDivisionSector.appendChild(cardDivisionSectorItem);
-                                }
-                                parentCardDivision.appendChild(cardDivisionSector);
-                            }
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch content list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                });
+                    })
+                    .catch(error => {
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch content list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                    });
             }
 
             determinePreviewPopUp() {
@@ -126,55 +140,56 @@
                     window.parent.shellInterface.throwAlert("Too many items", "Select only one item and try again", "The system is not capable of previewing multiple selections at once", null, "OK", null);
                 } else if (this.selectedCardDivisionSectorItems.length === 0) {
                     window.parent.shellInterface.throwAlert("Preview what now?", "Select no more than one item and try again", "You have to select no more than one item before requesting a preview", null, "OK", null);
-                } else if (this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory === "unknownExtensions") {
+                } else if (this.selectedCardDivisionSectorItems[0].dataset.fileCategory === "unknowns") {
                     window.parent.shellInterface.throwAlert("This file says 0001101...", "Try previewing a preview supported file", "The file type you are about to view is not currently supported by this system", null, "OK", null);
-                } else if (this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory === "directories") {
+                } else if (this.selectedCardDivisionSectorItems[0].dataset.fileCategory === "directories") {
                     window.parent.shellInterface.throwAlert("Cannot preview a directory", "Select anything that is not a directory", "Only a handful of file types are currently supported by this system for previewing. And those definitely do not include directories", null, "OK", null);
                 } else {
-                    const fileExtensionCategory = this.selectedCardDivisionSectorItems[0].dataset.itemExtensionCategory;
                     const filePath = this.selectedCardDivisionSectorItems[0].dataset.filePath;
-                    if (fileExtensionCategory === "imageExtensions") {
-                        this.showMediaPreviewPopUp("layouts/popUpCards/files_r_image.html", filePath);
-                    } else if (fileExtensionCategory === "audioExtensions") {
-                        this.showMediaPreviewPopUp("layouts/popUpCards/files_r_media.html", filePath);
-                    } else if (fileExtensionCategory === "videoExtensions") {
-                        this.showMediaPreviewPopUp("layouts/popUpCards/files_r_media.html", filePath);
-                    } else if (fileExtensionCategory === "textExtensions") {
-                        console.log("Text file");
-                        // existingPopUpCard.popUpCardInterface.previewText(filePath);
-                    }
+                    const fileCategory = this.selectedCardDivisionSectorItems[0].dataset.fileCategory;
+                    this.showMediaPreviewPopUp(fileCategory, this.presentWorkingDirectoryPath + filePath);
                 }
             }
 
             //NOTE: Since we use custom procedure for if and if not exists we cannot use this.cardObject.createPopUpCard()
-            showMediaPreviewPopUp(popUpCardLayoutFilePath, mediaFilePath) {
-                //Try to retrieve already existing popUpCard
-                const existingPopUpCard = this.cardObject.isPopUpCardExists(popUpCardLayoutFilePath);
-                if (existingPopUpCard) {
-                    existingPopUpCard.popUpCardInterface.preview(mediaFilePath);
-                } else {
-                    const popUpCard = new PopUpCard(popUpCardLayoutFilePath, this);
-                    this.cardObject.openPopUpCards.push(popUpCard);
+            //NOTE: "files_r_image.html" can have many instances
+            //NOTE: "files_r_media.html" can have only one instance
+            showMediaPreviewPopUp(fileCategory, filePath) {
+                if (fileCategory === "images") {
+                    const imagePreviewPopUp = this.cardObject.createPopUpCard("layouts/popUpCards/files_r_image.html");
                     //Allow more width than other popUpCards
-                    popUpCard.getView().style.maxWidth = "90vw";
-                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.preview(mediaFilePath);
+                    imagePreviewPopUp.getView().style.maxWidth = "90vw";
+                    imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
+                        imagePreviewPopUp.popUpCardInterface.preview(filePath);
                     });
+                } else if (fileCategory === "audios" || fileCategory === "videos") {
+                    //Try to retrieve already existing popUpCard
+                    const existingPopUpCard = this.cardObject.isPopUpCardExists("layouts/popUpCards/files_r_media.html");
+                    if (existingPopUpCard) {
+                        existingPopUpCard.popUpCardInterface.preview(filePath);
+                    } else {
+                        const mediaPreviewPopUp = this.cardObject.createPopUpCard("layouts/popUpCards/files_r_media.html");
+                        mediaPreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
+                            mediaPreviewPopUp.popUpCardInterface.preview(filePath);
+                        });
+                    }
+                } else if (fileCategory === "documents") {
+                    console.log("Document preview support is yet to be implemented");
                 }
             }
 
             returnFromDirectory() {
                 this.selectedCardDivisionSectorItems.length = 0;
-                if (this.currentSubDirectoryPath === "/") {
+                if (this.presentWorkingDirectoryPath === "/") {
                     window.parent.shellInterface.throwAlert("No more parent directories", "You're already on the root directory", "You cannot navigate back further when you're already on the root directory.", null, "OK", null);
                 } else {
-                    this.currentSubDirectoryPath = this.currentSubDirectoryPath.slice(0, -1);
-                    if (this.currentSubDirectoryPath.includes("/")) {
-                        this.currentSubDirectoryPath = this.currentSubDirectoryPath.slice(0, this.currentSubDirectoryPath.lastIndexOf("/") + 1);
+                    this.presentWorkingDirectoryPath = this.presentWorkingDirectoryPath.slice(0, -1);
+                    if (this.presentWorkingDirectoryPath.includes("/")) {
+                        this.presentWorkingDirectoryPath = this.presentWorkingDirectoryPath.slice(0, this.presentWorkingDirectoryPath.lastIndexOf("/") + 1);
                     } else {
-                        this.currentSubDirectoryPath = "/";
+                        this.presentWorkingDirectoryPath = "/";
                     }
-                    this.navigateDirectory(this.mainCardDivision, this.currentSubDirectoryPath);
+                    this.navigateDirectory(this.mainCardDivision, this.presentWorkingDirectoryPath);
                 }
             }
         }

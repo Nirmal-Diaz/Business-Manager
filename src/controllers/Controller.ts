@@ -550,21 +550,15 @@ export class ValidationController {
     }
 }
 
-//GLOBAL VARIABLES FOR FILE
-const extensions = JSON.parse(fs.readFileSync("./src/registries/extensions.json", "utf-8"));
-const audioExtensions = Object.keys(extensions.audioExtensions);
-const imageExtensions = Object.keys(extensions.imageExtensions);
-const videoExtensions = Object.keys(extensions.videoExtensions);
-const containerExtensions = Object.keys(extensions.containerExtensions);
-const textExtensions = Object.keys(extensions.textExtensions);
-
 export class FileController {
-    static async getDirectory(userId: number, subDirectoryPath: string) {
+    static async getWholeDirectory(userId: number, subDirectoryPath: string) {
         const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
-        if (!fs.existsSync(fullRelativeDirectoryPath)) {
-            throw { title: "What directory now?", titleDescription: "Recheck the directory path", message: "We couldn't find a directory for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested directory doesn't exist" };
-        } if (fs.statSync(fullRelativeDirectoryPath).isFile()) {
-            throw { title: "Files aren't directories!", titleDescription: "Make sure the path leads to a directory", message: "We couldn't find a directory for the path you sent. It leads to a file. Make sure that the path is correct and try again", technicalMessage: "Found a file at directory path" };
+        if (fullRelativeDirectoryPath.includes("..")) {
+            throw { title: "Path isn't valid", titleDescription: "Recheck the directory path", message: "There are invalid characters in the directory path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
+        } else if (!fs.existsSync(fullRelativeDirectoryPath)) {
+            throw { title: "What directory now?", titleDescription: "Recheck the directory path", message: "We couldn't find a directory for the path you specified. Make sure that the path is correct and try again", technicalMessage: "Directory doesn't exist" };
+        } else if (fs.statSync(fullRelativeDirectoryPath).isFile()) {
+            throw { title: "Files aren't directories!", titleDescription: "Make sure the path leads to a directory", message: "Path you specified leads to a file. Make sure that the path is correct and try again", technicalMessage: "Found a file at directory path" };
         } else {
             const itemNames = fs.readdirSync(fullRelativeDirectoryPath);
             const directories = [];
@@ -573,8 +567,9 @@ export class FileController {
                 const stats = fs.statSync(`${fullRelativeDirectoryPath}/${itemName}`);
                 if (stats.isDirectory()) {
                     const directory = {
-                        //A "/" will be appended to every directory name
-                        name: itemName + "/"
+                        //A "/" will be appended to every directory name as a convention
+                        name: itemName + "/",
+                        extension: "directory"
                     };
                     directories.push(directory);
                 } else {
@@ -582,30 +577,8 @@ export class FileController {
                     const file = {
                         name: itemName,
                         size: stats.size,
-                        type: null,
-                        extensionCategory: null,
                         extension: fileExtension
                     };
-                    if (audioExtensions.includes(fileExtension)) {
-                        file.type = extensions.audioExtensions[fileExtension].fileType;
-                        file.extensionCategory = "audioExtensions";
-                    } else if (imageExtensions.includes(fileExtension)) {
-                        file.type = extensions.imageExtensions[fileExtension].fileType;
-                        file.extensionCategory = "imageExtensions";
-                    } else if (videoExtensions.includes(fileExtension)) {
-                        file.type = extensions.videoExtensions[fileExtension].fileType;
-                        file.extensionCategory = "videoExtensions";
-                    } else if (containerExtensions.includes(fileExtension)) {
-                        file.type = extensions.containerExtensions[fileExtension].fileType;
-                        file.extensionCategory = "containerExtensions";
-                    } else if (textExtensions.includes(fileExtension)) {
-                        file.type = extensions.textExtensions[fileExtension].fileType;
-                        file.extensionCategory = "textExtensions";
-                    } else {
-                        file.type = extensions.unknownExtensions.unknownExtension.fileType;
-                        file.extensionCategory = "unknownExtensions";
-                        file.extension = "unknownExtension";
-                    }
                     files.push(file);
                 }
             }
@@ -618,8 +591,10 @@ export class FileController {
 
     static async getFile(userId: number, filePath: string) {
         const fullRelativeFilePath = `./private/${userId}/${filePath}`;
-        if (!fs.existsSync(fullRelativeFilePath)) {
-            throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file for the path you sent. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };
+        if (fullRelativeFilePath.includes("..")) {
+            throw { title: "Path isn't valid", titleDescription: "Recheck the file path", message: "There are invalid characters in the file path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
+        } if (!fs.existsSync(fullRelativeFilePath)) {
+            throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };
         } else if (fs.statSync(fullRelativeFilePath).isDirectory()) {
             throw { title: "Directories aren't files!", titleDescription: "Make sure the path leads to a file", message: "We couldn't find a file for the path you sent. It leads to a directory. Make sure that the path is correct and try again", technicalMessage: "Found a directory at file path" };
         } else {
