@@ -77,7 +77,8 @@
                             //Add a cardDivisionSector for viewing presentWorkingDirectoryPath
                             CardComponent.createCardDivisionSector(parentCardDivision, "", this.presentWorkingDirectoryPath.replace(/\//g, " > "));
                             if (response.data.directories.length === 0 && response.data.files.length === 0) {
-                                CardComponent.createCardDivisionSector(parentCardDivision, "Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
+                                const cardDivisionSector = CardComponent.createCardDivisionSector("Hmm... It's lonely here", "It's up to you to add something. Try the upload button");
+                                parentCardDivision.appendChild(cardDivisionSector);
                             } else {
                                 if (response.data.directories.length > 0) {
                                     //Create a cardDivisionSector for directories
