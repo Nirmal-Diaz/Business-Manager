@@ -51,6 +51,44 @@
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.form.resetInputs();
                 });
+
+                document.getElementById("nicNumber").addEventListener("keyup", (event) => {
+                    let nicNumber = event.target.value;
+                    if (/^\d{9}([VX]|\d{3})$/.test(nicNumber)) {
+                        //Create a new date for ThisYear-January-Today
+                        const birthDate = new Date();
+                        birthDate.setMonth(0);
+
+                        //Update old NIC formats to match the new format
+                        if (/^\d{9}[VX]$/.test(nicNumber)) {
+                            nicNumber = "19" + nicNumber.substring(0, 5) + "0" + nicNumber.substring(5, 9);
+                        }
+
+                        //Set year of birthDate
+                        const fullYear = parseInt(nicNumber.substring(0, 4));
+                        birthDate.setFullYear(fullYear);
+
+                        //Update gender dropDownInput and subtract additional noOfDays if female
+                        let noOfDays = parseInt(nicNumber.substring(4, 7));
+                        if (noOfDays > 500) {
+                            document.getElementById("genderId").value = "2";
+                            noOfDays -= 500;
+                        } else {
+                            document.getElementById("genderId").value = "1";
+                        }
+
+                        //Set number of days for birthDate
+                        //NOTE: This will automatically set the month and day
+                        if (fullYear % 4 !== 0 && noOfDays > 60) {
+                            birthDate.setDate(noOfDays - 1);
+                        } else {
+                            birthDate.setDate(noOfDays);
+                        }
+
+                        //Update birthDate textInput
+                        document.getElementById("birthDate").value = birthDate.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+                    }
+                });
             }
 
             initInputs() {
@@ -113,7 +151,7 @@
         <div class="formsContainer">
             <form>
                 <div class="titleContainer">
-                    <h1 class="title">Code</h1>
+                    <h1 class="title">Employee Code</h1>
                 </div>
                 <ul>
                     <li>Must be unique</li>
@@ -140,6 +178,13 @@
                 </div>
 
                 <div class="titleContainer">
+                    <h1 class="title">NIC Number</h1>
+                </div>
+                <div class="inputContainer">
+                    <input id="nicNumber" type="text" class="input textInput" placeholder="eg: 952000662V">
+                </div>
+
+                <div class="titleContainer">
                     <h1 class="title">Birth Date</h1>
                 </div>
                 <div class="inputContainer">
@@ -147,10 +192,12 @@
                 </div>
 
                 <div class="titleContainer">
-                    <h1 class="title">NIC Number</h1>
+                    <h1 class="title">Gender</h1>
                 </div>
-                <div class="inputContainer">
-                    <input id="nicNumber" type="text" class="input textInput" placeholder="eg: 952000662V">
+                <div class="inputContainer dropDown">
+                    <select id="genderId" class="input dropDownInput">
+
+                    </select>
                 </div>
 
                 <div class="titleContainer">
@@ -173,15 +220,6 @@
                 </div>
                 <div class="inputContainer">
                     <input id="land" type="text" class="input textInput" placeholder="eg: 0331234567">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Gender</h1>
-                </div>
-                <div class="inputContainer dropDown">
-                    <select id="genderId" class="input dropDownInput">
-
-                    </select>
                 </div>
 
                 <div class="titleContainer">
