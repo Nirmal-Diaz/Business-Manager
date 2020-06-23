@@ -318,15 +318,6 @@ export class UserPreferenceController {
         });
     }
 
-    static async getOne(username) {
-        // const preferences = await DAO.GeneralDAO.getRows("userPreference", [["username", "true", username]], "");
-        // if (preferences.length === 0) {
-        //     throw { title: "Hmm...Something's wrong", titleDescription: "Recheck to username", message: "We couldn't find a set of preferences for the username that you sent. Make sure that the username is correct and try again", technicalMessage: "Cannot find user" };
-        // } else {
-        //     return preferences[0];
-        // }
-    }
-
     static async deleteOne(userId: number) {
         const userPreference = await getRepository(UserPreference).findOne({
             where: {
