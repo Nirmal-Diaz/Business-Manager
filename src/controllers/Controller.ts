@@ -542,8 +542,8 @@ export class ValidationController {
 }
 
 export class FileController {
-    static async readDirectory(userId: number, subDirectoryPath: string) {
-        const fullRelativeDirectoryPath = `./private/${userId}/${subDirectoryPath}`;
+    static async readDirectory(subDirectoryPath: string) {
+        const fullRelativeDirectoryPath = `./private/${subDirectoryPath}`;
         if (fullRelativeDirectoryPath.includes("..")) {
             throw { title: "Path isn't valid", titleDescription: "Recheck the directory path", message: "There are invalid characters in the directory path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
         } else if (!fs.existsSync(fullRelativeDirectoryPath)) {
@@ -580,8 +580,35 @@ export class FileController {
         }
     }
 
-    static async getFile(userId: number, filePath: string) {
-        const fullRelativeFilePath = `./private/${userId}/${filePath}`;
+    static async deleteDirectory(subDirectoryPath: string) {
+        const fullRelativeDirectoryPath = `./private/${subDirectoryPath}`;
+        if (fullRelativeDirectoryPath.includes("..")) {
+            throw { title: "Path isn't valid", titleDescription: "Recheck the directory path", message: "There are invalid characters in the directory path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
+        } else if (!fs.existsSync(fullRelativeDirectoryPath)) {
+            throw { title: "What directory now?", titleDescription: "Recheck the directory path", message: "We couldn't find a directory for the path you specified. Make sure that the path is correct and try again", technicalMessage: "Directory doesn't exist" };
+        } else if (fs.statSync(fullRelativeDirectoryPath).isFile()) {
+            throw { title: "Files aren't directories!", titleDescription: "Make sure the path leads to a directory", message: "Path you specified leads to a file. Make sure that the path is correct and try again", technicalMessage: "Found a file at directory path" };
+        } else {
+            (function deleteDirectoryRecursively(directoryPath: string) {
+                const itemNames = fs.readdirSync(directoryPath);
+                for (const itemName of itemNames) {
+                    const itemPath = `${directoryPath}/${itemName}`;
+                    const stats = fs.statSync(itemPath);
+                    if (stats.isDirectory()) {
+                        deleteDirectoryRecursively(itemPath);
+                    } else {
+                        fs.unlinkSync(itemPath);
+                    }
+                }
+                fs.rmdirSync(directoryPath);
+            })(fullRelativeDirectoryPath);
+            
+            return true;
+        }
+    }
+
+    static async getFile(filePath: string) {
+        const fullRelativeFilePath = `./private/${filePath}`;
         if (fullRelativeFilePath.includes("..")) {
             throw { title: "Path isn't valid", titleDescription: "Recheck the file path", message: "There are invalid characters in the file path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
         } if (!fs.existsSync(fullRelativeFilePath)) {
@@ -590,6 +617,20 @@ export class FileController {
             throw { title: "Directories aren't files!", titleDescription: "Make sure the path leads to a file", message: "We couldn't find a file for the path you sent. It leads to a directory. Make sure that the path is correct and try again", technicalMessage: "Found a directory at file path" };
         } else {
             return fs.readFileSync(fullRelativeFilePath);
+        }
+    }
+
+    static async deleteFile(filePath: string) {
+        const fullRelativeFilePath = `./private/${filePath}`;
+        if (fullRelativeFilePath.includes("..")) {
+            throw { title: "Path isn't valid", titleDescription: "Recheck the file path", message: "There are invalid characters in the file path. Please remove any invalid characters and try again", technicalMessage: "Invalid characters in directory path" };
+        } if (!fs.existsSync(fullRelativeFilePath)) {
+            throw { title: "What file now?", titleDescription: "Recheck the file path", message: "We couldn't find a file at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Requested file doesn't exist" };
+        } else if (fs.statSync(fullRelativeFilePath).isDirectory()) {
+            throw { title: "Directories aren't files!", titleDescription: "Make sure the path leads to a file", message: "We couldn't find a file for the path you sent. It leads to a directory. Make sure that the path is correct and try again", technicalMessage: "Found a directory at file path" };
+        } else {
+            fs.unlinkSync(fullRelativeFilePath);
+            return true;
         }
     }
 }

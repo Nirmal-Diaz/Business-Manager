@@ -328,10 +328,20 @@ mainRouter.route("/permissions/:roleId")
     });
 
 //FILES AND DIRECTORIES
+mainRouter.route("/directories/:subDirectoryPath")
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "files", req.method)
+            .then(() => FileController.deleteDirectory(`${req.session.userId}/${req.params.subDirectoryPath}`)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 mainRouter.route("/directories/:subDirectoryPath/items")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.readDirectory(req.session.userId, req.params.subDirectoryPath)).then(data => {
+            .then(() => FileController.readDirectory(`${req.session.userId}/${req.params.subDirectoryPath}`)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -341,7 +351,15 @@ mainRouter.route("/directories/:subDirectoryPath/items")
 mainRouter.route("/directories/:subDirectoryPath/files/:fileName")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getFile(req.session.userId, req.params.subDirectoryPath + req.params.fileName)).then(data => {
+            .then(() => FileController.getFile(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "files", req.method)
+            .then(() => FileController.deleteFile(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
