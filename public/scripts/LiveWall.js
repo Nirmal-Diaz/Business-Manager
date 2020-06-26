@@ -156,12 +156,23 @@ export class LiveWallController {
         //Add onclick to every child of areaContainer for viewing infoArea
         const areas = Array.from(this.view.querySelector(".areasContainer").children);
         for (let i = 0; i < areas.length; i++) {
-            areas[i].addEventListener("click", () => {
+            areas[i].addEventListener("dblclick", () => {
                 const imageMetaDatum = this.cardInterface.getImageMetadata()[Number.parseInt(areas[i].dataset.imageIndex)];
-                const orientation = areas[i].id.slice(0, -1);
-                const color = areas[i].style.backgroundColor;
-                const zoomImage = new ZoomImage(imageMetaDatum, orientation, color);
-                this.cardInterface.addZoomImage(zoomImage);
+                if (window.frameElement) {
+                    //Case: App is inside an iFrame
+                    const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("layouts/popUpCards/files_r_image.html");
+                    //Allow more width than other popUpCards
+                    imagePreviewPopUp.getView().style.maxWidth = "90vw";
+                    imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
+                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path}`);
+                    });
+                } else {
+                    //Case: App is not inside an iFrame
+                    const orientation = areas[i].id.slice(0, -1);
+                    const color = areas[i].style.backgroundColor;
+                    const zoomImage = new ZoomImage(imageMetaDatum, orientation, color);
+                    this.cardInterface.addZoomImage(zoomImage);
+                }
             });
         }
     }

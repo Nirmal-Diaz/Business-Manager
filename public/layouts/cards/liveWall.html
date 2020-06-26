@@ -81,7 +81,7 @@
 
             //NOTE: This must be done only on secure contexts. navigator.serviceWorker isn't available on insecure contexts
             if (window.isSecureContext) {
-                navigator.serviceWorker.register("../../liveWall.serviceWorker.js", {scope: "liveWall"});
+                navigator.serviceWorker.register("../../liveWall.serviceWorker.js", { scope: "liveWall" });
             }
 
             this.switchViewport(0);
