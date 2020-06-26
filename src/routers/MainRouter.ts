@@ -350,10 +350,16 @@ mainRouter.route("/directories/:subDirectoryPath/items")
 
 mainRouter.route("/directories/:subDirectoryPath/files/:fileName")
     .get((req, res, next) => {
+        const resolvedPath = path.resolve(`${__dirname}/../../private/${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`);
+
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.getFile(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
+            .then(() => FileController.isPathValid(resolvedPath))
+            .then(() => FileController.isPathExists(resolvedPath))
+            .then(() => FileController.isPathFile(resolvedPath))
+            .then(() => {
+                res.sendFile(resolvedPath);
+            })
+            .catch(error => {
                 res.locals.error = error; next();
             });
     })

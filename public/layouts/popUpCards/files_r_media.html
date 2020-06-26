@@ -143,24 +143,10 @@
                 });
             }
 
-            preview(mediaFilePath) {
-                const fileName = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1);
-                const subDirectoryPath = mediaFilePath.slice(0, mediaFilePath.lastIndexOf("/"));
-                //Fetch itemPaths in the subDirectoryPath
-                fetch(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`)
-                .then(response => response.json())
-                .then(response => {
-                    if (response.status) {
-                        this.mediaController.src = URL.createObjectURL(new Blob([new Uint8Array(response.data.data)]));
-                        //Update titleDescription with fileName
-                        document.querySelector(".titleDescription").textContent = mediaFilePath.slice(mediaFilePath.lastIndexOf("/") + 1, mediaFilePath.lastIndexOf("."));
-                    } else {
-                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    }
-                })
-                .catch(error => {
-                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch required file from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                });
+            preview(mediaFileURL) {
+                this.mediaController.src = mediaFileURL;
+                //Update titleDescription with fileName
+                document.querySelector(".title").textContent = decodeURIComponent(mediaFileURL.slice(mediaFileURL.lastIndexOf("/") + 1, mediaFileURL.lastIndexOf(".")));
             }
 
             //EVENT HANDLER METHODS

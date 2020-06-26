@@ -160,7 +160,10 @@
                     //Allow more width than other popUpCards
                     imagePreviewPopUp.getView().style.maxWidth = "90vw";
                     imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
-                        imagePreviewPopUp.popUpCardInterface.preview(filePath);
+                        const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
+                        const subDirectoryPath = filePath.slice(0, filePath.lastIndexOf("/"));
+
+                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
                     });
                 } else if (fileCategory === "audios" || fileCategory === "videos") {
                     //Try to retrieve already existing popUpCard
@@ -170,7 +173,10 @@
                     } else {
                         const mediaPreviewPopUp = this.cardObject.createPopUpCard("layouts/popUpCards/files_r_media.html");
                         mediaPreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
-                            mediaPreviewPopUp.popUpCardInterface.preview(filePath);
+                            const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
+                            const subDirectoryPath = filePath.slice(0, filePath.lastIndexOf("/"));
+
+                            mediaPreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
                         });
                     }
                 } else if (fileCategory === "documents") {
