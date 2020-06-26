@@ -543,18 +543,18 @@ export class ValidationController {
 
 export class FileController {
     static async isPathValid(path: string) {
-        if (path.includes("..")) {
-            throw { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" };
-        } else {
-            return true;
-        }
-    }
-
-    static async isPathExists(path: string) {
         if (fs.existsSync(path)) {
             return true;
         } else {
             throw { title: "Path isn't valid", titleDescription: "Recheck the path", message: "There are invalid characters in the path you specified. Please remove all invalid characters and try again", technicalMessage: "Invalid characters in specified path" };
+        }
+    }
+
+    static async isPathExists(path: string) {
+        if (path.includes("..")) {
+            throw { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" };
+        } else {
+            return true;
         }
     }
 
