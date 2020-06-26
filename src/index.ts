@@ -17,7 +17,7 @@ app.listen(port);
 app: Router Setup
 =====================================================================================
 */
+app.use("/liveWall", liveWallRouter);
 app.use("/", mainRouter);
-app.use("/live-wall", liveWallRouter);
 
 console.log(`Express server status: Ready. Listening on port ${port}`);
