@@ -95,14 +95,18 @@
                 this.rootDirectoryPath = rootDirectoryPath + "/";
             }
             //Merge rootDirectoryPath with the static/public directory
-            fetch(`${location.protocol}//${location.host}/liveWall/environments?rootDirectoryPath=${this.rootDirectoryPath}`, {
+            fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.rootDirectoryPath)}`, {
                 method: "PUT"
             }).then(response => response.json()).then(response => {
                 if (response.status) {
                     //Populate directoryViewport with root directory's directory data (ie. specify empty subdirectoryPath)
-                    this.directoryExplorerController.exploreDirectory("");
+                    this.directoryExplorerController.exploreDirectory("/");
                 } else {
-                    alert(response.error);
+                    if (window.frameElement) {
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    } else {
+                        alert(response.error.title);
+                    }
                 }
             });
         }

@@ -69,13 +69,14 @@ export class CarouselController {
         this.carouselImageCurrent = this.view.querySelector("#carouselImageCurrent");
         this.carouselImageNew = this.view.querySelector("#carouselImageNew");
         //NOTE: static directory is merged under liveWallRouter. So static file requests must start with "liveWall/"
-        this.carouselImageCurrent.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path}`;
+        this.carouselImageCurrent.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         this.carouselImageCurrent.dataset.imageIndex = (imageIndex).toString();
     }
 }
 
 export class DirectoryExplorerController {
     cardInterface = null;
+    presentWorkingSubdirectoryPath = "/";
 
     view = null;
 
@@ -84,49 +85,55 @@ export class DirectoryExplorerController {
         this.view = panelView;
 
         this.view.querySelector(".buttonContainer>.button").addEventListener("click", () => {
-            this.exploreDirectory(this.view.dataset.currentSubdirectoryPath, true);
+            this.exploreDirectory(this.presentWorkingSubdirectoryPath, true);
         });
     }
 
     exploreDirectory(subdirectoryPath, backwards = false) {
+        if (subdirectoryPath === "/") {
+            subdirectoryPath = "";
+        }
         if (backwards) {
             subdirectoryPath = subdirectoryPath.slice(0, subdirectoryPath.slice(0, -1).lastIndexOf("/") + 1);
         }
         //Request directory data for the given directory
-        fetch(`${location.protocol}//${location.host}/liveWall/directories?rootDirectoryPath=${this.cardInterface.getRootDirectoryPath()}&subdirectoryPath=${subdirectoryPath}`)
-            .then(response => response.json())
-            .then(response => {
-                if (response.status) {
-                    this.view.dataset.currentSubdirectoryPath = subdirectoryPath;
+        fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/directories`)
+        .then(response => response.json())
+        .then(response => {
+            if (response.status) {
+                    this.presentWorkingSubdirectoryPath = subdirectoryPath;
                     this.view.firstElementChild.innerHTML = "";
 
                     //NOTE: A DocumentFragment is used to improve performance
                     const panelSectorContainerFragment = new DocumentFragment();
                     const panelDivisionSectorTemplate = this.cardInterface.getTemplate(".panelDivisionSector");
-                    for (const directoryPath of response.data) {
+                    for (const directory of response.data) {
                         const panelDivisionSector = panelDivisionSectorTemplate.cloneNode(true);
-                        panelDivisionSector.textContent = directoryPath.slice(directoryPath.slice(0, -1).lastIndexOf("/") + 1, -1);
-                        panelDivisionSector.dataset.subdirectoryPath = directoryPath.replace(this.cardInterface.getRootDirectoryPath(), "");
+                        panelDivisionSector.textContent = directory.name.slice(0, -1);
                         panelDivisionSector.addEventListener("contextmenu", (event) => {
                             event.preventDefault();
-                            this.navigateDirectory(panelDivisionSector.dataset.subdirectoryPath);
+                            this.navigateDirectory(this.presentWorkingSubdirectoryPath + directory.name);
                         });
                         panelDivisionSector.addEventListener("click", (event) => {
-                            this.exploreDirectory(panelDivisionSector.dataset.subdirectoryPath);
+                            this.exploreDirectory(this.presentWorkingSubdirectoryPath + directory.name);
                         });
                         panelSectorContainerFragment.appendChild(panelDivisionSector);
                     }
 
                     this.view.firstElementChild.appendChild(panelSectorContainerFragment);
                 } else {
-                    alert(response.error);
+                    if (window.frameElement) {
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    } else {
+                        alert(response.error.title);
+                    }
                 }
             });
     }
 
     navigateDirectory(subdirectoryPath) {
         //Request image data in the given directory
-        fetch(`${location.protocol}//${location.host}/liveWall/files/imageMetadata?rootDirectoryPath=${this.cardInterface.getRootDirectoryPath()}&subdirectoryPath=${subdirectoryPath}`)
+        fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/images`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -134,7 +141,11 @@ export class DirectoryExplorerController {
                     //NOTE: LiveWall functionality will be initiated when the user switches to the relevant viewport
                     this.cardInterface.getCarouselController().loadImageAtIndex(0);
                 } else {
-                    alert(response.error);
+                    if (window.frameElement) {
+                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    } else {
+                        alert(response.error.title);
+                    }
                 }
             })
     }
@@ -164,7 +175,7 @@ export class LiveWallController {
                     //Allow more width than other popUpCards
                     imagePreviewPopUp.getView().style.maxWidth = "90vw";
                     imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
-                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path}`);
+                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`);
                     });
                 } else {
                     //Case: App is not inside an iFrame
@@ -180,6 +191,7 @@ export class LiveWallController {
     validateAndViewRandomImage() {
         //Get a random imageIndex
         const imageIndex = Math.floor(Math.random() * (this.cardInterface.getImageMetadata().length));
+        
         //Check if the hwRatio is calculated
         if (this.cardInterface.getImageMetadata()[imageIndex].hwRatio) {
             //View the image appropriately
@@ -192,7 +204,7 @@ export class LiveWallController {
                 //View the image appropriately
                 this.viewImage(imageIndex);
             };
-            image.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path}`;
+            image.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         }
     }
 
@@ -216,7 +228,7 @@ export class LiveWallController {
         //Change the backgroundImage of the randomArea and store its data inside the element
         const randomArea = this.view.querySelector(randomAreaQuery);
         //NOTE: static directory is merged under liveWallRouter. So static file requests must start with "liveWall/"
-        randomArea.src = `${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path}`;
+        randomArea.src = `${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         randomArea.dataset.imageIndex = imageIndex;
     }
 
@@ -240,7 +252,7 @@ export class ZoomImage {
 
         this.view.classList.add(`zoomImage-${orientation}`);
         this.view.style.zIndex = document.querySelectorAll(".zoomImage").length.toString();
-        this.view.style.backgroundImage = `url("${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path}")`;
+        this.view.style.backgroundImage = `url("${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(window.cardInterface.getRootDirectoryPath(), "")}")`;
         this.view.style.borderColor = color;
         if (window.innerHeight >= window.innerWidth) {
             this.view.style.height = ((window.innerWidth * 90 / 100) * imageMetaDatum.hwRatio) + "px";

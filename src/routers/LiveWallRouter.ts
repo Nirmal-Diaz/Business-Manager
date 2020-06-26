@@ -11,65 +11,86 @@ liveWallRouter.route("/")
         res.sendFile(path.resolve(__dirname + "/../../public/layouts/cards/liveWall.html"));
     });
 
-liveWallRouter.route("/directories")
-    .get((req, res) => {
-        const directoryPath = req.query.rootDirectoryPath + req.query.subdirectoryPath;
+liveWallRouter.route("/directories/:absoluteDirectoryPath")
+    .put((req, res) => {
+        const resolvedPath = path.resolve(req.params.absoluteDirectoryPath) + "/";
 
-        if (fs.existsSync(directoryPath)) {
+        if (fs.existsSync(resolvedPath)) {
             //Case: Specified directory path exists
 
-            //Read directory
-            const itemNames = fs.readdirSync(directoryPath);
-            
-            //Populate subDirectoryPaths
-            const subdirectoryPaths = [];
-            for (const itemName of itemNames) {
-                //NOTE: Directory paths contain a "/" at the end. Therefore it should be removed before appending anything
-                const itemPath = `${directoryPath.slice(0, -1)}/${itemName}`;
-                const itemStats = fs.statSync(itemPath);
-                if (itemStats.isDirectory()) {
-                    //NOTE: Directory paths must contain a "/" at the end
-                    //NOTE: rootDirectoryPath substring must be replaced with an empty string
-                    const subDirectoryPath = itemPath.replace(req.query.rootDirectoryPath, "") + "/";
-                    //NOTE: Directories that start with "." must be excluded for security purposes
-                    if (!subDirectoryPath.startsWith(".")) {
-                        subdirectoryPaths.push(subDirectoryPath);
-                    }
-                }
-            }
+            //Merge the specified directory with the current static directory
+            //WARNING: This line merges the current static directory with the specified one
+            liveWallRouter.use(express.static(resolvedPath));
 
-            //Check if subdirectoryPaths contains any data
-            if (subdirectoryPaths.length > 0) {
-                res.json({
-                    status: true,
-                    data: subdirectoryPaths
-                });
-            } else {
-                res.json({
-                    status: false,
-                    error: "No subdirectories are found within this directory"
-                });
-            }
-
+            res.json({
+                status: true
+            });
         } else {
             //Case: Specified directory path doesn't exist
             res.json({
                 status: false,
-                error: "Specified directory doesn't exist"
+                error: { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" }
             });
+        }
+    })
+
+liveWallRouter.route("/directories/:absoluteDirectoryPath/directories")
+    .get((req, res) => {
+        const resolvedPath = path.resolve(req.params.absoluteDirectoryPath) + "/";
+        if (!fs.existsSync(resolvedPath)) {
+            res.json({
+                status: false,
+                error: { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" }
+            });
+        } else if (!fs.statSync(resolvedPath).isDirectory()) {
+            res.json({
+                status: false,
+                error: { title: "Path doesn't lead to a directory", titleDescription: "Specify a directory path", message: "Path you specified leads doesn't lead to a directory. Make sure that the path is correct and leads to a directory", technicalMessage: "Cannot find a directory at directory path" }
+            });
+        } else {
+            const itemNames = fs.readdirSync(resolvedPath);
+            const directories = [];
+            for (const itemName of itemNames) {
+                if (fs.statSync(`${resolvedPath}/${itemName}`).isDirectory()) {
+                    const directory = {
+                        //A "/" will be appended to every directory name as a convention
+                        name: itemName + "/",
+                    };
+                    directories.push(directory);
+                }
+            }
+            if (directories.length > 0) {
+                res.json({
+                    status: true,
+                    data: directories
+                });
+            } else {
+                res.json({
+                    status: false,
+                    error: { title: "No subdirectories", titleDescription: "Try another directory", message: "Path you specified leads doesn't have any subdirectories. Try another directory path", technicalMessage: "No subdirectories inside directory path" }
+                });
+            }
         }
     });
 
-liveWallRouter.route("/files/imageMetadata")
+liveWallRouter.route("/directories/:absoluteDirectoryPath/images")
     .get((req, res) => {
-        const supportedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-        const directoryPath = req.query.rootDirectoryPath + req.query.subdirectoryPath;
-        if (fs.existsSync(directoryPath)) {
-            //Case: Specified directory path exists
+        const resolvedPath = path.resolve(req.params.absoluteDirectoryPath) + "/";
+        if (!fs.existsSync(resolvedPath)) {
+            res.json({
+                status: false,
+                error: { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" }
+            });
+        } else if (!fs.statSync(resolvedPath).isDirectory()) {
+            res.json({
+                status: false,
+                error: { title: "Path doesn't lead to a directory", titleDescription: "Specify a directory path", message: "Path you specified leads doesn't lead to a directory. Make sure that the path is correct and leads to a directory", technicalMessage: "Cannot find a directory at directory path" }
+            });
+        } else {
+            const supportedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+            const files = [];
 
-            //Populate imageFileData
-            const imageFileData = [];
-            (function readContentRecursively(directoryPath) {
+            (function readImagesRecursively(directoryPath) {
                 //Read directory
                 const itemNames = fs.readdirSync(directoryPath);
                 for (let i = 0; i < itemNames.length; i++) {
@@ -77,60 +98,29 @@ liveWallRouter.route("/files/imageMetadata")
                     const itemPath = `${directoryPath.slice(0, -1)}/${itemNames[i]}`;
                     if (fs.statSync(itemPath).isDirectory()) {
                         //NOTE: Directory paths must contain a "/" at the end
-                        readContentRecursively(itemPath + "/");
+                        readImagesRecursively(itemPath + "/");
                     } else {
                         const fileExtension = itemNames[i].slice(itemNames[i].indexOf(".")).toLowerCase();
                         if (supportedExtensions.includes(fileExtension)) {
-                            const imageFileDatum = {
-                                //NOTE: rootDirectoryPath substring must be replaced with an empty string
-                                path: itemPath.replace(req.query.rootDirectoryPath, "")
+                            const file = {
+                                path: itemPath
                             };
-                            imageFileData.push(imageFileDatum);
+                            files.push(file);
                         }
                     }
                 }
-            })(directoryPath);
+            })(resolvedPath);
 
-            //Check if imageFileData contains any data
-            if (imageFileData.length > 0) {
+            if (files.length > 0) {
                 res.json({
                     status: true,
-                    data: imageFileData
+                    data: files
                 });
             } else {
                 res.json({
                     status: false,
-                    error: "No supported image files found within the specified directory"
+                    error: { title: "Cannot find any images", titleDescription: "Try another directory", message: "Path you specified leads doesn't contain any images supported by the system. Try another directory path", technicalMessage: "No supported images found inside directory path" }
                 });
             }
-
-        } else {
-            //Case: Specified directory path doesn't exist
-            res.json({
-                status: false,
-                error: "Specified directory doesn't exist"
-            });
-        }
-    });
-
-liveWallRouter.route("/environments")
-    .put((req, res) => {
-        if (fs.existsSync(req.query.rootDirectoryPath)) {
-            //Case: Specified directory path exists
-
-            //Merge the specified directory with the current static directory
-            //WARNING: This line merges the current static directory with the specified one
-            liveWallRouter.use(express.static(req.query.rootDirectoryPath));
-
-            res.json({
-                status: true
-            });
-
-        } else {
-            //Case: Specified directory path doesn't exist
-            res.json({
-                status: false,
-                error: "Specified directory doesn't exist. Please specify a valid directory path"
-            });
         }
     });
