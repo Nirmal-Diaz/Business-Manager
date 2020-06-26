@@ -1,7 +1,6 @@
 import "reflect-metadata";
 
 import * as express from "express";
-import * as session from "express-session";
 import * as path from "path";
 
 import {
@@ -23,13 +22,6 @@ mainRouter: Middleware Setup (Pre routing)
 */
 //Set static directory
 mainRouter.use(express.static(__dirname + "/../../public"));
-
-//Initiate session
-mainRouter.use(session({
-    secret: Math.random().toString(),
-    saveUninitialized: false,
-    resave: false
-}));
 
 //Initialize login validator
 mainRouter.use((req, res, next) => {
@@ -331,7 +323,7 @@ mainRouter.route("/permissions/:roleId")
 mainRouter.route("/directories/:subDirectoryPath")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.deleteDirectory(`${req.session.userId}/${req.params.subDirectoryPath}`)).then(data => {
+            .then(() => FileController.deleteDirectory(path.resolve(`${req.session.userId}/${req.params.subDirectoryPath}`))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -341,7 +333,7 @@ mainRouter.route("/directories/:subDirectoryPath")
 mainRouter.route("/directories/:subDirectoryPath/items")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.readDirectory(`${req.session.userId}/${req.params.subDirectoryPath}`)).then(data => {
+            .then(() => FileController.readDirectory(path.resolve(`${req.session.userId}/${req.params.subDirectoryPath}`))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -365,7 +357,7 @@ mainRouter.route("/directories/:subDirectoryPath/files/:fileName")
     })
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
-            .then(() => FileController.deleteFile(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`)).then(data => {
+            .then(() => FileController.deleteFile(path.resolve(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
