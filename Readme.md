@@ -7,43 +7,37 @@ The official computer-based information system(CBIS) for the BIT final year proj
 3. MySQL (Tested on v8.0.15)
 
 ## UPDATING DEPENDANCIES
-1. Run command "npm update" from the project root
+1. Run command "npm install" from the project root
 2. Make sure "./node_modules" is created
 
 ## CREATING DATABASE
-1. Open "./Business_Manager.mwb" in "MySQL Workbench"
+1. Open "./etc/businessManager.mwb" in "MySQL Workbench"
 2. Forward engineer the database with the following options
-   - Generate drop scemea
+   - Generate drop schema
    - Generate insert queries
-3. Make sure the database "d" is created
+3. Make sure the database "business_manager" is created
 
 ## EDITING PROJECT STRUCTURE
-* The following steps are completely unnecessaty if "git" supported empty directories
-1. Create "./Private" folder
+* The following steps are completely unnecessary if "git" supported empty directories
+1. Create "./private" folder
 
 * These steps are only required if you intend to use initial user accounts which are created for testing purposes
 * You can fill these directories with media files(.mp3, .jpg etc.) in order to view them within the CBIS
-2. Create "./Private/Nirmal Diaz" folder
-3. Create "./Private/Sandun Perera" folder
+2. Create "./private/1" folder
+3. Create "./private/2" folder
 
 ## EDITING DATABASE CONNECTION OBJECT
-1. Navigate into "./Scripts/DAO.js"
-2. Change the properties of the "connection" object at line 4 to match your MySQL server settings
+1. Navigate into "./ormconfig.json"
+2. Change the properties of the "default" connection object in lines 5,6,7,8
 
-## RUN THE PROJECT: ELECTRON MODE
-* This is a temporary solution. Soon the Business Manager Server and its Electron client will be separated
-1. Run command "npm start" from the project root
-
-## RUN THE PROJECT: WEB APP MODE
-* This is a temporary solution. Soon the Business Manager Server and its Electron client will be separated
-* You must run the project in Electron mode in order to continue
-* Do not terminate the electron process. Just minimize the electron window.
-1. Open any web browser and navigate to "http://localhost:80"
+## RUN THE PROJECT
+1. Run the "npm start" command from the project root
+2. Open any web browser and navigate to "http://localhost:8080"
 
 ## LOGGING IN TO THE CBIS
+* You must run the project first
 1. Click anywhere on the splash screen
-2. Enter "Nirmal Diaz" (Case sensitive) in the "type here..." field on the "Tell us who you are" screen
+2. Enter "Assassino" (Case sensitive) in the "type here..." field on the "Tell us who you are" screen
 3. Press "Enter"
-4. Mark the pattern according to the dot Configuration: 8, 7, 4, 1, 5, 7, 6, 3, 2
+4. Mark the pattern according to the dot Configuration: 1, 5, 9
 5. You will be automatically logged in
-6. Use mouse wheel to scroll through the "stack of module cards"
