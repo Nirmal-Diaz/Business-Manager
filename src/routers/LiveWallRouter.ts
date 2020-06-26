@@ -2,12 +2,13 @@ import "reflect-metadata";
 
 import * as express from "express";
 import * as fs from "fs";
+import * as path from "path";
 
 export const liveWallRouter = express.Router();
 
 liveWallRouter.route("/")
     .get((req, res) => {
-        res.sendFile(__dirname + "/public/layouts/index.html");
+        res.sendFile(path.resolve(__dirname + "/../../public/layouts/cards/liveWall.html"));
     });
 
 liveWallRouter.route("/directories")

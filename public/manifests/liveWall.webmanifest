@@ -1,0 +1,15 @@
+{
+  "background_color": "black",
+  "description": "A dynamic collage with an image viewer",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "../images/liveWall_launcher_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "LiveWall",
+  "short_name": "LiveWall",
+  "start_url": "/liveWall/"
+}
