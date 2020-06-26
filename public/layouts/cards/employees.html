@@ -25,13 +25,12 @@
         class CardInterface {
             cardObject = null;
             title = document.querySelector("title").textContent;
-
             selectedCardDivisionSectorItems = [];
-            quickAccessArea = document.getElementById("quickAccessArea");
-            createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
-            retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
-            updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
-            deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+
+            createControls = document.querySelectorAll("#createControlsContainer > button");
+            retrieveControls = document.querySelectorAll("#retrieveControlsContainer > button");
+            updateControls = document.querySelectorAll("#updateControlsContainer > button");
+            deleteControls = document.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
                 this.createControls[0].addEventListener("click", () => {

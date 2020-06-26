@@ -33,14 +33,13 @@
             title = document.querySelector("title").textContent;
             presentWorkingDirectoryPath = "/";
             fileMetadata = null;
-
             selectedCardDivisionSectorItems = [];
-            quickAccessArea = document.getElementById("quickAccessArea");
-            createControls = this.quickAccessArea.querySelectorAll("#createControlsContainer > button");
-            retrieveControls = this.quickAccessArea.querySelectorAll("#retrieveControlsContainer > button");
-            updateControls = this.quickAccessArea.querySelectorAll("#updateControlsContainer > button");
-            deleteControls = this.quickAccessArea.querySelectorAll("#deleteControlsContainer > button");
+            
             mainCardDivision = document.getElementById("mainCardDivision");
+            createControls = document.querySelectorAll("#createControlsContainer > button");
+            retrieveControls = document.querySelectorAll("#retrieveControlsContainer > button");
+            updateControls = document.querySelectorAll("#updateControlsContainer > button");
+            deleteControls = document.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
                 //Add onclick to retrieveFileButton for determining and showing the relevant retrieve file popUpCard
