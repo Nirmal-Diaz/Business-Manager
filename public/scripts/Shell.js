@@ -620,7 +620,7 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        window.shellInterface.throwAlert("You're about to logout", "Confirm your decision", "You are about to logout from the system. Make sure if all of your work is saved as all of the unsaved work will be lost. After a successful logout you can login as a new user or the current one", null, "LOGOUT", "CANCEL").then((value) => {
+        window.shellInterface.throwAlert("You're about to logout", "Confirm your action", "You are about to logout from the system. Make sure if all of your work is saved as all of the unsaved work will be lost. After a successful logout you can login as another user or as the current one", null, "PROCEED", "CANCEL").then((value) => {
             if (value) {
                 fetch(`${location.protocol}//${location.host}/sessions`, {
                     method: "DELETE"
@@ -638,6 +638,8 @@ export class WorkspaceScreenController extends ScreenController {
                         window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                     });
             }
+        }).catch(() => {
+            //NOTE: No need to do anything here
         });
     }
 }
