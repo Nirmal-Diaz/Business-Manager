@@ -3,10 +3,9 @@ import "reflect-metadata";
 import * as express from "express";
 import * as fs from "fs";
 import * as path from "path";
-// import * as socketIO from "socket.io";
 
 export const musixRouter = express.Router();
-// const io = socketIO(musixRouter);
+
 /*
 =====================================================================================
 musixRouter: Middleware Setup
@@ -116,40 +115,3 @@ musixRouter.route("/playlists")
             }
         }
     });
-/* 
-=====================================================================================
-Socket.io: Listeners
-=====================================================================================
-*/
-// io.on("connection", (socket) => {
-//     //Add remote events to socket for broadcasting params to other clients except the ordering client
-
-//     //NOTE: This event prevents enabling RemotePlay on more that one device
-//     socket.on("remote-disable", (params) => {
-//         socket.broadcast.emit("remote-disable", params);
-//     });
-
-//     socket.on("remote-set-volume", (params) => {
-//         socket.broadcast.emit("remote-set-volume", params);
-//     });
-
-//     socket.on("remote-set-playlist", (params) => {
-//         socket.broadcast.emit("remote-set-playlist", params);
-//     });
-
-//     socket.on("remote-load-track-at", (params) => {
-//         socket.broadcast.emit("remote-load-track-at", params);
-//     });
-
-//     socket.on("remote-seek-to", (params) => {
-//         socket.broadcast.emit("remote-seek-to", params);
-//     });
-
-//     socket.on("remote-toggle-play", (params) => {
-//         socket.broadcast.emit("remote-toggle-play", params);
-//     });
-
-//     socket.on("remote-skip-track", (params) => {
-//         socket.broadcast.emit("remote-skip-track", params);
-//     });
-// });

@@ -98,17 +98,34 @@ export class NowPlayingController {
 
     }
 
-    setRemotePlay(remotePlay) {
-        this.remotePlay = remotePlay;
-    }
-
-    isRemotePlay() {
-        return this.remotePlay;
+    toggleRemotePlay() {
+        if (this.remotePlay) {
+            this.remotePlay = false;
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-disable"
+            });
+            if (window.frameElement) {
+                window.parent.shellInterface.throwAlert("RemotePlay is off", "You no longer control other instances", "From now on every action you take on Musix won't affect other instances. YOu can control your instance", null, "OK", null);
+            } else {
+                alert("RemotePlay is off");
+            }
+        } else {
+            this.remotePlay = true;
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-enable"
+            });
+            if (window.frameElement) {
+                window.parent.shellInterface.throwAlert("RemotePlay is on", "You are in control of other instances", "From now on every action you take on Musix won't affect the current instance. Instead they are reflected throughout all other instances which are connected to the web socket server\n\nAll other clients are expected to interact with the DOM before RemotePlay can work properly", null, "OK", null);
+            } else {
+                alert("RemotePlay is enabled. All other clients are expected to interact with the DOM before RemotePlay can work properly");
+            }
+        }
     }
 
     setVolume(volume) {
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-set-volume", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-set-volume",
                 volume: volume
             });
         }
@@ -121,7 +138,8 @@ export class NowPlayingController {
 
     setPlaylist(playlist) {
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-set-playlist", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-set-playlist",
                 playlist: playlist
             });
         }
@@ -135,7 +153,8 @@ export class NowPlayingController {
 
     loadTrackAt(trackIndex) {
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-load-track-at", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-load-track-at",
                 trackIndex: trackIndex
             });
         }
@@ -187,7 +206,8 @@ export class NowPlayingController {
 
     seekTo(time) {
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-seek-to", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-seek-to",
                 time: time
             });
         }
@@ -200,7 +220,9 @@ export class NowPlayingController {
 
     togglePlay() {
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-toggle-play", {});
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-toggle-play"
+            });
         } else {
             if (this.mediaController.paused) {
                 this.mediaController.play();
@@ -218,13 +240,16 @@ export class NowPlayingController {
         this.loadTrackAt(upcomingTrackPosition.trackIndex);
 
         if (this.remotePlay) {
-            this.cardInterface.getWebSocket().emit("remote-set-playlist", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-set-playlist",
                 playlist: playlist
             });
-            this.cardInterface.getWebSocket().emit("remote-load-track-at", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-load-track-at",
                 trackIndex: upcomingTrackPosition.trackIndex
             });
-            this.cardInterface.getWebSocket().emit("remote-toggle-play", {
+            this.cardInterface.getWebSocket().emit("musix-broadcast", {
+                eventName: "remote-toggle-play",
                 trackIndex: upcomingTrackPosition.trackIndex
             });
         } else {

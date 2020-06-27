@@ -9,12 +9,12 @@
     <link href="../../manifests/musix.webmanifest" rel="manifest" />
     <link href="../../stylesheets/musix.css" rel="stylesheet" />
 
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
     <!-- This script tag will unite the module and global scope -->
-    <!-- <script>
+    <script>
         //Initialize a new socket with the server
         window.socket = io();
-    </script> -->
+    </script>
     <script type="module">
         //@ts-check
         import {
@@ -55,7 +55,7 @@
                 }
 
                 //Add webSocket listeners
-                // this.initWebSocket();
+                this.initWebSocket();
 
                 //Initialize PlaylistsController
                 this.playlistsController = new PlaylistController(this);
@@ -85,6 +85,10 @@
                 });
                 this.retrieveControls[2].addEventListener("click", (event) => {
                     this.nowPlayingController.skipTrack("next");
+                });
+
+                this.updateControls[0].addEventListener("click", (event) => {
+                    this.nowPlayingController.toggleRemotePlay();
                 });
             }
 
@@ -141,7 +145,7 @@
             getPlaylistController() {
                 return this.playlistsController;
             }
-
+            
             //EVENT HANDLER METHODS
             startNavigation(event) {
                 const cardInterface = this;
@@ -184,15 +188,7 @@
                         if (differenceY > 0) {
                             cardInterface.navigationControl.style.borderWidth = "0 0 2px 0";
                             procedureToExecute = () => {
-                                if (cardInterface.nowPlayingController.isRemotePlay()) {
-                                    cardInterface.nowPlayingController.setRemotePlay(false);
-                                    alert("RemotePlay is disabled");
-                                } else {
-                                    //Emit the remote-disable event to all other clients
-                                    cardInterface.getWebSocket().emit("remote-disable", {});
-                                    cardInterface.nowPlayingController.setRemotePlay(true);
-                                    alert("RemotePlay is enabled. All other clients are expected to interact with the DOM before RemotePlay can work properly");
-                                }
+                                cardInterface.nowPlayingController.toggleRemotePlay();
                             };
                         } else if (differenceY < 0) {
                             cardInterface.navigationControl.style.borderWidth = "2px 0 0 0";
@@ -275,7 +271,7 @@
         <button class="buttonGlyph"><span>&gt;</span></button>
     </div>
     <div id="updateControlsContainer">
-
+        <button class="buttonGlyph"><span>RP</span></button>
     </div>
     <div id="deleteControlsContainer">
 
