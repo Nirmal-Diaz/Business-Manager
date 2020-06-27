@@ -35,7 +35,7 @@
         });
         //Add onload to window for initializing shellInterface
         window.addEventListener("load", () => {
-            window.shellInterface = new ShellInterface(document.body);
+            window.shellInterface = new ShellInterface();
         });
     </script>
 </head>
@@ -45,7 +45,7 @@
     <div id="splashScreen" class="screen popIn">
         <div class="titleContainer" style="width: auto;">
             <h1 class="title" style="font-size: 60px;">bonjour.hola.hello</h1>
-            <p class="titleDescription">CLICK ANYWHERE TO CONTINUE</p>
+            <p class="titleDescription" style="text-align: center;">Click anywhere to continue</p>
         </div>
     </div>
 
