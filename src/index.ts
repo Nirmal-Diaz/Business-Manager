@@ -3,8 +3,9 @@ import "reflect-metadata";
 import * as express from "express";
 import * as session from "express-session";
 
-import { mainRouter } from "./routers/MainRouter";
+import { musixRouter } from "./routers/MusixRouter";
 import { liveWallRouter } from "./routers/LiveWallRouter";
+import { mainRouter } from "./routers/MainRouter";
 /*
 =====================================================================================
 app: Setup
@@ -28,6 +29,7 @@ app.use(session({
 app: Router Setup
 =====================================================================================
 */
+app.use("/musix", musixRouter);
 app.use("/liveWall", liveWallRouter);
 app.use("/", mainRouter);
 
