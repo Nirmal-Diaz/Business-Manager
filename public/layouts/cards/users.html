@@ -49,10 +49,11 @@
                 this.retrieveControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
                 //Add onkeypress to searchButtonInput for searching the card
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
+                    PlatformComponent.toggleButtonGlyph(event);
                     if (event.key === 'Enter' && event.currentTarget.value === "") {
                         this.searchItems("", "All users", "Double tap to view and update");
                     } else if (event.key === 'Enter') {
-                        this.searchItems(event.currentTarget.value, "Here's what we've found", `Keyword : "${event.currentTarget.value}"`);
+                        this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
                     }
                 });
 
