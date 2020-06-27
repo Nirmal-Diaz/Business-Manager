@@ -20,6 +20,10 @@
     user-select: none;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+}
+
 p,h1 {
     text-align: center;
 }
@@ -311,8 +315,8 @@ body {
     }
 
     #sliderContainer {
-        max-height: 80vh;
-        max-width: 80vh;
+        max-height: 350px;
+        max-width: 350px;
         height: 40vw;
         width: 40vw;
     }
@@ -336,7 +340,8 @@ body {
         right: 0;
     
         width: 30vw;
-        height: 70%;
+        max-height: 300px;
+        height: 50vw;
     }
 
     .panel {
@@ -362,6 +367,7 @@ body {
     }
 
     #navigationControl {
-        display: none;
+        bottom: calc(50vh - 100px);
+        left: calc(15vw - 22.5px);
     }
 }
