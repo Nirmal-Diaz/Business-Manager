@@ -44,7 +44,7 @@ mainRouter.use((req, res, next) => {
 
 /*
 =====================================================================================
-mainRouter: Route Handler Setup
+mainRouter: Route Handlers Setup
 =====================================================================================
 */
 mainRouter.route("/")
@@ -84,7 +84,7 @@ mainRouter.route("/users/:username/avatar")
 
 /* 
 =====================================================================================
-mainRouter: Routing (Only login validation)
+mainRouter: Route Handlers Setup (Only login validation)
 =====================================================================================
 */
 mainRouter.route("/tables/:tableName")
@@ -107,7 +107,7 @@ mainRouter.route("/registries/:registryFile")
 
 /* 
 =====================================================================================
-mainRouter: Routing (Both login and permission validation)
+mainRouter: Route Handlers Setup (Both login and permission validation)
 =====================================================================================
 */
 //EMPLOYEES

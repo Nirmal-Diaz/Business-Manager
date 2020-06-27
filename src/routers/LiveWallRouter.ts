@@ -5,7 +5,11 @@ import * as fs from "fs";
 import * as path from "path";
 
 export const liveWallRouter = express.Router();
-
+/*
+=====================================================================================
+liveWallRouter: Route Handlers Setup
+=====================================================================================
+*/
 liveWallRouter.route("/")
     .get((req, res) => {
         res.sendFile(path.resolve(__dirname + "/../../public/layouts/cards/liveWall.html"));

@@ -1,5 +1,5 @@
 //@ts-check
-const liveWallCache = "liveWallCacheV2";
+const liveWallCache = "liveWallCacheV1";
 
 self.addEventListener("install", (event) => {
     console.log("ServiceWorker installation successful");
@@ -16,8 +16,6 @@ self.addEventListener("activate", async (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    // console.log(event.request.url);
-        
     event.respondWith(
         caches.open(liveWallCache).then((cache) => {
             return cache.match(event.request).then((cachedResponse) => {
@@ -25,7 +23,7 @@ self.addEventListener("fetch", (event) => {
                     //Case: A cached response already exists
                     console.log("Serving: " + event.request.url);
                     return cachedResponse;
-                } else if (event.request.url.includes("directories?")) {
+                } else if (event.request.url.includes("/directories?")) {
                     //Case: A cached response doesn't exist and needs to be cached
                     //Request, cache and respond with required resource
                     return fetch(event.request).then((fetchedResponse) => {
