@@ -37,12 +37,12 @@ export class PlatformComponent {
         return actionOverlayChip;
     }
 
-    static toggleButtonGlyph(event) {
-        if (event.currentTarget.classList.toggle("revealed")) {
-            event.currentTarget.children[1].style.display = "block";
-            event.currentTarget.children[1].focus();
+    static toggleButtonGlyph(buttonGlyph) {
+        if (buttonGlyph.classList.toggle("revealed")) {
+            buttonGlyph.children[1].style.display = "block";
+            buttonGlyph.children[1].focus();
         } else {
-            event.currentTarget.children[1].style.display = "none";
+            buttonGlyph.children[1].style.display = "none";
         }
     }
 }
