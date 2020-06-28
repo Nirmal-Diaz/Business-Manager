@@ -49,12 +49,16 @@
 
         constructor() {
             //Add onclick to searchButton for toggling search UI
-            this.updateControls[0].addEventListener("click", PlatformComponent.toggleButtonGlyph);
+            this.updateControls[0].addEventListener("click", () => {
+                PlatformComponent.toggleButtonGlyph(this.updateControls[0]);
+            });
             //Add onkeypress to searchButtonInput for searching the card
             this.updateControls[0].children[1].addEventListener("keypress", (event) => {
-                PlatformComponent.toggleButtonGlyph;
-                if (event.key === 'Enter' && event.currentTarget.value !== "") {
-                    this.setRootDirectoryPath(event.target.value);
+                if (event.key === "Enter") {
+                    PlatformComponent.toggleButtonGlyph(this.updateControls[0]);
+                    if (event.currentTarget.value !== "") {
+                        this.setRootDirectoryPath(event.target.value);
+                    } 
                 }
             });
 
