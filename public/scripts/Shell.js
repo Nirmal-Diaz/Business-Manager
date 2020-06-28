@@ -268,7 +268,7 @@ export class WorkspaceScreenController extends ScreenController {
                     }
                     document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);
                 } else {
-                    window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "LOGOUT", null).then(() => this.logoutSession());
                 }
             })
             .catch(error => {
@@ -367,7 +367,13 @@ export class WorkspaceScreenController extends ScreenController {
                         //Logout session
                         workspaceScreenController.navigationControl.style.borderColor = "transparent var(--headerAreaColor) transparent transparent";
                         navigatorControlOptionDisplay.innerText = "Logout";
-                        procedureToExecute = workspaceScreenController.logoutSession;
+                        procedureToExecute = () => {
+                            window.shellInterface.throwAlert("You're about to logout", "Confirm your action", "You are about to logout from the system. Make sure if all of your work is saved as all of the unsaved work will be lost. After a successful logout you can login as another user or as the current one", null, "PROCEED", "CANCEL").then(() => {
+                                workspaceScreenController.logoutSession();
+                            }).catch(() => {
+                                //NOTE: No need to do anything here
+                            });
+                        };
                     } else if (differenceX < 0) {
                         //Show actionOverlay
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
@@ -629,26 +635,20 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        window.shellInterface.throwAlert("You're about to logout", "Confirm your action", "You are about to logout from the system. Make sure if all of your work is saved as all of the unsaved work will be lost. After a successful logout you can login as another user or as the current one", null, "PROCEED", "CANCEL").then((value) => {
-            if (value) {
-                fetch(`${location.protocol}//${location.host}/sessions`, {
-                    method: "DELETE"
-                })
-                    .then(response => response.json())
-                    .then(response => {
-                        if (response.status) {
-                            //Transit screen
-                            window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
-                            //Remove actionOverlayChips
-                            document.getElementById("actionOverlayChipPane").innerHTML = "";
-                        }
-                    })
-                    .catch(error => {
-                        window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                    });
-            }
-        }).catch(() => {
-            //NOTE: No need to do anything here
-        });
+        fetch(`${location.protocol}//${location.host}/sessions`, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.status) {
+                    //Transit screen
+                    window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
+                    //Remove actionOverlayChips
+                    document.getElementById("actionOverlayChipPane").innerHTML = "";
+                }
+            })
+            .catch(error => {
+                window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't logout you from your session. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
     }
 }

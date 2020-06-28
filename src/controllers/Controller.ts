@@ -80,29 +80,33 @@ export class SessionController {
 }
 
 export class PermissionController {
-    //WARNING: This method has cases that fails silently
-    static async cerateMany(clientBindingObject) {
+    static async filterApplicablePermissions(clientBindingObject) {
         //Remove permission objects with "0000" as the value
-        const tempClientBindingObject = [];
+        const filteredClientBindingObject = [];
         for (let i = 0; i < clientBindingObject.length; i++) {
             if (clientBindingObject[i].value.value !== "0000") {
-                tempClientBindingObject.push(clientBindingObject[i]);
+                filteredClientBindingObject.push(clientBindingObject[i]);
             }
         }
-        clientBindingObject = tempClientBindingObject;
 
-        if (clientBindingObject.length !== 0) {
+        if (filteredClientBindingObject.length > 0) {
+            return filteredClientBindingObject;
+        } else {
+            throw { title: "Forgot permissions?", titleDescription: "Assign some permissions for this role", message: "Every role must have a set of permissions over at least one module. You have assigned no such permissions over any module", technicalMessage: "No permissions assigned for role" };
+        }
+    }
+
+    static async cerateMany(clientBindingObject) {
+        return PermissionController.filterApplicablePermissions(clientBindingObject).then(filteredClientBindingObject => {
             //Validate clientBindingObject
             const serverObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
-            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.validateBindingObject(serverObject, filteredClientBindingObject);
 
             return getRepository(Permission).save(serverObject as Permission[])
                 .catch((error) => {
                     throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
                 });
-        } else {
-            return true;
-        }
+        });
     }
 
     static async getOne(roleId: number, moduleId: number) {
@@ -137,7 +141,7 @@ export class PermissionController {
         if (permissions.length > 0) {
             return permissions;
         } else {
-            throw { title: "You've got no permissions", titleDescription: "Contact your system administrator", message: "Looks like your role doesn't have any permissions. It may be a temporal situation or ask your system administrator for some permissions", technicalMessage: "No permissions for role" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like your role doesn't have any permissions assigned. Every user must have at least one permission over at least one module. This could is definitely a problem on our side. Please contact your system administrator", technicalMessage: "No permissions for role" };
         }
     }
 
@@ -157,7 +161,7 @@ export class PermissionController {
         if (permittedModules.length > 0) {
             return permittedModules;
         } else {
-            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules to work with. Every user must have at least one assigned module. This could be a database error", technicalMessage: "No permitted modules for user" };
+            throw { title: "Well, that's odd", titleDescription: "Contact your system administrator", message: "Looks like you don't have any modules to work with. Every user must have at least one assigned module. This could is definitely a problem on our side. Please contact your system administrator", technicalMessage: "No permitted modules for user" };
         }
     }
 
@@ -189,14 +193,20 @@ export class PermissionController {
         }
     }
 
-    //WARNING: This method deletes current permissions and recreates new ones
     static async updateMany(clientBindingObject) {
-        //Remove old permission objects and create new ones
-        return PermissionController.deleteMany(parseInt(clientBindingObject[0].roleId.value))
-            .then(() => PermissionController.cerateMany(clientBindingObject))
-            .catch((error) => {
-                throw error;
-            });
+        return PermissionController.filterApplicablePermissions(clientBindingObject).then(async filteredClientBindingObject => {
+            //Delete existing permissions
+            await PermissionController.deleteMany(parseInt(filteredClientBindingObject[0].roleId.value));
+
+            //Validate clientBindingObject
+            const serverObject = JSON.parse(fs.readFileSync("./src/registries/permissions.json", "utf-8"));
+            ValidationController.validateBindingObject(serverObject, filteredClientBindingObject);
+
+            return getRepository(Permission).save(serverObject as Permission[])
+                .catch((error) => {
+                    throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
+                });
+        });
     }
 
     //WARNING: This method has cases that fails silently
