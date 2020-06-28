@@ -635,7 +635,7 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        fetch(`${location.protocol}//${location.host}/sessions`, {
+        fetch(`${location.protocol}//${location.host}/sessions/@me`, {
             method: "DELETE"
         })
             .then(response => response.json())

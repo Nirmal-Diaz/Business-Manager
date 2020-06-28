@@ -66,7 +66,9 @@ mainRouter.route("/sessions")
         }).catch(error => {
             res.locals.error = error; next();
         });
-    })
+    });
+
+mainRouter.route("/sessions/@me")
     .delete((req, res, next) => {
         req.session.destroy(() => {
             res.locals.data = true; next();
