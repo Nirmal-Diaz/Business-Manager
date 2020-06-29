@@ -1,0 +1,122 @@
+{
+    ".mp3": {
+        "fileType": "Audio file",
+        "mimeType": "audio/mp3",
+        "iconPath": "/images/main/icon_file_audio.png",
+        "category": "audios"
+    },
+    ".wav": {
+        "fileType": "Audio file",
+        "mimeType": "audio/wav",
+        "iconPath": "/images/main/icon_file_audio.png",
+        "category": "audios"
+    },
+    ".jpeg": {
+        "fileType": "Image file",
+        "mimeType": "image/jpeg",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".jpg": {
+        "fileType": "Image file",
+        "mimeType": "image/jpeg",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".gif": {
+        "fileType": "Image file",
+        "mimeType": "image/gif",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".png": {
+        "fileType": "Image file",
+        "mimeType": "image/png",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".bmp": {
+        "fileType": "Image file",
+        "mimeType": "image/bmp",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".ico": {
+        "fileType": "Image file",
+        "mimeType": "image/x-icon",
+        "iconPath": "/images/main/icon_file_image.png",
+        "category": "images"
+    },
+    ".mp4": {
+        "fileType": "Video file",
+        "mimeType": "video/mp4",
+        "iconPath": "/images/main/icon_file_video.png",
+        "category": "videos"
+    },
+    ".webm": {
+        "fileType": "Video file",
+        "mimeType": "video/webm",
+        "iconPath": "/images/main/icon_file_video.png",
+        "category": "videos"
+    },
+    ".ogg": {
+        "fileType": "Container file",
+        "mimeType": "audio/ogg video/ogg",
+        "iconPath": "/images/main/icon_file_container.png",
+        "category": "videos"
+    },
+    ".html": {
+        "fileType": "Markup file",
+        "mimeType": "text/html",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".css": {
+        "fileType": "Style file",
+        "mimeType": "text/css",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".js": {
+        "fileType": "Activity file",
+        "mimeType": "application/javascript",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".json": {
+        "fileType": "Settings file",
+        "mimeType": "application/json",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".php": {
+        "fileType": "Activity file",
+        "mimeType": "text/php",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".txt": {
+        "fileType": "Plain text file",
+        "mimeType": "text/plain",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    ".vtt": {
+        "fileType": "Subtitle file",
+        "mimeType": "text/vtt",
+        "iconPath": "/images/main/icon_file_text.png",
+        "category": "documents"
+    },
+    "unknown": {
+        "fileType": "Unknown file",
+        "mimeType": "application/octet-stream",
+        "iconPath": "/images/main/icon_file_default.png",
+        "category": "unknowns"
+    },
+    "directory": {
+        "fileType": "Directory",
+        "mimeType": "",
+        "iconPath": "/images/main/icon_directory_default.png",
+        "category": "directories"
+    }
+}

@@ -7,7 +7,7 @@
   "display": "fullscreen",
   "icons": [
     {
-      "src": "../images/liveWall_launcher_192.png",
+      "src": "../images/liveWall/launcher_192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

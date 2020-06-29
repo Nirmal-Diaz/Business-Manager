@@ -9,7 +9,7 @@
         "database": "business_manager",
         "synchronize": false,
         "entities": [
-            "src/entities/*.ts"
+            "src/entities/main/*.ts"
         ]
     }
 ]

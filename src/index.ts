@@ -4,9 +4,9 @@ import * as express from "express";
 import * as session from "express-session";
 import * as socketIo from "socket.io";
 
-import { musixRouter } from "./routers/MusixRouter";
-import { liveWallRouter } from "./routers/LiveWallRouter";
-import { mainRouter } from "./routers/MainRouter";
+import { musixRouter } from "./routers/musix/MusixRouter";
+import { liveWallRouter } from "./routers/liveWall/LiveWallRouter";
+import { mainRouter } from "./routers/main/MainRouter";
 
 /*
 =====================================================================================
