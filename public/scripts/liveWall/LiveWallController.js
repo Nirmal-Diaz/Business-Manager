@@ -21,7 +21,7 @@ export class LiveWallController {
                 const imageMetaDatum = this.cardInterface.getImageMetadata()[Number.parseInt(areas[i].dataset.imageIndex)];
                 if (window.frameElement) {
                     //Case: App is inside an iFrame
-                    const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("layouts/popUpCards/files_r_image.html");
+                    const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("layouts/main/popUpCards/files_r_image.html");
                     //Allow more width than other popUpCards
                     imagePreviewPopUp.getView().style.maxWidth = "90vw";
                     imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
