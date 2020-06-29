@@ -15,7 +15,7 @@ export class LiveWallController {
         this.view = viewport;
 
         //Add onclick to every child of areaContainer for viewing infoArea
-        const areas = Array.from(this.view.querySelector(".areasContainer").children);
+        const areas = Array.from(this.view.querySelector("#areasContainer").children);
         for (let i = 0; i < areas.length; i++) {
             areas[i].addEventListener("dblclick", () => {
                 const imageMetaDatum = this.cardInterface.getImageMetadata()[Number.parseInt(areas[i].dataset.imageIndex)];
