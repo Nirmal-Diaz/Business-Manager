@@ -3,6 +3,7 @@ import "reflect-metadata";
 import * as path from "path";
 
 import * as express from "express";
+import * as session from "express-session";
 import { createConnection } from "typeorm";
 
 import { SessionController } from "../../controllers/main/SessionController";
@@ -30,6 +31,13 @@ createConnection().then(() => {
 mainRouter: Middleware Setup (Pre routing)
 =====================================================================================
 */
+//Initiate session
+mainRouter.use(session({
+    secret: Math.random().toString(),
+    saveUninitialized: false,
+    resave: false
+}));
+
 //Set static directory
 mainRouter.use(express.static(__dirname + "/../../../public"));
 

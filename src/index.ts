@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import * as express from "express";
-import * as session from "express-session";
+
 import * as socketIo from "socket.io";
 
 import { musixRouter } from "./routers/musix/MusixRouter";
@@ -18,16 +18,6 @@ const app = express();
 const http = require('http').createServer(app);
 const io = socketIo(http);
 http.listen(port);
-/*
-=====================================================================================
-app: Middleware Setup
-=====================================================================================
-*/
-app.use(session({
-    secret: Math.random().toString(),
-    saveUninitialized: false,
-    resave: false
-}));
 /*
 =====================================================================================
 app: Router Setup
