@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="../../manifests/musix.webmanifest" rel="manifest" />
-    <link href="../../stylesheets/musix/musix.css" rel="stylesheet" />
+    <link href="../../stylesheets/musix/index.css" rel="stylesheet" />
 
     <script src="/socket.io/socket.io.js"></script>
     <!-- This script tag will unite the module and global scope -->
@@ -17,11 +17,9 @@
     </script>
     <script type="module">
         //@ts-check
-        import {
-            NowPlayingController,
-            PlaylistExplorerController,
-            PlaylistController
-        } from "../../scripts/musix/Musix.js";
+        import { NowPlayingController } from "../../scripts/musix/NowPlayingController.js";
+        import { PlaylistExplorerController } from "../../scripts/musix/PlaylistExplorerController.js";
+        import { PlaylistController } from "../../scripts/musix/PlaylistController.js";
 
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
@@ -145,7 +143,7 @@
             getPlaylistController() {
                 return this.playlistsController;
             }
-            
+
             //EVENT HANDLER METHODS
             startNavigation(event) {
                 const cardInterface = this;
