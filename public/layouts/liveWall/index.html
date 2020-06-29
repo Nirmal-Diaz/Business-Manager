@@ -87,6 +87,12 @@
             }
 
             this.switchViewport(0);
+
+            if (!window.frameElement && navigator.userAgent.includes("Android")) {
+                this.setRootDirectoryPath("/storage/3ACD-101B/" + prompt("Specify a path inside '/storage/3ACD-101B/'"));
+            } else if (!window.frameElement) {
+                this.setRootDirectoryPath(prompt("Specify an absolute path with image directories"));
+            }
         }
 
         setRootDirectoryPath(rootDirectoryPath) {
