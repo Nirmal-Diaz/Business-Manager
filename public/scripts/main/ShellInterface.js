@@ -26,9 +26,9 @@ export class ShellInterface {
         //Update greeting on the splashScreen according to the time
         const currentHours = new Date().getHours();
         if (currentHours >= 20) {
-            document.querySelector("#splashScreen .title").textContent = "Hey there! Good night";
+            document.querySelector("#splashScreen .title").textContent = "Working late? Let's do it";
         } else if (currentHours >= 12) {
-            document.querySelector("#splashScreen .title").textContent = "Hey there! Good evening";
+            document.querySelector("#splashScreen .title").textContent = "Good evening! Nice to have you back";
         } else {
             document.querySelector("#splashScreen .title").textContent = "Hey there! Good morning";
         }
