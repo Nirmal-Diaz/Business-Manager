@@ -315,10 +315,8 @@ body {
     }
 
     #sliderContainer {
-        max-height: 350px;
-        max-width: 350px;
-        height: 40vw;
-        width: 40vw;
+        height: 55vh;
+        width: 55vh;
     }
 
     #seekSlider {
