@@ -12,7 +12,7 @@
 
 <script type="module">
     //@ts-check
-    import { PlatformComponent } from "/scripts/main/Utility.js";
+    import { Utility } from "/scripts/liveWall/Utility.js";
     import { CarouselController } from "/scripts/liveWall/CarouselController.js";
     import { LiveWallController } from "/scripts/liveWall/LiveWallController.js";
     import { DirectoryExplorerController } from "/scripts/liveWall/DirectoryExplorerController.js";
@@ -48,12 +48,12 @@
         constructor() {
             //Add onclick to searchButton for toggling search UI
             this.updateControls[0].addEventListener("click", () => {
-                PlatformComponent.toggleButtonGlyph(this.updateControls[0]);
+                Utility.toggleButtonGlyph(this.updateControls[0]);
             });
             //Add onkeypress to searchButtonInput for searching the card
             this.updateControls[0].children[1].addEventListener("keypress", (event) => {
                 if (event.key === "Enter") {
-                    PlatformComponent.toggleButtonGlyph(this.updateControls[0]);
+                    Utility.toggleButtonGlyph(this.updateControls[0]);
                     if (event.currentTarget.value !== "") {
                         this.setRootDirectoryPath(event.target.value);
                     } 
