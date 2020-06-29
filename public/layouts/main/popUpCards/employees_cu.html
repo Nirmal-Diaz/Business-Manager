@@ -86,7 +86,7 @@
                         }
 
                         //Update birthDate textInput
-                        document.getElementById("birthDate").value = birthDate.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+                        document.getElementById("birthDate").value = birthDate.toISOString().slice(0,10);;
                     }
                 });
             }
