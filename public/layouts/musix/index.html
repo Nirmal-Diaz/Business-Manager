@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="/manifests/musix.webmanifest" rel="manifest" />
-    <link href="/stylesheets/musix/index.css" rel="stylesheet" />
+    <link href="/musix/manifests/musix.webmanifest" rel="manifest" />
+    <link href="/musix/stylesheets/musix/index.css" rel="stylesheet" />
 
     <script src="/socket.io/socket.io.js"></script>
     <!-- This script tag will unite the module and global scope -->
@@ -17,9 +17,9 @@
     </script>
     <script type="module">
         //@ts-check
-        import { NowPlayingController } from "/scripts/musix/NowPlayingController.js";
-        import { PlaylistExplorerController } from "/scripts/musix/PlaylistExplorerController.js";
-        import { PlaylistController } from "/scripts/musix/PlaylistController.js";
+        import { NowPlayingController } from "/musix/scripts/musix/NowPlayingController.js";
+        import { PlaylistExplorerController } from "/musix/scripts/musix/PlaylistExplorerController.js";
+        import { PlaylistController } from "/musix/scripts/musix/PlaylistController.js";
 
         window.addEventListener("contextmenu", (event) => {
             //Prevent contextMenu

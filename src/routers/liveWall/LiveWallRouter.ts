@@ -7,6 +7,13 @@ import * as path from "path";
 export const liveWallRouter = express.Router();
 /*
 =====================================================================================
+liveWallRouter: Middleware Setup
+=====================================================================================
+*/
+//Set static directory
+liveWallRouter.use(express.static(__dirname + "/../../../public"));
+/*
+=====================================================================================
 liveWallRouter: Route Handlers Setup
 =====================================================================================
 */

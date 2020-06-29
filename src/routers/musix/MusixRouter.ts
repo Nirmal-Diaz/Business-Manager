@@ -11,6 +11,9 @@ export const musixRouter = express.Router();
 musixRouter: Middleware Setup
 =====================================================================================
 */
+//Set static directory
+musixRouter.use(express.static(__dirname + "/../../../public"));
+
 //Set static directory for music files
 if (process.platform === "android") {
     musixRouter.use(express.static("/storage/3ACD-101B/Music"));
