@@ -26,7 +26,7 @@ musixRouter: Route Handlers Setup
 */
 musixRouter.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/liveWall/musix.html"));
+        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
     });
 
 //EXPRESS ROUTING: NON-USER PATHS
@@ -114,4 +114,9 @@ musixRouter.route("/playlists")
                 });
             }
         }
+    });
+
+musixRouter.route("/lyrics/:lyricsFileName")
+    .get((req, res) => {
+        res.sendFile(path.resolve(__dirname + "/../../registries/musix/lyrics/" + req.params.lyricsFileName));
     });
