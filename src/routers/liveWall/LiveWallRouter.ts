@@ -12,7 +12,7 @@ liveWallRouter: Route Handlers Setup
 */
 liveWallRouter.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/liveWall/liveWall.html"));
+        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/liveWall/index.html"));
     });
 
 liveWallRouter.route("/directories/:absoluteDirectoryPath")

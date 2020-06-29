@@ -7,13 +7,13 @@
                 "path": "English Audios/Battle Cry.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Battle Cry",
-                "lyricsURI": "lyrics/Battle Cry - Imagine Dragons.json"
+                "lyricsFileName": "Battle Cry - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Everybody Wants To Rule The World.mp3",
                 "artist": "Lorde",
                 "title": "Everybody Wants to Rule The World",
-                "lyricsURI": "lyrics/Everybody Wants To Rule The World - Lorde.json"
+                "lyricsFileName": "Everybody Wants To Rule The World - Lorde.json"
             },
             {
                 "path": "English Hymns/Walking In The Air.mp3",
@@ -31,13 +31,13 @@
                 "path": "English Audios/Here With Me.mp3",
                 "artist": "Dido",
                 "title": "Here With Me",
-                "lyricsURI": "lyrics/Here With Me - Dido.json"
+                "lyricsFileName": "Here With Me - Dido.json"
             },
             {
                 "path": "English Audios/It's A Fine Day.mp3",
                 "artist": "Miss Jane",
                 "title": "It's A Fine Day",
-                "lyricsURI": "lyrics/It's A Fine Day - Miss Jane.json"
+                "lyricsFileName": "It's A Fine Day - Miss Jane.json"
             },
             {
                 "path": "Sinhala Audios/Ahi Pillamak Yata.mp3",
@@ -49,7 +49,7 @@
                 "path": "English Audios/Jenny Of Oldstones.mp3",
                 "artist": "Florence + The Machine",
                 "title": "Jenny of Oldstones",
-                "lyricsURI": "lyrics/Jenny Of Oldstones - Florence + The Machine.json"
+                "lyricsFileName": "Jenny Of Oldstones - Florence + The Machine.json"
             },
             {
                 "path": "English Audios/Mad World.mp3",
@@ -85,7 +85,7 @@
                 "path": "English Audios/Speak Up.mp3",
                 "artist": "Pop Etc",
                 "title": "Speak Up",
-                "lyricsURI": "lyrics/Speak Up - Pop Etc.json"
+                "lyricsFileName": "Speak Up - Pop Etc.json"
             },
             {
                 "path": "Sinhala Audios/Heenayak.mp3",
@@ -97,13 +97,13 @@
                 "path": "English Hymns/Walking In The Air.mp3",
                 "artist": "Aled Jones",
                 "title": "Walking in the Air",
-                "lyricsURI": "lyrics/Walking In The Air - Shaggy.json"
+                "lyricsFileName": "Walking In The Air - Shaggy.json"
             },
             {
                 "path": "English Audios/The Humbling River.mp3",
                 "artist": "Puscifer",
                 "title": "The Humbling River",
-                "lyricsURI": "lyrics/The Humbling River - Pucifer.json"
+                "lyricsFileName": "The Humbling River - Pucifer.json"
             },
             {
                 "path": "English Audios/The Misty Mountains.mp3",
@@ -115,7 +115,7 @@
                 "path": "English Audios/To Feel Alive.mp3",
                 "artist": "Iameve",
                 "title": "To Feel Alive",
-                "lyricsURI": "lyrics/To Feel Alive - Iameve.json"
+                "lyricsFileName": "To Feel Alive - Iameve.json"
             },
             {
                 "path": "English Audios/United Again.mp3",
@@ -145,13 +145,13 @@
                 "path": "English Audios/Blackbirds.mp3",
                 "artist": "Linkin Park",
                 "title": "Blackbirds",
-                "lyricsURI": "lyrics/Blackbirds - Linkin Park.json"
+                "lyricsFileName": "Blackbirds - Linkin Park.json"
             },
             {
                 "path": "English Audios/A Thousand Years.mp3",
                 "artist": "Christina Perri",
                 "title": "A Thousand Years",
-                "lyricsURI": "lyrics/A Thousand Years - Christina Perri.json"
+                "lyricsFileName": "A Thousand Years - Christina Perri.json"
             },
             {
                 "path": "English Audios/A Better Man.mp3",
@@ -163,13 +163,13 @@
                 "path": "English Audios/One More Light.mp3",
                 "artist": "Linkin Park",
                 "title": "One More Light",
-                "lyricsURI": "lyrics/One More Light - Linkin Park.json"
+                "lyricsFileName": "One More Light - Linkin Park.json"
             },
             {
                 "path": "English Audios/Leave Out All The Rest.mp3",
                 "artist": "Linkin Park",
                 "title": "Leave Out All the Rest",
-                "lyricsURI": "lyrics/Leave Out All The Rest - Linkin Park.json"
+                "lyricsFileName": "Leave Out All The Rest - Linkin Park.json"
             },
             {
                 "path": "English Audios/Another Day In Paradise.mp3",
@@ -181,19 +181,19 @@
                 "path": "English Audios/Beautiful In White.mp3",
                 "artist": "Westlife",
                 "title": "Beautiful in White",
-                "lyricsURI": "lyrics/Beautiful In White - Westlife.json"
+                "lyricsFileName": "Beautiful In White - Westlife.json"
             },
             {
                 "path": "English Audios/Breathless.mp3",
                 "artist": "Shayne Ward",
                 "title": "Breathless",
-                "lyricsURI": "lyrics/Breathless - Shayne Ward.json"
+                "lyricsFileName": "Breathless - Shayne Ward.json"
             },
             {
                 "path": "English Audios/Father To A Son.mp3",
                 "artist": "Nestor",
                 "title": "Father to a Son",
-                "lyricsURI": "lyrics/Father To A Son - Nestor.json"
+                "lyricsFileName": "Father To A Son - Nestor.json"
             },
             {
                 "path": "English Audios/Big Big World.mp3",
@@ -205,31 +205,31 @@
                 "path": "English Audios/Burning In The Skies.mp3",
                 "artist": "Linkin Park",
                 "title": "Burning in the Skies",
-                "lyricsURI": "lyrics/Burning In The Skies - Linkin Park.json"
+                "lyricsFileName": "Burning In The Skies - Linkin Park.json"
             },
             {
                 "path": "English Audios/Careless Whisper.MP3",
                 "artist": "George Michael",
                 "title": "Careless Whisper",
-                "lyricsURI": "lyrics/Careless Whisper - George Michael.json"
+                "lyricsFileName": "Careless Whisper - George Michael.json"
             },
             {
                 "path": "English Audios/Not Alone.mp3",
                 "artist": "Linkin Park",
                 "title": "Not Alone",
-                "lyricsURI": "lyrics/Not Alone - Linkin Park.json"
+                "lyricsFileName": "Not Alone - Linkin Park.json"
             },
             {
                 "path": "English Audios/Iridescent.mp3",
                 "artist": "Linkin Park",
                 "title": "Iridescent",
-                "lyricsURI": "lyrics/Iridescent - Linkin Park.json"
+                "lyricsFileName": "Iridescent - Linkin Park.json"
             },
             {
                 "path": "English Audios/Everything I Do.MP3",
                 "artist": "Bryan Adams",
                 "title": "(Everything I Do) I Do It for You",
-                "lyricsURI": "lyrics/Everything I Do - Brian Adams.json"
+                "lyricsFileName": "Everything I Do - Brian Adams.json"
             },
             {
                 "path": "Exceptions/The Holy Pearl Intro.mp3",
@@ -253,25 +253,25 @@
                 "path": "English Audios/Hallelujah.mp3",
                 "artist": "Rufus Wainwright",
                 "title": "Hallelujah",
-                "lyricsURI": "lyrics/Hallelujah - Rufus Wainwright.json"
+                "lyricsFileName": "Hallelujah - Rufus Wainwright.json"
             },
             {
                 "path": "English Audios/Skin To Bone.mp3",
                 "artist": "Linkin Park",
                 "title": "Skin to Bone",
-                "lyricsURI": "lyrics/Skin To Bone - Linkin Park.json"
+                "lyricsFileName": "Skin To Bone - Linkin Park.json"
             },
             {
                 "path": "English Audios/Hazard.MP3",
                 "artist": "Richard Marx",
                 "title": "Hazard",
-                "lyricsURI": "lyrics/Hazard - Richard Marx.json"
+                "lyricsFileName": "Hazard - Richard Marx.json"
             },
             {
                 "path": "English Audios/No Roads Left.mp3",
                 "artist": "Linkin Park",
                 "title": "No Roads Left",
-                "lyricsURI": "lyrics/No Roads Left - Linkin Park.json"
+                "lyricsFileName": "No Roads Left - Linkin Park.json"
             },
             {
                 "path": "English Audios/I Want to Spend My Lifetime Loving You.mp3",
@@ -289,13 +289,13 @@
                 "path": "English Audios/I'm Letting Go.mp3",
                 "artist": "Josh Woodward",
                 "title": "I'm Letting Go",
-                "lyricsURI": "lyrics/I'm Letting Go - Josh Woodward.json"
+                "lyricsFileName": "I'm Letting Go - Josh Woodward.json"
             },
             {
                 "path": "English Audios/In Pieces.mp3",
                 "artist": "Linkin Park",
                 "title": "In Pieces",
-                "lyricsURI": "lyrics/In Pieces - Linkin Park.json"
+                "lyricsFileName": "In Pieces - Linkin Park.json"
             },
             {
                 "path": "English Audios/Jar Of Hearts.mp3",
@@ -307,13 +307,13 @@
                 "path": "English Audios/My Baby You.mp3",
                 "artist": "Marc Anthony",
                 "title": "My Baby You",
-                "lyricsURI": "lyrics/My Baby You - Mark Anthony.json"
+                "lyricsFileName": "My Baby You - Mark Anthony.json"
             },
             {
                 "path": "English Audios/Powerless.mp3",
                 "artist": "Linkin Park",
                 "title": "Powerless",
-                "lyricsURI": "lyrics/Powerless - Linkin Park.json"
+                "lyricsFileName": "Powerless - Linkin Park.json"
             },
             {
                 "path": "English Audios/My Heart Will Go On.mp3",
@@ -325,7 +325,7 @@
                 "path": "English Audios/She Couldn't.mp3",
                 "artist": "Linkin Park",
                 "title": "She Couldn't",
-                "lyricsURI": "lyrics/She Couldn't - Linkin Park.json"
+                "lyricsFileName": "She Couldn't - Linkin Park.json"
             },
             {
                 "path": "English Audios/One Minute A Time.mp3",
@@ -337,7 +337,7 @@
                 "path": "English Audios/Queen Of My Heart.mp3",
                 "artist": "Westlife",
                 "title": "Queen Of My Heart",
-                "lyricsURI": "lyrics/Queen Of My Heart - Westlife.json"
+                "lyricsFileName": "Queen Of My Heart - Westlife.json"
             },
             {
                 "path": "English Audios/Right Here Waiting.mp3",
@@ -355,13 +355,13 @@
                 "path": "English Audios/Roads Untraveled.mp3",
                 "artist": "Linkin Park",
                 "title": "Roads Untraveled",
-                "lyricsURI": "lyrics/Roads Untraveled - Linkin Park.json"
+                "lyricsFileName": "Roads Untraveled - Linkin Park.json"
             },
             {
                 "path": "English Audios/The Messenger.mp3",
                 "artist": "Linkin Park",
                 "title": "The Messenger",
-                "lyricsURI": "lyrics/The Messenger - Linkin Park.json"
+                "lyricsFileName": "The Messenger - Linkin Park.json"
             },
             {
                 "path": "English Audios/Our Kingdom Will Fall.mp3",
@@ -373,7 +373,7 @@
                 "path": "English Audios/Robot Boy.mp3",
                 "artist": "Linkin Park ",
                 "title": "Robot Boy",
-                "lyricsURI": "lyrics/Robot Boy - Linkin Park.json"
+                "lyricsFileName": "Robot Boy - Linkin Park.json"
             },
             {
                 "path": "English Audios/Rockets.mp3",
@@ -415,7 +415,7 @@
                 "path": "English Audios/Soledad.mp3",
                 "artist": "Westlife",
                 "title": "Soledad",
-                "lyricsURI": "lyrics/Soledad - Westlife.json"
+                "lyricsFileName": "Soledad - Westlife.json"
             },
             {
                 "path": "English Audios/Space Oddity.mp3",
@@ -427,13 +427,13 @@
                 "path": "English Audios/The Final Countdown.mp3",
                 "artist": "Europe",
                 "title": "The Final Countdown",
-                "lyricsURI": "lyrics/The Final Countdown - Europe.json"
+                "lyricsFileName": "The Final Countdown - Europe.json"
             },
             {
                 "path": "English Audios/The Lost Children.mp3",
                 "artist": "Michael Jackson",
                 "title": "The Lost Children",
-                "lyricsURI": "lyrics/The Lost Children - Michael Jackson.json"
+                "lyricsFileName": "The Lost Children - Michael Jackson.json"
             },
             {
                 "path": "English Audios/The World I Knew.mp3",
@@ -493,7 +493,7 @@
                 "path": "English Audios/We Are The Champions.mp3",
                 "artist": "Queen",
                 "title": "We Are The Champions",
-                "lyricsURI": "lyrics/We Are The Champions - Queen.json"
+                "lyricsFileName": "We Are The Champions - Queen.json"
             },
             {
                 "path": "English Audios/Carry On My Wayward Son.mp3",
@@ -529,13 +529,13 @@
                 "path": "English Audios/Bohemian Rhapsody.mp3",
                 "artist": "Queen",
                 "title": "Bohemian Rhapsody",
-                "lyricsURI": "lyrics/Bohemian Rhapsody - Queen.json"
+                "lyricsFileName": "Bohemian Rhapsody - Queen.json"
             },
             {
                 "path": "English Audios/We Will Rock You.mp3",
                 "artist": "Queen",
                 "title": "We Will Rock You",
-                "lyricsURI": "lyrics/We Will Rock You - Queen.json"
+                "lyricsFileName": "We Will Rock You - Queen.json"
             },
             {
                 "path": "English Audios/Give In To Me.mp3",
@@ -565,19 +565,19 @@
                 "path": "English Audios/Hotel California.MP3",
                 "artist": "Eagle",
                 "title": "Hotel California",
-                "lyricsURI": "lyrics/Hotel California - Eagal.json"
+                "lyricsFileName": "Hotel California - Eagal.json"
             },
             {
                 "path": "English Audios/I Have A Dream.mp3",
                 "artist": "Westlife",
                 "title": "I Have a Dream",
-                "lyricsURI": "lyrics/I Have A Dream - Westlife.json"
+                "lyricsFileName": "I Have A Dream - Westlife.json"
             },
             {
                 "path": "English Audios/I Knew I Loved You.mp3",
                 "artist": "Savage Garden",
                 "title": "I Knew I Loved You",
-                "lyricsURI": "lyrics/I Knew I Loved You - Savage Garden.json"
+                "lyricsFileName": "I Knew I Loved You - Savage Garden.json"
             },
             {
                 "path": "English Audios/I Miss You.mp3",
@@ -589,7 +589,7 @@
                 "path": "English Audios/La Isla Bonita.mp3",
                 "artist": "Madonna",
                 "title": "La Isla Bonita",
-                "lyricsURI": "lyrics/La Isla Bonita - Madona.json"
+                "lyricsFileName": "La Isla Bonita - Madona.json"
             },
             {
                 "path": "English Audios/Last Christmas.mp3",
@@ -613,13 +613,13 @@
                 "path": "English Audios/Nothing's Gonna Change My Love For You.mp3",
                 "artist": "Westlife",
                 "title": "Nothing's Going To Change My Love For You",
-                "lyricsURI": "lyrics/Nothing's Gonna Change My Love For You - Westlife.json"
+                "lyricsFileName": "Nothing's Gonna Change My Love For You - Westlife.json"
             },
             {
                 "path": "English Audios/Paradise.mp3",
                 "artist": "Coldplay",
                 "title": "Paradise",
-                "lyricsURI": "lyrics/Paradise - Cold Play.json"
+                "lyricsFileName": "Paradise - Cold Play.json"
             },
             {
                 "path": "English Audios/Sealed With A Kiss.mp3",
@@ -643,7 +643,7 @@
                 "path": "English Audios/You're My No. 1.mp3",
                 "artist": "Enrique Iglesias",
                 "title": "You're My #1",
-                "lyricsURI": "lyrics/You're My No. 1 - Enrique Iglesias.json"
+                "lyricsFileName": "You're My No. 1 - Enrique Iglesias.json"
             },
             {
                 "path": "English Audios/You Took My Heart Away.mp3",
@@ -655,7 +655,7 @@
                 "path": "English Audios/You're Still The One.mp3",
                 "artist": "Shania Twain",
                 "title": "You're Still The One",
-                "lyricsURI": "lyrics/You're Still The One - Shania Twain.json"
+                "lyricsFileName": "You're Still The One - Shania Twain.json"
             }
         ]
     },
@@ -667,31 +667,31 @@
                 "path": "English Audios/Runnin' Home To You.mp3",
                 "artist": "Grant Gustin",
                 "title": "Runnin’ Home to You",
-                "lyricsURI": "lyrics/Runnin' Home To You - Grant Gustin.json"
+                "lyricsFileName": "Runnin' Home To You - Grant Gustin.json"
             },
             {
                 "path": "English Audios/Mark The Graves.mp3",
                 "artist": "Linkin Park",
                 "title": "Mark the Graves",
-                "lyricsURI": "lyrics/Mark The Graves - Linkin Park.json"
+                "lyricsFileName": "Mark The Graves - Linkin Park.json"
             },
             {
                 "path": "English Audios/A Line In The Sand.mp3",
                 "artist": "Linkin Park",
                 "title": "A Line in the Sand",
-                "lyricsURI": "lyrics/A Line In The Sand - Linkin Park.json"
+                "lyricsFileName": "A Line In The Sand - Linkin Park.json"
             },
             {
                 "path": "English Audios/All For Nothing.mp3",
                 "artist": "Linkin Park",
                 "title": "All for Nothing",
-                "lyricsURI": "lyrics/All For Nothing - Linkin Park.json"
+                "lyricsFileName": "All For Nothing - Linkin Park.json"
             },
             {
                 "path": "English Audios/Debris.mp3",
                 "artist": "Linkin Park",
                 "title": "Debris",
-                "lyricsURI": "lyrics/Debris - Linkin Park.json"
+                "lyricsFileName": "Debris - Linkin Park.json"
             },
             {
                 "path": "English Audios/Waiting For My Moment.mp3",
@@ -703,19 +703,19 @@
                 "path": "English Audios/In Between.mp3",
                 "artist": "Linkin Park",
                 "title": "In Between",
-                "lyricsURI": "lyrics/In Between - Linkin Park.json"
+                "lyricsFileName": "In Between - Linkin Park.json"
             },
             {
                 "path": "English Audios/Hold Nothing Back.mp3",
                 "artist": "Linkin Park",
                 "title": "Hold Nothing Back",
-                "lyricsURI": "lyrics/Hold Nothing Back - Linkin Park.json"
+                "lyricsFileName": "Hold Nothing Back - Linkin Park.json"
             },
             {
                 "path": "English Audios/Nobody's Listening.mp3",
                 "artist": "Linkin Park",
                 "title": "Nobody's Listening",
-                "lyricsURI": "lyrics/Nobody's Listening - Linkin Park.json"
+                "lyricsFileName": "Nobody's Listening - Linkin Park.json"
             },
             {
                 "path": "English Audios/Reading My Eyes.mp3",
@@ -727,49 +727,49 @@
                 "path": "English Audios/Pretend To Be.mp3",
                 "artist": "Linkin Park",
                 "title": "Pretend to Be",
-                "lyricsURI": "lyrics/Pretend To Be - Linkin Park.json"
+                "lyricsFileName": "Pretend To Be - Linkin Park.json"
             },
             {
                 "path": "English Audios/Shadow Of The Day.mp3",
                 "artist": "Linkin Park",
                 "title": "Shadow of the Day",
-                "lyricsURI": "lyrics/Shadow Of The Day - Linkin Park.json"
+                "lyricsFileName": "Shadow Of The Day - Linkin Park.json"
             },
             {
                 "path": "English Audios/So Far Away.mp3",
                 "artist": "Linkin Park",
                 "title": "So Far Away (Unreleased 1998)",
-                "lyricsURI": "lyrics/So Far Away - Linkin Park.json"
+                "lyricsFileName": "So Far Away - Linkin Park.json"
             },
             {
                 "path": "English Audios/Stick N Move.mp3",
                 "artist": "Xero",
                 "title": "Stick N Move",
-                "lyricsURI": "lyrics/Stick N Move - Xero.json"
+                "lyricsFileName": "Stick N Move - Xero.json"
             },
             {
                 "path": "English Audios/The Little Things Give You Away.mp3",
                 "artist": "Linkin Park",
                 "title": "The Little Things Give You Away",
-                "lyricsURI": "lyrics/The Little Things Give You Away - Linkin Park.json"
+                "lyricsFileName": "The Little Things Give You Away - Linkin Park.json"
             },
             {
                 "path": "English Audios/Until It Breaks.mp3",
                 "artist": "Linkin Park",
                 "title": "Until It Breaks",
-                "lyricsURI": "lyrics/Until It Breaks - Linkin Park.json"
+                "lyricsFileName": "Until It Breaks - Linkin Park.json"
             },
             {
                 "path": "English Audios/Valentine's Day.mp3",
                 "artist": "Linkin Park",
                 "title": "Valentine's Day",
-                "lyricsURI": "lyrics/Valentine's Day - Linkin Park.json"
+                "lyricsFileName": "Valentine's Day - Linkin Park.json"
             },
             {
                 "path": "English Audios/Waiting For The End.mp3",
                 "artist": "Linkin Park ",
                 "title": "Waiting for the End",
-                "lyricsURI": "lyrics/Waiting For The End - Linkin Park.json"
+                "lyricsFileName": "Waiting For The End - Linkin Park.json"
             },
             {
                 "path": "English Audios/When They Come For Me.mp3",
@@ -787,25 +787,25 @@
                 "path": "English Audios/Across The Line.mp3",
                 "artist": "Linkin Park",
                 "title": "Across the Line",
-                "lyricsURI": "lyrics/Across The Line - Linkin Park.json"
+                "lyricsFileName": "Across The Line - Linkin Park.json"
             },
             {
                 "path": "English Audios/Believer.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Believer",
-                "lyricsURI": "lyrics/Believer - Imagine Dragons.json"
+                "lyricsFileName": "Believer - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Beautiful.mp3",
                 "artist": "Eminem",
                 "title": "Beautiful",
-                "lyricsURI": "lyrics/Beautiful - Eminem.json"
+                "lyricsFileName": "Beautiful - Eminem.json"
             },
             {
                 "path": "English Audios/Battle Symphony.mp3",
                 "artist": "Linkin Park",
                 "title": "Battle Symphony",
-                "lyricsURI": "lyrics/Battle Symphony - Linkin Park.json"
+                "lyricsFileName": "Battle Symphony - Linkin Park.json"
             },
             {
                 "path": "English Audios/Earth Song.mp3",
@@ -817,25 +817,25 @@
                 "path": "English Audios/It's Time.mp3",
                 "artist": "Imagine Dragons",
                 "title": "It's Time",
-                "lyricsURI": "lyrics/It's Time - Imagine Dragons.json"
+                "lyricsFileName": "It's Time - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Who We Are.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Who We Are",
-                "lyricsURI": "lyrics/Who We Are - Imagine Dragons.json"
+                "lyricsFileName": "Who We Are - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Castle Of Glass.mp3",
                 "artist": "Linkin Park",
                 "title": "Castle Of Glass",
-                "lyricsURI": "lyrics/Castle Of Glass - Linkin Park.json"
+                "lyricsFileName": "Castle Of Glass - Linkin Park.json"
             },
             {
                 "path": "English Audios/Bleeding Out.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Bleeding Out",
-                "lyricsURI": "lyrics/Bleeding Out - Imagine Dragons.json"
+                "lyricsFileName": "Bleeding Out - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Good Goodbye.mp3",
@@ -847,7 +847,7 @@
                 "path": "English Audios/Halfway Right.mp3",
                 "artist": "Linkin Park",
                 "title": "Halfway Right",
-                "lyricsURI": "lyrics/Halfway Right - Linkin Park.json"
+                "lyricsFileName": "Halfway Right - Linkin Park.json"
             },
             {
                 "path": "English Audios/Heal The World.MP3",
@@ -865,7 +865,7 @@
                 "path": "English Audios/Working Man.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Working Man",
-                "lyricsURI": "lyrics/Working Man - Imagine Dragons.json"
+                "lyricsFileName": "Working Man - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Thunderclouds.mp3",
@@ -877,7 +877,7 @@
                 "path": "English Audios/Shots.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Shots",
-                "lyricsURI": "lyrics/Shots - Imagine Dragons.json"
+                "lyricsFileName": "Shots - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Hold My Hand.mp3",
@@ -889,7 +889,7 @@
                 "path": "English Audios/Invisible.mp3",
                 "artist": "Linkin Park",
                 "title": "Invisible",
-                "lyricsURI": "lyrics/Invisible - Linkin Park.json"
+                "lyricsFileName": "Invisible - Linkin Park.json"
             },
             {
                 "path": "English Audios/J Town Story.MP3",
@@ -901,7 +901,7 @@
                 "path": "English Audios/Nobody Can Save Me.mp3",
                 "artist": "Linkin Park",
                 "title": "Nobody Can Save Me",
-                "lyricsURI": "lyrics/Nobody Can Save Me - Linkin Park.json"
+                "lyricsFileName": "Nobody Can Save Me - Linkin Park.json"
             },
             {
                 "path": "English Audios/Warriors.mp3",
@@ -913,19 +913,19 @@
                 "path": "English Audios/Ready Aim Fire.mp3",
                 "artist": "Imagne Dragons",
                 "title": "Ready Aim Fire",
-                "lyricsURI": "lyrics/Ready Aim Fire - Imagine Dragons.json"
+                "lyricsFileName": "Ready Aim Fire - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Never Say Never.mp3",
                 "artist": "Justin Bieber",
                 "title": "Never Say Never",
-                "lyricsURI": "lyrics/Never Say Never - Justin Bieber.json"
+                "lyricsFileName": "Never Say Never - Justin Bieber.json"
             },
             {
                 "path": "English Audios/Sharp Edges.mp3",
                 "artist": "Linkin Park",
                 "title": "Sharp Edges",
-                "lyricsURI": "lyrics/Sharp Edges - Linkin Park.json"
+                "lyricsFileName": "Sharp Edges - Linkin Park.json"
             },
             {
                 "path": "English Audios/Sorry For Now.mp3",
@@ -937,7 +937,7 @@
                 "path": "English Audios/Talking To Myself.mp3",
                 "artist": "Linkin Park",
                 "title": "Talking to Myself",
-                "lyricsURI": "lyrics/Talking To Myself - Linkin Park.json"
+                "lyricsFileName": "Talking To Myself - Linkin Park.json"
             },
             {
                 "path": "English Audios/Mouth Of The River.mp3",
@@ -1003,7 +1003,7 @@
                 "path": "English Audios/Fire Escape.mp3",
                 "artist": "Andrew McMahon In The Wilderness",
                 "title": "Fire Escape",
-                "lyricsURI": "lyrics/Fire Escape - Andrew McMahon.json"
+                "lyricsFileName": "Fire Escape - Andrew McMahon.json"
             },
             {
                 "path": "English Audios/Get It Right.mp3",
@@ -1063,13 +1063,13 @@
                 "path": "English Audios/Mirrors.mp3",
                 "artist": "Justin Timberlake",
                 "title": "Mirrors",
-                "lyricsURI": "lyrics/Mirrors - Justin Timberlake.json"
+                "lyricsFileName": "Mirrors - Justin Timberlake.json"
             },
             {
                 "path": "English Audios/So Good.mp3",
                 "artist": "B.o.B",
                 "title": "So Good",
-                "lyricsURI": "lyrics/So Good - B.o.B.json"
+                "lyricsFileName": "So Good - B.o.B.json"
             },
             {
                 "path": "English Audios/One More Night.mp3",
@@ -1129,7 +1129,7 @@
                 "path": "English Audios/There She Goes.mp3",
                 "artist": "Taio Cruz",
                 "title": "There She Goes",
-                "lyricsURI": "lyrics/There She Goes - Taio Cruz.json"
+                "lyricsFileName": "There She Goes - Taio Cruz.json"
             },
             {
                 "path": "English Audios/This Time For Africa.mp3",
@@ -1147,7 +1147,7 @@
                 "path": "English Audios/When I Dream At Night.mp3",
                 "artist": "Marc Anthony",
                 "title": "When I Dream at Night",
-                "lyricsURI": "lyrics/When I Dream At Night - Mark Anthony.json"
+                "lyricsFileName": "When I Dream At Night - Mark Anthony.json"
             },
             {
                 "path": "English Audios/You're The Voice.mp3",
@@ -1195,7 +1195,7 @@
                 "path": "English Audios/Demons.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Demons",
-                "lyricsURI": "lyrics/Demons - Imagine Dragons.json"
+                "lyricsFileName": "Demons - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Broken Angel.mp3",
@@ -1207,7 +1207,7 @@
                 "path": "English Audios/Come Into My Room.mp3",
                 "artist": "Movado/Stacious",
                 "title": "Come Into My Room",
-                "lyricsURI": "lyrics/Come Into My Room - Mavado.json"
+                "lyricsFileName": "Come Into My Room - Mavado.json"
             },
             {
                 "path": "English Audios/Temptation.mp3",
@@ -1225,7 +1225,7 @@
                 "path": "English Audios/It Goes On.mp3",
                 "artist": "Zac Brown & Sir Rosevelt",
                 "title": "It Goes On",
-                "lyricsURI": "lyrics/It Goes On - Zac Brown, Sir Rosevelt.json"
+                "lyricsFileName": "It Goes On - Zac Brown, Sir Rosevelt.json"
             },
             {
                 "path": "English Audios/The Heart Wants What It Wants.mp3",
@@ -1243,7 +1243,7 @@
                 "path": "English Audios/Darkside.mp3",
                 "artist": "Alan Walker/Au/Ra/Tomine Harket",
                 "title": "Darkside",
-                "lyricsURI": "lyrics/Darkside - Alan Walker.json"
+                "lyricsFileName": "Darkside - Alan Walker.json"
             },
             {
                 "path": "English Audios/Dusk Till Dawn.mp3",
@@ -1267,7 +1267,7 @@
                 "path": "English Audios/No I.mp3",
                 "artist": "Raghav",
                 "title": "",
-                "lyricsURI": "lyrics/No I - Raghav.json"
+                "lyricsFileName": "No I - Raghav.json"
             },
             {
                 "path": "English Audios/Scared Of The Dark.mp3",
@@ -1285,13 +1285,13 @@
                 "path": "English Audios/Heavy.mp3",
                 "artist": "Linkin Park",
                 "title": "Heavy",
-                "lyricsURI": "lyrics/Heavy - Linkin Park.json"
+                "lyricsFileName": "Heavy - Linkin Park.json"
             },
             {
                 "path": "English Audios/Monster.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Monster",
-                "lyricsURI": "lyrics/Monster - Imagine Dragons.json"
+                "lyricsFileName": "Monster - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/I Don't Wanna Live Forever.mp3",
@@ -1309,7 +1309,7 @@
                 "path": "English Audios/Ignite.mp3",
                 "artist": "Alan Walker",
                 "title": "Ignite",
-                "lyricsURI": "lyrics/Ignite - Alan Walker.json"
+                "lyricsFileName": "Ignite - Alan Walker.json"
             },
             {
                 "path": "English Audios/Havana.mp3",
@@ -1321,25 +1321,25 @@
                 "path": "English Audios/Little Wonders.mp3",
                 "artist": "Rob Thomas",
                 "title": "Little Wonders",
-                "lyricsURI": "lyrics/Little Wonders - Rob Thomas.json"
+                "lyricsFileName": "Little Wonders - Rob Thomas.json"
             },
             {
                 "path": "English Audios/Lady Killer.mp3",
                 "artist": "Jane Zhang",
                 "title": "Lady Killer",
-                "lyricsURI": "lyrics/Lady Killer - Jane Zang.json"
+                "lyricsFileName": "Lady Killer - Jane Zang.json"
             },
             {
                 "path": "English Audios/Alone (Part 2).mp3",
                 "artist": "Alan Walker/Ava Max",
                 "title": "Alone, Pt. II",
-                "lyricsURI": "lyrics/Alone (Part 2) - Alan Walker.json"
+                "lyricsFileName": "Alone (Part 2) - Alan Walker.json"
             },
             {
                 "path": "English Audios/Now You're Gone.mp3",
                 "artist": "Basshunter Feat. DJ Mental Theo's Bassheadz",
                 "title": "Now You're Gone",
-                "lyricsURI": "lyrics/Now You're Gone - Basshunter.json"
+                "lyricsFileName": "Now You're Gone - Basshunter.json"
             },
             {
                 "path": "English Audios/Levitate.mp3",
@@ -1375,25 +1375,25 @@
                 "path": "English Audios/The Nights.mp3",
                 "artist": "Avicii",
                 "title": "The Nights",
-                "lyricsURI": "lyrics/The Nights - Avicii.json"
+                "lyricsFileName": "The Nights - Avicii.json"
             },
             {
                 "path": "English Audios/One Day.mp3",
                 "artist": "Arash",
                 "title": "One Day",
-                "lyricsURI": "lyrics/One Day - Arash.json"
+                "lyricsFileName": "One Day - Arash.json"
             },
             {
                 "path": "English Audios/Rockabye.mp3",
                 "artist": "Clean Bandit",
                 "title": "Rockabye",
-                "lyricsURI": "lyrics/Rockabye - Clean Bandit.json"
+                "lyricsFileName": "Rockabye - Clean Bandit.json"
             },
             {
                 "path": "English Audios/Hey Ma.mp3",
                 "artist": "Claydee",
                 "title": "Hey Ma",
-                "lyricsURI": "lyrics/Hey Ma - Claydee.json"
+                "lyricsFileName": "Hey Ma - Claydee.json"
             },
             {
                 "path": "English Audios/Run Away.mp3",
@@ -1423,13 +1423,13 @@
                 "path": "English Audios/Unstoppable.mp3",
                 "artist": "The Score",
                 "title": "Unstoppable",
-                "lyricsURI": "lyrics/Unstoppable - The Score.json"
+                "lyricsFileName": "Unstoppable - The Score.json"
             },
             {
                 "path": "English Audios/Whatever It Takes.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Whatever It Takes",
-                "lyricsURI": "lyrics/Whatever It Takes - Imagine Dragons.json"
+                "lyricsFileName": "Whatever It Takes - Imagine Dragons.json"
             },
             {
                 "path": "Exceptions/Secret Of Success.mp3",
@@ -1459,7 +1459,7 @@
                 "path": "English Audios/I'll Be There For You.mp3",
                 "artist": "The Rembrandts",
                 "title": "I'll Be There For You",
-                "lyricsURI": "lyrics/I'll Be There For You - The Rembrandts.json"
+                "lyricsFileName": "I'll Be There For You - The Rembrandts.json"
             },
             {
                 "path": "English Audios/Bilamos.MP3",
@@ -1471,7 +1471,7 @@
                 "path": "English Audios/All Rise.MP3",
                 "artist": "Blue",
                 "title": "All Rise",
-                "lyricsURI": "lyrics/All Rise - Blue.json"
+                "lyricsFileName": "All Rise - Blue.json"
             },
             {
                 "path": "English Audios/I Need You.mp3",
@@ -1489,7 +1489,7 @@
                 "path": "English Audios/You're The Voice.mp3",
                 "artist": "John Farnham",
                 "title": "You're The Voice",
-                "lyricsURI": "lyrics/You're The Voice - John Farnham.json"
+                "lyricsFileName": "You're The Voice - John Farnham.json"
             },
             {
                 "path": "English Audios/Don't Stop Me Now.mp3",
@@ -1549,7 +1549,7 @@
                 "path": "English Audios/The Call.MP3",
                 "artist": "Backstreet Boys",
                 "title": "The Call",
-                "lyricsURI": "lyrics/The Call - Backstreet Boys.json"
+                "lyricsFileName": "The Call - Backstreet Boys.json"
             },
             {
                 "path": "English Audios/The One.mp3",
@@ -1615,7 +1615,7 @@
                 "path": "English Audios/Beautiful Now.mp3",
                 "artist": "Zedd",
                 "title": "Beautiful Now",
-                "lyricsURI": "lyrics/Beautiful Now - Zedd.json"
+                "lyricsFileName": "Beautiful Now - Zedd.json"
             },
             {
                 "path": "English Audios/Blue.mp3",
@@ -1735,13 +1735,13 @@
                 "path": "English Audios/The Days.mp3",
                 "artist": "Avicii",
                 "title": "The Days",
-                "lyricsURI": "lyrics/The Days - Avicii.json"
+                "lyricsFileName": "The Days - Avicii.json"
             },
             {
                 "path": "English Audios/Taste The Feeling.mp3",
                 "artist": "Avicii/Conrad Sewell",
                 "title": "Taste the Feeling",
-                "lyricsURI": "lyrics/Taste The Feeling - Avicii.json"
+                "lyricsFileName": "Taste The Feeling - Avicii.json"
             },
             {
                 "path": "English Audios/The Game Of Love And Unity.mp3",
@@ -1783,7 +1783,7 @@
                 "path": "English Audios/Dream It Possible.mp3",
                 "artist": "Jane Zhang",
                 "title": "Dream It Possible",
-                "lyricsURI": "lyrics/Dream It Possible - Jane Zang.json"
+                "lyricsFileName": "Dream It Possible - Jane Zang.json"
             },
             {
                 "path": "English Audios/Ever After.mp3",
@@ -1897,7 +1897,7 @@
                 "path": "English Audios/Mocking Bird.mp3",
                 "artist": "Eminem",
                 "title": "Mocking Bird",
-                "lyricsURI": "lyrics/Mocking Bird - Eminem.json"
+                "lyricsFileName": "Mocking Bird - Eminem.json"
             },
             {
                 "path": "English Audios/Earth Angle.mp3",
@@ -1909,13 +1909,13 @@
                 "path": "English Audios/Neva 4 Get Me.mp3",
                 "artist": "Akon",
                 "title": "Neva 4 Get Me",
-                "lyricsURI": "lyrics/Neva 4 Get Me - Akon.json"
+                "lyricsFileName": "Neva 4 Get Me - Akon.json"
             },
             {
                 "path": "English Audios/No Love.mp3",
                 "artist": "Eminem/Lil Wayne",
                 "title": "No Love",
-                "lyricsURI": "lyrics/No Love - Eminem.json"
+                "lyricsFileName": "No Love - Eminem.json"
             },
             {
                 "path": "English Audios/Right Round.mp3",
@@ -1945,7 +1945,7 @@
                 "path": "English Audios/Payback.mp3",
                 "artist": "Juicy J",
                 "title": "Payback",
-                "lyricsURI": "lyrics/Payback - Juicy J.json"
+                "lyricsFileName": "Payback - Juicy J.json"
             },
             {
                 "path": "English Audios/Venom.mp3",
@@ -2053,13 +2053,13 @@
                 "path": "English Audios/Home, Home On The Range.mp3",
                 "artist": "Unknown Artist",
                 "title": "Home, Home On The Range",
-                "lyricsURI": "lyrics/Home, Home On The Range - Unknown.json"
+                "lyricsFileName": "Home, Home On The Range - Unknown.json"
             },
             {
                 "path": "English Audios/Hush Little Baby.mp3",
                 "artist": "",
                 "title": "Hush Little Baby",
-                "lyricsURI": "lyrics/Hush Little Baby - Unknown.json"
+                "lyricsFileName": "Hush Little Baby - Unknown.json"
             },
             {
                 "path": "English Audios/My Bonnie Lies Over The Ocean.mp3",
@@ -2071,19 +2071,19 @@
                 "path": "English Audios/My Grandfather's Clock.mp3",
                 "artist": "",
                 "title": "My Grandfather's Clock",
-                "lyricsURI": "lyrics/My Grandfather's Clock - Unknown.json"
+                "lyricsFileName": "My Grandfather's Clock - Unknown.json"
             },
             {
                 "path": "English Audios/Oh My Darlin' Clementine.mp3",
                 "artist": "Unknown Artist",
                 "title": "Oh My Darlin' Clementine",
-                "lyricsURI": "lyrics/Oh My Darlin' Clementine - Unknown.json"
+                "lyricsFileName": "Oh My Darlin' Clementine - Unknown.json"
             },
             {
                 "path": "English Audios/Oh Susanna.mp3",
                 "artist": "Unknown Artist",
                 "title": "Oh Susanna",
-                "lyricsURI": "lyrics/Oh Susanna - Unknown.json"
+                "lyricsFileName": "Oh Susanna - Unknown.json"
             }
         ]
     },
@@ -2095,19 +2095,19 @@
                 "path": "English Audios/A Place For My Head.mp3",
                 "artist": "Linkin Park",
                 "title": "A Place for My Head",
-                "lyricsURI": "lyrics/A Place For My Head - Linkin Park.json"
+                "lyricsFileName": "A Place For My Head - Linkin Park.json"
             },
             {
                 "path": "English Audios/Bleed It Out.mp3",
                 "artist": "Linkin Park",
                 "title": "Bleed It Out",
-                "lyricsURI": "lyrics/Bleed It Out - Linkin Park.json"
+                "lyricsFileName": "Bleed It Out - Linkin Park.json"
             },
             {
                 "path": "English Audios/By Myself.mp3",
                 "artist": "Linkin Park",
                 "title": "By Myself",
-                "lyricsURI": "lyrics/By Myself - Linkin Park.json"
+                "lyricsFileName": "By Myself - Linkin Park.json"
             },
             {
                 "path": "English Audios/Castaway.mp3",
@@ -2119,7 +2119,7 @@
                 "path": "English Audios/Immortals.mp3",
                 "artist": "Fall Out Boy",
                 "title": "Immortals",
-                "lyricsURI": "lyrics/Immortals - Fall Out Boys.json"
+                "lyricsFileName": "Immortals - Fall Out Boys.json"
             },
             {
                 "path": "English Audios/Holding On To Smoke.mp3",
@@ -2131,13 +2131,13 @@
                 "path": "English Audios/Don't Leave Me Dry.mp3",
                 "artist": "Nestor",
                 "title": "Don't Leave Me Dry",
-                "lyricsURI": "lyrics/Don't Leave Me Dry - Nestor.json"
+                "lyricsFileName": "Don't Leave Me Dry - Nestor.json"
             },
             {
                 "path": "English Audios/Don't Stay.mp3",
                 "artist": "Linkin Park",
                 "title": "Don't Stay",
-                "lyricsURI": "lyrics/Don't Stay - Linkin Park.json"
+                "lyricsFileName": "Don't Stay - Linkin Park.json"
             },
             {
                 "path": "English Audios/Catharsis.mp3",
@@ -2149,13 +2149,13 @@
                 "path": "English Audios/Forgotten.mp3",
                 "artist": "Linkin Park",
                 "title": "Forgotten",
-                "lyricsURI": "lyrics/Forgotten - Linkin Park.json"
+                "lyricsFileName": "Forgotten - Linkin Park.json"
             },
             {
                 "path": "English Audios/Given Up.mp3",
                 "artist": "Linkin Park",
                 "title": "Given Up",
-                "lyricsURI": "lyrics/Given Up - Linkin Park.json"
+                "lyricsFileName": "Given Up - Linkin Park.json"
             },
             {
                 "path": "English Audios/Legacy.mp3",
@@ -2167,13 +2167,13 @@
                 "path": "English Audios/Guilty All The Same.mp3",
                 "artist": "Linkin Park",
                 "title": "Guilty All the Same",
-                "lyricsURI": "lyrics/Guilty All The Same - Linkin Park.json"
+                "lyricsFileName": "Guilty All The Same - Linkin Park.json"
             },
             {
                 "path": "English Audios/I Hate Everything About You.mp3",
                 "artist": "Three Days Grace",
                 "title": "I Hate Everything About You",
-                "lyricsURI": "lyrics/I Hate Everything About You - Three Days Grace.json"
+                "lyricsFileName": "I Hate Everything About You - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Hallelujah (2).mp3",
@@ -2191,7 +2191,7 @@
                 "path": "English Audios/Landmine.mp3",
                 "artist": "Three Days Grace",
                 "title": "Landmine",
-                "lyricsURI": "lyrics/Landmine - Three Days Grace.json"
+                "lyricsFileName": "Landmine - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Lose Myself.mp3",
@@ -2203,7 +2203,7 @@
                 "path": "English Audios/No More Sorrow.mp3",
                 "artist": "Linkin Park",
                 "title": "No More Sorrow",
-                "lyricsURI": "lyrics/No More Sorrow - Linkin Park.json"
+                "lyricsFileName": "No More Sorrow - Linkin Park.json"
             },
             {
                 "path": "English Audios/One Step Closer (2).mp3",
@@ -2215,55 +2215,55 @@
                 "path": "English Audios/Last To Know.mp3",
                 "artist": "Three Days Grace",
                 "title": "Last To Know",
-                "lyricsURI": "lyrics/Last To Know - Three Days Grace.json"
+                "lyricsFileName": "Last To Know - Three Days Grace.json"
             },
             {
                 "path": "English Audios/One Step Closer.mp3",
                 "artist": "Linkin Park",
                 "title": "One Step Closer",
-                "lyricsURI": "lyrics/One Step Closer - Linkin Park.json"
+                "lyricsFileName": "One Step Closer - Linkin Park.json"
             },
             {
                 "path": "English Audios/Papercut.mp3",
                 "artist": "Linkin Park",
                 "title": "Papercut",
-                "lyricsURI": "lyrics/Papercut - Linkin Park.json"
+                "lyricsFileName": "Papercut - Linkin Park.json"
             },
             {
                 "path": "English Audios/Part Of Me.mp3",
                 "artist": "Linkin Park",
                 "title": "Part Of Me",
-                "lyricsURI": "lyrics/Part Of Me - Linkin Park.json"
+                "lyricsFileName": "Part Of Me - Linkin Park.json"
             },
             {
                 "path": "English Audios/Points Of Authority.mp3",
                 "artist": "Linkin Park",
                 "title": "Points of Authority",
-                "lyricsURI": "lyrics/Points Of Authority - Linkin Park.json"
+                "lyricsFileName": "Points Of Authority - Linkin Park.json"
             },
             {
                 "path": "English Audios/Rebellion.mp3",
                 "artist": "Linkin Park",
                 "title": "Rebellion",
-                "lyricsURI": "lyrics/Rebellion - Linkin Park.json"
+                "lyricsFileName": "Rebellion - Linkin Park.json"
             },
             {
                 "path": "English Audios/Takin' Over.mp3",
                 "artist": "New Device",
                 "title": "Takin' Over",
-                "lyricsURI": "lyrics/Takin' Over - New Device.json"
+                "lyricsFileName": "Takin' Over - New Device.json"
             },
             {
                 "path": "English Audios/The Good Life.mp3",
                 "artist": "Three Days Grace",
                 "title": "The Good Life",
-                "lyricsURI": "lyrics/The Good Life - Three Days Grace.json"
+                "lyricsFileName": "The Good Life - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Till All Are One.mp3",
                 "artist": "Stan Bush",
                 "title": "Til All Are One",
-                "lyricsURI": "lyrics/Till All Are One - Stan Bush.json"
+                "lyricsFileName": "Till All Are One - Stan Bush.json"
             },
             {
                 "path": "English Audios/Unstoppable (2).mp3",
@@ -2275,19 +2275,19 @@
                 "path": "English Audios/Wastelands.mp3",
                 "artist": "Linkin Park",
                 "title": "Wastelands",
-                "lyricsURI": "lyrics/Wastelands - Linkin Park.json"
+                "lyricsFileName": "Wastelands - Linkin Park.json"
             },
             {
                 "path": "English Audios/Welcome To The Family.mp3",
                 "artist": "Avenged Sevenfold",
                 "title": "Welcome to the Family",
-                "lyricsURI": "lyrics/Welcome To The Family - Avenged Sevenfold.json"
+                "lyricsFileName": "Welcome To The Family - Avenged Sevenfold.json"
             },
             {
                 "path": "English Audios/With You.mp3",
                 "artist": "Linkin Park",
                 "title": "WTH>You",
-                "lyricsURI": "lyrics/With You - Linkin Park.json"
+                "lyricsFileName": "With You - Linkin Park.json"
             },
             {
                 "path": "English Audios/You And I.mp3",
@@ -2299,13 +2299,13 @@
                 "path": "English Audios/You Give Love A Bad Name.mp3",
                 "artist": "Bon Jovi",
                 "title": "You Give Love A Bad Name",
-                "lyricsURI": "lyrics/You Give Love A Bad Name - Bon Jovi.json"
+                "lyricsFileName": "You Give Love A Bad Name - Bon Jovi.json"
             },
             {
                 "path": "English Audios/You Don't Get Me High Anymore.mp3",
                 "artist": "Three Days Grace",
                 "title": "You Don't Get Me High Anymore",
-                "lyricsURI": "lyrics/You Don't Get Me High Anymore - Three Days Grace.json"
+                "lyricsFileName": "You Don't Get Me High Anymore - Three Days Grace.json"
             }
         ]
     },
@@ -2317,43 +2317,43 @@
                 "path": "English Audios/137.mp3",
                 "artist": "Jay Ray",
                 "title": "137",
-                "lyricsURI": "lyrics/137 - Jay Ray.json"
+                "lyricsFileName": "137 - Jay Ray.json"
             },
             {
                 "path": "English Audios/Animal I Have Become.mp3",
                 "artist": "Three Days Grace",
                 "title": "Animal I Have Become",
-                "lyricsURI": "lyrics/Animal I Have Become - Three Days Grace.json"
+                "lyricsFileName": "Animal I Have Become - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Breaking The Habit.mp3",
                 "artist": "Linkin Park",
                 "title": "Breaking the Habit",
-                "lyricsURI": "lyrics/Breaking The Habit - Linkin Park.json"
+                "lyricsFileName": "Breaking The Habit - Linkin Park.json"
             },
             {
                 "path": "English Audios/Burn It Down.mp3",
                 "artist": "Linkin Park",
                 "title": "Burn It Down",
-                "lyricsURI": "lyrics/Burn It Down - Linkin Park.json"
+                "lyricsFileName": "Burn It Down - Linkin Park.json"
             },
             {
                 "path": "English Audios/Change.mp3",
                 "artist": "Beta State",
                 "title": "Change (LPU Sessions 2013)",
-                "lyricsURI": "lyrics/Change - Linkin Park.json"
+                "lyricsFileName": "Change - Linkin Park.json"
             },
             {
                 "path": "English Audios/Crawling.mp3",
                 "artist": "Linkin Park",
                 "title": "Crawling",
-                "lyricsURI": "lyrics/Crawling - Linkin Park.json"
+                "lyricsFileName": "Crawling - Linkin Park.json"
             },
             {
                 "path": "English Audios/Easier To Run.mp3",
                 "artist": "Linkin Park",
                 "title": "Easier to Run",
-                "lyricsURI": "lyrics/Easier To Run - Linkin Park.json"
+                "lyricsFileName": "Easier To Run - Linkin Park.json"
             },
             {
                 "path": "English Audios/Another Life.mp3",
@@ -2365,7 +2365,7 @@
                 "path": "English Audios/Light That Never Comes.mp3",
                 "artist": "Linkin Park",
                 "title": "Light That Never Comes",
-                "lyricsURI": "lyrics/Light That Never Comes - Linkin Park.json"
+                "lyricsFileName": "Light That Never Comes - Linkin Park.json"
             },
             {
                 "path": "English Audios/«--c0de».mp3",
@@ -2377,19 +2377,19 @@
                 "path": "English Audios/Eternally Yours.mp3",
                 "artist": "Motionless In White",
                 "title": "Eternally Yours",
-                "lyricsURI": "lyrics/Eternally Yours - Motionless In White.json"
+                "lyricsFileName": "Eternally Yours - Motionless In White.json"
             },
             {
                 "path": "English Audios/Fallen Angel.mp3",
                 "artist": "Three Days Grace",
                 "title": "Fallen Angel",
-                "lyricsURI": "lyrics/Fallen Angel - Three Days Grace.json"
+                "lyricsFileName": "Fallen Angel - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Final Masquerade.mp3",
                 "artist": "Linkin Park",
                 "title": "Final Masquerade",
-                "lyricsURI": "lyrics/Final Masquerade - Linkin Park.json"
+                "lyricsFileName": "Final Masquerade - Linkin Park.json"
             },
             {
                 "path": "English Audios/In The End (2).mp3",
@@ -2401,109 +2401,109 @@
                 "path": "English Audios/From The Inside.mp3",
                 "artist": "Linkin Park",
                 "title": "From the Inside",
-                "lyricsURI": "lyrics/From The Inside - Linkin Park.json"
+                "lyricsFileName": "From The Inside - Linkin Park.json"
             },
             {
                 "path": "English Audios/I Am Machine.mp3",
                 "artist": "Three Days Grace",
                 "title": "I am Machine",
-                "lyricsURI": "lyrics/I Am Machine - Three Days Grace.json"
+                "lyricsFileName": "I Am Machine - Three Days Grace.json"
             },
             {
                 "path": "English Audios/I'll Be Gone.mp3",
                 "artist": "Linkin Park",
                 "title": "I'll Be Gone",
-                "lyricsURI": "lyrics/I'll Be Gone - Linkin Park.json"
+                "lyricsFileName": "I'll Be Gone - Linkin Park.json"
             },
             {
                 "path": "English Audios/In My Remains.mp3",
                 "artist": "Linkin Park",
                 "title": "In My Remains",
-                "lyricsURI": "lyrics/In My Remains - Linkin Park.json"
+                "lyricsFileName": "In My Remains - Linkin Park.json"
             },
             {
                 "path": "English Audios/In The End.mp3",
                 "artist": "Linkin Park",
                 "title": "In the End",
-                "lyricsURI": "lyrics/In The End - Linkin Park.json"
+                "lyricsFileName": "In The End - Linkin Park.json"
             },
             {
                 "path": "English Audios/Lost In The Echo.mp3",
                 "artist": "Linkin Park",
                 "title": "Lost in the Echo",
-                "lyricsURI": "lyrics/Lost In The Echo - Linkin Park.json"
+                "lyricsFileName": "Lost In The Echo - Linkin Park.json"
             },
             {
                 "path": "English Audios/Never Too Late.mp3",
                 "artist": "Three Days Grace",
                 "title": "Never Too Late",
-                "lyricsURI": "lyrics/Never Too Late - Three Days Grace.json"
+                "lyricsFileName": "Never Too Late - Three Days Grace.json"
             },
             {
                 "path": "English Audios/New Divide.mp3",
                 "artist": "Linkin Park",
                 "title": "New Divide",
-                "lyricsURI": "lyrics/New Divide - Linkin Park.json"
+                "lyricsFileName": "New Divide - Linkin Park.json"
             },
             {
                 "path": "English Audios/Numb.mp3",
                 "artist": "Linkin Park",
                 "title": "Numb",
-                "lyricsURI": "lyrics/Numb - Linkin Park.json"
+                "lyricsFileName": "Numb - Linkin Park.json"
             },
             {
                 "path": "English Audios/On My Own.mp3",
                 "artist": "Three Days Grace",
                 "title": "On My Own",
-                "lyricsURI": "lyrics/On My Own - Three Days Grace.json"
+                "lyricsFileName": "On My Own - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Pushing Me Away.mp3",
                 "artist": "Linkin Park",
                 "title": "Pushing Me Away",
-                "lyricsURI": "lyrics/Pushing Me Away - Linkin Park.json"
+                "lyricsFileName": "Pushing Me Away - Linkin Park.json"
             },
             {
                 "path": "English Audios/Radioactive.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Radioactive",
-                "lyricsURI": "lyrics/Radioactive - Imagine Dragons.json"
+                "lyricsFileName": "Radioactive - Imagine Dragons.json"
             },
             {
                 "path": "English Audios/Rats.mp3",
                 "artist": "Motionless In White",
                 "title": "Rats",
-                "lyricsURI": "lyrics/Rats - Motionless In White.json"
+                "lyricsFileName": "Rats - Motionless In White.json"
             },
             {
                 "path": "English Audios/Reincarnate.mp3",
                 "artist": "Motionless In White",
                 "title": "Reincarnate",
-                "lyricsURI": "lyrics/Reincarnate - Motionless In White.json"
+                "lyricsFileName": "Reincarnate - Motionless In White.json"
             },
             {
                 "path": "English Audios/Runaway.mp3",
                 "artist": "Linkin Park",
                 "title": "Runaway",
-                "lyricsURI": "lyrics/Runaway - Linkin Park.json"
+                "lyricsFileName": "Runaway - Linkin Park.json"
             },
             {
                 "path": "English Audios/Somewhere I Belong.mp3",
                 "artist": "Linkin Park",
                 "title": "Somewhere I Belong",
-                "lyricsURI": "lyrics/Somewhere I Belong - Linkin Park.json"
+                "lyricsFileName": "Somewhere I Belong - Linkin Park.json"
             },
             {
                 "path": "English Audios/Tell Me Why.mp3",
                 "artist": "Three Days Grace",
                 "title": "Tell Me Why",
-                "lyricsURI": "lyrics/Tell Me Why - Three Days Grace.json"
+                "lyricsFileName": "Tell Me Why - Three Days Grace.json"
             },
             {
                 "path": "English Audios/The Catalyst.mp3",
                 "artist": "Linkin Park",
                 "title": "The Catalyst",
-                "lyricsURI": "lyrics/The Catalyst - Linkin Park.json"
+                "lyricsFileName": "The Catalyst - Linkin Park.json"
             },
             {
                 "path": "English Audios/This Is It (2).mp3",
@@ -2515,19 +2515,19 @@
                 "path": "English Audios/Until It's Gone.mp3",
                 "artist": "Linkin Park",
                 "title": "Until It's Gone",
-                "lyricsURI": "lyrics/Until It's Gone - Linkin Park.json"
+                "lyricsFileName": "Until It's Gone - Linkin Park.json"
             },
             {
                 "path": "English Audios/What I've Done.mp3",
                 "artist": "Linkin Park",
                 "title": "What I've Done",
-                "lyricsURI": "lyrics/What I've Done - Linkin Park.json"
+                "lyricsFileName": "What I've Done - Linkin Park.json"
             },
             {
                 "path": "English Audios/World So Cold.mp3",
                 "artist": "Three Days Grace",
                 "title": "World so Cold",
-                "lyricsURI": "lyrics/World So Cold - Three Days Grace.json"
+                "lyricsFileName": "World So Cold - Three Days Grace.json"
             }
         ]
     },
@@ -2539,73 +2539,73 @@
                 "path": "English Audios/America.mp3",
                 "artist": "Motionless in White",
                 "title": "America",
-                "lyricsURI": "lyrics/America - Motionless In White.json"
+                "lyricsFileName": "America - Motionless In White.json"
             },
             {
                 "path": "English Audios/Carousel.mp3",
                 "artist": "Linkin Park",
                 "title": "Carousel",
-                "lyricsURI": "lyrics/Carousel - Linkin Park.json"
+                "lyricsFileName": "Carousel - Linkin Park.json"
             },
             {
                 "path": "English Audios/Faint.mp3",
                 "artist": "Linkin Park",
                 "title": "Faint",
-                "lyricsURI": "lyrics/Faint - Linkin Park.json"
+                "lyricsFileName": "Faint - Linkin Park.json"
             },
             {
                 "path": "English Audios/Figure.09.mp3",
                 "artist": "Linkin Park",
                 "title": "Figure.09",
-                "lyricsURI": "lyrics/Figure.09 - Linkin Park.json"
+                "lyricsFileName": "Figure.09 - Linkin Park.json"
             },
             {
                 "path": "English Audios/Hit The Floor.mp3",
                 "artist": "Linkin Park",
                 "title": "Hit the Floor",
-                "lyricsURI": "lyrics/Hit The Floor - Linkin Park.json"
+                "lyricsFileName": "Hit The Floor - Linkin Park.json"
             },
             {
                 "path": "English Audios/Keys To The Kingdom.mp3",
                 "artist": "Linkin Park",
                 "title": "Keys to the Kingdom",
-                "lyricsURI": "lyrics/Keys To The Kingdom - Linkin Park.json"
+                "lyricsFileName": "Keys To The Kingdom - Linkin Park.json"
             },
             {
                 "path": "English Audios/Lies Greed Misery.mp3",
                 "artist": "Linkin Park",
                 "title": "Lies Greed Misery",
-                "lyricsURI": "lyrics/Lies Greed Misery - Linkin Park.json"
+                "lyricsFileName": "Lies Greed Misery - Linkin Park.json"
             },
             {
                 "path": "English Audios/Lying From You.mp3",
                 "artist": "Linkin Park",
                 "title": "Lying from You",
-                "lyricsURI": "lyrics/Lying From You - Linkin Park.json"
+                "lyricsFileName": "Lying From You - Linkin Park.json"
             },
             {
                 "path": "English Audios/Qwerty.mp3",
                 "artist": "Linkin Park",
                 "title": "Qwerty",
-                "lyricsURI": "lyrics/Qwerty - Linkin Park.json"
+                "lyricsFileName": "Qwerty - Linkin Park.json"
             },
             {
                 "path": "English Audios/Victimized.mp3",
                 "artist": "Linkin Park",
                 "title": "Victimized",
-                "lyricsURI": "lyrics/Victimized - Linkin Park.json"
+                "lyricsFileName": "Victimized - Linkin Park.json"
             },
             {
                 "path": "English Audios/War.mp3",
                 "artist": "Linkin Park",
                 "title": "War",
-                "lyricsURI": "lyrics/War - Linkin Park.json"
+                "lyricsFileName": "War - Linkin Park.json"
             },
             {
                 "path": "English Audios/Wretches And Kings.mp3",
                 "artist": "Linkin Park ",
                 "title": "Wretches and Kings",
-                "lyricsURI": "lyrics/Wretches And Kings - Linkin Park.json"
+                "lyricsFileName": "Wretches And Kings - Linkin Park.json"
             }
         ]
     },
@@ -3157,7 +3157,7 @@
                 "path": "English Audios/Jah Is By My Side.mp3",
                 "artist": "Tony Rebel",
                 "title": "Jah Is By My Side",
-                "lyricsURI": "lyrics/Jah Is By My Side - Tony Rebel.json"
+                "lyricsFileName": "Jah Is By My Side - Tony Rebel.json"
             },
             {
                 "path": "English Hymns/Gradual and Alleluia.mp3",
@@ -3175,7 +3175,7 @@
                 "path": "English Hymns/Mary Did You Know.mp3",
                 "artist": "Cee Lo Green",
                 "title": "Mary Did You Know (Fast)",
-                "lyricsURI": "lyrics/Mary Did You Know - Clay Aiken.json"
+                "lyricsFileName": "Mary Did You Know - Clay Aiken.json"
             },
             {
                 "path": "English Hymns/O Come Divine Messiah.mp3",
@@ -3199,7 +3199,7 @@
                 "path": "English Hymns/Gethsemane Song.mp3",
                 "artist": "Claire Ryann",
                 "title": "Gethsemane Song",
-                "lyricsURI": "lyrics/Gethsemane Song - Unknown.json"
+                "lyricsFileName": "Gethsemane Song - Unknown.json"
             },
             {
                 "path": "English Hymns/The Chaplet Of Divine Mercy.mp3",
@@ -3217,7 +3217,7 @@
                 "path": "English Hymns/Give Thanks To Allah.mp3",
                 "artist": "Michael Jackson",
                 "title": "Give Thanks To Allah",
-                "lyricsURI": "lyrics/Give Thanks To Allah - Michael Jackson.json"
+                "lyricsFileName": "Give Thanks To Allah - Michael Jackson.json"
             },
             {
                 "path": "English Hymns/Auld Lang Syne.mp3",
