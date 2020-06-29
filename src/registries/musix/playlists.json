@@ -154,6 +154,12 @@
                 "lyricsURI": "lyrics/A Thousand Years - Christina Perri.json"
             },
             {
+                "path": "English Audios/A Better Man.mp3",
+                "artist": "King's Road",
+                "title": "A Better Man",
+                "lyricsURI": null
+            },
+            {
                 "path": "English Audios/One More Light.mp3",
                 "artist": "Linkin Park",
                 "title": "One More Light",
@@ -2878,12 +2884,6 @@
                 "lyricsURI": null
             },
             {
-                "path": "Music Catalog/Loading Screen Music (Soundtrack 1) GTA V.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsURI": null
-            },
-            {
                 "path": "Music Catalog/Love (Soundtrack 1) Merlin.mp3",
                 "artist": "Unknown Artist",
                 "title": "",
@@ -3460,6 +3460,12 @@
         "themeColor": "limegreen",
         "tracks": [
             {
+                "path": "Hindi Audios/Mere Rashke Qamar.mp3",
+                "artist": "Junaid Asghar",
+                "title": "Mere Rashke Qamar",
+                "lyricsURI": null
+            },
+            {
                 "path": "Hindi Audios/Dheevara.mp3",
                 "artist": "Deepu & Ramya Behara",
                 "title": "Dhivara",
@@ -3646,6 +3652,12 @@
                 "lyricsURI": null
             },
             {
+                "path": "Sinhala Audios/Wikasitha Pathuman Vs O Mere Dil Ke Chain.mp3",
+                "artist": "Sahan Hasthi/Pavan Mallawarachchi",
+                "title": "Wikasitha Pathuman Vs O Mere Dil Ke Chain",
+                "lyricsURI": null
+            },
+            {
                 "path": "Sinhala Audios/Anduru Kutiya Thula.mp3",
                 "artist": "Chanuka Moragoda",
                 "title": "Anduru Kutiya Thula",
@@ -3676,9 +3688,27 @@
                 "lyricsURI": null
             },
             {
+                "path": "Sinhala Audios/Thaniwee Sitinnai Ma.mp3",
+                "artist": "",
+                "title": "Thaniwee Sitinnai Ma",
+                "lyricsURI": null
+            },
+            {
                 "path": "Sinhala Audios/Chakithaya.mp3",
                 "artist": "Nemesis",
                 "title": "Chakithaya",
+                "lyricsURI": null
+            },
+            {
+                "path": "Sinhala Audios/Budune Jesune.MP3",
+                "artist": "Bachi Susan",
+                "title": "Budune Jesune",
+                "lyricsURI": null
+            },
+            {
+                "path": "Sinhala Audios/Ae Neela Warala Peerala.mp3",
+                "artist": "Danapala Udawaththa/Gayan Udawatta",
+                "title": "Ae Neela Warala Peerala",
                 "lyricsURI": null
             },
             {
@@ -3815,7 +3845,7 @@
             },
             {
                 "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
-                "artist": "Namal Udugama",
+                "artist": "Dulaj Danushka",
                 "title": "Apa Hamuweema Wenweema",
                 "lyricsURI": null
             },
@@ -3911,8 +3941,8 @@
             },
             {
                 "path": "Sinhala Audios/Laa Rosa.mp3",
-                "artist": "Chillie",
-                "title": "",
+                "artist": "Chillie/Sineth",
+                "title": "Laa Rosa",
                 "lyricsURI": null
             },
             {
@@ -3953,8 +3983,8 @@
             },
             {
                 "path": "Sinhala Audios/Pem Sihine.mp3",
-                "artist": "Padeep Rangana",
-                "title": "",
+                "artist": "Pradeep Rangana",
+                "title": "Pem Sihine",
                 "lyricsURI": null
             },
             {
@@ -4363,6 +4393,12 @@
                 "path": "Sinhala Audios/Iki Gasa Handana Atheethayaka.mp3",
                 "artist": "Amarasiri Peries",
                 "title": "Iki Gasa Handana Atheethayaka",
+                "lyricsURI": null
+            },
+            {
+                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
+                "artist": "Chamara Weerasinghe",
+                "title": "Paaya Aa Sanda",
                 "lyricsURI": null
             },
             {
