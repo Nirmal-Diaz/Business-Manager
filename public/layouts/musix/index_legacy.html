@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Musix</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/musix/LegacyInterface.js"></script>
+</head>
+<body>
+    <h1>Minimal Musix</h1>
+    <audio id="mediaController" controls></audio>
+
+    <p>This is a minimal interface for Musix. You can only manipulate this either with RemotePlay or a browser console</p>
+    <p>You must also play the first track manually, after loading a track by one of the above methods</p>
+    <p>Please click the following button to initiate</p>
+    
+    <button onclick="main(); alert('Initiation successful');">START</button>
+
+    <p id="volumeDisplay"></p>
+    <p id="playlistDisplay"></p>
+    <p id="trackDisplay"></p>
+</body>
+</html>

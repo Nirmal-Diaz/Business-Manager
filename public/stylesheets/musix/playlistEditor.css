@@ -1,0 +1,67 @@
+* {
+    /* border: thin solid red; */
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    overflow: initial;
+    font-size: 10px;
+    color: black;
+    cursor: default;
+    -webkit-user-select: none;
+}
+
+p,h1 {
+    text-align: center;
+}
+
+body {
+    width: 300vw;
+}
+
+#playlistViewContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.playlistView {
+    overflow: hidden;
+
+    margin: 5px;
+
+    border: thin solid black;
+    border-radius: 10px;
+}
+
+.playlistNameView {
+    padding: 10px;
+
+    font-size: 20px;
+}
+
+.playlistColorInput {
+    width: 100%;
+    padding: 10px;
+
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.trackView {
+    width: 100%;
+    padding: 10px;
+
+    border: thin solid black;
+    border-width: thin 0 0 0;
+}
+
+#submitButton {
+    position: sticky;
+    bottom: 20px;
+    left: 20px;
+
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50%;
+}
