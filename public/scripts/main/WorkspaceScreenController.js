@@ -14,6 +14,7 @@ export class WorkspaceScreenController extends ScreenController {
     presentCards = [];
     pastCards = [];
     permittedModuleOperations = {};
+    themeFilePath = "";
 
     headerArea = null;
     navigationControl = null;
@@ -42,7 +43,8 @@ export class WorkspaceScreenController extends ScreenController {
                     this.headerArea.querySelector("#roleNameDisplay").innerText = response.data.role.name;
                     this.headerArea.querySelector("#workspaceAvatar").style.backgroundImage = `url(${URL.createObjectURL(new Blob([new Uint8Array(response.data.userPreference.avatar.data)]))})`;
                     //Apply user preferences to the UI
-                    document.getElementsByTagName("link")[0].href = response.data.userPreference.theme.cssPath;
+                    this.themeFilePath = response.data.userPreference.theme.cssPath;
+                    document.getElementsByTagName("link")[0].href = this.themeFilePath;
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                 }
@@ -221,6 +223,10 @@ export class WorkspaceScreenController extends ScreenController {
                 this.actionOverlayView.classList.replace("popIn", "popOut");
             }, 250);
         });
+    }
+
+    getThemeFilePath() {
+        return this.themeFilePath;
     }
 
     addCard(card) {

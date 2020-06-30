@@ -8,16 +8,17 @@
     --color0-2: indianred;
     --color0-3: transparent;
 
-    --color1-5: rgb(65, 200, 130);
-    --color1-1: rgba(60, 180, 115, 1);
-    --color1-2: rgba(0, 140, 140, 1);
-    --color1-3: rgba(0, 120, 120, 1);
-    --color1-4: rgba(0, 100, 100, 1);
+    --color1-5: rgb(100, 130, 255);
+    --color1-1: rgba(230, 230, 230, 0.8);
+    --color1-2: rgba(65, 105, 225, 1);
+    --color1-3: rgba(60, 60, 60, 1);
+    --color1-4: rgb(50, 90, 200);
 
     --color2-1: rgba(0, 0, 0, 0.9);
     --color2-2: black;
+    --color2-3: gray;
     
-    --color3-1: rgba(65, 105, 225, 1);
+    --color3-1: gray;
     --color3-2: rgb(50, 90, 200);
 
     /* platformStyleVariables */
@@ -35,7 +36,7 @@
     --inputBackgroundColor-active-hover: var(--color3-2);
     --inputBorderColor: var(--color0-1);
 
-    --textInputPlaceholderColor: var(--color2-2);
+    --textInputPlaceholderColor: var(--color2-3);
 
     --buttonGlyphBackgroundColor: var(--color1-1);
     --buttonGlyphBackgroundColor-hover: var(--color1-3);
@@ -60,7 +61,7 @@
 
     --logInBoxInputBackgroundColor: var(--color0-3);
 
-    --workspaceScreenBackgroundImage: url("/images/main/image_background_workspaceScreen_turquoise.jpg");
+    --workspaceScreenBackgroundImage: url("/images/main/image_background_workspaceScreen_crystal.jpg");
 
     --cardBackgroundColor: var(--color1-1);
     --cardBackdropFilter: blur(5px);
@@ -90,10 +91,10 @@
     --cardDivisionSectorItemBoxShadowColor-active: var(--color1-4);
 
     /* popUpCardStyleVariables */
-    --formTitleContainerBoxShadow: var(--color2-2);
+    --formTitleContainerBoxShadow: var(--color2-3);
     --formTitleContainerColor_child: var(--color1-3);
 
     --formFieldsContainerBackgroundColor: var(--color1-3);
 
-    --formControlsContainerBoxShadow: var(--color2-2);
+    --formControlsContainerBoxShadow: var(--color2-3);
 }
