@@ -1,7 +1,8 @@
 import "reflect-metadata";
 
-import * as express from "express";
+import * as http from "http";
 
+import * as express from "express";
 import * as socketIo from "socket.io";
 
 import { musixRouter } from "./routers/musix/MusixRouter";
@@ -15,9 +16,9 @@ app & io: Setup
 */
 const port: number = 8080;
 const app = express();
-const http = require('http').createServer(app);
-const io = socketIo(http);
-http.listen(port);
+const server = http.createServer(app);
+const io = socketIo(server);
+server.listen(port);
 /*
 =====================================================================================
 app: Router Setup
