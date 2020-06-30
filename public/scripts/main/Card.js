@@ -17,7 +17,7 @@ export class Card {
         //NOTE: A cardView's styling will be handled by the WorkspaceScreen
         //Create the iFrame to load the module
         const iFrame = document.createElement("iframe");
-        iFrame.src = `${location.protocol}//${location.host}/${layoutFilePath}`;
+        iFrame.src = layoutFilePath;
         //Add onload to iFrame for connecting cardObject with cardInterface
         iFrame.addEventListener("load", () => {
             this.cardInterface = iFrame.contentWindow.cardInterface;

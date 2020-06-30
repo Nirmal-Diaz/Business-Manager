@@ -69,7 +69,7 @@ export class CarouselController {
         this.carouselImageCurrent = this.view.querySelector("#carouselImageCurrent");
         this.carouselImageNew = this.view.querySelector("#carouselImageNew");
         //NOTE: static directory is merged under liveWallRouter. So static file requests must start with "liveWall/"
-        this.carouselImageCurrent.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
+        this.carouselImageCurrent.src = `/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         this.carouselImageCurrent.dataset.imageIndex = (imageIndex).toString();
     }
 }

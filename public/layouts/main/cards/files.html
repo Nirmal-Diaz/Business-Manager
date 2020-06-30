@@ -156,7 +156,7 @@
                         const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
                         const subDirectoryPath = filePath.slice(0, filePath.lastIndexOf("/"));
 
-                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
+                        imagePreviewPopUp.popUpCardInterface.preview(`/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
                     });
                 } else if (fileCategory === "audios" || fileCategory === "videos") {
                     //Try to retrieve already existing popUpCard
@@ -169,7 +169,7 @@
                             const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
                             const subDirectoryPath = filePath.slice(0, filePath.lastIndexOf("/"));
 
-                            mediaPreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
+                            mediaPreviewPopUp.popUpCardInterface.preview(`/directories/${encodeURIComponent(subDirectoryPath)}/files/${encodeURIComponent(fileName)}`);
                         });
                     }
                 } else if (fileCategory === "documents") {

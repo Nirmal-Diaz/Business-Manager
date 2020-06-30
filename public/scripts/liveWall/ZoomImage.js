@@ -7,7 +7,7 @@ export class ZoomImage {
 
         this.view.classList.add(`zoomImage-${orientation}`);
         this.view.style.zIndex = document.querySelectorAll(".zoomImage").length.toString();
-        this.view.style.backgroundImage = `url("${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(window.cardInterface.getRootDirectoryPath(), "")}")`;
+        this.view.style.backgroundImage = `url("/liveWall/${imageMetaDatum.path.replace(window.cardInterface.getRootDirectoryPath(), "")}")`;
         this.view.style.borderColor = color;
         if (window.innerHeight >= window.innerWidth) {
             this.view.style.height = ((window.innerWidth * 90 / 100) * imageMetaDatum.hwRatio) + "px";

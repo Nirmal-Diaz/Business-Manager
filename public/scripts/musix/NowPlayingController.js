@@ -186,7 +186,7 @@ export class NowPlayingController {
         }
 
         //Update mediaController
-        this.mediaController.src = `${window.location.protocol}//${window.location.host}/musix/${track.path}`;
+        this.mediaController.src = `/musix/${track.path}`;
         this.mediaController.currentTime = 0;
 
         //Update playback state

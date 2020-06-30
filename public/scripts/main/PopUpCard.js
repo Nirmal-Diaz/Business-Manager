@@ -112,7 +112,7 @@ export class PopUpCard {
         });
         //Create the iFrame to load the moduleComponent
         const iFrame = document.createElement("iframe");
-        iFrame.src = `${location.protocol}//${location.host}/${layoutFilePath}`;
+        iFrame.src = layoutFilePath;
         //Add onload to iFrame for connecting popUpCardObject with popUpCardInterface
         iFrame.addEventListener("load", () => {
             this.popUpCardInterface = iFrame.contentWindow.popUpCardInterface;

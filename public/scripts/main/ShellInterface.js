@@ -14,6 +14,12 @@ export class ShellInterface {
     alertFalseButton = null;
 
     constructor() {
+        //Install service worker
+        //NOTE: This must be done only on secure contexts. navigator.serviceWorker isn't available on insecure contexts
+        if (window.isSecureContext) {
+            navigator.serviceWorker.register("/main.serviceWorker.js");
+        }
+
         //Initialize/cache view elements
         this.alertOverlayView = document.getElementById("alertOverlay");
         this.alertTitleContainer = this.alertOverlayView.querySelector(".titleContainer");

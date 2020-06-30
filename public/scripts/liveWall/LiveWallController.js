@@ -21,11 +21,11 @@ export class LiveWallController {
                 const imageMetaDatum = this.cardInterface.getImageMetadata()[Number.parseInt(areas[i].dataset.imageIndex)];
                 if (window.frameElement) {
                     //Case: App is inside an iFrame
-                    const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("layouts/main/popUpCards/files_r_image.html");
+                    const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/files_r_image.html");
                     //Allow more width than other popUpCards
                     imagePreviewPopUp.getView().style.maxWidth = "90vw";
                     imagePreviewPopUp.getView().querySelector("iframe").addEventListener("load", () => {
-                        imagePreviewPopUp.popUpCardInterface.preview(`${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`);
+                        imagePreviewPopUp.popUpCardInterface.preview(`/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`);
                     });
                 } else {
                     //Case: App is not inside an iFrame
@@ -54,7 +54,7 @@ export class LiveWallController {
                 //View the image appropriately
                 this.viewImage(imageIndex);
             };
-            image.src = `${location.protocol}//${location.host}/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
+            image.src = `/liveWall/${this.cardInterface.getImageMetadata()[imageIndex].path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         }
     }
 
@@ -78,7 +78,7 @@ export class LiveWallController {
         //Change the backgroundImage of the randomArea and store its data inside the element
         const randomArea = this.view.querySelector(randomAreaQuery);
         //NOTE: static directory is merged under liveWallRouter. So static file requests must start with "liveWall/"
-        randomArea.src = `${location.protocol}//${location.host}/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
+        randomArea.src = `/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`;
         randomArea.dataset.imageIndex = imageIndex;
     }
 
