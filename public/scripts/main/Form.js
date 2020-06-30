@@ -21,7 +21,7 @@ export class Form {
         this.submissionURL = submissionURL;
         this.submissionMethod = submissionMethod;
         //Load bindingObject
-        return fetch(`${location.protocol}//${location.host}${bindingObjectURL}`)
+        return fetch(bindingObjectURL)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -193,7 +193,7 @@ export class Form {
                 }
             };
         } else {
-            return fetch(`${location.protocol}//${location.host}${this.submissionURL}`, {
+            return fetch(this.submissionURL, {
                 method: this.submissionMethod,
                 headers: {
                     "Content-Type": "application/json"

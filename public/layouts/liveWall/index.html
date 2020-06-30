@@ -103,7 +103,7 @@
                 this.rootDirectoryPath = rootDirectoryPath + "/";
             }
             //Merge rootDirectoryPath with the static/public directory
-            fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.rootDirectoryPath)}`, {
+            fetch(`/liveWall/directories/${encodeURIComponent(this.rootDirectoryPath)}`, {
                 method: "PUT"
             }).then(response => response.json()).then(response => {
                 if (response.status) {

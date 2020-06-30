@@ -18,7 +18,7 @@ export class LogInScreenController extends ScreenController {
         this.logInBox.children[1].addEventListener("keypress", (event) => {
             //Check if the pressed key is "Enter"
             if (event.key === "Enter") {
-                fetch(`${location.protocol}//${location.host}/users/${encodeURIComponent(this.logInBox.children[1].value)}/avatar`)
+                fetch(`/users/${encodeURIComponent(this.logInBox.children[1].value)}/avatar`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {

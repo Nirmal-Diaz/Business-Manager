@@ -22,7 +22,7 @@ export class DirectoryExplorerController {
             subdirectoryPath = subdirectoryPath.slice(0, subdirectoryPath.slice(0, -1).lastIndexOf("/") + 1);
         }
         //Request directory data for the given directory
-        fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/directories`)
+        fetch(`/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/directories`)
         .then(response => response.json())
         .then(response => {
             if (response.status) {
@@ -58,7 +58,7 @@ export class DirectoryExplorerController {
 
     navigateDirectory(subdirectoryPath) {
         //Request image data in the given directory
-        fetch(`${location.protocol}//${location.host}/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/images`)
+        fetch(`/liveWall/directories/${encodeURIComponent(this.cardInterface.getRootDirectoryPath()+subdirectoryPath)}/images`)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {

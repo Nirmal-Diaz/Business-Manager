@@ -82,7 +82,7 @@
                         window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", "The action of deleting an item isn't reversible. Think carefully and proceed", null, "YES", "NO")
                             .then((value) => {
                                 if (value) {
-                                    fetch(`${location.protocol}//${location.host}/users/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
+                                    fetch(`/users/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
                                         method: "DELETE"
                                     })
                                         .then(response => response.json())
@@ -118,7 +118,7 @@
             //EVENT HANDLER METHODS
             searchItems(keyword, titleText, titleDescriptionText) {
                 //Fetch registered users of the system
-                fetch(`${location.protocol}//${location.host}/users?keyword=${keyword}`)
+                fetch(`/users?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {

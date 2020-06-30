@@ -154,7 +154,7 @@
                 //Initialize form
                 this.roleForm.init("/registries/role.json", `/roles/${selectedItemId}`, "POST").then((form) => {
                     //Load plainObject
-                    return fetch(`${location.protocol}//${location.host}/roles/${selectedItemId}`)
+                    return fetch(`/roles/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
                             if (response.status) {
@@ -173,7 +173,7 @@
                         //Execute the extended initiation procedure
                         this.extendInitPermissionForm();
                         //Load plainObject
-                        fetch(`${location.protocol}//${location.host}/permissions/${selectedItemId}`)
+                        fetch(`/permissions/${selectedItemId}`)
                             .then(response => response.json())
                             .then(response => {
                                 if (response.status) {

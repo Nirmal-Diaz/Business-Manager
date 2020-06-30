@@ -76,7 +76,7 @@
                 //Initialize form
                 this.form.init("/registries/user.json", `/users/${selectedItemId}`, "POST").then((form) => {
                     //Load plainObject
-                    fetch(`${location.protocol}//${location.host}/users/${selectedItemId}`)
+                    fetch(`/users/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
                             if (response.status) {

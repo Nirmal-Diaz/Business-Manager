@@ -33,7 +33,7 @@ export class WorkspaceScreenController extends ScreenController {
         this.actionOverlayView = document.getElementById("actionOverlay");
         this.actionOverlayBackground = this.actionOverlayView.querySelector(".overlayBackground");
         //Fetch username, roleName and profileImage and apply user preferences
-        fetch(`${location.protocol}//${location.host}/users/@me`)
+        fetch("/users/@me")
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -51,7 +51,7 @@ export class WorkspaceScreenController extends ScreenController {
                 window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch your session data from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
         //Fetch all permittedModules
-        fetch(`${location.protocol}//${location.host}/users/@me/modules`)
+        fetch("/users/@me/modules")
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
@@ -328,7 +328,7 @@ export class WorkspaceScreenController extends ScreenController {
             addQuickAccessControls.bind(this)();
         } else {
             //Fetch permittedModuleOperations and cache them
-            fetch(`${location.protocol}//${location.host}/users/@me/modules/${moduleId}`)
+            fetch(`/users/@me/modules/${moduleId}`)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {
@@ -432,7 +432,7 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     logoutSession() {
-        fetch(`${location.protocol}//${location.host}/sessions/@me`, {
+        fetch("/sessions/@me", {
             method: "DELETE"
         })
             .then(response => response.json())

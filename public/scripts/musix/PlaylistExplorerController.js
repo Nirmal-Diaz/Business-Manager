@@ -28,7 +28,7 @@ export class PlaylistExplorerController {
             const directoryPath = prompt("Specify an absolute directory path for your playlist");
             if (directoryPath) {
                 //Fetch a playlist for the directoryPath
-                fetch(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/playlists?directoryPath=${directoryPath}`, {
+                fetch(`/playlists?directoryPath=${directoryPath}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"

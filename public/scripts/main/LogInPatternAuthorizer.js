@@ -9,7 +9,7 @@ export class LogInPatternAuthorizer extends PatternAuthorizer {
 
     attemptAuthorization() {
         //Create a session
-        fetch(`${location.protocol}//${location.host}/sessions`, {
+        fetch("/sessions", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

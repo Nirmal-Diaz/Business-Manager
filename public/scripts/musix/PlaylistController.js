@@ -11,7 +11,7 @@ export class PlaylistController {
 
     init() {
         //Request playlist database and playlist metadata
-        return fetch(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/musix/playlists`)
+        return fetch("/musix/playlists")
             .then(response => response.json())
             .then(response => {
                 if (response.status) {

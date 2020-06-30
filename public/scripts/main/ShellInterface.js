@@ -36,7 +36,7 @@ export class ShellInterface {
         //Add onclick to splashScreenView for initializing currentScreen
         document.getElementById("splashScreen").addEventListener("click", (event) => {
             //Fetch workspace
-            fetch(`${location.protocol}//${location.host}/sessions`)
+            fetch("/sessions")
                 .then(response => response.json())
                 .then(response => {
                     if (response.status) {

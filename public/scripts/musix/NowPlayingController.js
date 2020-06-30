@@ -167,7 +167,7 @@ export class NowPlayingController {
         const lyricsDisplay = this.view.querySelector("#lyricsDisplay");
         lyricsDisplay.scrollTo(0, 0);
         if (track.lyricsFileName) {
-            fetch(`${window.location.protocol}//${window.location.host}/musix/lyrics/${encodeURIComponent(track.lyricsFileName)}`)
+            fetch(`/musix/lyrics/${encodeURIComponent(track.lyricsFileName)}`)
                 .then(response => response.json())
                 .then(data => {
                     for (let i = 0; i < data.blocks.length; i++) {

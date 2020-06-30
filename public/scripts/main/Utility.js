@@ -157,9 +157,9 @@ export class FormUtil {
         }
     }
 
-    static createDropDownInputFragment(requestPath, textContentField, valueField) {
+    static createDropDownInputFragment(requestURL, textContentField, valueField) {
         //Fetch items
-        return fetch(`${location.protocol}//${location.host}${requestPath}`)
+        return fetch(requestURL)
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
