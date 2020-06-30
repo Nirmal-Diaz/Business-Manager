@@ -7,19 +7,19 @@
     --color0-1: white;
     --color0-2: indianred;
     --color0-3: transparent;
+    --color0-4: rgba(230, 230, 230, 0.5);
 
-    --color1-5: rgb(100, 130, 255);
-    --color1-1: rgba(230, 230, 230, 0.8);
-    --color1-2: rgba(65, 105, 225, 1);
-    --color1-3: rgba(60, 60, 60, 1);
-    --color1-4: rgb(50, 90, 200);
+    --color1-5: rgb(65, 130, 255);
+    --color1-1: rgb(60, 100, 255);
+    --color1-2: rgba(0, 60, 255, 1);
+    --color1-3: rgba(0, 40, 255, 1);
+    --color1-4: darkblue;
 
     --color2-1: rgba(0, 0, 0, 0.9);
     --color2-2: black;
     --color2-3: gray;
-    
-    --color3-1: gray;
-    --color3-2: rgb(50, 90, 200);
+    --color2-4: rgba(50, 50, 50, 1);
+    --color2-5: rgb(35, 35, 35);
 
     /* platformStyleVariables */
     --defaultFontFamily: "OpenSans";
@@ -31,30 +31,30 @@
     --inputContainerBorderColor-invalid: var(--color0-2);
 
     --inputBackgroundColor: var(--color0-3);
-    --inputBackgroundColor-active: var(--color3-1);
-    --inputBackgroundColor-hover: var(--color1-1);
-    --inputBackgroundColor-active-hover: var(--color3-2);
+    --inputBackgroundColor-active: var(--color1-1);
+    --inputBackgroundColor-hover: var(--color1-2);
+    --inputBackgroundColor-active-hover: var(--color1-3);
     --inputBorderColor: var(--color0-1);
 
     --textInputPlaceholderColor: var(--color2-3);
 
-    --buttonGlyphBackgroundColor: var(--color1-1);
-    --buttonGlyphBackgroundColor-hover: var(--color1-3);
+    --buttonGlyphBackgroundColor: var(--color2-3);
+    --buttonGlyphBackgroundColor-hover: var(--color2-4);
     --buttonGlyphBoxShadowColor: var(--color2-2);
 
     --buttonTextBackgroundColor: var(--color1-1);
-    --buttonTextBackgroundColor-hover: var(--color1-3);
+    --buttonTextBackgroundColor-hover: var(--color1-2);
     --buttonTextBoxShadowColor: var(--color2-2);
 
     --buttonTextLinkColor: var(--color0-1);
-    --buttonTextLinkColor-hover: var(--color1-3);
+    --buttonTextLinkColor-hover: var(--color2-4);
 
     --cellPointBackgroundColor: var(--color0-1);
-    --cellPointBackgroundColor-active: var(--color3-1);
+    --cellPointBackgroundColor-active: var(--color1-1);
     --cellPointBorderColor-active: var(--color0-1);
 
     /* shellStyleVariables */
-    --logInScreenBackgroundColor: var(--color3-1);
+    --logInScreenBackgroundColor: var(--color1-4);
 
     --logInBoxBackgroundBackgroundColor: var(--color1-3);
     --logInBoxBackgroundBoxShadowColor: var(--color2-2);
@@ -63,38 +63,38 @@
 
     --workspaceScreenBackgroundImage: url("/images/main/image_background_workspaceScreen_crystal.jpg");
 
-    --cardBackgroundColor: var(--color1-1);
-    --cardBackdropFilter: blur(5px);
+    --cardBackgroundColor: var(--color0-4);
+    --cardBackdropFilter: blur(10px);
     --cardBoxShadowColor: var(--color2-2);
 
     --headerAreaColor: var(--color0-1);
     --HeaderAreaTextShadowColor: var(--color2-2);
 
-    --popUpCardBackgroundColor: var(--color1-1);
-    --popUpCardBackdropFilter: blur(5px);
+    --popUpCardBackgroundColor: var(--color0-4);
+    --popUpCardBackdropFilter: blur(10px);
     --popUpCardBoxShadowColor: var(--color2-2);
 
     --actionOverlayBackgroundColor: var(--color2-1);
 
-    --actionOverlayChipBackgroundColor: var(--color3-1);
-    --actionOverlayChipBackgroundColor-hover: var(--color3-2);
+    --actionOverlayChipBackgroundColor: var(--color2-4);
+    --actionOverlayChipBackgroundColor-hover: var(--color2-5);
 
     --alertOverlayBackgroundColor: var(--color2-1);
 
-    --alertBoxBackgroundBackgroundColor: var(--color1-3);
+    --alertBoxBackgroundBackgroundColor: var(--color1-4);
     --alertBoxBackgroundBoxShadowColor: var(--color2-2);
 
     /* cardStyleVariables */
-    --cardDivisionBackgroundColor: var(--color1-3);
+    --cardDivisionBackgroundColor: var(--color2-4);
 
-    --cardDivisionSectorItemBackgroundColor-hover: var(--color1-2);
-    --cardDivisionSectorItemBoxShadowColor-active: var(--color1-4);
+    --cardDivisionSectorItemBackgroundColor-hover: var(--color2-3);
+    --cardDivisionSectorItemBoxShadowColor-active: var(--color2-5);
 
     /* popUpCardStyleVariables */
-    --formTitleContainerBoxShadow: var(--color2-3);
-    --formTitleContainerColor_child: var(--color1-3);
+    --formTitleContainerBoxShadow: var(--color2-2);
+    --formTitleContainerColor_child: var(--color1-4);
 
-    --formFieldsContainerBackgroundColor: var(--color1-3);
+    --formFieldsContainerBackgroundColor: var(--color2-4);
 
-    --formControlsContainerBoxShadow: var(--color2-3);
+    --formControlsContainerBoxShadow: var(--color2-2);
 }
