@@ -12,27 +12,16 @@
     <script type="module">
         //@ts-check
         import { PlatformComponent, CardComponent } from "/scripts/main/Utility.js";
-
-        //Prevent contextMenu
-        window.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+        import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
+        
         //Add onload to window for initializing cardInterface
-        window.addEventListener("load", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             window.cardInterface = new CardInterface();
         });
 
-        class CardInterface {
-            cardObject = null;
-            title = document.querySelector("title").textContent;
-            selectedCardDivisionSectorItems = [];
-
-            createControls = document.querySelectorAll("#createControlsContainer > button");
-            retrieveControls = document.querySelectorAll("#retrieveControlsContainer > button");
-            updateControls = document.querySelectorAll("#updateControlsContainer > button");
-            deleteControls = document.querySelectorAll("#deleteControlsContainer > button");
-
+        class CardInterface extends BaseCardInterface {
             constructor() {
+                super();
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/permissions_cu.html");

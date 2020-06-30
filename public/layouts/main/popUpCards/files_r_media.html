@@ -66,24 +66,19 @@
 
     <script>
         //@ts-check
-        //Prevent contextMenu
-        window.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        
         //Add onload to window for initializing popUpCardInterface
-        window.addEventListener("load", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface {
-            popUpCardObject = null;
-            mediaFileName = null;
+        class PopUpCardInterface extends BasePopUpCardInterface {
             boundedHandlers = {
                 updateInterface: this.updateInterface.bind(this),
                 seek: this.seek.bind(this)
             };
 
-            closeButtons = document.querySelectorAll(".closeButton");
             formControls = document.querySelector(".formControlsContainer").children;
             mediaController = document.getElementById("mediaController");
             seekSlider = document.getElementById("seekSlider");
@@ -92,6 +87,7 @@
             statusDisplay = document.querySelector(".title");
 
             constructor() {
+                super();
                 //Set initial volume of mediaController
                 this.mediaController.volume = 0.5;
                 //Add eventListeners to the mediaController and seekSlider

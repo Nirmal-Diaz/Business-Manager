@@ -13,24 +13,18 @@
         //@ts-check
         import { FormUtil } from "/scripts/main/Utility.js";
         import { Form } from "/scripts/main/Form.js";
-
-        //Prevent contextMenu
-        window.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        
         //Add onload to window for initializing popUpCardInterface
-        window.addEventListener("load", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface {
-            popUpCardObject = null;
-            title = document.querySelector("title").textContent;
+        class PopUpCardInterface extends BasePopUpCardInterface {
             form = new Form(document.querySelector("form"));
 
-            closeButtons = document.querySelectorAll(".closeButton");
-
             constructor() {
+                super();
                 document.getElementById("saveButton").addEventListener("click", () => {
                     this.form.submit().then(submission => {
                         if (submission.status) {

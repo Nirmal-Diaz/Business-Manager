@@ -19,29 +19,22 @@
         //@ts-check
         import { CardComponent } from "/scripts/main/Utility.js";
         import { PopUpCard } from "/scripts/main/PopUpCard.js";
-        //Prevent contextMenu
-        window.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+        import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
+        
         //Add onload to window for initializing cardInterface
-        window.addEventListener("load", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             window.cardInterface = new CardInterface();
         });
 
-        class CardInterface {
-            cardObject = null;
-            title = document.querySelector("title").textContent;
+        class CardInterface extends BaseCardInterface{
             presentWorkingDirectoryPath = "/";
             fileMetadata = null;
             selectedCardDivisionSectorItems = [];
             
             mainCardDivision = document.getElementById("mainCardDivision");
-            createControls = document.querySelectorAll("#createControlsContainer > button");
-            retrieveControls = document.querySelectorAll("#retrieveControlsContainer > button");
-            updateControls = document.querySelectorAll("#updateControlsContainer > button");
-            deleteControls = document.querySelectorAll("#deleteControlsContainer > button");
 
             constructor() {
+                super();
                 //Add onclick to retrieveFileButton for determining and showing the relevant retrieve file popUpCard
                 this.retrieveControls[0].addEventListener("click", () => {
                     this.determinePreviewPopUp();

@@ -26,20 +26,19 @@
 
     <script>
         //@ts-check
-        //Prevent contextMenu
-        window.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        
         //Add onload to window for initializing popUpCardInterface
-        window.addEventListener("load", () => {
+        window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface {
-            popUpCardObject = null;
-
-            closeButtons = document.querySelectorAll(".closeButton");
+        class PopUpCardInterface extends BasePopUpCardInterface {
             imageController = document.getElementById("imageController");
+
+            constructor() {
+                super();
+            }
 
             preview(imageFileURL) {
                 this.imageController.src = imageFileURL;
