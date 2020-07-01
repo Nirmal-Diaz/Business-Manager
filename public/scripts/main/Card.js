@@ -3,28 +3,28 @@ import { PopUpCard } from "./PopUpCard.js";
 
 export class Card {
     cardInterface = null;
-    layoutFilePath = null;
+    layoutFileURL = null;
     openPopUpCards = [];
     moduleId = null;
 
     view = null;
 
-    constructor(layoutFilePath, moduleId) {
+    constructor(layoutFileURL, moduleId) {
         this.moduleId = moduleId;
-        this.layoutFilePath = layoutFilePath;
+        this.layoutFileURL = layoutFileURL;
         //Initialize/cache view elements
         this.view = document.createElement("div");
         //NOTE: A cardView's styling will be handled by the WorkspaceScreen
         //Create the iFrame to load the module
         const iFrame = document.createElement("iframe");
-        iFrame.src = layoutFilePath;
+        iFrame.src = layoutFileURL;
         //Add onload to iFrame for connecting cardObject with cardInterface
         iFrame.addEventListener("load", () => {
             this.cardInterface = iFrame.contentWindow.cardInterface;
             this.cardInterface.cardObject = this;
         });
         //Set the cardView's id to match its iFrame's src
-        this.view.id = layoutFilePath.slice(layoutFilePath.lastIndexOf("/") + 1, -5).toLowerCase();
+        this.view.id = layoutFileURL.slice(layoutFileURL.lastIndexOf("/") + 1, -5).toLowerCase();
         //Append elements into HTML
         this.view.appendChild(iFrame);
     }
@@ -42,7 +42,7 @@ export class Card {
     }
 
     getLayoutFilePath() {
-        return this.layoutFilePath;
+        return this.layoutFileURL;
     }
 
     getModuleId() {

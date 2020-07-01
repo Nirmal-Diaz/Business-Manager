@@ -1,13 +1,13 @@
 //@ts-check
 export class PopUpCard {
     popUpCardInterface = null;
-    layoutFilePath;
+    layoutFileURL;
     parentCardInterface;
 
     view = document.createElement("div");
 
-    constructor(layoutFilePath, parentCardInterface) {
-        this.layoutFilePath = layoutFilePath;
+    constructor(layoutFileURL, parentCardInterface) {
+        this.layoutFileURL = layoutFileURL;
         this.parentCardInterface = parentCardInterface;
         //Initialize/cache view elements
         this.view.setAttribute("class", "popUpCard popIn");
@@ -112,7 +112,7 @@ export class PopUpCard {
         });
         //Create the iFrame to load the moduleComponent
         const iFrame = document.createElement("iframe");
-        iFrame.src = layoutFilePath;
+        iFrame.src = layoutFileURL;
         //Add onload to iFrame for connecting popUpCardObject with popUpCardInterface
         iFrame.addEventListener("load", () => {
             this.popUpCardInterface = iFrame.contentWindow.popUpCardInterface;
@@ -127,7 +127,7 @@ export class PopUpCard {
             }
         });
         //Set the popUpCardView's id to match its iFrame's src
-        this.view.id = layoutFilePath.slice(layoutFilePath.lastIndexOf("/") + 1, -5);
+        this.view.id = layoutFileURL.slice(layoutFileURL.lastIndexOf("/") + 1, -5);
         //Append into HTML
         this.view.appendChild(iFrame);
         this.view.appendChild(popUpCardResizeHandle);
@@ -148,7 +148,7 @@ export class PopUpCard {
     }
 
     getLayoutFilePath() {
-        return this.layoutFilePath;
+        return this.layoutFileURL;
     }
 
     close() {
