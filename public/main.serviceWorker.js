@@ -5,7 +5,8 @@ const cachableURLSegments = [
     "/images/main",
     "/layouts/main",
     "/stylesheets/main",
-    "/scripts/main"
+    "/scripts/main",
+    "/registries"
 ];
 
 self.addEventListener("install", (event) => {
