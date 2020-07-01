@@ -1,13 +1,5 @@
 //@ts-check
 const cacheName = "liveWallV1";
-const cachableURLSegments = [
-    "/fonts",
-    "/images/liveWall",
-    "/layouts/liveWall",
-    "/stylesheets/liveWall",
-    "/scripts/liveWall",
-    "/directories"
-];
 
 self.addEventListener("install", (event) => {
     console.log("ServiceWorker installation successful");
@@ -33,15 +25,7 @@ self.addEventListener("fetch", (event) => {
                     return cachedResponse;
                 } else {
                     //Case: A cached response doesn't exist
-                    let isCachable = false;
-                    if (event.request.method === "GET") {
-                        for (const urlSegment of cachableURLSegments) {
-                            if (event.request.url.includes(urlSegment)) {
-                                isCachable = true;
-                                break;
-                            }
-                        }
-                    }
+                    let isCachable = event.request.method.includes("/directories");
                     if (isCachable) {
                         //Case: A cached response doesn't exist and needs to be cached
                         //Request, cache and respond with required resource
