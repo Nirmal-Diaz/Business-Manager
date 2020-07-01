@@ -49,7 +49,7 @@
                 //Register the service worker
                 //NOTE: This must be done only on secure contexts. navigator.serviceWorker isn't available on insecure contexts
                 if (window.isSecureContext) {
-                    navigator.serviceWorker.register("/musix.serviceWorker.js", { scope: "musix" });
+                    navigator.serviceWorker.register("/musix.serviceWorker.js", { scope: "/musix" });
                 }
 
                 //Add webSocket listeners

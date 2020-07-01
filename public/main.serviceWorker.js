@@ -1,10 +1,11 @@
 //@ts-check
-const businessManagerCache = "businessManagerCacheV1";
+const cacheName = "businessManagerV1";
 const cachableURLSegments = [
     "/fonts",
     "/images/main",
     "/layouts/main",
-    "/scripts/main",
+    "/stylesheets/main",
+    "/scripts/main"
 ];
 
 self.addEventListener("install", (event) => {
@@ -14,7 +15,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", async (event) => {
     const keys = await caches.keys();
     keys.map((key) => {
-        if (key !== businessManagerCache) {
+        if (key !== cacheName) {
             return caches.delete(key);
         }
     });
@@ -23,46 +24,47 @@ self.addEventListener("activate", async (event) => {
 
 self.addEventListener("fetch", (event) => {
     event.respondWith(
-        caches.open(businessManagerCache).then((cache) => {
+        caches.open(cacheName).then((cache) => {
             return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
                     //Case: A cached response already exists
                     console.log("Serving: " + event.request.url);
                     return cachedResponse;
                 } else {
+                    //Case: A cached response doesn't exist
                     let isCachable = false;
-                    for (const urlSegment of cachableURLSegments) {
-                        if (event.request.url.includes(urlSegment)) {
-                            isCachable = true;
-                            break;
+                    if (event.request.method === "GET") {
+                        for (const urlSegment of cachableURLSegments) {
+                            if (event.request.url.includes(urlSegment)) {
+                                isCachable = true;
+                                break;
+                            }
                         }
                     }
                     if (isCachable) {
+                        //Case: A cached response doesn't exist and needs to be cached
+                        //Request, cache and respond with required resource
+                        return fetch(event.request).then((fetchedResponse) => {
+                            console.log("Caching: " + event.request.url);
+                            cache.put(event.request, fetchedResponse.clone());
+                            return fetchedResponse;
+                        }).catch((error) => {
+                            return new Response(JSON.stringify({
+                                status: false,
+                                error: { title: "Aw! snap", titleDescription: "Contact your system administrator", message: "We couldn't fetch some required data from the server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, technicalMessage: "Fetch failure from service worker" }
+                            }));
+                        });
+                    } else {
                         //Case: A cached response doesn't exist and no need of caching
                         //Request and respond with required resource without caching
+                        console.log("Fetching: " + event.request.url);
                         return fetch(event.request).catch((error) => {
-                            return new Response(
-                                JSON.stringify({
-                                    status: false,
-                                    error: { title: "Aw! snap", titleDescription: "Contact your system administrator", message: "We couldn't fetch some required data from the server. The most likely cause may be a network failure", technicalMessage: "Fetch failure from service worker" }
-                                })
-                            );
+                            return new Response(JSON.stringify({
+                                status: false,
+                                error: { title: "Aw! snap", titleDescription: "Contact your system administrator", message: "We couldn't fetch some required data from the server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, technicalMessage: "Fetch failure from service worker" }
+                            }));
                         });
                     }
-                    //Case: A cached response doesn't exist and needs to be cached
-                    //Request, cache and respond with required resource
-                    return fetch(event.request).then((fetchedResponse) => {
-                        console.log("Caching: " + event.request.url);
-                        cache.put(event.request, fetchedResponse.clone());
-                        return fetchedResponse;
-                    }).catch((error) => {
-                        return new Response(
-                            JSON.stringify({
-                                status: false,
-                                error: { title: "Aw! snap", titleDescription: "Contact your system administrator", message: "We couldn't fetch some required data from the server. The most likely cause may be a network failure", technicalMessage: "Fetch failure from service worker" }
-                            })
-                        );
-                    });
                 }
             });
         })
