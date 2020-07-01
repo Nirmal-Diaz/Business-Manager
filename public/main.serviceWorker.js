@@ -28,7 +28,7 @@ self.addEventListener("fetch", (event) => {
             return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
                     //Case: A cached response already exists
-                    console.log("Serving: " + event.request.url);
+                    // console.log("Serving: " + event.request.url);
                     return cachedResponse;
                 } else {
                     //Case: A cached response doesn't exist
@@ -45,7 +45,7 @@ self.addEventListener("fetch", (event) => {
                         //Case: A cached response doesn't exist and needs to be cached
                         //Request, cache and respond with required resource
                         return fetch(event.request).then((fetchedResponse) => {
-                            console.log("Caching: " + event.request.url);
+                            // console.log("Caching: " + event.request.url);
                             cache.put(event.request, fetchedResponse.clone());
                             return fetchedResponse;
                         }).catch((error) => {
@@ -57,7 +57,7 @@ self.addEventListener("fetch", (event) => {
                     } else {
                         //Case: A cached response doesn't exist and no need of caching
                         //Request and respond with required resource without caching
-                        console.log("Fetching: " + event.request.url);
+                        // console.log("Fetching: " + event.request.url);
                         return fetch(event.request).catch((error) => {
                             return new Response(JSON.stringify({
                                 status: false,
