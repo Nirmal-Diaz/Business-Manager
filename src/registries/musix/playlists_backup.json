@@ -1336,12 +1336,6 @@
                 "lyricsFileName": "Alone (Part 2) - Alan Walker.json"
             },
             {
-                "path": "English Audios/Now You're Gone.mp3",
-                "artist": "Basshunter Feat. DJ Mental Theo's Bassheadz",
-                "title": "Now You're Gone",
-                "lyricsFileName": "Now You're Gone - Basshunter.json"
-            },
-            {
                 "path": "English Audios/Levitate.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Levitate",
@@ -1658,6 +1652,12 @@
                 "artist": "Pitbull",
                 "title": "Rain Over Me",
                 "lyricsURI": null
+            },
+            {
+                "path": "English Audios/Now You're Gone.mp3",
+                "artist": "Basshunter Feat. DJ Mental Theo's Bassheadz",
+                "title": "Now You're Gone",
+                "lyricsFileName": "Now You're Gone - Basshunter.json"
             },
             {
                 "path": "English Audios/Rise Up.mp3",

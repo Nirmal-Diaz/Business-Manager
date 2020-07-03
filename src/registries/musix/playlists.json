@@ -178,6 +178,12 @@
                 "lyricsURI": null
             },
             {
+                "path": "English Audios/Last To Know.mp3",
+                "artist": "Three Days Grace",
+                "title": "Last To Know",
+                "lyricsFileName": "Last To Know - Three Days Grace.json"
+            },
+            {
                 "path": "English Audios/Beautiful In White.mp3",
                 "artist": "Westlife",
                 "title": "Beautiful in White",
@@ -2110,6 +2116,12 @@
                 "lyricsFileName": "By Myself - Linkin Park.json"
             },
             {
+                "path": "English Audios/Animal I Have Become.mp3",
+                "artist": "Three Days Grace",
+                "title": "Animal I Have Become",
+                "lyricsFileName": "Animal I Have Become - Three Days Grace.json"
+            },
+            {
                 "path": "English Audios/Castaway.mp3",
                 "artist": "Barns Courtney",
                 "title": "Castaway",
@@ -2122,12 +2134,6 @@
                 "lyricsFileName": "Immortals - Fall Out Boys.json"
             },
             {
-                "path": "English Audios/Holding On To Smoke.mp3",
-                "artist": "Motionless In White",
-                "title": "Holding on to Smoke",
-                "lyricsURI": null
-            },
-            {
                 "path": "English Audios/Don't Leave Me Dry.mp3",
                 "artist": "Nestor",
                 "title": "Don't Leave Me Dry",
@@ -2138,12 +2144,6 @@
                 "artist": "Linkin Park",
                 "title": "Don't Stay",
                 "lyricsFileName": "Don't Stay - Linkin Park.json"
-            },
-            {
-                "path": "English Audios/Catharsis.mp3",
-                "artist": "Motionless In White",
-                "title": "Catharsis",
-                "lyricsURI": null
             },
             {
                 "path": "English Audios/Forgotten.mp3",
@@ -2210,12 +2210,6 @@
                 "artist": "Nestor",
                 "title": "One Step Closer",
                 "lyricsURI": null
-            },
-            {
-                "path": "English Audios/Last To Know.mp3",
-                "artist": "Three Days Grace",
-                "title": "Last To Know",
-                "lyricsFileName": "Last To Know - Three Days Grace.json"
             },
             {
                 "path": "English Audios/One Step Closer.mp3",
@@ -2320,16 +2314,16 @@
                 "lyricsFileName": "137 - Jay Ray.json"
             },
             {
-                "path": "English Audios/Animal I Have Become.mp3",
-                "artist": "Three Days Grace",
-                "title": "Animal I Have Become",
-                "lyricsFileName": "Animal I Have Become - Three Days Grace.json"
-            },
-            {
                 "path": "English Audios/Breaking The Habit.mp3",
                 "artist": "Linkin Park",
                 "title": "Breaking the Habit",
                 "lyricsFileName": "Breaking The Habit - Linkin Park.json"
+            },
+            {
+                "path": "English Audios/Holding On To Smoke.mp3",
+                "artist": "Motionless In White",
+                "title": "Holding on to Smoke",
+                "lyricsURI": null
             },
             {
                 "path": "English Audios/Burn It Down.mp3",
@@ -2395,6 +2389,12 @@
                 "path": "English Audios/In The End (2).mp3",
                 "artist": "Black Veil Brides",
                 "title": "In the End",
+                "lyricsURI": null
+            },
+            {
+                "path": "English Audios/Catharsis.mp3",
+                "artist": "Motionless In White",
+                "title": "Catharsis",
                 "lyricsURI": null
             },
             {
