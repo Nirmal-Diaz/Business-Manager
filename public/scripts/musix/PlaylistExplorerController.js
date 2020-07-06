@@ -101,4 +101,26 @@ export class PlaylistExplorerController {
 
         return trackView;
     }
+
+    search(keyword) {
+        keyword = keyword.toLowerCase();
+        let found = false;
+
+        const panelDivisionSectorItems = document.getElementsByClassName("panelDivisionSectorItem");
+        for (let i = 0; i < panelDivisionSectorItems.length; i++) {
+            if (panelDivisionSectorItems[i].textContent.toLowerCase().includes(keyword)) {
+                panelDivisionSectorItems[i].scrollIntoView();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            if (window.frameElement) {
+                window.parent.shellInterface.throwAlert("Oops! We found nothing", "Try words instead of phrases", "We couldn't find a track matching your keyword. Try again with a different keyword", null, "OK", null);
+            } else {
+                alert("We couldn't find a track matching your keyword. Try again with a different keyword");
+            }
+        }
+    }
 }

@@ -20,6 +20,7 @@
         import { NowPlayingController } from "/musix/scripts/musix/NowPlayingController.js";
         import { PlaylistExplorerController } from "/musix/scripts/musix/PlaylistExplorerController.js";
         import { PlaylistController } from "/musix/scripts/musix/PlaylistController.js";
+        import { Utility } from "/musix/scripts/musix/Utility.js";
 
         window.addEventListener("contextmenu", (event) => {
             //Prevent contextMenu
@@ -83,6 +84,17 @@
                 });
                 this.retrieveControls[2].addEventListener("click", (event) => {
                     this.nowPlayingController.skipTrack("next");
+                });
+                this.retrieveControls[3].addEventListener("click", () => {
+                    Utility.toggleButtonGlyph(this.retrieveControls[3]);
+                });
+                this.retrieveControls[3].children[1].addEventListener("keypress", (event) => {
+                    if (event.key === 'Enter') {
+                        Utility.toggleButtonGlyph(this.retrieveControls[3]);
+                        if (event.currentTarget.value !== "") {
+                            this.playlistExplorerController.search(event.currentTarget.value);
+                        }
+                    }
                 });
 
                 this.updateControls[0].addEventListener("click", (event) => {
@@ -272,6 +284,12 @@
         </button>
         <button class="buttonGlyph" title="Next track">
             <img src="/images/musix/glyph_skipNext.png" />
+        </button>
+        <button class="buttonGlyph" title="Search for track">
+            <img src="/images/musix/glyph_search.png" />
+            <input type="text" placeholder="TYPE A KEYWORD"
+                style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;"
+                value="" />
         </button>
     </div>
     <div id="updateControlsContainer">
