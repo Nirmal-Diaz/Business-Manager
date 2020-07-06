@@ -39,7 +39,7 @@
                     if (event.key === 'Enter') {
                         PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All employees", "Double tap to view and update");
+                            this.searchItems("", "All employees", "Select an item to view, update or delete");
                         } else {
                             this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
                         }
@@ -84,7 +84,7 @@
                     }
                 });
 
-                this.searchItems("", "Employees", "Double tap to view and update");
+                this.searchItems("", "Employees", "Select an item to view, update or delete");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -109,7 +109,6 @@
                             for (const item of response.data) {
                                 const iconURL = `../../../images/main/icon_user_default.png`;
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.preferredName, [item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name])();
-                                cardDivisionSectorItem.addEventListener("dblclick", this.updateItem.bind(this, cardDivisionSectorItem));
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }

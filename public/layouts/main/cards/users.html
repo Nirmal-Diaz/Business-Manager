@@ -43,7 +43,7 @@
                     if (event.key === 'Enter') {
                         PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All users", "Double tap to view and update");
+                            this.searchItems("", "All users", "Select an item to view, update or delete");
                         } else {
                             this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
                         }
@@ -91,7 +91,7 @@
                 });
 
                 //Initially load every user without specifying a keyword
-                this.searchItems("", "Users", "Double tap to view and update");
+                this.searchItems("", "Users", "Select an item to view, update or delete");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -120,7 +120,6 @@
                                 const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.userPreference.avatar.data)]));
                                 //NOTE: Bounded method is immediately invoked
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.username, [item.role.name])();
-                                cardDivisionSectorItem.addEventListener("dblclick", this.updateItem.bind(this, cardDivisionSectorItem));
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
