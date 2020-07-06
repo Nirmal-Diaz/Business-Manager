@@ -153,6 +153,22 @@ export class PlaylistController {
             const quickPlaylist = PlaylistController.createNewPlaylist("Quick Playlist", track);
             const quickPlaylistIndex = this.appendPlaylist(quickPlaylist);
             localStorage.setItem("quickPlaylistIndex", quickPlaylistIndex.toString());
+            //Ask to begin playback of quickPlaylist
+            if (window.frameElement) {
+                window.parent.shellInterface.throwAlert("Got a question", "Do you want to start QuickPlaylist now?", "Tap YES if you want to start playback of the QuickPlaylist immediately. Otherwise tap on NO", null, "YES", "NO").then(() => {
+                    this.cardInterface.getNowPlayingController().setPlaylist(quickPlaylist);
+                    this.cardInterface.getNowPlayingController().loadTrackAt(0);
+                    this.cardInterface.getNowPlayingController().togglePlay();
+                }, () => {
+                    //Do nothing here
+                });
+            } else {
+                if (confirm("Do you want to start playback of QuickPlaylist now?")) {
+                    this.cardInterface.getNowPlayingController().setPlaylist(quickPlaylist);
+                    this.cardInterface.getNowPlayingController().loadTrackAt(0);
+                    this.cardInterface.getNowPlayingController().togglePlay();
+                };
+            }
         } else {
             //Case: There is a quick playlist created
             const quickPlaylistIndex = parseInt(localStorage.getItem("quickPlaylistIndex"));
