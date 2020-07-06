@@ -13,7 +13,7 @@
     <!-- This script tag will unite the module and global scope -->
     <script>
         //Initialize a new socket with the server
-        window.socket = io();
+        window.socket = io({transports: ["websocket"], upgrade: false});
     </script>
     <script type="module">
         //@ts-check
