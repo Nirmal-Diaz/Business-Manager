@@ -235,11 +235,11 @@ body {
     background-color: var(--buttonGlyphBackgroundColor);
 }
 
-.buttonGlyph.revealed > span {
+.buttonGlyph.revealed > img {
     display: none;
 }
 
-.buttonGlyph.revealed > input {
+.buttonGlyph > input {
     outline: none;
 }
 

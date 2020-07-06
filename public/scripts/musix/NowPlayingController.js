@@ -57,6 +57,7 @@ export class NowPlayingController {
         });
         //Add onplay to mediaController for displaying current state on navigationControl
         this.mediaController.addEventListener("play", () => {
+            this.cardInterface.retrieveControls[1].firstElementChild.src = "/images/musix/glyph_pause.png";
             this.cardInterface.getNavigationControl().style.boxShadow = "0 0 10px black, inset 0 0 10px white";
         });
         //Add ontimeupdate to mediaController for updating state and UI
@@ -69,6 +70,7 @@ export class NowPlayingController {
         });
         //Add onplay to mediaController for displaying current state on navigationControl
         this.mediaController.addEventListener("pause", () => {
+            this.cardInterface.retrieveControls[1].firstElementChild.src = "/images/musix/glyph_play.png";
             this.cardInterface.getNavigationControl().style.boxShadow = "0 0 10px black";
         });
         //Add onended to mediaController for playing next track
