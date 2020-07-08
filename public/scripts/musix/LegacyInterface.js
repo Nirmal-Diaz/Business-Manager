@@ -4,7 +4,7 @@ var currentTrackIndex = 0;
 var mediaController = null;
 
 function main() {
-    window.socket = io();
+    window.socket = io("/musix");
 
     mediaController = document.getElementById("mediaController");
     mediaController.addEventListener("ended", function () {
@@ -44,7 +44,7 @@ function setPlaylist(playlist) {
 
 function loadTrackAt(trackIndex) {
     //NOTE: Because the current directory is http://hostname/layouts/, going to parent directory is needed to load audio files
-    mediaController.src = "../" + currentPlaylist.tracks[trackIndex].path;
+    mediaController.src = "/musix/" + currentPlaylist.tracks[trackIndex].path;
     currentTrackIndex = trackIndex;
     document.getElementById("trackDisplay").textContent = "TRACK: " + currentPlaylist.tracks[trackIndex].title;
 }
