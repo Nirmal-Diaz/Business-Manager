@@ -3,9 +3,9 @@ const cacheName = "musixV1";
 const cachableURLSegments = [
     "/fonts",
     "/images/musix",
-    // "/layouts/musix",
-    // "/stylesheets/musix",
-    // "/scripts/musix",
+    "/layouts/musix",
+    "/stylesheets/musix",
+    "/scripts/musix",
     "/socket.io/socket.io.js",
     "/lyrics"
 ];
