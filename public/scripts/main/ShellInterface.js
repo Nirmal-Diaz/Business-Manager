@@ -4,6 +4,7 @@ import { LogInScreenController } from "./LogInScreenController.js";
 
 export class ShellInterface {
     currentScreenController = null;
+    styleFileURL = null;
 
     alertOverlayView = null;
     alertTitleContainer = null;
@@ -67,6 +68,15 @@ export class ShellInterface {
 
     getView() {
         return document.body;
+    }
+
+    getStyleFileURL() {
+        return this.styleFileURL;
+    }
+
+    setStyle(styleFileURL) {
+        this.styleFileURL = styleFileURL;
+        document.getElementsByTagName("link")[0].href = this.styleFileURL;
     }
 
     getAllFrames() {
