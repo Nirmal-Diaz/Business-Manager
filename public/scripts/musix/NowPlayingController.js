@@ -105,9 +105,6 @@ export class NowPlayingController {
     toggleRemotePlay() {
         if (this.remotePlay) {
             this.remotePlay = false;
-            this.cardInterface.getWebSocket().emit("broadcast-event", {
-                eventName: "remote-disable"
-            });
             if (window.frameElement) {
                 window.parent.shellInterface.throwAlert("RemotePlay is off", "You no longer control other instances", "From now on every action you take on Musix won't affect other instances. YOu can control your instance", null, "OK", null);
             } else {
@@ -116,7 +113,7 @@ export class NowPlayingController {
         } else {
             this.remotePlay = true;
             this.cardInterface.getWebSocket().emit("broadcast-event", {
-                eventName: "remote-enable"
+                eventName: "remote-disable"
             });
             if (window.frameElement) {
                 window.parent.shellInterface.throwAlert("RemotePlay is on", "You are in control of other instances", "From now on every action you take on Musix won't affect the current instance. Instead they are reflected throughout all other instances which are connected to the web socket server\n\nAll other clients are expected to interact with the DOM before RemotePlay can work properly", null, "OK", null);
@@ -124,6 +121,10 @@ export class NowPlayingController {
                 alert("RemotePlay is enabled. All other clients are expected to interact with the DOM before RemotePlay can work properly");
             }
         }
+    }
+
+    setRemotePlay(remotePlay) {
+        this.remotePlay = remotePlay;
     }
 
     setVolume(volume) {
