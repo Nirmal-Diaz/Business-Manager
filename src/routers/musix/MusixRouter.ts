@@ -29,7 +29,11 @@ musixRouter: Route Handlers Setup
 */
 musixRouter.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
+        if (req.query?.interface === "legacy") {
+            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index_legacy.html"));
+        } else {
+            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
+        }
     });
 
 //EXPRESS ROUTING: NON-USER PATHS
