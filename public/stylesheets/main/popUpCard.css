@@ -40,3 +40,55 @@
 
     box-shadow: 0 5px 20px 0 var(--formControlsContainerBoxShadow);
 }
+
+@media print {
+    * {
+        border: thin solid red;
+    }
+
+    .popUpDivision {
+        padding: 0;
+    }
+
+    .formTitleContainer, .formControlsContainer, .titleContainer+ul {
+        display: none;
+    }
+
+    .formsContainer {
+        padding: 0;
+    }
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+
+        width: 100%;
+    }
+
+    .titleContainer {
+        width: 25%;
+    }
+
+    .title {
+        height: 100%;
+
+        font-size: 16px;
+    }
+
+    .inputContainer {
+        margin: 0;
+        width: 75%;
+    }
+
+    .inputContainer.dropDown::after {
+        display: none;
+    }
+    
+    .input {
+        margin: 0;
+        padding: 0;
+
+        border: none;
+    }
+
+}
