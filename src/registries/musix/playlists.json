@@ -3370,9 +3370,15 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Teri Deewani (Remake).mp3",
+                "path": "Hindi Audios/Teri Deewani.mp3",
                 "artist": "Sanam Puri",
                 "title": "Teri Deewani (Remake)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Mere Rashke Qamar.mp3",
+                "artist": "Junaid Asghar",
+                "title": "Mere Rashke Qamar",
                 "lyricsFileName": null
             },
             {
@@ -3406,13 +3412,13 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Aadat (Remix).mp3",
+                "path": "Hindi Audios/Aadat.mp3",
                 "artist": "Atif Aslam",
                 "title": "Aadat (Remix)",
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Aye Khuda (Remix).mp3",
+                "path": "Hindi Audios/Aye Khuda.mp3",
                 "artist": "Kshitij Tarey/Saim Bhat/Mithoon",
                 "title": "Aye Khuda (Remix)",
                 "lyricsFileName": null
@@ -3454,7 +3460,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Teri Yaadon (Remix).mp3",
+                "path": "Hindi Audios/Teri Yaadon Mein.mp3",
                 "artist": "KK & Shreya Ghoshal",
                 "title": "Teri Yaadon Mein (Remix)",
                 "lyricsFileName": null
@@ -3472,7 +3478,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Haseeno Ka Deewana (Remake).mp3",
+                "path": "Hindi Audios/Haseeno Ka Deewana.mp3",
                 "artist": "Raftaar/Payal Dev",
                 "title": "Haseeno Ka Deewana (Remake)",
                 "lyricsFileName": null
@@ -3483,12 +3489,6 @@
         "name": "Mashup (Hindi)",
         "themeColor": "limegreen",
         "tracks": [
-            {
-                "path": "Hindi Audios/Mere Rashke Qamar.mp3",
-                "artist": "Junaid Asghar",
-                "title": "Mere Rashke Qamar",
-                "lyricsFileName": null
-            },
             {
                 "path": "Hindi Audios/Dheevara.mp3",
                 "artist": "Deepu & Ramya Behara",
@@ -3772,6 +3772,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Supun Sihine Nidan Puthune.mp3",
+                "artist": "Sangeeth Wijesooriya",
+                "title": "Supun Sihine Nidan Puthune",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Ran Dewolin.mp3",
                 "artist": "Mihindu Ariyarathne",
                 "title": "Ran Dewolin",
@@ -4024,6 +4030,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sonduriye Oya Nil Dase.mp3",
+                "artist": "Sangeeth Wijesooriya",
+                "title": "Sonduriye Oya Nil Dase",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Lasowin.mp3",
                 "artist": "Eranga Jayawardhana/Gayani",
                 "title": "Lasowin",
@@ -4228,6 +4240,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Perada Dathe Weli.mp3",
+                "artist": "Wijaya Bandara Welituduwa",
+                "title": "Perada Dathe Weli",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
                 "artist": "Dulaj Danushka",
                 "title": "Apa Hamuweema Wenweema",
@@ -4246,6 +4264,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Epa Thawath Oba.mp3",
+                "artist": "Ruchini Wijesundera",
+                "title": "Epa Thawath Oba",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Dineka Aayeth Lanwela.mp3",
                 "artist": "Dimanka Wellalage",
                 "title": "Dineka Aayeth Lanwela",
@@ -4261,6 +4285,18 @@
                 "path": "Sinhala Audios/Hamuwuna.mp3",
                 "artist": "Shalitha/Mahesh/Sanka/Thilina",
                 "title": "Hamuwuna",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Samanala Wewa Purawannata.mp3",
+                "artist": "Karunarathna Divulgane",
+                "title": "Samanala Wawa Purawannata",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sithuvili Pura.mp3",
+                "artist": "Chitral Somapala",
+                "title": "Sithuvili Pura",
                 "lyricsFileName": null
             },
             {
@@ -4507,6 +4543,12 @@
                 "path": "Sinhala Audios/Katharaka Thaniwee.mp3",
                 "artist": "Samith R",
                 "title": "Katharaka Thaniwee",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Aadara Priya Landune.mp3",
+                "artist": "Felix Anton/Ayomi Perera",
+                "title": "Aadara Priya Landune",
                 "lyricsFileName": null
             },
             {
