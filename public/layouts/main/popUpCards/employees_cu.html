@@ -46,6 +46,10 @@
                     this.form.resetInputs();
                 });
 
+                document.getElementById("printButton").addEventListener("click", () => {
+                    print();
+                });
+
                 document.getElementById("nicNumber").addEventListener("keyup", (event) => {
                     let nicNumber = event.target.value;
                     if (/^\d{9}([VX]|\d{3})$/.test(nicNumber)) {
@@ -248,7 +252,7 @@
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
-            <button id="printButton" onclick="window.print();" class="buttonText link">PRINT</button>
+            <button id="printButton" class="buttonText link">PRINT</button>
             <button id="resetButton" class="buttonText link">RESET</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>

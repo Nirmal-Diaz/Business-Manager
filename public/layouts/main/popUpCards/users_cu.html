@@ -47,6 +47,10 @@
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.form.resetInputs();
                 });
+
+                document.getElementById("printButton").addEventListener("click", () => {
+                    print();
+                });
             }
 
             initInputs() {
@@ -104,7 +108,6 @@
         <div class="formsContainer">
             <form>
                 <div class="titleContainer">
-                    <div class="titleDescription">Create</div>
                     <h1 class="title">Username</h1>
                 </div>
                 <ul>
@@ -120,7 +123,9 @@
                 <div class="titleContainer">
                     <h1 class="title">Employee Code</h1>
                 </div>
-                <p>Every user has a corresponding employee</p>
+                <ul>
+                    <li>Every user has a corresponding employee</li>
+                </ul>
                 <div class="inputContainer">
                     <input id="employeeCode" type="text" class="input textInput" placeholder="eg: PCB1125">
                 </div>
@@ -128,8 +133,10 @@
                 <div class="titleContainer">
                     <h1 class="title">Role</h1>
                 </div>
-                <p>The role determines a user's permissions on each module</p>
-                <p>If the role you want isn't listed below, go and add it in before proceeding</p>
+                <ul>
+                    <li>The role determines a user's permissions on each module</li>
+                    <li>If the role you want isn't listed below, go and add it in before proceeding</li>
+                </ul>
                 <div class="inputContainer dropDown">
                     <select id="roleId" class="input dropDownInput">
 
@@ -141,6 +148,7 @@
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
+            <button id="printButton" class="buttonText link">PRINT</button>
             <button id="resetButton" class="buttonText link">RESET</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
