@@ -122,6 +122,37 @@ export class CardComponent {
         cardDivisionSectorItem.appendChild(itemDetails);
         return cardDivisionSectorItem;
     }
+
+    static createTable(fields) {
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const tbody = document.createElement("tbody");
+        
+        const headRow = document.createElement("tr");
+        for (const field of fields) {
+            const th = document.createElement("th");
+            th.textContent = field;
+            headRow.appendChild(th);
+        }
+
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        return table;
+    }
+
+    static createTableRow(fieldContent) {
+        const bodyRow = document.createElement("tr");
+
+        for (let i = 0; i < fieldContent.length; i++) {
+            const td = document.createElement("td");
+            td.textContent = fieldContent[i];
+            bodyRow.appendChild(td);
+        }
+
+        return bodyRow;
+    }
 }
 
 export class FormUtil {
