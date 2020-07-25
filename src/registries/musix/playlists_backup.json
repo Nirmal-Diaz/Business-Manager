@@ -148,12 +148,6 @@
         "themeColor": "yellow",
         "tracks": [
             {
-                "path": "English Audios/Blackbirds.mp3",
-                "artist": "Linkin Park",
-                "title": "Blackbirds",
-                "lyricsFileName": "Blackbirds - Linkin Park.json"
-            },
-            {
                 "path": "English Audios/A Thousand Years.mp3",
                 "artist": "Christina Perri",
                 "title": "A Thousand Years",
@@ -172,22 +166,10 @@
                 "lyricsFileName": "One More Light - Linkin Park.json"
             },
             {
-                "path": "English Audios/Leave Out All The Rest.mp3",
-                "artist": "Linkin Park",
-                "title": "Leave Out All the Rest",
-                "lyricsFileName": "Leave Out All The Rest - Linkin Park.json"
-            },
-            {
                 "path": "English Audios/Another Day In Paradise.mp3",
                 "artist": "Phil Collins",
                 "title": "Another Day In Paradise",
                 "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Last To Know.mp3",
-                "artist": "Three Days Grace",
-                "title": "Last To Know",
-                "lyricsFileName": "Last To Know - Three Days Grace.json"
             },
             {
                 "path": "English Audios/Beautiful In White.mp3",
@@ -202,6 +184,12 @@
                 "lyricsFileName": "Breathless - Shayne Ward.json"
             },
             {
+                "path": "English Audios/Blue Night.mp3",
+                "artist": "Michael Learns To Rock",
+                "title": "Blue Night",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Father To A Son.mp3",
                 "artist": "Nestor",
                 "title": "Father to a Son",
@@ -214,12 +202,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Burning In The Skies.mp3",
-                "artist": "Linkin Park",
-                "title": "Burning in the Skies",
-                "lyricsFileName": "Burning In The Skies - Linkin Park.json"
-            },
-            {
                 "path": "English Audios/Careless Whisper.mp3",
                 "artist": "George Michael",
                 "title": "Careless Whisper",
@@ -230,12 +212,6 @@
                 "artist": "Linkin Park",
                 "title": "Not Alone",
                 "lyricsFileName": "Not Alone - Linkin Park.json"
-            },
-            {
-                "path": "English Audios/Iridescent.mp3",
-                "artist": "Linkin Park",
-                "title": "Iridescent",
-                "lyricsFileName": "Iridescent - Linkin Park.json"
             },
             {
                 "path": "English Audios/Everything I Do.mp3",
@@ -262,10 +238,76 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/I Have A Dream.mp3",
+                "artist": "Westlife",
+                "title": "I Have a Dream",
+                "lyricsFileName": "I Have A Dream - Westlife.json"
+            },
+            {
+                "path": "English Audios/I Miss You.mp3",
+                "artist": "Westlife",
+                "title": "Miss You",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Hallelujah.mp3",
                 "artist": "Rufus Wainwright",
                 "title": "Hallelujah",
                 "lyricsFileName": "Hallelujah - Rufus Wainwright.json"
+            },
+            {
+                "path": "English Audios/I Knew I Loved You.mp3",
+                "artist": "Savage Garden",
+                "title": "I Knew I Loved You",
+                "lyricsFileName": "I Knew I Loved You - Savage Garden.json"
+            },
+            {
+                "path": "English Audios/Lovely Day.mp3",
+                "artist": "Bill Withers",
+                "title": "Lovely Day",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/You're My No. 1.mp3",
+                "artist": "Enrique Iglesias",
+                "title": "You're My #1",
+                "lyricsFileName": "You're My No. 1 - Enrique Iglesias.json"
+            },
+            {
+                "path": "English Audios/No Promises.mp3",
+                "artist": "Shayne Ward",
+                "title": "No Promises",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/You Took My Heart Away.mp3",
+                "artist": "Michael Learns To Rock",
+                "title": "You Took My Heart Away",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Sealed With A Kiss.mp3",
+                "artist": "Jason Donovan",
+                "title": "Sealed With A Kiss",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/La Isla Bonita.mp3",
+                "artist": "Madonna",
+                "title": "La Isla Bonita",
+                "lyricsFileName": "La Isla Bonita - Madona.json"
+            },
+            {
+                "path": "English Audios/Paradise.mp3",
+                "artist": "Coldplay",
+                "title": "Paradise",
+                "lyricsFileName": "Paradise - Cold Play.json"
+            },
+            {
+                "path": "English Audios/Will You Be There.mp3",
+                "artist": "Michael Jackson",
+                "title": "Will You Be There [Reprise]",
+                "lyricsFileName": null
             },
             {
                 "path": "English Audios/Skin To Bone.mp3",
@@ -274,16 +316,40 @@
                 "lyricsFileName": "Skin To Bone - Linkin Park.json"
             },
             {
+                "path": "English Audios/Nothing's Gonna Change My Love For You.mp3",
+                "artist": "Westlife",
+                "title": "Nothing's Going To Change My Love For You",
+                "lyricsFileName": "Nothing's Gonna Change My Love For You - Westlife.json"
+            },
+            {
+                "path": "English Audios/Dancing Queen.mp3",
+                "artist": "A*Teens",
+                "title": "Dancing Queen",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/The Actor.mp3",
+                "artist": "Michael Learns To Rock",
+                "title": "The Actor",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Damaged.mp3",
+                "artist": "Shayne Ward",
+                "title": "Damaged",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Space Oddity.mp3",
+                "artist": "David Bowie",
+                "title": "Space Oddity",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Hazard.mp3",
                 "artist": "Richard Marx",
                 "title": "Hazard",
                 "lyricsFileName": "Hazard - Richard Marx.json"
-            },
-            {
-                "path": "English Audios/No Roads Left.mp3",
-                "artist": "Linkin Park",
-                "title": "No Roads Left",
-                "lyricsFileName": "No Roads Left - Linkin Park.json"
             },
             {
                 "path": "English Audios/I Want to Spend My Lifetime Loving You.mp3",
@@ -304,12 +370,6 @@
                 "lyricsFileName": "I'm Letting Go - Josh Woodward.json"
             },
             {
-                "path": "English Audios/In Pieces.mp3",
-                "artist": "Linkin Park",
-                "title": "In Pieces",
-                "lyricsFileName": "In Pieces - Linkin Park.json"
-            },
-            {
                 "path": "English Audios/Jar Of Hearts.mp3",
                 "artist": "Christina Perri",
                 "title": "Jar Of Hearts",
@@ -320,12 +380,6 @@
                 "artist": "Marc Anthony",
                 "title": "My Baby You",
                 "lyricsFileName": "My Baby You - Mark Anthony.json"
-            },
-            {
-                "path": "English Audios/Powerless.mp3",
-                "artist": "Linkin Park",
-                "title": "Powerless",
-                "lyricsFileName": "Powerless - Linkin Park.json"
             },
             {
                 "path": "English Audios/My Heart Will Go On.mp3",
@@ -430,12 +484,6 @@
                 "lyricsFileName": "Soledad - Westlife.json"
             },
             {
-                "path": "English Audios/Space Oddity.mp3",
-                "artist": "David Bowie",
-                "title": "Space Oddity",
-                "lyricsFileName": null
-            },
-            {
                 "path": "English Audios/The Final Countdown.mp3",
                 "artist": "Europe",
                 "title": "The Final Countdown",
@@ -446,12 +494,6 @@
                 "artist": "Michael Jackson",
                 "title": "The Lost Children",
                 "lyricsFileName": "The Lost Children - Michael Jackson.json"
-            },
-            {
-                "path": "English Audios/The World I Knew.mp3",
-                "artist": "Jordin Sparks",
-                "title": "The World I Knew",
-                "lyricsFileName": null
             },
             {
                 "path": "English Audios/This Is It.mp3",
@@ -502,6 +544,12 @@
         "themeColor": "orange",
         "tracks": [
             {
+                "path": "English Audios/Blackbirds.mp3",
+                "artist": "Linkin Park",
+                "title": "Blackbirds",
+                "lyricsFileName": "Blackbirds - Linkin Park.json"
+            },
+            {
                 "path": "English Audios/We Are The Champions.mp3",
                 "artist": "Queen",
                 "title": "We Are The Champions",
@@ -520,16 +568,22 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Leave Out All The Rest.mp3",
+                "artist": "Linkin Park",
+                "title": "Leave Out All the Rest",
+                "lyricsFileName": "Leave Out All The Rest - Linkin Park.json"
+            },
+            {
                 "path": "English Audios/Black Or White.mp3",
                 "artist": "Michael Jackson",
                 "title": "Black Or White",
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Blue Night.mp3",
-                "artist": "Michael Learns To Rock",
-                "title": "Blue Night",
-                "lyricsFileName": null
+                "path": "English Audios/Last To Know.mp3",
+                "artist": "Three Days Grace",
+                "title": "Last To Know",
+                "lyricsFileName": "Last To Know - Three Days Grace.json"
             },
             {
                 "path": "English Audios/California Calling.mp3",
@@ -556,21 +610,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Burning In The Skies.mp3",
+                "artist": "Linkin Park",
+                "title": "Burning in the Skies",
+                "lyricsFileName": "Burning In The Skies - Linkin Park.json"
+            },
+            {
+                "path": "English Audios/Iridescent.mp3",
+                "artist": "Linkin Park",
+                "title": "Iridescent",
+                "lyricsFileName": "Iridescent - Linkin Park.json"
+            },
+            {
                 "path": "English Audios/Come On Over.mp3",
                 "artist": "Toni Braxton",
                 "title": "Come on Over",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Damaged.mp3",
-                "artist": "Shayne Ward",
-                "title": "Damaged",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Dancing Queen.mp3",
-                "artist": "A*Teens",
-                "title": "Dancing Queen",
                 "lyricsFileName": null
             },
             {
@@ -580,87 +634,33 @@
                 "lyricsFileName": "Hotel California - Eagal.json"
             },
             {
-                "path": "English Audios/I Have A Dream.mp3",
-                "artist": "Westlife",
-                "title": "I Have a Dream",
-                "lyricsFileName": "I Have A Dream - Westlife.json"
+                "path": "English Audios/No Roads Left.mp3",
+                "artist": "Linkin Park",
+                "title": "No Roads Left",
+                "lyricsFileName": "No Roads Left - Linkin Park.json"
             },
             {
-                "path": "English Audios/I Knew I Loved You.mp3",
-                "artist": "Savage Garden",
-                "title": "I Knew I Loved You",
-                "lyricsFileName": "I Knew I Loved You - Savage Garden.json"
+                "path": "English Audios/In Pieces.mp3",
+                "artist": "Linkin Park",
+                "title": "In Pieces",
+                "lyricsFileName": "In Pieces - Linkin Park.json"
             },
             {
-                "path": "English Audios/I Miss You.mp3",
-                "artist": "Westlife",
-                "title": "Miss You",
+                "path": "English Audios/Powerless.mp3",
+                "artist": "Linkin Park",
+                "title": "Powerless",
+                "lyricsFileName": "Powerless - Linkin Park.json"
+            },
+            {
+                "path": "English Audios/The World I Knew.mp3",
+                "artist": "Jordin Sparks",
+                "title": "The World I Knew",
                 "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/La Isla Bonita.mp3",
-                "artist": "Madonna",
-                "title": "La Isla Bonita",
-                "lyricsFileName": "La Isla Bonita - Madona.json"
             },
             {
                 "path": "English Audios/Last Christmas.mp3",
                 "artist": "Wham!",
                 "title": "Last Christmas",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Lovely Day.mp3",
-                "artist": "Bill Withers",
-                "title": "Lovely Day",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/No Promises.mp3",
-                "artist": "Shayne Ward",
-                "title": "No Promises",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Nothing's Gonna Change My Love For You.mp3",
-                "artist": "Westlife",
-                "title": "Nothing's Going To Change My Love For You",
-                "lyricsFileName": "Nothing's Gonna Change My Love For You - Westlife.json"
-            },
-            {
-                "path": "English Audios/Paradise.mp3",
-                "artist": "Coldplay",
-                "title": "Paradise",
-                "lyricsFileName": "Paradise - Cold Play.json"
-            },
-            {
-                "path": "English Audios/Sealed With A Kiss.mp3",
-                "artist": "Jason Donovan",
-                "title": "Sealed With A Kiss",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/The Actor.mp3",
-                "artist": "Michael Learns To Rock",
-                "title": "The Actor",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Will You Be There.mp3",
-                "artist": "Michael Jackson",
-                "title": "Will You Be There [Reprise]",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/You're My No. 1.mp3",
-                "artist": "Enrique Iglesias",
-                "title": "You're My #1",
-                "lyricsFileName": "You're My No. 1 - Enrique Iglesias.json"
-            },
-            {
-                "path": "English Audios/You Took My Heart Away.mp3",
-                "artist": "Michael Learns To Rock",
-                "title": "You Took My Heart Away",
                 "lyricsFileName": null
             },
             {
@@ -3370,9 +3370,15 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Teri Deewani (Remake).mp3",
+                "path": "Hindi Audios/Teri Deewani.mp3",
                 "artist": "Sanam Puri",
                 "title": "Teri Deewani (Remake)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Mere Rashke Qamar.mp3",
+                "artist": "Junaid Asghar",
+                "title": "Mere Rashke Qamar",
                 "lyricsFileName": null
             },
             {
@@ -3406,13 +3412,13 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Aadat (Remix).mp3",
+                "path": "Hindi Audios/Aadat.mp3",
                 "artist": "Atif Aslam",
                 "title": "Aadat (Remix)",
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Aye Khuda (Remix).mp3",
+                "path": "Hindi Audios/Aye Khuda.mp3",
                 "artist": "Kshitij Tarey/Saim Bhat/Mithoon",
                 "title": "Aye Khuda (Remix)",
                 "lyricsFileName": null
@@ -3454,7 +3460,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Teri Yaadon (Remix).mp3",
+                "path": "Hindi Audios/Teri Yaadon Mein.mp3",
                 "artist": "KK & Shreya Ghoshal",
                 "title": "Teri Yaadon Mein (Remix)",
                 "lyricsFileName": null
@@ -3472,7 +3478,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Hindi Audios/Haseeno Ka Deewana (Remake).mp3",
+                "path": "Hindi Audios/Haseeno Ka Deewana.mp3",
                 "artist": "Raftaar/Payal Dev",
                 "title": "Haseeno Ka Deewana (Remake)",
                 "lyricsFileName": null
@@ -3483,12 +3489,6 @@
         "name": "Mashup (Hindi)",
         "themeColor": "limegreen",
         "tracks": [
-            {
-                "path": "Hindi Audios/Mere Rashke Qamar.mp3",
-                "artist": "Junaid Asghar",
-                "title": "Mere Rashke Qamar",
-                "lyricsFileName": null
-            },
             {
                 "path": "Hindi Audios/Dheevara.mp3",
                 "artist": "Deepu & Ramya Behara",
