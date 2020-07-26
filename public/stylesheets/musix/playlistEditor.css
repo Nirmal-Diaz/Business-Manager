@@ -32,10 +32,14 @@ body {
     border-width: 0 2px 0 0;
 }
 
-.playlistNameView {
+.playlistNameInput {
     padding: 10px;
+    
+    font-weight: bolder;
 
-    font-size: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
 }
 
 .playlistColorInput {

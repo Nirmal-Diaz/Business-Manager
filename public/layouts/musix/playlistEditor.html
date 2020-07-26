@@ -24,10 +24,15 @@
                         playlistView.dataset.themeColor = playlist.themeColor;
                         playlistView.style.backgroundColor = playlist.themeColor;
 
-                        const playlistNameView = document.createElement("h3");
-                        playlistNameView.setAttribute("class", "playlistNameView");
-                        playlistNameView.textContent = playlist.name;
-                        playlistView.appendChild(playlistNameView);
+                        const playlistNameInput = document.createElement("input");
+                        playlistNameInput.type = "text";
+                        playlistNameInput.placeholder = "Playlist Name";
+                        playlistNameInput.value = playlist.name;
+                        playlistNameInput.setAttribute("class", "playlistNameInput");
+                        playlistNameInput.addEventListener("keyup", () => {
+                            playlistView.dataset.name = playlistNameInput.value;
+                        });
+                        playlistView.appendChild(playlistNameInput);
 
                         const playlistColorInput = document.createElement("input");
                         playlistColorInput.type = "text";
