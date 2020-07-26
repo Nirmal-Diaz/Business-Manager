@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Control Panel</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/card.css" />
+
+    <style>
+        .itemInformation:hover {
+            color: var(--defaultColor);
+        }
+    </style>
+
+    <script type="module">
+        //@ts-check
+        import { CardComponent } from "/scripts/main/Utility.js";
+        import { PopUpCard } from "/scripts/main/PopUpCard.js";
+        import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
+
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface extends BaseCardInterface {
+            constructor() {
+                super();
+
+                this.updateControls[0].addEventListener("click", () => {
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/pattern_u.html");
+                });
+
+                this.updateControls[1].addEventListener("click", () => {
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/userPreferences_u.html");
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm();
+                        });
+                    });
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="mainCardDivision" class="cardDivision">
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+        <div id="createControlsContainer">
+
+        </div>
+        <div id="retrieveControlsContainer">
+
+        </div>
+        <div id="updateControlsContainer">
+            <button class="buttonGlyph">
+                <span>PW</span>
+            </button>
+
+            <button class="buttonGlyph">
+                <span>PR</span>
+            </button>
+        </div>
+        <div id="deleteControlsContainer">
+
+        </div>
+    </div>
+</body>
+
+</html>
