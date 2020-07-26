@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Pattern</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+
+    <script type="module">
+        //@ts-check
+        import { PatternUpdater } from "/scripts/main/PatternUpdater.js";
+        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+
+        //Add onload to window for initializing popUpCardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.popUpCardInterface = new PopUpCardInterface();
+        });
+
+        class PopUpCardInterface extends BasePopUpCardInterface {
+            patternUpdater = null;
+
+            constructor() {
+                super();
+
+                this.patternUpdater = new PatternUpdater(document.querySelector(".patternInput"));
+
+                document.getElementById("resetButton").addEventListener("click", () => {
+                    this.patternUpdater.setStep(2);
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="popUpDivision">
+        <!-- formTitleContainer -->
+        <div class="formTitleContainer">
+            <div class="titleContainer">
+                <div class="titleDescription">Update</div>
+                <div class="title">Pattern</div>
+            </div>
+        </div>
+
+        <!-- formsContainer -->
+        <div class="formsContainer">
+            <form>
+                <div class="titleContainer">
+                    <h1 class="title">Step 1</h1>
+                    <h1 class="titleDescription">Mark your current pattern</h1>
+                </div>
+                <div class="inputContainer">
+                    <div class="patternInput">
+                        <canvas class="patternCanvas"></canvas>
+                        <div class="cell">
+                            <div data-cell-keyword="A9" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="B8" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="C7" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="D6" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="E5" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="F4" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="G3" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="H2" class="cellPoint"></div>
+                        </div>
+                        <div class="cell">
+                            <div data-cell-keyword="I1" class="cellPoint"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- formControlsContainer -->
+        <div class="formControlsContainer">
+            <button id="resetButton" class="buttonText link">RESET</button>
+            <button class="buttonText link closeButton">CLOSE</button>
+        </div>
+    </div>
+</body>
+
+</html>
