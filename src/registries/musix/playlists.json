@@ -382,12 +382,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/She Couldn't.mp3",
-                "artist": "Linkin Park",
-                "title": "She Couldn't",
-                "lyricsFileName": "She Couldn't - Linkin Park.json"
-            },
-            {
                 "path": "English Audios/One Minute A Time.mp3",
                 "artist": "",
                 "title": "One Minute a Time",
@@ -478,10 +472,10 @@
                 "lyricsFileName": "Soledad - Westlife.json"
             },
             {
-                "path": "English Audios/The Final Countdown.mp3",
-                "artist": "Europe",
-                "title": "The Final Countdown",
-                "lyricsFileName": "The Final Countdown - Europe.json"
+                "path": "English Audios/You're Still The One.mp3",
+                "artist": "Shania Twain",
+                "title": "You're Still The One",
+                "lyricsFileName": "You're Still The One - Shania Twain.json"
             },
             {
                 "path": "English Audios/The Lost Children.mp3",
@@ -640,6 +634,12 @@
                 "lyricsFileName": "In Pieces - Linkin Park.json"
             },
             {
+                "path": "English Audios/She Couldn't.mp3",
+                "artist": "Linkin Park",
+                "title": "She Couldn't",
+                "lyricsFileName": "She Couldn't - Linkin Park.json"
+            },
+            {
                 "path": "English Audios/Powerless.mp3",
                 "artist": "Linkin Park",
                 "title": "Powerless",
@@ -658,16 +658,16 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/The Final Countdown.mp3",
+                "artist": "Europe",
+                "title": "The Final Countdown",
+                "lyricsFileName": "The Final Countdown - Europe.json"
+            },
+            {
                 "path": "English Audios/Skin To Bone.mp3",
                 "artist": "Linkin Park",
                 "title": "Skin to Bone",
                 "lyricsFileName": "Skin To Bone - Linkin Park.json"
-            },
-            {
-                "path": "English Audios/You're Still The One.mp3",
-                "artist": "Shania Twain",
-                "title": "You're Still The One",
-                "lyricsFileName": "You're Still The One - Shania Twain.json"
             }
         ]
     },
@@ -3365,14 +3365,14 @@
         "tracks": [
             {
                 "path": "Hindi Audios/Zara Sa.mp3",
-                "artist": "K. K.",
+                "artist": "KK",
                 "title": "Zara Sa",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Teri Deewani.mp3",
                 "artist": "Sanam Puri",
-                "title": "Teri Deewani (Remake)",
+                "title": "Teri Deewani",
                 "lyricsFileName": null
             },
             {
@@ -3414,13 +3414,13 @@
             {
                 "path": "Hindi Audios/Aadat.mp3",
                 "artist": "Atif Aslam",
-                "title": "Aadat (Remix)",
+                "title": "Aadat",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Aye Khuda.mp3",
                 "artist": "Kshitij Tarey/Saim Bhat/Mithoon",
-                "title": "Aye Khuda (Remix)",
+                "title": "Aye Khuda",
                 "lyricsFileName": null
             },
             {
@@ -3438,7 +3438,7 @@
             {
                 "path": "Hindi Audios/Mahe Jaan (Rock Version).mp3",
                 "artist": "Harshit Saxena",
-                "title": "Mahe Jaan [Rock Version]",
+                "title": "Mahe Jaan",
                 "lyricsFileName": null
             },
             {
@@ -3456,13 +3456,13 @@
             {
                 "path": "Hindi Audios/Sunn Raha Hai.mp3",
                 "artist": "Ankit Tiwari",
-                "title": "Sunn Raha Hai (Male Version)",
+                "title": "Sunn Raha Hai",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Teri Yaadon Mein.mp3",
-                "artist": "KK & Shreya Ghoshal",
-                "title": "Teri Yaadon Mein (Remix)",
+                "artist": "KK/Shreya Ghoshal",
+                "title": "Teri Yaadon Mein",
                 "lyricsFileName": null
             },
             {
@@ -3480,7 +3480,7 @@
             {
                 "path": "Hindi Audios/Haseeno Ka Deewana.mp3",
                 "artist": "Raftaar/Payal Dev",
-                "title": "Haseeno Ka Deewana (Remake)",
+                "title": "Haseeno Ka Deewana",
                 "lyricsFileName": null
             }
         ]
@@ -3491,7 +3491,7 @@
         "tracks": [
             {
                 "path": "Hindi Audios/Dheevara.mp3",
-                "artist": "Deepu & Ramya Behara",
+                "artist": "Deepu/Ramya Behara",
                 "title": "Dhivara",
                 "lyricsFileName": null
             },
@@ -3521,13 +3521,13 @@
             },
             {
                 "path": "Hindi Audios/Tu Hi Meri Shab Hei.mp3",
-                "artist": "K. K.",
+                "artist": "KK",
                 "title": "Tu Hi Meri Shab Hai",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Piya Aaye Na.mp3",
-                "artist": "KK & Tulsi Kumar",
+                "artist": "KK/Tulsi Kumar",
                 "title": "Piya Aaye Na",
                 "lyricsFileName": null
             },
@@ -3539,7 +3539,7 @@
             },
             {
                 "path": "Hindi Audios/Mere Humsafar.mp3",
-                "artist": "Mithoon & Tulsi Kumar",
+                "artist": "Mithoon/Tulsi Kumar",
                 "title": "Mere Humsafar",
                 "lyricsFileName": null
             },
@@ -3569,13 +3569,13 @@
             },
             {
                 "path": "Hindi Audios/Toota Jo Kabhi Taara.mp3",
-                "artist": "Atif Aslam & Sumedha Karmahe",
+                "artist": "Atif Aslam/Sumedha Karmahe",
                 "title": "Toota Jo Kabhi Tara",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Chahun Main Ya Naa.mp3",
-                "artist": "Palak Muchhal & Arjit Singh",
+                "artist": "Palak Muchhal/Arjit Singh",
                 "title": "Chahun Main Ya Naa",
                 "lyricsFileName": null
             },
@@ -3617,7 +3617,7 @@
             },
             {
                 "path": "Hindi Audios/Kaabil Hoon.mp3",
-                "artist": "Jubin Nautiyal & Palak Muchhal/Jubin Nautiyal & Palak Muchhal",
+                "artist": "Jubin Nautiyal/Palak Muchhal",
                 "title": "Kaabil Hoon",
                 "lyricsFileName": null
             },
@@ -3629,7 +3629,7 @@
             },
             {
                 "path": "Hindi Audios/Samjhawan.mp3",
-                "artist": "Arijit Singh & Shreya Ghoshal",
+                "artist": "Arijit Singh/Shreya Ghoshal",
                 "title": "Samjhawan",
                 "lyricsFileName": null
             },
@@ -3835,12 +3835,6 @@
                 "path": "Sinhala Audios/Chakithaya.mp3",
                 "artist": "Nemesis",
                 "title": "Chakithaya",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Budune Jesune.mp3",
-                "artist": "Bachi Susan",
-                "title": "Budune Jesune",
                 "lyricsFileName": null
             },
             {
