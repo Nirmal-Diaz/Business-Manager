@@ -16,6 +16,8 @@ p,h1 {
 
 body {
     width: 300vw;
+
+    background-color: black;
 }
 
 #playlistViewContainer {
@@ -26,10 +28,8 @@ body {
 .playlistView {
     overflow: hidden;
 
-    margin: 5px;
-
     border: thin solid black;
-    border-radius: 10px;
+    border-width: 0 2px 0 0;
 }
 
 .playlistNameView {
