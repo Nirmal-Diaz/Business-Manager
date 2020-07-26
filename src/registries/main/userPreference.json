@@ -6,8 +6,8 @@
         "value": null
     },
     "hash": {
-        "inputQuery": "#hash",
-        "inputClass": "dropDownInput",
+        "inputQuery": null,
+        "inputClass": null,
         "pattern": "^[a-f\\d]{1,64}",
         "value": null
     },
@@ -24,7 +24,7 @@
         "value": "1"
     },
     "avatar": {
-        "inputQuery": "#avatar",
+        "inputQuery": null,
         "inputClass": "fileInput",
         "pattern": null,
         "value": null
