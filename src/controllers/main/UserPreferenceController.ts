@@ -5,6 +5,8 @@ import { getRepository } from "typeorm";
 
 import { UserPreference } from "../../entities/main/UserPreference";
 import { User } from "../../entities/main/User";
+import { RegistryController } from "./RegistryController";
+import { ValidationController } from "./ValidationController";
 
 export class UserPreferenceController {
     static async createOne(user: User) {
@@ -26,6 +28,38 @@ export class UserPreferenceController {
         });
     }
 
+    static async getOne(userId: number) {
+        const userPreference = await getRepository(UserPreference).findOne({
+            where: {
+                userId: userId
+            },
+        });
+
+        if (userPreference) {
+            return userPreference;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find any user preferences that matches your arguments", technicalMessage: "No user preferences for given arguments" };
+        }
+    }
+
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(UserPreference).findOne({
+            userId: clientBindingObject.userId.value
+        });
+
+        if (originalObject) {
+            const serverObject = await RegistryController.getParsedRegistry("userPreference.json");
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            return await getRepository(UserPreference).save(originalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find any user preferences that matches your arguments", technicalMessage: "No user preferences for given arguments" };
+        }
+    }
+
     static async deleteOne(userId: number) {
         const userPreference = await getRepository(UserPreference).findOne({
             where: {
@@ -39,6 +73,38 @@ export class UserPreferenceController {
             });
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a user preference that matches your arguments", technicalMessage: "No user preference for given arguments" };
+        }
+    }
+
+    static async updatePattern(userId: number, cellCombination: string) {
+        const user = await getRepository(User).findOne({
+            where: {
+                id: userId
+            },
+            relations: ["userPreference"]
+        });
+
+        user.userPreference.hash = crypto.createHash("sha256").update(`${user.username} : ${cellCombination}`).digest("hex");
+
+        return getRepository(UserPreference).save(user.userPreference).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
+    }
+
+    static async checkPattern(userId: number, cellCombination: string) {
+        const user = await getRepository(User).findOne({
+            where: {
+                id: userId
+            },
+            relations: ["userPreference"]
+        });
+
+        const generatedHash = crypto.createHash("sha256").update(`${user.username} : ${cellCombination}`).digest("hex");
+
+        if (user.userPreference.hash === generatedHash) {
+            return true;
+        } else {
+            throw { title: "Oops! Pattern mismatch", titleDescription: "Try again with the correct pattern", message: "", technicalMessage: "Inequivalent hashes" };
         }
     }
 }

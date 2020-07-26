@@ -14,6 +14,7 @@ import { PermissionController } from "../../controllers/main/PermissionControlle
 import { EmployeeController } from "../../controllers/main/EmployeeController";
 import { RoleController } from "../../controllers/main/RoleController";
 import { FileController } from "../../controllers/main/FIleController";
+import { UserPreferenceController } from "../../controllers/main/UserPreferenceController";
 
 export const mainRouter = express.Router();
 /*
@@ -255,10 +256,70 @@ mainRouter.route("/users/:userId/modules/:moduleId")
     .get((req, res, next) => {
         (() => {
             if (req.params.userId === "@me") {
-                return PermissionController.getOneByUser(parseInt(req.session.userId), parseInt(req.params.moduleId));
+                return PermissionController.getOneByUser(req.session.userId, parseInt(req.params.moduleId));
             } else {
                 return PermissionController.checkPermission(req.session.userId, "permissions", req.method)
                     .then(() => PermissionController.getOneByUser(parseInt(req.params.userId), parseInt(req.params.moduleId)));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
+    });
+
+mainRouter.route("/users/:userId/pattern")
+    .get((req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return UserPreferenceController.checkPattern(req.session.userId, req.query.cellCombination);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "users", req.method)
+                    .then(() => UserPreferenceController.checkPattern(parseInt(req.params.userId), req.query.cellCombination));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
+    })
+    .post(express.json(), (req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return UserPreferenceController.updatePattern(req.session.userId, req.body.cellCombination);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "users", req.method)
+                    .then(() => UserPreferenceController.updatePattern(parseInt(req.params.userId), req.body.cellCombination));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
+    });
+
+mainRouter.route("/users/:userId/userPreferences")
+    .get((req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return UserPreferenceController.getOne(req.session.userId);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "users", req.method)
+                    .then(() => UserPreferenceController.getOne(parseInt(req.params.userId)));
+            }
+        })().then(data => {
+            res.locals.data = data; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        });
+    })
+    .post(express.json(), (req, res, next) => {
+        (() => {
+            if (req.params.userId === "@me") {
+                return UserPreferenceController.updateOne(req.body.bindingObject);
+            } else {
+                return PermissionController.checkPermission(req.session.userId, "users", req.method)
+                    .then(() => UserPreferenceController.updateOne(req.body.bindingObject));
             }
         })().then(data => {
             res.locals.data = data; next();

@@ -63,8 +63,8 @@ export class Form {
     //NOTE: Use this before updating inputs of an "update" form
     //NOTE: When requesting objects from the server, they are plain objects (objects with only data). But forms work with bindingObjects (objects that have validation and view binding capabilities along with data)
     mapToBindingObject(bindingObject = this.bindingObject, plainObject) {
-        //NOTE: Binding object doesn't have an "id" formField. But the plain object has it
-        //Add the id formField to bindingObject
+        //NOTE: Binding object doesn't have an "id" formField. But most of the plain objects has it
+        //Add the id formField to bindingObject if requested
         bindingObject.id = {
             inputQuery: null,
             inputClass: null,
@@ -100,7 +100,6 @@ export class Form {
                         //Case: Field of the formObject have a binding input
                         //Load the value of the input to the binding field
                         bindingObject[key].value = this.view.querySelector(bindingObject[key].inputQuery).value;
-                        // console.log("UPDATED", key, "WITH", bindingObject[key].value);
                     }
                 }
             }
@@ -184,7 +183,7 @@ export class Form {
         //Reset invalidBindingObject flag
         this.invalidBindingObject = false;
         this.validateBindingObject(this.referenceBindingObject, this.bindingObject);
-        
+
         if (this.invalidBindingObject) {
             return {
                 status: false,
@@ -202,14 +201,14 @@ export class Form {
                     bindingObject: this.bindingObject
                 })
             })
-            .then(response => response.json())
-            .then(response => response)
-            .catch(error => {
-                return {
-                    status: false,
-                    error: error
-                };
-            });
+                .then(response => response.json())
+                .then(response => response)
+                .catch(error => {
+                    return {
+                        status: false,
+                        error: error
+                    };
+                });
         }
     }
 }
