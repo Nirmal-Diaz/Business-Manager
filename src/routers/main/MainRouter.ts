@@ -242,7 +242,7 @@ mainRouter.route("/users/:userId/modules")
             if (req.params.userId === "@me") {
                 return PermissionController.getPermittedModules(req.session.userId);
             } else {
-                return PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
                     .then(() => PermissionController.getPermittedModules(parseInt(req.params.userId)));
             }
         })().then(data => {
@@ -258,7 +258,7 @@ mainRouter.route("/users/:userId/modules/:moduleId")
             if (req.params.userId === "@me") {
                 return PermissionController.getOneByUser(req.session.userId, parseInt(req.params.moduleId));
             } else {
-                return PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+                return PermissionController.checkPermission(req.session.userId, "roles", req.method)
                     .then(() => PermissionController.getOneByUser(parseInt(req.params.userId), parseInt(req.params.moduleId)));
             }
         })().then(data => {
@@ -330,7 +330,7 @@ mainRouter.route("/users/:userId/userPreferences")
 
 mainRouter.route("/roles")
     .put(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -338,7 +338,7 @@ mainRouter.route("/roles")
             });
     })
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.getMany(req.query.keyword)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -348,7 +348,7 @@ mainRouter.route("/roles")
 
 mainRouter.route("/roles/:roleId")
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.getOne(parseInt(req.params.roleId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -356,7 +356,7 @@ mainRouter.route("/roles/:roleId")
             });
     })
     .post(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -364,7 +364,7 @@ mainRouter.route("/roles/:roleId")
             });
     })
     .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.deleteOne(parseInt(req.params.roleId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -374,7 +374,7 @@ mainRouter.route("/roles/:roleId")
 
 mainRouter.route("/permissions")
     .put(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => PermissionController.cerateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -384,7 +384,7 @@ mainRouter.route("/permissions")
 
 mainRouter.route("/permissions/:roleId")
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => PermissionController.getManyByRole(parseInt(req.params.roleId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -392,7 +392,7 @@ mainRouter.route("/permissions/:roleId")
             });
     })
     .post(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "permissions", req.method)
+        PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => PermissionController.updateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

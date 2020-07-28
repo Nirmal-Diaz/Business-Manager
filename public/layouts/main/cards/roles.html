@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Permissions and Roles</title>
+    <title>Roles and Permissions</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css">
@@ -24,7 +24,7 @@
                 super();
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
-                    const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/permissions_cu.html");
+                    const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/roles_cu.html");
                     popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                         popUpCard.popUpCardInterface.initInputs().then(() => {
                             popUpCard.popUpCardInterface.initCreateForm();
@@ -89,7 +89,7 @@
 
             updateItem(selectedCardDivisionSectorItem) {
                 //Add onload to iframe for initializing update form
-                const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/permissions_cu.html");
+                const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/roles_cu.html");
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                     popUpCard.popUpCardInterface.initInputs().then(() => {
                         popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
