@@ -74,6 +74,7 @@
 
     background-size: cover;
     background-repeat: no-repeat;
+    border-radius: 50%;
 
     transition: opacity 0.3s;
 }
