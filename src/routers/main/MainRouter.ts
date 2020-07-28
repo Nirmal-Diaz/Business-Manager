@@ -313,7 +313,7 @@ mainRouter.route("/users/:userId/userPreferences")
             res.locals.error = error; next();
         });
     })
-    .post(express.json(), (req, res, next) => {
+    .post(express.json({limit: 1000000}), (req, res, next) => {
         (() => {
             if (req.params.userId === "@me") {
                 return UserPreferenceController.updateOne(req.body.bindingObject);
