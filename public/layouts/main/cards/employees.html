@@ -103,6 +103,7 @@
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
+                            this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);

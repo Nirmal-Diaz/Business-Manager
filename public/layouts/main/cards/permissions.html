@@ -103,11 +103,10 @@
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
-                            //Get the main cardDivision
+                            this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            //Create a cardDivisionSector for each item
                             for (const item of response.data) {
                                 const iconURL = `../../../images/main/icon_user_default.png`;
                                 //NOTE: Bounded method is immediately invoked
