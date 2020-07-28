@@ -72,7 +72,7 @@
     height: 10vw;
     width: 10vw;
 
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 
     transition: opacity 0.3s;
@@ -241,12 +241,13 @@
 }
 
 #workspaceAvatar {
-    margin: 0 5px 0 5px;
+    margin: 0 10px 0 10px;
     height: 80px;
     width: 80px;
 
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    border-radius: 50%;
 }
 
 @keyframes createPopUpCard {
