@@ -2801,8 +2801,8 @@
             },
             {
                 "path": "Music Catalog/Fields Of Woe (Soundtrack 1) War Of The Vikings.mp3",
-                "artist": "Paradox Interactive",
-                "title": "Fields of Woe",
+                "artist": "",
+                "title": "Fields Of Woe",
                 "lyricsFileName": null
             },
             {
@@ -4003,6 +4003,12 @@
                 "path": "Sinhala Audios/Husma Oya.mp3",
                 "artist": "Sandeep Jayalath",
                 "title": "Husma Oya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sihilasee.mp3",
+                "artist": "Eranga Jayawardhana/Hansini",
+                "title": "Sihilasee",
                 "lyricsFileName": null
             },
             {
