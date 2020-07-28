@@ -32,7 +32,6 @@
     --inputBackgroundColor: var(--color0-3);
     --inputBackgroundColor-active: var(--color3-1);
     --inputBackgroundColor-hover: var(--color1-1);
-    --inputBackgroundColor-active-hover: var(--color3-2);
     --inputBorderColor: var(--color0-1);
 
     --textInputPlaceholderColor: var(--color2-2);
