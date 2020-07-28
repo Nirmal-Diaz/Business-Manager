@@ -107,19 +107,28 @@
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            const table = CardComponent.createTable(["Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
-                            const tableBody = table.querySelector("tbody");
                             for (const item of response.data) {
-                                const iconURL = `../../../images/main/icon_user_default.png`;
-                                // const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.preferredName, [item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name])();
-                                const bodyRow = CardComponent.createTableRow([item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
-                                // cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                bodyRow.dataset.bindingObjectId = item.id;
-                                // cardDivisionSector.appendChild(cardDivisionSectorItem);
-                                tableBody.appendChild(bodyRow);
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.preferredName, [item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name])();
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
                             cardDivision.appendChild(cardDivisionSector);
-                            cardDivisionSector.appendChild(table);
+
+                            // this.selectedCardDivisionSectorItems.length = 0;
+                            // const cardDivision = document.getElementById("mainCardDivision");
+                            // cardDivision.innerHTML = "";
+                            // const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+                            // const table = CardComponent.createTable(["Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
+                            // const tableBody = table.querySelector("tbody");
+                            // for (const item of response.data) {
+                            //     const iconURL = `../../../images/main/icon_user_default.png`;
+                            //     const bodyRow = CardComponent.createTableRow([item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
+                            //     bodyRow.dataset.bindingObjectId = item.id;
+                            //     tableBody.appendChild(bodyRow);
+                            // }
+                            // cardDivision.appendChild(cardDivisionSector);
+                            // cardDivisionSector.appendChild(table);
                         } else {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }

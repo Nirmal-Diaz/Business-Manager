@@ -1,4 +1,12 @@
 {
+    "photo": {
+        "inputQuery": "#photo",
+        "inputClass": "imageInput",
+        "pattern": "62000;image/png,image/jpg",
+        "size": null,
+        "type": "image/png",
+        "value": null
+    },
     "code": {
         "inputQuery": "#code",
         "inputClass": "textInput",

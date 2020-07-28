@@ -24,6 +24,9 @@ export class Employee {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
+  @Column("blob", { name: "photo" })
+  photo: Buffer;
+
   @Column("varchar", { name: "code", unique: true, length: 10 })
   code: string;
 
