@@ -31,7 +31,7 @@ export class Form {
                     const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
                     for (const textInput of textInputs) {
                         textInput.addEventListener("keyup", () => {
-                            FormUtil.visualizeValidation(this.view, this.bindingObject[textInput.id], true);
+                            FormUtil.validateAndVisualizeField(this.view, this.bindingObject[textInput.id], true);
                         });
                     }
                     return this;
@@ -64,20 +64,20 @@ export class Form {
     //NOTE: When requesting objects from the server, they are plain objects (objects with only data). But forms work with bindingObjects (objects that have validation and view binding capabilities along with data)
     mapToBindingObject(bindingObject = this.bindingObject, plainObject) {
         //NOTE: Binding object doesn't have an "id" formField. But most of the plain objects has it
-        //Add the id formField to bindingObject if requested
+        //NOTE: If the plain object doesn't need an id field. This will be automatically discarded
         bindingObject.id = {
             inputQuery: null,
             inputClass: null,
             pattern: "^[1-9]{1,}$",
             value: plainObject.id
-        }
+        };
+
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
                 //Case: Key holds an entire new formObject
                 this.mapToBindingObject(bindingObject[key].value, plainObject[key]);
             } else {
-                //Case: Key holds a formField object
-                bindingObject[key].value = plainObject[key];
+                FormUtil.mapPlainFieldToFormField(plainObject[key], bindingObject[key]);
             }
         }
     }
@@ -99,7 +99,7 @@ export class Form {
                     if (bindingObject[key].inputQuery !== null) {
                         //Case: Field of the formObject have a binding input
                         //Load the value of the input to the binding field
-                        bindingObject[key].value = this.view.querySelector(bindingObject[key].inputQuery).value;
+                        FormUtil.updateValueFromInput(this.view, bindingObject[key]);
                     }
                 }
             }
@@ -116,7 +116,7 @@ export class Form {
                 //Case: Key holds a formField object
                 if (bindingObject[key].inputQuery !== null) {
                     //Case: Field of the formObject have a binding input
-                    FormUtil.syncInputWithValue(this.view, bindingObject[key], null);
+                    FormUtil.updateInputFromValue(this.view, bindingObject[key], null);
                 }
             }
         }
@@ -130,11 +130,7 @@ export class Form {
             } else {
                 //Case: Key holds a formField object
                 if (bindingObject[key].inputClass !== null) {
-                    if (bindingObject[key].inputClass === "textInput") {
-                        this.view.querySelector(bindingObject[key].inputQuery).value = "";
-                    } else if (bindingObject[key].inputClass === "dropDownInput") {
-                        this.view.querySelector(bindingObject[key].inputQuery).value = "1";
-                    }
+                    FormUtil.resetInput(this.view, bindingObject[key]);
                 }
             }
         }
@@ -159,18 +155,11 @@ export class Form {
                     this.validateBindingObject(referenceBindingObject[key].value, alteredBindingObject[key].value);
                 } else {
                     //Case: Key holds a formField object
-                    if (referenceBindingObject[key].regex !== null) {
+                    if (referenceBindingObject[key].pattern !== null) {
                         //Case: formField object must have a pattern to match
-                        // console.log("VALIDATED", key, "DATA", alteredBindingObject[key].value);
-                        const regexp = new RegExp(referenceBindingObject[key].pattern);
-                        if (!regexp.test(alteredBindingObject[key].value) || alteredBindingObject[key].value === "null") {
-                            //Case: Invalid value found
-                            this.invalidBindingObject = true;
-                        }
-                        if (referenceBindingObject[key].inputQuery !== null) {
-                            //Case: formField object must have a pattern along with an input
-                            FormUtil.visualizeValidation(this.view, alteredBindingObject[key], false);
-                        }
+
+                        //NOTE: this.invalidBindingObject must contain the OR value of each field validation
+                        this.invalidBindingObject = this.invalidBindingObject || FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
                     }
                 }
             }

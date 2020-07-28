@@ -127,7 +127,7 @@ export class CardComponent {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
-        
+
         const headRow = document.createElement("tr");
         for (const field of fields) {
             const th = document.createElement("th");
@@ -156,28 +156,30 @@ export class CardComponent {
 }
 
 export class FormUtil {
-    static visualizeValidation(formView, formField, prioritizeInputValue = false) {
-        let input = formView.querySelector(formField.inputQuery);
-        let value;
-        if (prioritizeInputValue) {
-            value = input.value;
+    static mapPlainFieldToFormField(plainFieldValue, formField) {
+        if (formField.inputClass === "imageInput") {
+            //NOTE: Any kind of blob sent by the server has the following structure
+            // const sampleBlob = {
+            //     type: "Buffer",
+            //     data: []
+            // }
+
+            //formField.value must contain the stringified sampleBlob.data
+            formField.value = JSON.stringify(plainFieldValue.data);
+            formField.size = plainFieldValue.data.length;
         } else {
-            value = formField.value;
-        }
-        const regexp = new RegExp(formField.pattern);
-        if (!regexp.test(value) || value === "null") {
-            input.parentElement.classList.add("invalid");
-        } else {
-            input.parentElement.classList.remove("invalid");
+            formField.value = plainFieldValue;
         }
     }
 
-    static syncInputWithValue(formView, formField, overrideValue = null) {
+    static updateInputFromValue(formView, formField, overrideValue = null) {
         const input = formView.querySelector(formField.inputQuery);
-        let value = formField.value;
+        let value = null;
         //Override the formField.value if there is an overrideValue provided
         if (overrideValue) {
             value = overrideValue;
+        } else {
+            value = formField.value;
         }
 
         //Handle synchronization according to the inputClass
@@ -185,7 +187,95 @@ export class FormUtil {
             input.value = value;
         } else if (formField.inputClass === "dropDownInput") {
             input.value = value;
+        } else if (formField.inputClass === "imageInput") {
+            input.dataset.stringifiedBlob = value;
+            input.dataset.size = formField.size;
+            input.dataset.type = formField.type;
+
+            //NOTE: There is a sibling img tag to preview images
+            const imageBlob = new Blob([new Uint8Array(JSON.parse(value))]);
+            input.previousElementSibling.src = URL.createObjectURL(imageBlob);
         }
+    }
+
+    static updateValueFromInput(formView, formField, overrideValue = null) {
+        const input = formView.querySelector(formField.inputQuery);
+        let value = null;
+        //Override the formField.value if there is an overrideValue provided
+        if (overrideValue) {
+            value = overrideValue;
+        } else {
+            value = input.value;
+        }
+
+        //Handle synchronization according to the inputClass
+        if (formField.inputClass === "textInput") {
+            formField.value = input.value;
+        } else if (formField.inputClass === "dropDownInput") {
+            formField.value = input.value;
+        } else if (formField.inputClass === "imageInput") {
+            formField.value = input.dataset.stringifiedBlob;
+            formField.size = parseInt(input.dataset.size);
+            formField.type = input.dataset.type;
+        }
+    }
+
+    static resetInput(formView, formField) {
+        if (formField.inputClass === "textInput") {
+            formView.querySelector(formField.inputQuery).value = "";
+        } else if (formField.inputClass === "dropDownInput") {
+            formView.querySelector(formField.inputQuery).value = "1";
+        } else if (formField.inputClass === "imageInput") {
+            const imageInput = formView.querySelector(formField.inputQuery);
+
+            imageInput.value = "";
+            imageInput.dataset.stringifiedBlob = "";
+            imageInput.dataset.size = "0";
+            imageInput.dataset.type = "";
+            imageInput.previousElementSibling.src = "";
+        }
+    }
+
+    static validateAndVisualizeField(formView, formField, prioritizeInputValue = false) {
+        let isInvalidFiled = false;
+
+        let value;
+        if (prioritizeInputValue && formField.inputQuery !== null) {
+            //WARNING: input.value doesn't work for file inputs
+            value = formView.querySelector(formField.inputQuery).value;
+        } else {
+            value = formField.value;
+        }
+
+        //Handle visualization according to the inputClass
+        if (formField.inputClass === "textInput" || formField.inputClass === "dropDownInput") {
+            const regexp = new RegExp(formField.pattern);
+            if (!regexp.test(value) || value === "null") {
+                isInvalidFiled = true;
+            } else {
+                isInvalidFiled = false;
+            }
+        } else if (formField.inputClass === "imageInput") {
+            const parts = formField.pattern.split(";");
+            const maxSize = parseInt(parts[0]);
+            const acceptedTypes = parts[1].split(",");
+
+            if (formField.size > maxSize || !acceptedTypes.includes(formField.type)) {
+                isInvalidFiled = true;
+            } else {
+                isInvalidFiled = false;
+            }
+        }
+
+        if (formField.inputQuery !== null) {
+            if (isInvalidFiled) {
+                formView.querySelector(formField.inputQuery).parentElement.classList.add("invalid");
+            } else {
+                formView.querySelector(formField.inputQuery).parentElement.classList.remove("invalid");
+            }
+        }
+
+        return isInvalidFiled;
     }
 
     static createDropDownInputFragment(requestURL, textContentField, valueField) {
