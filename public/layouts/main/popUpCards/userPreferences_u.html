@@ -31,6 +31,8 @@
                         if (submission.status) {
                             //Close this popUpCard
                             this.popUpCardObject.close();
+
+                            window.parent.shellInterface.throwAlert("One more step", "Login again to apply changes", "Some UI changes will be applied only after the next login. YOu can logout now and login again to view those changes immediately", null, "OK", null);
                         } else {
                             window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
                         }
@@ -127,7 +129,11 @@
 
                 <div class="titleContainer">
                     <h1 class="title">Avatar</h1>
+                    <h1 class="titleDescription">Click to change</h1>
                 </div>
+                <ul>
+                    <li>Must be less than 62KiB</li>
+                </ul>
                 <div class="inputContainer image">
                     <img src="" alt="">
                     <input id="avatar" type="file" class="input fileInput" />
