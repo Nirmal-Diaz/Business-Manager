@@ -111,13 +111,6 @@ body {
     white-space: nowrap;
 }
 
-.inputGroup {
-    display: flex;
-    flex-wrap: wrap;
-
-    width: 100%;
-}
-
 .inputContainer {
     display: flex;
     flex-wrap: wrap;
@@ -142,8 +135,25 @@ body {
     content: "\25BC";
 }
 
-.inputContainer.invalid > input:first-child {
+.inputContainer.image > img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
+    border: 2px solid var(--inputBorderColor);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.inputContainer.invalid > *:first-child {
     border-color: var(--inputContainerBorderColor-invalid);
+}
+
+.inputGroup {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
 }
 
 .inputGroup>.inputContainer {
@@ -182,11 +192,6 @@ body {
 }
 
 .fileInput {
-    display: flex;
-    align-items: center;
-}
-
-.fileInput>input {
     display: none;
 }
 
