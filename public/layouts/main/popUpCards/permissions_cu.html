@@ -23,6 +23,7 @@
         class PopUpCardInterface extends BasePopUpCardInterface {
             roleForm = new Form(document.getElementById("roleForm"));
             permissionForm = new Form(document.getElementById("permissionForm"));
+            overallSubmissionStatus = false;
 
             moduleId2BindingObjectIndex = {
                 // "1": 4
@@ -34,6 +35,7 @@
                 document.getElementById("saveButton").addEventListener("click", () => {
                     this.roleForm.submit()
                         .then(submission => {
+                            this.overallSubmissionStatus = this.overallSubmissionStatus && submission.status;
                             if (submission.status) {
                                 //Fill the roleId of each permission with the newly created role.id
                                 for (const permission of this.permissionForm.getBindingObject()) {
@@ -47,6 +49,7 @@
                         })
                         .then(() => this.permissionForm.submit())
                         .then(submission => {
+                            this.overallSubmissionStatus = this.overallSubmissionStatus && submission.status;
                             if (submission.status) {
                                 //Refresh (not reload) the parentCardInterface
                                 if (this.permissionForm.getSubmissionMethod() === "PUT") {
@@ -55,7 +58,9 @@
                                     this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a role recently", "Double tap to view");
                                 }
                                 
-                                this.popUpCardObject.close();
+                                if (this.overallSubmissionStatus) {
+                                    this.popUpCardObject.close();
+                                }
                             } else {
                                 window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
                             }
