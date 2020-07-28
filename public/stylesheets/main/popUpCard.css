@@ -54,7 +54,7 @@
         padding: 0 0 20px 0;
     }
 
-    .formTitleContainer .titleDescription, .formControlsContainer, .titleContainer+ul {
+    .formTitleContainer>.titleContainer>.titleDescription, form>.titleContainer>.titleDescription, form>.titleContainer+ul, .formControlsContainer {
         display: none;
     }
 
@@ -64,11 +64,11 @@
         border: none;
     }
 
-    .formTitleContainer .title {
+    .formTitleContainer>.titleContainer>.title {
         font-size: 30px;
     }
 
-    .formTitleContainer .title::after {
+    .formTitleContainer>.titleContainer>.title::after {
         content: " Details";
     }
 
@@ -83,7 +83,7 @@
         width: 100%;
     }
 
-    .titleContainer {
+    form>.titleContainer {
         display: flex;
         align-items: center;
 
@@ -93,7 +93,7 @@
         border-width: 0 0 thin 0;
     }
 
-    .title {
+    form>.titleContainer>.title {
         font-size: 16px;
     }
 
@@ -108,8 +108,8 @@
     .inputContainer.dropDown::after {
         display: none;
     }
-    
-    .input {
+
+    .inputContainer>input, .inputContainer>select {
         margin: 0;
         padding: 0;
 
@@ -118,7 +118,11 @@
         color: black;
     }
 
-    .textInput::placeholder {
+    .inputContainer.text>input::placeholder {
         color: transparent;
+    }
+
+    .inputContainer.image {
+        justify-content: flex-start;
     }
 }

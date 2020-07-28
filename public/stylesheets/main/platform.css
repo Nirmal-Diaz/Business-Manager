@@ -111,44 +111,6 @@ body {
     white-space: nowrap;
 }
 
-.inputContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: flex-start;
-
-    margin: 10px 0 10px 0;
-    width: 100%;
-}
-
-.inputContainer.dropDown {
-    position: relative;
-}
-
-.inputContainer.dropDown::after {
-    position: absolute;
-    top: 23px;
-    right: 20px;
-
-    font-size: xx-small;
-    content: "\25BC";
-}
-
-.inputContainer.image > img {
-    width: 200px;
-    height: 200px;
-
-    border-radius: 50%;
-    border: 2px solid var(--inputBorderColor);
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.inputContainer.invalid > *:first-child {
-    border-color: var(--inputContainerBorderColor-invalid);
-}
-
 .inputGroup {
     display: flex;
     flex-wrap: wrap;
@@ -162,7 +124,25 @@ body {
     width: 50%;
 }
 
-.input {
+.inputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.inputContainer.invalid>*:first-child {
+    border-color: var(--inputContainerBorderColor-invalid);
+}
+
+.inputContainer>input, .inputContainer>select {
+    appearance: none;
+    -webkit-appearance: none;
+
     margin: 10px 0 10px 0;
     height: 40px;
     width: 100%;
@@ -178,25 +158,44 @@ body {
     -webkit-user-select: text;
 }
 
-.input:hover {
+.inputContainer>input:hover {
     background-color: var(--inputBackgroundColor-hover);
 }
 
-.textInput::placeholder {
+.inputContainer.text>input::placeholder {
     color: var(--textInputPlaceholderColor);
 }
 
-.dropDownInput, .checkInput, .radioInput {
-    appearance: none;
-    -webkit-appearance: none;
+.inputContainer.dropDown {
+    position: relative;
 }
 
-.fileInput {
+.inputContainer.dropDown::after {
+    position: absolute;
+    top: 23px;
+    right: 20px;
+
+    font-size: xx-small;
+    content: "\25BC";
+}
+
+.inputContainer.image>img {
+    margin: 10px 0 10px 0;
+    height: 200px;
+    width: 200px;
+
+    border-radius: 50%;
+    border: 2px solid var(--inputBorderColor);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.inputContainer.image>input {
     display: none;
 }
 
-.checkInput,
-.radioInput {
+.inputContainer.check>input,
+.inputContainer.radio>input {
     margin: 0 20px 0 0;
     height: 50px;
     width: 50px;
@@ -204,11 +203,11 @@ body {
     border-radius: 50%;
 }
 
-.checkInput:checked,.radioInput:checked {
+.inputContainer.check>input:checked, .inputContainer.radio>input:checked {
     background-color: var(--inputBackgroundColor-active);
 }
 
-.checkInput:checked:hover,.radioInput:checked:hover {
+.inputContainer.check>input:checked:hover, .inputContainer.radio>input:hover {
     background-color: var(--inputBackgroundColor-active-hover);
 }
 

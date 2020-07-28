@@ -72,7 +72,7 @@
                     for (const permission of this.permissionForm.getBindingObject()) {
                         permission.value.value = "0000";
                     }
-                    const checkInputs = this.permissionForm.getView().querySelectorAll(".checkInput");
+                    const checkInputs = this.permissionForm.getView().querySelectorAll(".inputContainer.check>input");
                     for (let i = 0; i < 4; i++) {
                         checkInputs[i].checked = false;
                     }
@@ -110,7 +110,7 @@
                     const bindingObjectIndex = this.moduleId2BindingObjectIndex[moduleId];
                     const permissionValue = this.permissionForm.getBindingObject()[bindingObjectIndex].value.value;
 
-                    const checkInputs = this.permissionForm.getView().querySelectorAll(".checkInput");
+                    const checkInputs = this.permissionForm.getView().querySelectorAll(".inputContainer.check>input");
                     for (let i = 0; i < 4; i++) {
                         if (permissionValue[i] === "1") {
                             checkInputs[i].checked = true;
@@ -121,7 +121,7 @@
                 });
 
                 //Add onchange to every checkInput for updating relevant permission object's value
-                const checkInputs = this.permissionForm.getView().querySelectorAll(".checkInput");
+                const checkInputs = this.permissionForm.getView().querySelectorAll(".inputContainer.check>input");
                 for (let i = 0; i < 4; i++) {
                     checkInputs[i].addEventListener("change", (event) => {
                         const selectedModuleId = dropDownInput.value;
@@ -195,7 +195,7 @@
                                 const moduleId = this.permissionForm.getView().querySelector("#moduleId").value;
                                 const bindingObjectIndex = this.moduleId2BindingObjectIndex[moduleId];
                                 const permissionValue = this.permissionForm.getBindingObject()[bindingObjectIndex].value.value;
-                                const checkInputs = this.permissionForm.getView().querySelectorAll(".checkInput");
+                                const checkInputs = this.permissionForm.getView().querySelectorAll(".inputContainer.check>input");
                                 for (let i = 0; i < 4; i++) {
                                     if (permissionValue[i] === "1") {
                                         checkInputs[i].checked = true;
@@ -235,8 +235,8 @@
                     <li>Both uppercase and lowercase letters are allowed</li>
                     <li>No spaces are allowed</li>
                 </ul>
-                <div class="inputContainer">
-                    <input id="name" type="text" class="input textInput" placeholder="eg: myRole1" />
+                <div class="inputContainer text">
+                    <input id="name" type="text" placeholder="eg: myRole1" />
                 </div>
             </form>
             <form id="permissionForm">
@@ -246,25 +246,25 @@
                 <p>The role determines a user's permissions on each module</p>
                 <p>If the role you want isn't listed below, go and add it in before proceeding</p>
                 <div class="inputContainer dropDown">
-                    <select id="moduleId" class="input dropDownInput">
+                    <select id="moduleId">
 
                     </select>
                 </div>
                 <div class="inputGroup">
-                    <div class="inputContainer">
-                        <input type="checkbox" class="input checkInput">
+                    <div class="inputContainer check">
+                        <input type="checkbox" />
                         <label>Create</label>
                     </div>
-                    <div class="inputContainer">
-                        <input type="checkbox" class="input checkInput">
+                    <div class="inputContainer check">
+                        <input type="checkbox" />
                         <label>Retrieve</label>
                     </div>
-                    <div class="inputContainer">
-                        <input type="checkbox" class="input checkInput">
+                    <div class="inputContainer check">
+                        <input type="checkbox" />
                         <label>Update</label>
                     </div>
-                    <div class="inputContainer">
-                        <input type="checkbox" class="input checkInput">
+                    <div class="inputContainer check">
+                        <input type="checkbox" />
                         <label>Delete</label>
                     </div>
                 </div>
