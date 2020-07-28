@@ -352,12 +352,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Take Me Home, Country Roads.mp3",
-                "artist": "",
-                "title": "Take Me Home, Country Roads",
-                "lyricsFileName": null
-            },
-            {
                 "path": "English Audios/I'm Letting Go.mp3",
                 "artist": "Josh Woodward",
                 "title": "I'm Letting Go",
@@ -433,12 +427,6 @@
                 "path": "English Audios/Rockets.mp3",
                 "artist": "",
                 "title": "Rockets",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Exceptions/Love You 1000 Years (The Holy Pearl).mp3",
-                "artist": "Unknown Artist",
-                "title": "Love You 1000 Years (The Holy Pearl)",
                 "lyricsFileName": null
             },
             {
@@ -634,6 +622,12 @@
                 "lyricsFileName": "In Pieces - Linkin Park.json"
             },
             {
+                "path": "Exceptions/Love You 1000 Years (The Holy Pearl).mp3",
+                "artist": "Unknown Artist",
+                "title": "Love You 1000 Years (The Holy Pearl)",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/She Couldn't.mp3",
                 "artist": "Linkin Park",
                 "title": "She Couldn't",
@@ -806,12 +800,6 @@
                 "artist": "Imagine Dragons",
                 "title": "Believer",
                 "lyricsFileName": "Believer - Imagine Dragons.json"
-            },
-            {
-                "path": "English Audios/Beautiful.mp3",
-                "artist": "Eminem",
-                "title": "Beautiful",
-                "lyricsFileName": "Beautiful - Eminem.json"
             },
             {
                 "path": "English Audios/Battle Symphony.mp3",
@@ -1027,6 +1015,12 @@
                 "path": "English Audios/Happy Together.mp3",
                 "artist": "",
                 "title": "Happy Together",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Beautiful (2).mp3",
+                "artist": "Akon",
+                "title": "Beautiful",
                 "lyricsFileName": null
             },
             {
@@ -1546,7 +1540,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Tearing Up My Heart.wma",
+                "path": "English Audios/Tearin' Up My Heart.mp3",
                 "artist": "NSYNC",
                 "title": "Tearin' Up My Heart",
                 "lyricsFileName": null
@@ -1864,10 +1858,10 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Beautiful (2).mp3",
-                "artist": "Akon",
+                "path": "English Audios/Beautiful.mp3",
+                "artist": "Eminem",
                 "title": "Beautiful",
-                "lyricsFileName": null
+                "lyricsFileName": "Beautiful - Eminem.json"
             },
             {
                 "path": "English Audios/Bellie Jean.mp3",
@@ -2150,6 +2144,12 @@
                 "artist": "Nestor",
                 "title": "Don't Leave Me Dry",
                 "lyricsFileName": "Don't Leave Me Dry - Nestor.json"
+            },
+            {
+                "path": "English Audios/Take Me Home, Country Roads.mp3",
+                "artist": "",
+                "title": "Take Me Home, Country Roads",
+                "lyricsFileName": null
             },
             {
                 "path": "English Audios/Don't Stay.mp3",
@@ -2800,7 +2800,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Fields Of Woe (Soundtrack 1) War Of The Vikings.m4a",
+                "path": "Music Catalog/Fields Of Woe (Soundtrack 1) War Of The Vikings.mp3",
                 "artist": "Paradox Interactive",
                 "title": "Fields of Woe",
                 "lyricsFileName": null
@@ -3130,7 +3130,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/To The End Of The Galaxy (Soundtrack 1) Stellaris.m4a",
+                "path": "Music Catalog/To The End Of The Galaxy (Soundtrack 1) Stellaris.mp3",
                 "artist": "Paradox Interactive",
                 "title": "To the End of the Galaxy",
                 "lyricsFileName": null
