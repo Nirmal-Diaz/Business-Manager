@@ -24,9 +24,11 @@
         "value": "1"
     },
     "avatar": {
-        "inputQuery": null,
-        "inputClass": "fileInput",
-        "pattern": null,
+        "inputQuery": "#avatar",
+        "inputClass": "imageInput",
+        "pattern": "62000;image/png,image/jpg",
+        "size": null,
+        "type": "image/png",
         "value": null
     }
 }
