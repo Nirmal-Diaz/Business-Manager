@@ -1,7 +1,7 @@
 {
     "photo": {
         "inputQuery": "#photo",
-        "inputClass": "imageInput",
+        "inputClass": "image",
         "pattern": "62000;image/png,image/jpg",
         "size": null,
         "type": "image/png",
@@ -9,73 +9,73 @@
     },
     "code": {
         "inputQuery": "#code",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^[A-Z]{3}[0-9]{1,7}$",
         "value": null
     },
     "fullName": {
         "inputQuery": "#fullName",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^[\\w\\s]{3,150}$",
         "value": null
     },
     "preferredName": {
         "inputQuery": "#preferredName",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^[\\w\\s]{3,150}$",
         "value": null
     },
     "birthDate": {
         "inputQuery": "#birthDate",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
     },
     "nicNumber": {
         "inputQuery": "#nicNumber",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^\\d{9}([VX]|\\d{3})$",
         "value": null
     },
     "address": {
         "inputQuery": "#address",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^[\\w\\s\\d,/.]{3,150}$",
         "value": null
     },
     "mobile": {
         "inputQuery": "#mobile",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^0\\d{9}$",
         "value": null
     },
     "land": {
         "inputQuery": "#land",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^0\\d{9}$",
         "value": null
     },
     "genderId": {
         "inputQuery": "#genderId",
-        "inputClass": "dropDownInput",
+        "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
     "civilStatusId": {
         "inputQuery": "#civilStatusId",
-        "inputClass": "dropDownInput",
+        "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
     "employeeStatusId": {
         "inputQuery": "#employeeStatusId",
-        "inputClass": "dropDownInput",
+        "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
     "designationId": {
         "inputQuery": "#designationId",
-        "inputClass": "dropDownInput",
+        "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null
     }

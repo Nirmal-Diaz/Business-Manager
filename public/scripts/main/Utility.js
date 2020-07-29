@@ -187,7 +187,7 @@ export class FormComponent {
 
 export class FormUtil {
     static mapPlainFieldToFormField(plainFieldValue, formField) {
-        if (formField.inputClass === "imageInput") {
+        if (formField.inputClass === "image") {
             //NOTE: Any kind of blob sent by the server has the following structure
             // const sampleBlob = {
             //     type: "Buffer",
@@ -213,11 +213,11 @@ export class FormUtil {
         }
 
         //Handle synchronization according to the inputClass
-        if (formField.inputClass === "textInput") {
+        if (formField.inputClass === "text") {
             input.value = value;
-        } else if (formField.inputClass === "dropDownInput") {
+        } else if (formField.inputClass === "dropDown") {
             input.value = value;
-        } else if (formField.inputClass === "imageInput") {
+        } else if (formField.inputClass === "image") {
             input.dataset.stringifiedBlob = value;
             input.dataset.size = formField.size;
             input.dataset.type = formField.type;
@@ -239,11 +239,11 @@ export class FormUtil {
         }
 
         //Handle synchronization according to the inputClass
-        if (formField.inputClass === "textInput") {
+        if (formField.inputClass === "text") {
             formField.value = input.value;
-        } else if (formField.inputClass === "dropDownInput") {
+        } else if (formField.inputClass === "dropDown") {
             formField.value = input.value;
-        } else if (formField.inputClass === "imageInput") {
+        } else if (formField.inputClass === "image") {
             formField.value = input.dataset.stringifiedBlob;
             formField.size = parseInt(input.dataset.size);
             formField.type = input.dataset.type;
@@ -251,11 +251,11 @@ export class FormUtil {
     }
 
     static resetInput(formView, formField) {
-        if (formField.inputClass === "textInput") {
+        if (formField.inputClass === "text") {
             formView.querySelector(formField.inputQuery).value = "";
-        } else if (formField.inputClass === "dropDownInput") {
+        } else if (formField.inputClass === "dropDown") {
             formView.querySelector(formField.inputQuery).value = "1";
-        } else if (formField.inputClass === "imageInput") {
+        } else if (formField.inputClass === "image") {
             const imageInput = formView.querySelector(formField.inputQuery);
 
             imageInput.value = "";
@@ -278,14 +278,14 @@ export class FormUtil {
         }
 
         //Handle visualization according to the inputClass
-        if (formField.inputClass === "textInput" || formField.inputClass === "dropDownInput") {
+        if (formField.inputClass === "text" || formField.inputClass === "dropDown") {
             const regexp = new RegExp(formField.pattern);
             if (!regexp.test(value) || value === "null") {
                 isInvalidFiled = true;
             } else {
                 isInvalidFiled = false;
             }
-        } else if (formField.inputClass === "imageInput") {
+        } else if (formField.inputClass === "image") {
             const parts = formField.pattern.split(";");
             const maxSize = parseInt(parts[0]);
             const acceptedTypes = parts[1].split(",");

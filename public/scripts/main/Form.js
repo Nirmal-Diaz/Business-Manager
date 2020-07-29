@@ -28,7 +28,7 @@ export class Form {
                     this.bindingObject = response.data;
                     this.referenceBindingObject = response.data;
                     //Add onkeyup to each textInput for validate itself in realtime
-                    const textInputs = this.view.querySelectorAll(".inputContainer>input[type='text']");
+                    const textInputs = this.view.querySelectorAll(".inputContainer.text>input");
                     for (const textInput of textInputs) {
                         textInput.addEventListener("keyup", () => {
                             FormUtil.validateAndVisualizeField(this.view, this.bindingObject[textInput.id], true);

@@ -26,7 +26,7 @@ export class ValidationController {
                         if (clientBindingObject[key].hasOwnProperty("value")) {
                             if (serverObject[key].pattern !== null) {
                                 //Copy clientBindingObject's values to serverBindingObject after validating against the pattern
-                                if (serverObject[key].inputClass === "imageInput") {
+                                if (serverObject[key].inputClass === "image") {
                                     //WARNING: Server only validates the blob.size
                                     //TODO: Add blob.type validation to server side
                                     const parts = serverObject[key].pattern.split(";");

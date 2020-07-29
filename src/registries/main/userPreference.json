@@ -13,19 +13,19 @@
     },
     "preferredName": {
         "inputQuery": "#preferredName",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^[\\w\\s]{3,15}",
         "value": null
     },
     "themeId": {
         "inputQuery": "#themeId",
-        "inputClass": "dropDownInput",
+        "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}",
         "value": "1"
     },
     "avatar": {
         "inputQuery": "#avatar",
-        "inputClass": "imageInput",
+        "inputClass": "image",
         "pattern": "62000;image/png,image/jpg",
         "size": null,
         "type": "image/png",

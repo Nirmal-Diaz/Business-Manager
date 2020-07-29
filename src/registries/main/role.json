@@ -1,7 +1,7 @@
 {
     "name": {
         "inputQuery": "#name",
-        "inputClass": "textInput",
+        "inputClass": "text",
         "pattern": "^\\w{3,15}$",
         "value": null
     }
