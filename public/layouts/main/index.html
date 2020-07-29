@@ -5,17 +5,15 @@
     <meta charset="UTF-8" />
     <title>Business Manager Server</title>
 
-    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css"/>
-    <link rel="stylesheet" href="/stylesheets/main/platform.css"/>
-    <link rel="stylesheet" href="/stylesheets/main/shell.css"/>
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css" />
+    <link rel="stylesheet" href="/stylesheets/main/shell.css" />
 
     <style>
-        .patternInput {
+        .inputContainer.pattern {
             position: absolute;
             right: 0;
 
-            display: flex;
-            flex-wrap: wrap;
             visibility: hidden;
 
             height: 25vw;
@@ -23,12 +21,17 @@
 
             transform: translate(-50px);
         }
+
+        .inputContainer.pattern>div {
+            height: 25vw;
+            width: 25vw;
+        }
     </style>
 
     <script type="module">
         //@ts-check
-        import {ShellInterface} from "/scripts/main/ShellInterface.js";
-        
+        import { ShellInterface } from "/scripts/main/ShellInterface.js";
+
         //Prevent contextMenu
         window.addEventListener("contextmenu", (event) => {
             event.preventDefault();
@@ -62,34 +65,36 @@
 
         <div id="logInAvatar"></div>
 
-        <div class="patternInput">
-            <canvas class="patternCanvas"></canvas>
-            <div class="cell">
-                <div data-cell-keyword="A9" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="B8" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="C7" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="D6" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="E5" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="F4" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="G3" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="H2" class="cellPoint"></div>
-            </div>
-            <div class="cell">
-                <div data-cell-keyword="I1" class="cellPoint"></div>
+        <div class="inputContainer pattern">
+            <div>
+                <canvas></canvas>
+                <div>
+                    <div data-cell-keyword="A9" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="B8" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="C7" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="D6" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="E5" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="F4" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="G3" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="H2" class="cellPoint"></div>
+                </div>
+                <div>
+                    <div data-cell-keyword="I1" class="cellPoint"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -124,11 +129,12 @@
                 <div style="display: flex; align-items: center;">
                     <div>
                         <div id="timeDisplay" class="title" style="text-align: right;"></div>
-                        <div id="navigatorControlOptionDisplay" class="titleDescription" style="text-align: right;">Click and drag for options</div>
+                        <div id="navigatorControlOptionDisplay" class="titleDescription" style="text-align: right;">
+                            Click and drag for options</div>
                     </div>
                     <button id="navigationControl">
                         <span></span>
-                </button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -142,7 +148,7 @@
                 <div class="titleDescription">Following cards are available for you to work with</div>
             </div>
             <div id="actionOverlayChipPane">
-    
+
             </div>
             <div style="display: flex; justify-content: center;">
                 <button class="buttonText">CLOSE</button>

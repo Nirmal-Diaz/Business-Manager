@@ -25,7 +25,7 @@
             constructor() {
                 super();
 
-                this.patternUpdater = new PatternUpdater(document.querySelector(".patternInput"));
+                this.patternUpdater = new PatternUpdater(document.querySelector(".inputContainer.pattern"));
 
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.patternUpdater.setStep(2);
@@ -53,33 +53,33 @@
                     <h1 class="titleDescription">Mark your current pattern</h1>
                 </div>
                 <div class="inputContainer pattern">
-                    <div class="patternInput">
-                        <canvas class="patternCanvas"></canvas>
-                        <div class="cell">
+                    <div>
+                        <canvas></canvas>
+                        <div>
                             <div data-cell-keyword="A9" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="B8" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="C7" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="D6" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="E5" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="F4" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="G3" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="H2" class="cellPoint"></div>
                         </div>
-                        <div class="cell">
+                        <div>
                             <div data-cell-keyword="I1" class="cellPoint"></div>
                         </div>
                     </div>

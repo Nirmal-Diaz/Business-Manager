@@ -13,7 +13,7 @@ export class PatternAuthorizer {
     constructor(patternInput) {
         //Initialize/cache view elements
         this.view = patternInput;
-        this.patternCanvas = this.view.querySelector(".patternCanvas");
+        this.patternCanvas = this.view.querySelector("canvas");
         this.context2D = this.patternCanvas.getContext("2d");
         this.cellPoints = this.view.querySelectorAll(".cellPoint");
         //Add onpointerdown to cellPoints for initializing activatedCellPositions and cellCombination
