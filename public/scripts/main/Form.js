@@ -34,6 +34,30 @@ export class Form {
                             FormUtil.validateAndVisualizeField(this.view, this.bindingObject[textInput.id], true);
                         });
                     }
+
+                    //Add onchange to each imageInput to update dataset values
+                    const imageInputs = this.view.querySelectorAll(".inputContainer.image>input");
+                    for (const imageInput of imageInputs) {
+                        imageInput.addEventListener("change", () => {
+                            const imageBlob = imageInput.files[0];
+
+                            //NOTE: To improve performance, blobs representations must be strings rather than arrays
+                            imageBlob.arrayBuffer().then((blobArrayBuffer) => {
+                                imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
+                            });
+                            imageInput.dataset.size = imageBlob.size;
+                            imageInput.dataset.type = imageBlob.type;
+
+                            //Update the sibling img
+                            imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
+                        });
+                        //Add onclick to sibling img tag for triggering the click event on the imageInput
+                        imageInput.previousElementSibling.addEventListener("click", () => {
+                            imageInput.click();
+                        });
+                    }
+
+
                     return this;
                 } else {
                     return null;

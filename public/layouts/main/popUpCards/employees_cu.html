@@ -87,26 +87,6 @@
                         document.getElementById("birthDate").value = birthDate.toISOString().slice(0, 10);;
                     }
                 });
-
-                const photoInput = document.getElementById("photo");
-                //Add onchange to photoInput for updating the binding object
-                photoInput.addEventListener("change", () => {
-                    const photoBlob = photoInput.files[0];
-
-                    //NOTE: To improve performance, blobs representations must be strings rather than arrays
-                    photoBlob.arrayBuffer().then((blobArrayBuffer) => {
-                        photoInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
-                    });
-                    photoInput.dataset.size = photoBlob.size;
-                    photoInput.dataset.type = photoBlob.type;
-
-                    //Update the sibling img
-                    photoInput.previousElementSibling.src = URL.createObjectURL(photoBlob);
-                });
-                //Add onclick to sibling img tag for triggering the click event on the photoInput
-                photoInput.previousElementSibling.addEventListener("click", () => {
-                    photoInput.click();
-                });
             }
 
             initInputs() {

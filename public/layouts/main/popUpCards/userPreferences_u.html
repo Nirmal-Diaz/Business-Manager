@@ -42,26 +42,6 @@
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.form.resetInputs();
                 });
-
-                const avatarInput = document.getElementById("avatar");
-                //Add onchange to avatarInput for updating the binding object
-                avatarInput.addEventListener("change", () => {
-                    const avatarBlob = avatarInput.files[0];
-
-                    //NOTE: To improve performance, blobs representations must be strings rather than arrays
-                    avatarBlob.arrayBuffer().then((blobArrayBuffer) => {
-                        avatarInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
-                    });
-                    avatarInput.dataset.size = avatarBlob.size;
-                    avatarInput.dataset.type = avatarBlob.type;
-
-                    //Update the sibling img
-                    avatarInput.previousElementSibling.src = URL.createObjectURL(avatarBlob);
-                });
-                //Add onclick to sibling img tag for triggering the click event on the avatarInput
-                avatarInput.previousElementSibling.addEventListener("click", () => {
-                    avatarInput.click();
-                });
             }
 
             initInputs() {
