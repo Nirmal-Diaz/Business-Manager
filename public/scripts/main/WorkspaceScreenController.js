@@ -2,7 +2,6 @@
 import { ScreenController } from "./ScreenController.js";
 import { LogInScreenController } from "./LogInScreenController.js";
 import { ShellComponent, PlatformUtil } from "./Utility.js";
-import { Card } from "./Card.js";
 
 export class WorkspaceScreenController extends ScreenController {
     //NOTE: Following declarations are aligned with the z-indexes of the cards where last of the pastCards have the highest z-index
@@ -55,8 +54,6 @@ export class WorkspaceScreenController extends ScreenController {
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    //Create a card for the first actionOverlayChip
-                    this.addCard(new Card(response.data[0].layoutFilePath, response.data[0].id));
                     //Create actionOverlayChips for each permission if its value[1] === "1"
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.data.length; i++) {
@@ -64,6 +61,10 @@ export class WorkspaceScreenController extends ScreenController {
                         actionOverlayChipPaneFragment.appendChild(actionOverlayChip);
                     }
                     document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);
+
+                    //Present Action Overlay
+                    this.actionOverlayView.classList.replace("popOut", "popIn");
+                    this.actionOverlayBackground.classList.replace("popOut", "popIn");
                 } else {
                     window.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "LOGOUT", null).then(() => this.logoutSession());
                 }
@@ -244,8 +245,9 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     removeCurrentCard() {
-        if ((this.pastCards.length + this.presentCards.length) > 1) {
-            //CASE: There are more than one card open
+        if (this.presentCards.length > 0) {
+            //CASE: There is at least one card open
+            //Animate out the currentCard from view
             const currentCard = this.presentCards[this.presentCards.length - 1];
             //Remove all popUpCards of currentCard
             //NOTE: Closing one popUpCard will alter the openPopUpCards[]. Therefore we must copy that array to a temporary array
@@ -258,23 +260,47 @@ export class WorkspaceScreenController extends ScreenController {
             }
             const currentCardView = currentCard.getView();
             currentCardView.style.animation = "removePresentCard 0.5s forwards";
-            setTimeout(() => {
-                if (this.presentCards.length > 1) {
-                    //CASE: Positive scrolling is possible
-                    this.scrollViewport(100);
-                    this.pastCards.shift();
+
+            //Remove all memory allocations of currentCard
+            if ((this.pastCards.length + this.presentCards.length) > 1) {
+                //CASE: There are more than one card open
+                setTimeout(() => {
+                    if (this.presentCards.length > 1) {
+                        //CASE: Positive scrolling is possible
+                        this.scrollViewport(100);
+                        this.pastCards.shift();
+                        currentCardView.remove();
+                    } else {
+                        //CASE: Positive scrolling is not possible
+                        currentCardView.style.animation = "removePresentCard 0.5s forwards";
+                        this.scrollViewport(-100);
+                        this.presentCards.shift();
+                        currentCardView.remove();
+                    }
+                }, 450);
+            } else {
+                //CASE: There is only one card open
+                this.presentCards.pop();
+
+                //Update status area
+                this.headerArea.querySelector("#moduleNameDisplay").innerText = "";
+                
+                //Animate out quickAccessArea
+                this.quickAccessArea.parentElement.classList.add("popOut");
+                //UpdateQuickAccessArea and animate in quickAccessArea
+                setTimeout(() => {
+                    this.quickAccessArea.innerHTML = "";
+                    this.quickAccessArea.parentElement.classList.remove("popOut");
                     currentCardView.remove();
-                } else {
-                    //CASE: Positive scrolling is not possible
-                    currentCardView.style.animation = "removePresentCard 0.5s forwards";
-                    this.scrollViewport(-100);
-                    this.presentCards.shift();
-                    currentCardView.remove();
-                }
-            }, 450);
+
+                    //Present Action Overlay
+                    this.actionOverlayView.classList.replace("popOut", "popIn");
+                    this.actionOverlayBackground.classList.replace("popOut", "popIn");
+                }, 300);
+            }
         } else {
-            //CASE: There is only one card open
-            window.shellInterface.throwAlert("Can't remove last card", "Open another card before closing this card", "The system expects you to work on at least one card at a given time. Therefore you cannot close the last card in your workspace. If you want to close the current card, another card must be open first. If you intend to finish your work, use the logout option", null, "OK", null);
+            //CASE: There are no cards open
+            window.shellInterface.throwAlert("No cards to close!", "Try Action Overlay to open a card", "You have no cards open currently. You can open the Action Overlay to open a card", null, "OK", null);
         }
     }
 
@@ -398,9 +424,9 @@ export class WorkspaceScreenController extends ScreenController {
         //NOTE: updateCardStyles() and updateQuickAccessArea() should be executed only if there is a change in either of the lengths of upcomingCards or pastCards
         if ((this.upcomingCards.length !== upcomingCardsLength) || (this.pastCards.length !== pastCardsLength)) {
             this.updateCardStyles();
-            //Animate out statusArea
+            //Animate out quickAccessArea
             this.quickAccessArea.parentElement.classList.add("popOut");
-            //UpdateQuickAccessArea and animate in statusArea
+            //UpdateQuickAccessArea and animate in quickAccessArea
             setTimeout(() => {
                 this.updateQuickAccessArea();
                 this.quickAccessArea.parentElement.classList.remove("popOut");
