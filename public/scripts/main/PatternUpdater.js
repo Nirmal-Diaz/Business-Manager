@@ -26,7 +26,7 @@ export class PatternUpdater extends PatternAuthorizer {
 
     attemptAuthorization() {
         if (this.step === 1) {
-            //Case: PatternUpdater has asked to recall the current pattern from the user and we have the recalled pattern
+            //CASE: PatternUpdater has asked to recall the current pattern from the user and we have the recalled pattern
             fetch(`/users/@me/pattern?cellCombination=${this.cellCombination}`)
                 .then(response => response.json())
                 .then(response => {
@@ -39,14 +39,14 @@ export class PatternUpdater extends PatternAuthorizer {
                     window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't create a session for you the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                 });
         } else if (this.step === 2) {
-            //Case: PatternUpdater has asked to mark the new pattern from the user and we have the new pattern
+            //CASE: PatternUpdater has asked to mark the new pattern from the user and we have the new pattern
             this.setStep(3);
             this.newPattern = this.cellCombination;
 
         } else if (this.step === 3) {
-            //Case: PatternUpdater has asked to confirm the new pattern from the user and we have the confirmed pattern
+            //CASE: PatternUpdater has asked to confirm the new pattern from the user and we have the confirmed pattern
             if (this.newPattern === this.cellCombination) {
-                //Case: Both the new and confirmed patterns are equivalent
+                //CASE: Both the new and confirmed patterns are equivalent
                 fetch("/users/@me/pattern", {
                     method: "POST",
                     headers: {

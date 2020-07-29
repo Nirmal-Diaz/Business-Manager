@@ -181,7 +181,7 @@
                     const absoluteDifferenceX = Math.abs(differenceX);
                     const absoluteDifferenceY = Math.abs(differenceY);
                     if (absoluteDifferenceX >= absoluteDifferenceY) {
-                        //Case: x axis must be prioritized
+                        //CASE: x axis must be prioritized
                         if (differenceX > 0) {
                             cardInterface.navigationControl.style.borderWidth = "0 2px 0 0";
                             procedureToExecute = () => {
@@ -191,7 +191,7 @@
                             cardInterface.navigationControl.style.borderWidth = "0 0 0 2px";
                             procedureToExecute = () => {
                                 if (window.frameElement) {
-                                    //Case: Musix is running inside a frame element
+                                    //CASE: Musix is running inside a frame element
                                     //NOTE: There is a better way to start a search. So don't allow search this way
                                     cardInterface.nowPlayingController.skipTrack("previous");
                                 } else {
@@ -203,7 +203,7 @@
                             };
                         }
                     } else {
-                        //Case: y axis must be prioritized
+                        //CASE: y axis must be prioritized
                         if (differenceY > 0) {
                             cardInterface.navigationControl.style.borderWidth = "0 0 2px 0";
                             procedureToExecute = () => {

@@ -197,7 +197,7 @@
                 const absoluteDifferenceX = Math.abs(differenceX);
                 const absoluteDifferenceY = Math.abs(differenceY);
                 if (absoluteDifferenceX >= absoluteDifferenceY) {
-                    //Case: x axis must be prioritized
+                    //CASE: x axis must be prioritized
                     if (differenceX > 0) {
                         cardInterface.navigationControl.style.borderWidth = "0 2px 0 0";
                         procedureToExecute = () => {
@@ -210,7 +210,7 @@
                         };
                     }
                 } else {
-                    //Case: y axis must be prioritized
+                    //CASE: y axis must be prioritized
                     if (differenceY > 0) {
                         cardInterface.navigationControl.style.borderWidth = "0 0 2px 0";
                         procedureToExecute = () => {

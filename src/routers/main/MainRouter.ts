@@ -45,10 +45,10 @@ mainRouter.use(express.static(__dirname + "/../../../public"));
 //Initialize login validator
 mainRouter.use((req, res, next) => {
     if (["/", "/sessions"].includes(req.path) || /^\/users\/.*\/avatar$/.test(req.path)) {
-        //Case: Path must be excluded
+        //CASE: Path must be excluded
         next();
     } else {
-        //Case: Path must be included
+        //CASE: Path must be included
         SessionController.checkLogIn(req.session).then(() => {
             next();
         }).catch(error => {
@@ -452,14 +452,14 @@ mainRouter: Middleware Setup (Post routing)
 //Initiate handler for successful responses
 mainRouter.use((req, res, next) => {
     if (res.locals.data) {
-        //Case: res.locales.data is present with data
+        //CASE: res.locales.data is present with data
         //Send data
         res.json({
             status: true,
             data: res.locals.data
         });
     } else {
-        //Case: res.locales.data is not present
+        //CASE: res.locales.data is not present
         next();
     }
 });
@@ -468,7 +468,7 @@ mainRouter.use((req, res, next) => {
 mainRouter.use((req, res, next) => {
     //WARNING: This "else" is unnecessary as res.locales.error must be present by now
     if (res.locals.error) {
-        //Case: res.locales.error is present with data
+        //CASE: res.locales.error is present with data
         //Send data
         console.log("System error resolved:", res.locals.error);
         res.json({

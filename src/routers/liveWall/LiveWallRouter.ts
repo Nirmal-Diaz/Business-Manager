@@ -27,7 +27,7 @@ liveWallRouter.route("/directories/:absoluteDirectoryPath")
         const resolvedPath = path.resolve(req.params.absoluteDirectoryPath) + "/";
 
         if (fs.existsSync(resolvedPath)) {
-            //Case: Specified directory path exists
+            //CASE: Specified directory path exists
 
             //Merge the specified directory with the current static directory
             //WARNING: This line merges the current static directory with the specified one
@@ -37,7 +37,7 @@ liveWallRouter.route("/directories/:absoluteDirectoryPath")
                 status: true
             });
         } else {
-            //Case: Specified directory path doesn't exist
+            //CASE: Specified directory path doesn't exist
             res.json({
                 status: false,
                 error: { title: "There's nothing here", titleDescription: "Recheck the path", message: "We couldn't find anything at the path you specified. Make sure that the path is correct and try again", technicalMessage: "Nothing exists at specified path" }

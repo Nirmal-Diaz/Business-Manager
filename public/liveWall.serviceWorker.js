@@ -20,14 +20,14 @@ self.addEventListener("fetch", (event) => {
         caches.open(cacheName).then((cache) => {
             return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
-                    //Case: A cached response already exists
+                    //CASE: A cached response already exists
                     // console.log("Serving: " + event.request.url);
                     return cachedResponse;
                 } else {
-                    //Case: A cached response doesn't exist
+                    //CASE: A cached response doesn't exist
                     let isCachable = event.request.method.includes("/directories");
                     if (isCachable) {
-                        //Case: A cached response doesn't exist and needs to be cached
+                        //CASE: A cached response doesn't exist and needs to be cached
                         //Request, cache and respond with required resource
                         return fetch(event.request).then((fetchedResponse) => {
                             // console.log("Caching: " + event.request.url);
@@ -40,7 +40,7 @@ self.addEventListener("fetch", (event) => {
                             }));
                         });
                     } else {
-                        //Case: A cached response doesn't exist and no need of caching
+                        //CASE: A cached response doesn't exist and no need of caching
                         //Request and respond with required resource without caching
                         // console.log("Fetching: " + event.request.url);
                         return fetch(event.request).catch((error) => {

@@ -75,21 +75,21 @@ export class PlaylistController {
             const isFinalPlaylist = currentPlaylistIndex === this.playlists.length - 1;
             const isFinalTrack = currentTrackIndex === currentPlaylist.tracks.length - 1;
             if (isFinalPlaylist && isFinalTrack) {
-                //Case: Now playing is the final track of the final playlist
+                //CASE: Now playing is the final track of the final playlist
                 //Return position of first track of the first playlist
                 return {
                     playlistIndex: 0,
                     trackIndex: 0
                 };
             } else if (isFinalTrack) {
-                //Case: Now playing is the final track of the current playlist
+                //CASE: Now playing is the final track of the current playlist
                 //Return position of first track of the next playlist
                 return {
                     playlistIndex: currentPlaylistIndex + 1,
                     trackIndex: 0
                 };
             } else {
-                //Case: Now playing is not a final track or the final the playlist
+                //CASE: Now playing is not a final track or the final the playlist
                 //Return position of next track of the current playlist
                 return {
                     playlistIndex: currentPlaylistIndex,
@@ -100,21 +100,21 @@ export class PlaylistController {
             const isFirstPlaylist = currentPlaylistIndex === 0;
             const isFirstTrack = currentTrackIndex === 0;
             if (isFirstPlaylist && isFirstTrack) {
-                //Case: Now playing is the first track of the first playlist
+                //CASE: Now playing is the first track of the first playlist
                 //Return position of final track of the final playlist
                 return {
                     playlistIndex: this.playlists.length - 1,
                     trackIndex: this.playlists[this.playlists.length - 1].tracks.length - 1
                 };
             } else if (isFirstTrack) {
-                //Case: Now playing is the first track of the current playlist
+                //CASE: Now playing is the first track of the current playlist
                 //Return position of final track of the previous playlist
                 return {
                     playlistIndex: currentPlaylistIndex - 1,
                     trackIndex: this.playlists[currentPlaylistIndex - 1].tracks.length - 1
                 };
             } else {
-                //Case: Now playing is not a first track or the first the playlist
+                //CASE: Now playing is not a first track or the first the playlist
                 //REturn position of previous track of the current playlist
                 return {
                     playlistIndex: currentPlaylistIndex,
@@ -148,7 +148,7 @@ export class PlaylistController {
 
     addToQuickPlaylist(track) {
         if (localStorage.getItem("quickPlaylistIndex") === "-1") {
-            //Case: There is no quick playlist created
+            //CASE: There is no quick playlist created
             //Create the quick playlist in the playlists[]
             const quickPlaylist = PlaylistController.createNewPlaylist("Quick Playlist", track);
             const quickPlaylistIndex = this.appendPlaylist(quickPlaylist);
@@ -170,7 +170,7 @@ export class PlaylistController {
                 };
             }
         } else {
-            //Case: There is a quick playlist created
+            //CASE: There is a quick playlist created
             const quickPlaylistIndex = parseInt(localStorage.getItem("quickPlaylistIndex"));
             const quickPlaylist = this.playlists[quickPlaylistIndex];
             //Add the specified track as the last track of the quick playlist

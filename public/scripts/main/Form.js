@@ -98,7 +98,7 @@ export class Form {
 
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
-                //Case: Key holds an entire new formObject
+                //CASE: Key holds an entire new formObject
                 this.mapToBindingObject(bindingObject[key].value, plainObject[key]);
             } else {
                 FormUtil.mapPlainFieldToFormField(plainObject[key], bindingObject[key]);
@@ -110,18 +110,18 @@ export class Form {
     //NOTE: Use this before submitting a "create" form
     updateBindingObject(bindingObject = this.bindingObject) {
         if (Array.isArray(bindingObject)) {
-            //Case: deSyncedObject is an array
+            //CASE: deSyncedObject is an array
             //Cannot update elements inside arrays
         } else {
-            //Case: deSyncedObject is an object
+            //CASE: deSyncedObject is an object
             for (const key of Object.keys(bindingObject)) {
                 if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
-                    //Case: Key holds an entire new formObject
+                    //CASE: Key holds an entire new formObject
                     this.updateBindingObject(bindingObject[key].value);
                 } else {
-                    //Case: Key holds a formField object
+                    //CASE: Key holds a formField object
                     if (bindingObject[key].inputQuery !== null) {
-                        //Case: Field of the formObject have a binding input
+                        //CASE: Field of the formObject have a binding input
                         //Load the value of the input to the binding field
                         FormUtil.updateValueFromInput(this.view, bindingObject[key]);
                     }
@@ -134,12 +134,12 @@ export class Form {
     updateInputs(bindingObject = this.bindingObject) {
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
-                //Case: Key holds an entire new formObject
+                //CASE: Key holds an entire new formObject
                 this.updateInputs(bindingObject[key].value);
             } else {
-                //Case: Key holds a formField object
+                //CASE: Key holds a formField object
                 if (bindingObject[key].inputQuery !== null) {
-                    //Case: Field of the formObject have a binding input
+                    //CASE: Field of the formObject have a binding input
                     FormUtil.updateInputFromValue(this.view, bindingObject[key], null);
                 }
             }
@@ -149,10 +149,10 @@ export class Form {
     resetInputs(bindingObject = this.bindingObject) {
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key].hasOwnProperty("childFormObject") && bindingObject[key].childFormObject === true) {
-                //Case: Key holds an entire new formObject
+                //CASE: Key holds an entire new formObject
                 this.resetInputs(bindingObject[key].value);
             } else {
-                //Case: Key holds a formField object
+                //CASE: Key holds a formField object
                 if (bindingObject[key].inputClass !== null) {
                     FormUtil.resetInput(this.view, bindingObject[key]);
                 }
@@ -164,7 +164,7 @@ export class Form {
     validateBindingObject(referenceBindingObject = this.referenceBindingObject, alteredBindingObject = this.bindingObject) {
         //NOTE: Validation is done against the referenceObject as it has the correct structure
         if (Array.isArray(referenceBindingObject)) {
-            //Case: referenceObject is an array
+            //CASE: referenceObject is an array
             //NOTE: referenceObject only contains one reference element for all the elements inside alteredObject
             const referenceElement = referenceBindingObject[0];
             //Validate each element inside alteredObject against referenceElement
@@ -172,15 +172,15 @@ export class Form {
                 this.validateBindingObject(referenceElement, bindingObjectElement)
             }
         } else {
-            //Case: referenceObject is an object
+            //CASE: referenceObject is an object
             for (const key of Object.keys(referenceBindingObject)) {
                 if (referenceBindingObject[key].hasOwnProperty("childFormObject") && referenceBindingObject[key].childFormObject === true) {
-                    //Case: Key holds an entire new formObject
+                    //CASE: Key holds an entire new formObject
                     this.validateBindingObject(referenceBindingObject[key].value, alteredBindingObject[key].value);
                 } else {
-                    //Case: Key holds a formField object
+                    //CASE: Key holds a formField object
                     if (referenceBindingObject[key].pattern !== null) {
-                        //Case: formField object must have a pattern to match
+                        //CASE: formField object must have a pattern to match
 
                         //NOTE: this.invalidBindingObject must contain the OR value of each field validation
                         this.invalidBindingObject = this.invalidBindingObject || FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);

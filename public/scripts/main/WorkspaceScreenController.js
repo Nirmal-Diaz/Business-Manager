@@ -159,7 +159,7 @@ export class WorkspaceScreenController extends ScreenController {
                 const absoluteDifferenceX = Math.abs(differenceX);
                 const absoluteDifferenceY = Math.abs(differenceY);
                 if (absoluteDifferenceX >= absoluteDifferenceY) {
-                    //Case: x axis must be prioritized
+                    //CASE: x axis must be prioritized
                     if (differenceX > 0) {
                         //Logout session
                         workspaceScreenController.navigationControl.style.borderColor = "transparent var(--headerAreaColor) transparent transparent";
@@ -181,7 +181,7 @@ export class WorkspaceScreenController extends ScreenController {
                         }
                     }
                 } else {
-                    //Case: y axis must be prioritized
+                    //CASE: y axis must be prioritized
                     if (differenceY > 0) {
                         //Remove presentCard[2]
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent var(--headerAreaColor) transparent";
@@ -245,7 +245,7 @@ export class WorkspaceScreenController extends ScreenController {
 
     removeCurrentCard() {
         if ((this.pastCards.length + this.presentCards.length) > 1) {
-            //Case: There are more then one card open
+            //CASE: There are more than one card open
             const currentCard = this.presentCards[this.presentCards.length - 1];
             //Remove all popUpCards of currentCard
             //NOTE: Closing one popUpCard will alter the openPopUpCards[]. Therefore we must copy that array to a temporary array
@@ -260,12 +260,12 @@ export class WorkspaceScreenController extends ScreenController {
             currentCardView.style.animation = "removePresentCard 0.5s forwards";
             setTimeout(() => {
                 if (this.presentCards.length > 1) {
-                    //Case: Positive scrolling is possible
+                    //CASE: Positive scrolling is possible
                     this.scrollViewport(100);
                     this.pastCards.shift();
                     currentCardView.remove();
                 } else {
-                    //Case: Positive scrolling is not possible
+                    //CASE: Positive scrolling is not possible
                     currentCardView.style.animation = "removePresentCard 0.5s forwards";
                     this.scrollViewport(-100);
                     this.presentCards.shift();
@@ -273,7 +273,7 @@ export class WorkspaceScreenController extends ScreenController {
                 }
             }, 450);
         } else {
-            //Case: There is only one card open
+            //CASE: There is only one card open
             window.shellInterface.throwAlert("Can't remove last card", "Open another card before closing this card", "The system expects you to work on at least one card at a given time. Therefore you cannot close the last card in your workspace. If you want to close the current card, another card must be open first. If you intend to finish your work, use the logout option", null, "OK", null);
         }
     }

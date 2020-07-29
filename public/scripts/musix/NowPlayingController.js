@@ -25,7 +25,7 @@ export class NowPlayingController {
 
         //Initiate localStorage if not exist
         if (!localStorage.getItem("hasPlaybackState")) {
-            //Case: Doesn't have a playback state
+            //CASE: Doesn't have a playback state
             //Playback state parameters must be initialized
             localStorage.setItem("hasPlaybackState", "true");
             localStorage.setItem("currentPlaylistIndex", "0");
@@ -34,7 +34,7 @@ export class NowPlayingController {
             localStorage.setItem("currentVolume", "0.5");
         }
         if (parseInt(localStorage.getItem("currentPlaylistIndex")) >= this.cardInterface.getPlaylistController().getPlaylists().length) {
-            //Case: User had a custom playlist in the previous session
+            //CASE: User had a custom playlist in the previous session
             //Current playlistIndex, trackIndex and trackTime must be reset because there is no quickPlaylist in this session and we cannot continue it
             //Choose a random playlistIndex as currentPlaylistIndex
             localStorage.setItem("currentPlaylistIndex", Utility.getRandInt(0, this.cardInterface.getPlaylistController().getPlaylists().length).toString());

@@ -20,7 +20,7 @@ export class LiveWallController {
             areas[i].addEventListener("dblclick", () => {
                 const imageMetaDatum = this.cardInterface.getImageMetadata()[Number.parseInt(areas[i].dataset.imageIndex)];
                 if (window.frameElement) {
-                    //Case: App is inside an iFrame
+                    //CASE: App is inside an iFrame
                     const imagePreviewPopUp = this.cardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/files_r_image.html");
                     //Allow more width than other popUpCards
                     imagePreviewPopUp.getView().style.maxWidth = "90vw";
@@ -28,7 +28,7 @@ export class LiveWallController {
                         imagePreviewPopUp.popUpCardInterface.preview(`/liveWall/${imageMetaDatum.path.replace(this.cardInterface.getRootDirectoryPath(), "")}`);
                     });
                 } else {
-                    //Case: App is not inside an iFrame
+                    //CASE: App is not inside an iFrame
                     const orientation = areas[i].id.slice(0, -1);
                     const color = areas[i].style.backgroundColor;
                     const zoomImage = new ZoomImage(imageMetaDatum, orientation, color);
@@ -62,15 +62,15 @@ export class LiveWallController {
         const imageMetaDatum = this.cardInterface.getImageMetadata()[imageIndex];
         let randomAreaQuery = "";
         if (imageMetaDatum.hwRatio > 1.2) {
-            //Case: portrait
+            //CASE: portrait
             randomAreaQuery = "#portrait" + this.portraitCounter;
             if (this.portraitCounter === 6) { this.portraitCounter = 1; } else { this.portraitCounter++; }
         } else if (imageMetaDatum.hwRatio < 3 / 4) {
-            //Case: landscape
+            //CASE: landscape
             randomAreaQuery = "#landscape" + this.landscapeCounter;
             if (this.landscapeCounter === 3) { this.landscapeCounter = 1; } else { this.landscapeCounter++; }
         } else {
-            //Case: square
+            //CASE: square
             randomAreaQuery = "#square" + this.squareCounter;
             if (this.squareCounter === 3) { this.squareCounter = 1; } else { this.squareCounter++; }
         }
