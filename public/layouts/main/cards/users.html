@@ -11,7 +11,7 @@
 
     <script type="module">
         //@ts-check
-        import { PlatformComponent, CardComponent } from "/scripts/main/Utility.js";
+        import { ShellComponent, ShellUtil, CardComponent } from "/scripts/main/Utility.js";
         import { PopUpCard } from "/scripts/main/PopUpCard.js";
         import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
         
@@ -36,12 +36,12 @@
 
                 //Add onclick to searchButton for toggling search UI
                 this.retrieveControls[0].addEventListener("click", () => {
-                    PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
+                    ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                 });
                 //Add onkeypress to searchButtonInput for searching the card
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter') {
-                        PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
+                        ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
                             this.searchItems("", "All users", "Select an item to view, update or delete");
                         } else {

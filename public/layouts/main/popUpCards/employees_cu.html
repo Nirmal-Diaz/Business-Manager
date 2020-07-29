@@ -11,9 +11,9 @@
 
     <script type="module">
         //@ts-check
-        import { FormUtil } from "/scripts/main/Utility.js";
-        import { Form } from "/scripts/main/Form.js";
         import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        import { Form } from "/scripts/main/Form.js";
+        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
 
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
@@ -92,16 +92,16 @@
             initInputs() {
                 return Promise.all([
                     //Load genders and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/tables/gender", "name", "id")
+                    FormComponent.createDropDownInputFragment("/tables/gender", "name", "id")
                         .then(dropDownInputFragment => this.form.getView().querySelector("#genderId").appendChild(dropDownInputFragment)),
                     //Load civil statuses and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/tables/civilStatus", "name", "id")
+                    FormComponent.createDropDownInputFragment("/tables/civilStatus", "name", "id")
                         .then(dropDownInputFragment => this.form.getView().querySelector("#civilStatusId").appendChild(dropDownInputFragment)),
                     //Load employee statuses and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/tables/employeeStatus", "name", "id")
+                    FormComponent.createDropDownInputFragment("/tables/employeeStatus", "name", "id")
                         .then(dropDownInputFragment => this.form.getView().querySelector("#employeeStatusId").appendChild(dropDownInputFragment)),
                     //Load designations and select option with value "1"
-                    FormUtil.createDropDownInputFragment("/tables/designation", "name", "id")
+                    FormComponent.createDropDownInputFragment("/tables/designation", "name", "id")
                         .then(dropDownInputFragment => this.form.getView().querySelector("#designationId").appendChild(dropDownInputFragment)),
                 ]);
             }

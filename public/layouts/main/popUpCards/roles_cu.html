@@ -11,9 +11,9 @@
 
     <script type="module">
         //@ts-check
-        import { FormUtil } from "/scripts/main/Utility.js";
-        import { Form } from "/scripts/main/Form.js";
         import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        import { Form } from "/scripts/main/Form.js";
+        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
         
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
@@ -82,7 +82,7 @@
             initInputs() {
                 return Promise.all([
                     //Load modules
-                    FormUtil.createDropDownInputFragment("/tables/module", "name", "id")
+                    FormComponent.createDropDownInputFragment("/tables/module", "name", "id")
                         .then((dropDownInputFragment) => {
                             this.permissionForm.getView().querySelector("#moduleId").appendChild(dropDownInputFragment);
                         })

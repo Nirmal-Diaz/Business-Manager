@@ -11,7 +11,7 @@
 
     <script type="module">
         //@ts-check
-        import { PlatformComponent, CardComponent } from "/scripts/main/Utility.js";
+        import { ShellComponent, ShellUtil, CardComponent } from "/scripts/main/Utility.js";
         import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
         
         //Add onload to window for initializing cardInterface
@@ -33,11 +33,11 @@
                 });
 
                 this.retrieveControls[0].addEventListener("click", () => {
-                    PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
+                    ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                 });
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter') {
-                        PlatformComponent.toggleButtonGlyph(this.retrieveControls[0]);
+                        ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
                             this.searchItems("", "All roles", "Select an item to view, update or delete");
                         } else {

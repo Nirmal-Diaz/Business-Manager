@@ -1,7 +1,7 @@
 //@ts-check
 import { ScreenController } from "./ScreenController.js";
 import { LogInScreenController } from "./LogInScreenController.js";
-import { PlatformComponent, PlatformUtil } from "./Utility.js";
+import { ShellComponent, PlatformUtil } from "./Utility.js";
 import { Card } from "./Card.js";
 
 export class WorkspaceScreenController extends ScreenController {
@@ -60,7 +60,7 @@ export class WorkspaceScreenController extends ScreenController {
                     //Create actionOverlayChips for each permission if its value[1] === "1"
                     const actionOverlayChipPaneFragment = new DocumentFragment();
                     for (let i = 0; i < response.data.length; i++) {
-                        const actionOverlayChip = PlatformComponent.createActionOverlayChip(response.data[i], this);
+                        const actionOverlayChip = ShellComponent.createActionOverlayChip(response.data[i], this);
                         actionOverlayChipPaneFragment.appendChild(actionOverlayChip);
                     }
                     document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);

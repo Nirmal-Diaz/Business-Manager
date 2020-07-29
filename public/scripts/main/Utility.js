@@ -15,7 +15,7 @@ export class PlatformUtil {
     }
 }
 
-export class PlatformComponent {
+export class ShellComponent {
     static createActionOverlayChip(module, workspaceScreenController) {
         const actionOverlayChip = document.createElement("div");
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
@@ -36,7 +36,9 @@ export class PlatformComponent {
         actionOverlayChip.appendChild(title);
         return actionOverlayChip;
     }
+}
 
+export class ShellUtil {
     static toggleButtonGlyph(buttonGlyph) {
         if (buttonGlyph.classList.toggle("revealed")) {
             buttonGlyph.children[1].style.display = "block";
@@ -152,6 +154,34 @@ export class CardComponent {
         }
 
         return bodyRow;
+    }
+}
+
+export class FormComponent {
+    static createDropDownInputFragment(requestURL, textContentField, valueField) {
+        //Fetch items
+        return fetch(requestURL)
+            .then(response => response.json())
+            .then(response => {
+                if (response.status) {
+                    const dropDownInputFragment = new DocumentFragment();
+                    //Create a dropDownInputOption for every item
+                    for (const item of response.data) {
+                        const dropDownInputOption = document.createElement("option");
+                        dropDownInputOption.textContent = item[textContentField];
+                        dropDownInputOption.value = item[valueField];
+
+                        dropDownInputFragment.appendChild(dropDownInputOption);
+                    }
+                    return dropDownInputFragment;
+                } else {
+                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                    return null;
+                }
+            })
+            .catch(error => {
+                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+            });
     }
 }
 
@@ -276,31 +306,5 @@ export class FormUtil {
         }
 
         return isInvalidFiled;
-    }
-
-    static createDropDownInputFragment(requestURL, textContentField, valueField) {
-        //Fetch items
-        return fetch(requestURL)
-            .then(response => response.json())
-            .then(response => {
-                if (response.status) {
-                    const dropDownInputFragment = new DocumentFragment();
-                    //Create a dropDownInputOption for every item
-                    for (const item of response.data) {
-                        const dropDownInputOption = document.createElement("option");
-                        dropDownInputOption.textContent = item[textContentField];
-                        dropDownInputOption.value = item[valueField];
-
-                        dropDownInputFragment.appendChild(dropDownInputOption);
-                    }
-                    return dropDownInputFragment;
-                } else {
-                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    return null;
-                }
-            })
-            .catch(error => {
-                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-            });
     }
 }
