@@ -148,114 +148,140 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
-                <div class="titleContainer">
-                    <h1 class="title">Photo</h1>
-                    <h1 class="titleDescription">Click to change</h1>
-                </div>
-                <ul>
-                    <li>Must be less than 62KiB</li>
-                </ul>
-                <div class="inputContainer image">
-                    <img src="" alt="">
-                    <input id="photo" type="file" />
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Employee Code</h1>
-                </div>
-                <ul>
-                    <li>Must be unique</li>
-                    <li>Must consist only of letters and numbers</li>
-                    <li>Both uppercase and lowercase letters are allowed</li>
-                    <li>No spaces are allowed</li>
-                </ul>
-                <div class="inputContainer text">
-                    <input id="code" type="text" placeholder="eg: PCB1125" />
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Photo</h1>
+                        <h1 class="titleDescription">Click to change</h1>
+                    </div>
+                    <ul>
+                        <li>Must be less than 62KiB</li>
+                    </ul>
+                    <div class="inputContainer image">
+                        <img src="" alt="">
+                        <input id="photo" type="file" />
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Full Name</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="fullName" type="text" placeholder="eg: John Adam Doe">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Preferred Name</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="preferredName" type="text" placeholder="eg: John">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">NIC Number</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="nicNumber" type="text" placeholder="eg: 952000662V">
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Employee Code</h1>
+                    </div>
+                    <ul>
+                        <li>Must be unique</li>
+                        <li>Must consist only of letters and numbers</li>
+                        <li>Both uppercase and lowercase letters are allowed</li>
+                        <li>No spaces are allowed</li>
+                    </ul>
+                    <div class="inputContainer text">
+                        <input id="code" type="text" placeholder="eg: PCB1125" />
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Birth Date</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="birthDate" type="text" placeholder="eg: 1970.01.01">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Gender</h1>
-                </div>
-                <div class="inputContainer dropDown">
-                    <select id="genderId">
-
-                    </select>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Full Name</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="fullName" type="text" placeholder="eg: John Adam Doe">
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Address</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="address" type="text" placeholder="eg: Broadway New York, NY 10012">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Mobile Number</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="mobile" type="text" placeholder="eg: 0711234567">
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Preferred Name</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="preferredName" type="text" placeholder="eg: John">
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Landline Number</h1>
-                </div>
-                <div class="inputContainer text">
-                    <input id="land" type="text" placeholder="eg: 0331234567">
-                </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Civil Status</h1>
-                </div>
-                <div class="inputContainer dropDown">
-                    <select id="civilStatusId">
-
-                    </select>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">NIC Number</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="nicNumber" type="text" placeholder="eg: 952000662V">
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Employee Status</h1>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Birth Date</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="birthDate" type="text" placeholder="eg: 1970.01.01">
+                    </div>
                 </div>
-                <div class="inputContainer dropDown">
-                    <select id="employeeStatusId">
 
-                    </select>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Gender</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="genderId">
+    
+                        </select>
+                    </div>
                 </div>
 
-                <div class="titleContainer">
-                    <h1 class="title">Designation</h1>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Address</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="address" type="text" placeholder="eg: Broadway New York, NY 10012">
+                    </div>
                 </div>
-                <div class="inputContainer dropDown">
-                    <select id="designationId">
 
-                    </select>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Mobile Number</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="mobile" type="text" placeholder="eg: 0711234567">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Landline Number</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="land" type="text" placeholder="eg: 0331234567">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Civil Status</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="civilStatusId">
+    
+                        </select>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Employee Status</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="employeeStatusId">
+    
+                        </select>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Designation</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="designationId">
+    
+                        </select>
+                    </div>
                 </div>
             </form>
         </div>

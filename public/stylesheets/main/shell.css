@@ -284,9 +284,9 @@
     height: 600px;
     min-height: 600px;
     max-height: 90vh;
-    width: 400px;
+    width: 700px;
     min-width: 400px;
-    max-width: 45vw;
+    max-width: 90vw;
     padding: 60px 0px 0 0px;
 
     background-color: var(--popUpCardBackgroundColor);

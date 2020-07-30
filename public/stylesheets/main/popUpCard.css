@@ -30,6 +30,17 @@
     background-color: var(--formFieldsContainerBackgroundColor);
 }
 
+form {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+.formFieldContainer {
+    width: 100%;
+}
+
 .formControlsContainer {
     position: absolute;
     bottom: 0;
@@ -40,6 +51,18 @@
 
     box-shadow: 0 5px 20px 0 var(--formControlsContainerBoxShadow);
 }
+
+/* @media (min-width: 60vw) and (max-width: 90vw) {
+    .formFieldContainer {
+        width: calc(100% / 3);
+    }
+}
+
+@media (max-width: 60vw) {
+    .formFieldContainer {
+        width: 50%;
+    }
+} */
 
 @media print {
     /* * {
@@ -74,13 +97,6 @@
 
     .formsContainer {
         padding: 70px 0 0 0;
-    }
-
-    form {
-        display: flex;
-        flex-wrap: wrap;
-
-        width: 100%;
     }
 
     form>.titleContainer {

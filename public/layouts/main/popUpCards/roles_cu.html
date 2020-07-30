@@ -227,45 +227,49 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form id="roleForm">
-                <div class="titleContainer">
-                    <h1 class="title">Role Name</h1>
-                </div>
-                <ul>
-                    <li>Must consist only of letters and numbers</li>
-                    <li>Both uppercase and lowercase letters are allowed</li>
-                    <li>No spaces are allowed</li>
-                </ul>
-                <div class="inputContainer text">
-                    <input id="name" type="text" placeholder="eg: myRole1" />
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Role Name</h1>
+                    </div>
+                    <ul>
+                        <li>Must consist only of letters and numbers</li>
+                        <li>Both uppercase and lowercase letters are allowed</li>
+                        <li>No spaces are allowed</li>
+                    </ul>
+                    <div class="inputContainer text">
+                        <input id="name" type="text" placeholder="eg: myRole1" />
+                    </div>
                 </div>
             </form>
             <form id="permissionForm">
-                <div class="titleContainer">
-                    <h1 class="title">Module Permissions</h1>
-                </div>
-                <p>The role determines a user's permissions on each module</p>
-                <p>If the role you want isn't listed below, go and add it in before proceeding</p>
-                <div class="inputContainer dropDown">
-                    <select id="moduleId">
-
-                    </select>
-                </div>
-                <div class="inputGroup">
-                    <div class="inputContainer check">
-                        <input type="checkbox" />
-                        <label>Create</label>
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Module Permissions</h1>
                     </div>
-                    <div class="inputContainer check">
-                        <input type="checkbox" />
-                        <label>Retrieve</label>
+                    <p>The role determines a user's permissions on each module</p>
+                    <p>If the role you want isn't listed below, go and add it in before proceeding</p>
+                    <div class="inputContainer dropDown">
+                        <select id="moduleId">
+    
+                        </select>
                     </div>
-                    <div class="inputContainer check">
-                        <input type="checkbox" />
-                        <label>Update</label>
-                    </div>
-                    <div class="inputContainer check">
-                        <input type="checkbox" />
-                        <label>Delete</label>
+                    <div class="inputGroup">
+                        <div class="inputContainer check">
+                            <input type="checkbox" />
+                            <label>Create</label>
+                        </div>
+                        <div class="inputContainer check">
+                            <input type="checkbox" />
+                            <label>Retrieve</label>
+                        </div>
+                        <div class="inputContainer check">
+                            <input type="checkbox" />
+                            <label>Update</label>
+                        </div>
+                        <div class="inputContainer check">
+                            <input type="checkbox" />
+                            <label>Delete</label>
+                        </div>
                     </div>
                 </div>
             </form>
