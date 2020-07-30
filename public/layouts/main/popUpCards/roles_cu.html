@@ -35,7 +35,7 @@
                 document.getElementById("saveButton").addEventListener("click", () => {
                     this.roleForm.submit()
                         .then(submission => {
-                            this.overallSubmissionStatus = this.overallSubmissionStatus && submission.status;
+                            this.overallSubmissionStatus = submission.status;
                             if (submission.status) {
                                 //Fill the roleId of each permission with the newly created role.id
                                 for (const permission of this.permissionForm.getBindingObject()) {
