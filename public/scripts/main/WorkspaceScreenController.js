@@ -435,26 +435,27 @@ export class WorkspaceScreenController extends ScreenController {
     }
 
     isCardExist(cardLayoutFilePath) {
-        let foundPopUpCard = false;
-        for (const pastCard of this.pastCards) {
-            if (pastCard.getLayoutFilePath() === cardLayoutFilePath) {
-                foundPopUpCard = pastCard;
+        //NOTE: When scroll < 0, cards are scrolled backwards (ie. pastCards are scrolled towards presentCards)
+        let scroll = null;
+        for (let i = 0; i < this.pastCards.length; i++) {
+            if (this.pastCards[i].getLayoutFilePath() === cardLayoutFilePath) {
+                scroll = -(i+1);
                 break;
             }
         }
-        for (const presentCard of this.presentCards) {
-            if (presentCard.getLayoutFilePath() === cardLayoutFilePath) {
-                foundPopUpCard = presentCard;
+        for (let i = 0; i < this.presentCards.length; i++) {
+            if (this.presentCards[i].getLayoutFilePath() === cardLayoutFilePath) {
+                scroll = this.presentCards.length -1 -i;
                 break;
             }
         }
-        for (const upcomingCard of this.upcomingCards) {
-            if (upcomingCard.getLayoutFilePath() === cardLayoutFilePath) {
-                foundPopUpCard = upcomingCard;
+        for (let i = 0; i < this.upcomingCards.length; i++) {
+            if (this.upcomingCards[i].getLayoutFilePath() === cardLayoutFilePath) {
+                scroll = this.upcomingCards.length - i + this.presentCards.length -1;
                 break;
             }
         }
-        return foundPopUpCard;
+        return scroll;
     }
 
     logoutSession() {

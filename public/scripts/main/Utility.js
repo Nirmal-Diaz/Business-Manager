@@ -20,14 +20,24 @@ export class ShellComponent {
         const actionOverlayChip = document.createElement("div");
         actionOverlayChip.setAttribute("class", "actionOverlayChip");
         actionOverlayChip.addEventListener("click", (event) => {
-            if (workspaceScreenController.isCardExist(module.layoutFilePath)) {
-                window.shellInterface.throwAlert("Card already open", "Scroll on the viewport to find it", "An instance of the card that you are trying to open already exists. You can find it by scrolling the stack of cards. You aren't allowed to open more than one instance of a card", null, "OK", null);
+            let scroll = workspaceScreenController.isCardExist(module.layoutFilePath);
+            if (scroll !== null) {
+                if (scroll < 0) {
+                    scroll = -scroll;
+                    for (let i = 0; i < scroll; i++) {
+                        workspaceScreenController.scrollViewport(-1);
+                    }
+                } else if (scroll > 0) {
+                    for (let i = 0; i < scroll; i++) {
+                        workspaceScreenController.scrollViewport(1);
+                    }
+                }
             } else {
                 workspaceScreenController.addCard(new Card(module.layoutFilePath, module.id));
-                //NOTE: Since we don't care about the closing animation of action overlay when a chip is clicked (We care about the card insertion animation), actionOverlayView must be popped out first
-                workspaceScreenController.actionOverlayView.classList.replace("popIn", "popOut");
-                workspaceScreenController.actionOverlayBackground.classList.replace("popIn", "popOut");
             }
+            //NOTE: Since we don't care about the closing animation of action overlay when a chip is clicked (We care about the card insertion animation), actionOverlayView must be popped out first
+            workspaceScreenController.actionOverlayView.classList.replace("popIn", "popOut");
+            workspaceScreenController.actionOverlayBackground.classList.replace("popIn", "popOut");
         });
 
         const title = document.createElement("div");
