@@ -4006,6 +4006,12 @@
         "lyricsFileName": null
       },
       {
+        "path": "Sinhala Audios/Sihilasee.mp3",
+        "artist": "Eranga Jayawardhana/Hansini",
+        "title": "Sihilasee",
+        "lyricsFileName": null
+      },
+      {
         "path": "Sinhala Audios/Pinwanthiye Mage.mp3",
         "artist": "",
         "title": "Pinwanthiye Mage",
@@ -4540,9 +4546,27 @@
         "lyricsFileName": null
       },
       {
+        "path": "Sinhala Audios/Hansa Bottuwe.mp3",
+        "artist": "Api Machan/Sumith Mandanayaka",
+        "title": "Hansa Bottuwe",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Deadara Wilikun.mp3",
+        "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
+        "title": "Deadara Wilikun",
+        "lyricsFileName": null
+      },
+      {
         "path": "Sinhala Audios/Aadara Priya Landune.mp3",
         "artist": "Felix Anton/Ayomi Perera",
         "title": "Aadara Priya Landune",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Me Nagaraya Aluth Wela.mp3",
+        "artist": "Api Machan",
+        "title": "Me Nagaraya Aluth Wela",
         "lyricsFileName": null
       },
       {
@@ -4786,9 +4810,9 @@
     "themeColor": "gray",
     "tracks": [
       {
-        "path": "Sinhala Audios/Sihilasee.mp3",
-        "artist": "Eranga Jayawardhana/Hansini",
-        "title": "Sihilasee",
+        "path": "English Audios/Take Me Home, Country Roads (2).mp3",
+        "artist": "John Denver",
+        "title": "Take Me Home, Country Roads",
         "lyricsFileName": null
       },
       {
