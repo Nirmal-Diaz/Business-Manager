@@ -27,7 +27,7 @@ export class Employee {
   @Column("blob", { name: "photo" })
   photo: Buffer;
 
-  @Column("varchar", { name: "code", unique: true, length: 10 })
+  @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
   @Column("varchar", { name: "full_name", length: 150 })
@@ -38,6 +38,9 @@ export class Employee {
 
   @Column("date", { name: "birth_date" })
   birthDate: string;
+
+  @Column("date", { name: "employment_date" })
+  employmentDate: string;
 
   @Column("char", { name: "nic_number", unique: true, length: 12 })
   nicNumber: string;
