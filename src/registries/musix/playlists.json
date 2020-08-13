@@ -220,6 +220,12 @@
                 "lyricsFileName": "Not Alone - Linkin Park.json"
             },
             {
+                "path": "English Audios/When I Dream At Night.mp3",
+                "artist": "Marc Anthony",
+                "title": "When I Dream at Night",
+                "lyricsFileName": "When I Dream At Night - Mark Anthony.json"
+            },
+            {
                 "path": "English Audios/Everything I Do.mp3",
                 "artist": "Bryan Adams",
                 "title": "(Everything I Do) I Do It for You",
@@ -874,9 +880,21 @@
                 "lyricsFileName": "Working Man - Imagine Dragons.json"
             },
             {
+                "path": "English Audios/Radio Ga Ga.mp3",
+                "artist": "Queen",
+                "title": "Radio Ga Ga",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Thunderclouds.mp3",
                 "artist": "Sia/Diplo/Labrinth",
                 "title": "Thunderclouds",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Show Must Go On.mp3",
+                "artist": "Queen",
+                "title": "The Show Must Go On",
                 "lyricsFileName": null
             },
             {
@@ -922,6 +940,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Heroes Tonight.mp3",
+                "artist": "",
+                "title": "",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Somebody's Watching Me.mp3",
                 "artist": "Michael Jackson",
                 "title": "Somebody's Wactching Me",
@@ -949,6 +973,12 @@
                 "path": "English Audios/Sorry For Now.mp3",
                 "artist": "Linkin Park",
                 "title": "Sorry for Now",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/You're The Voice.mp3",
+                "artist": "John Farnham",
+                "title": "You're The Voice",
                 "lyricsFileName": null
             },
             {
@@ -1060,12 +1090,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Kiki Do You Love Me.mp3",
-                "artist": "Drake",
-                "title": "Kiki Do You Love Me",
-                "lyricsFileName": null
-            },
-            {
                 "path": "English Audios/Locked Away.mp3",
                 "artist": "R. City Feat. Adam Levine",
                 "title": "Locked Away",
@@ -1132,40 +1156,10 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Heroes Tonight.mp3",
-                "artist": "",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
                 "path": "English Audios/There She Goes.mp3",
                 "artist": "Taio Cruz",
                 "title": "There She Goes",
                 "lyricsFileName": "There She Goes - Taio Cruz.json"
-            },
-            {
-                "path": "English Audios/This Time For Africa.mp3",
-                "artist": "Shakira",
-                "title": "Waka Waka",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/When Can I See You Again.mp3",
-                "artist": "Owl City",
-                "title": "When Can I See You Again?",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/When I Dream At Night.mp3",
-                "artist": "Marc Anthony",
-                "title": "When I Dream at Night",
-                "lyricsFileName": "When I Dream At Night - Mark Anthony.json"
-            },
-            {
-                "path": "English Audios/You're The Voice.mp3",
-                "artist": "John Farnham",
-                "title": "You're The Voice",
-                "lyricsFileName": null
             },
             {
                 "path": "Exceptions/Fate.mp3",
@@ -1504,6 +1498,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Better With You.mp3",
+                "artist": "Sergio Bertran",
+                "title": "Better With You",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/I Lay My Love On You.mp3",
                 "artist": "Westlife",
                 "title": "I Lay My Love on You",
@@ -1516,21 +1516,15 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/This Time For Africa.mp3",
+                "artist": "Shakira",
+                "title": "Waka Waka",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/My Love.mp3",
                 "artist": "Westlife",
                 "title": "My Love",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Radio Ga Ga.mp3",
-                "artist": "Queen",
-                "title": "Radio Ga Ga",
-                "lyricsFileName": null
-            },
-            {
-                "path": "English Audios/Show Must Go On.mp3",
-                "artist": "Queen",
-                "title": "The Show Must Go On",
                 "lyricsFileName": null
             },
             {
@@ -1609,6 +1603,12 @@
                 "path": "English Audios/As Long As You Love Me (2).mp3",
                 "artist": "Justin Bieber",
                 "title": "As Long as You Love Me",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/When Can I See You Again.mp3",
+                "artist": "Owl City",
+                "title": "When Can I See You Again?",
                 "lyricsFileName": null
             },
             {
@@ -3760,18 +3760,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Eka Yaye.mp3",
-                "artist": "Api Machan",
-                "title": "Eka Yaye",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Kathirina.mp3",
-                "artist": "Malindu/Hirushi Jayasena/Iraj",
-                "title": "Kathirina",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Mathu Pem Purana.mp3",
                 "artist": "Indika Upamali/Bachi Susan",
                 "title": "Mathu Pem Purana",
@@ -3808,12 +3796,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Ae Neela Warala Peerala.mp3",
-                "artist": "Danapala Udawaththa/Gayan Udawatta",
-                "title": "Ae Neela Warala Peerala",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Hada Salena Raye.mp3",
                 "artist": "Aruna Liyan",
                 "title": "Hada Salena Raye (Remix)",
@@ -3832,12 +3814,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Niyare Piyanagala.mp3",
-                "artist": "Saman De Silva",
-                "title": "Niyare Piyanagala",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Chakithaya.mp3",
                 "artist": "Nemesis",
                 "title": "Chakithaya",
@@ -3853,12 +3829,6 @@
                 "path": "Sinhala Audios/Diyawanna Kumariye.mp3",
                 "artist": "Naada",
                 "title": "Diyawanna Kumariye",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sandawathiye.mp3",
-                "artist": "Ashan Fernando",
-                "title": "Sandawathiye",
                 "lyricsFileName": null
             },
             {
@@ -4018,9 +3988,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Eka Yaye.mp3",
+                "artist": "Api Machan",
+                "title": "Eka Yaye",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Pinwanthiye Mage.mp3",
                 "artist": "",
                 "title": "Pinwanthiye Mage",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ae Neela Warala Peerala.mp3",
+                "artist": "Danapala Udawaththa/Gayan Udawatta",
+                "title": "Ae Neela Warala Peerala",
                 "lyricsFileName": null
             },
             {
@@ -4066,6 +4048,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Niyare Piyanagala.mp3",
+                "artist": "Saman De Silva",
+                "title": "Niyare Piyanagala",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Bambara Naade.mp3",
                 "artist": "Bachi Susan/Shanika Madhumali",
                 "title": "Bambara Naade",
@@ -4075,6 +4063,12 @@
                 "path": "Sinhala Audios/Oya Muwe Hasaral Soya.mp3",
                 "artist": "Udaya Sri/Umariya Sinhawansa",
                 "title": "Oya Muwe Hasaral Soya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sandawathiye.mp3",
+                "artist": "Ashan Fernando",
+                "title": "Sandawathiye",
                 "lyricsFileName": null
             },
             {
@@ -4807,6 +4801,18 @@
                 "path": "Sinhala Audios/Nethin Netha Balaala.mp3",
                 "artist": "Uddika Premarathna",
                 "title": "Nethin Netha Balaala",
+                "lyricsFileName": null
+            }
+        ]
+    },
+    {
+        "name": "#AutoGenerated",
+        "themeColor": "gray",
+        "tracks": [
+            {
+                "path": "Sinhala Audios/Abhimanaya Thurstan Namin Liyawila.mp3",
+                "artist": "",
+                "title": "Abhimanaya Thurstan Namin Liyawila",
                 "lyricsFileName": null
             }
         ]
