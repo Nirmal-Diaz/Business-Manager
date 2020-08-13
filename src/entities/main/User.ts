@@ -7,9 +7,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { UserPreference } from "./UserPreference";
 import { Employee } from "./Employee";
 import { Role } from "./Role";
+import { UserPreference } from "./UserPreference";
 
 @Index("username_UNIQUE", ["username"], { unique: true })
 @Index("fk_user_occupation1_idx", ["roleId"], {})
@@ -31,9 +31,6 @@ export class User {
   @Column("varchar", { name: "employee_code", length: 10 })
   employeeCode: string;
 
-  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
-  userPreference: UserPreference;
-
   @ManyToOne(() => Employee, (employee) => employee.users, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
@@ -47,4 +44,7 @@ export class User {
   })
   @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
   role: Role;
+
+  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
+  userPreference: UserPreference;
 }
