@@ -1,6 +1,7 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { Product } from "./Product";
 import { ProductPackageStatus } from "./ProductPackageStatus";
+import { User } from "./User";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_product_Package_product1_idx", ["productId"], {})
@@ -9,7 +10,8 @@ import { ProductPackageStatus } from "./ProductPackageStatus";
   ["productPackageStatusId"],
   {}
 )
-@Entity("product_Package", { schema: "business_manager" })
+@Index("fk_product_package_user1_idx", ["userId"], {})
+@Entity("product_package", { schema: "business_manager" })
 export class ProductPackage {
   @Column("int", { primary: true, name: "id" })
   id: number;
@@ -20,23 +22,29 @@ export class ProductPackage {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("varchar", { name: "available_amount", length: 45 })
+  @Column("decimal", { name: "available_amount", precision: 10, scale: 0 })
   availableAmount: string;
 
-  @Column("varchar", { name: "unit_price", length: 45 })
-  unitPrice: string;
+  @Column("decimal", { name: "unit_price_factor", precision: 10, scale: 0 })
+  unitPriceFactor: string;
 
-  @Column("date", { name: "introduced_date" })
-  introducedDate: string;
+  @Column("date", { name: "added_date" })
+  addedDate: string;
 
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("int", { name: "pieces" })
-  pieces: number;
+  @Column("int", { name: "product_amount" })
+  productAmount: number;
 
   @Column("int", { name: "product_package_status_id" })
   productPackageStatusId: number;
+
+  @Column("text", { name: "description", nullable: true })
+  description: string | null;
+
+  @Column("int", { name: "user_id" })
+  userId: number;
 
   @ManyToOne(() => Product, (product) => product.productPackages, {
     onDelete: "NO ACTION",
@@ -54,4 +62,11 @@ export class ProductPackage {
     { name: "product_package_status_id", referencedColumnName: "id" },
   ])
   productPackageStatus: ProductPackageStatus;
+
+  @ManyToOne(() => User, (user) => user.productPackages, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 }

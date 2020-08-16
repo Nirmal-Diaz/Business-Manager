@@ -3,21 +3,23 @@ import {
   Entity,
   Index,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { CustomerStatus } from "./CustomerStatus";
+import { SupplierStatus } from "./SupplierStatus";
 import { User } from "./User";
+import { Material } from "./Material";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_customer_customer_status1_idx", ["customerStatusId"], {})
+@Index("fk_customer_customer_status1_idx", ["supplierStatusId"], {})
 @Index("fk_customer_user1_idx", ["userId"], {})
-@Entity("customer", { schema: "business_manager" })
-export class Customer {
+@Entity("supplier", { schema: "business_manager" })
+export class Supplier {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("varchar", { name: "code", unique: true, length: 45 })
+  @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
   @Column("varchar", { name: "person_name", length: 150 })
@@ -41,17 +43,14 @@ export class Customer {
   @Column("varchar", { name: "email", length: 150 })
   email: string;
 
-  @Column("text", { name: "address" })
+  @Column("varchar", { name: "address", length: 150 })
   address: string;
-
-  @Column("decimal", { name: "discount_factor", precision: 10, scale: 0 })
-  discountFactor: string;
 
   @Column("decimal", { name: "arrears", precision: 8, scale: 2 })
   arrears: string;
 
-  @Column("int", { name: "customer_status_id" })
-  customerStatusId: number;
+  @Column("int", { name: "supplier_status_id" })
+  supplierStatusId: number;
 
   @Column("text", { name: "description" })
   description: string;
@@ -63,17 +62,20 @@ export class Customer {
   addedDate: string;
 
   @ManyToOne(
-    () => CustomerStatus,
-    (customerStatus) => customerStatus.customers,
+    () => SupplierStatus,
+    (supplierStatus) => supplierStatus.suppliers,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "customer_status_id", referencedColumnName: "id" }])
-  customerStatus: CustomerStatus;
+  @JoinColumn([{ name: "supplier_status_id", referencedColumnName: "id" }])
+  supplierStatus: SupplierStatus;
 
-  @ManyToOne(() => User, (user) => user.customers, {
+  @ManyToOne(() => User, (user) => user.suppliers, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @ManyToMany(() => Material, (material) => material.suppliers)
+  materials: Material[];
 }
