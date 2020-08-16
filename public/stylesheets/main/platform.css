@@ -139,7 +139,7 @@ body {
     border-color: var(--inputContainerBorderColor-invalid);
 }
 
-.inputContainer>input, .inputContainer>select {
+.inputContainer>input, .inputContainer>select, .inputContainer>textarea {
     appearance: none;
     -webkit-appearance: none;
 
@@ -164,6 +164,11 @@ body {
 
 .inputContainer.text>input::placeholder {
     color: var(--textInputPlaceholderColor);
+}
+
+.inputContainer.textarea>textarea {
+    height: 80px;
+    padding: 20px;
 }
 
 .inputContainer.dropDown {
