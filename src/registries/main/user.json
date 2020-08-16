@@ -14,7 +14,7 @@
     "employeeCode": {
         "inputQuery": "#employeeCode",
         "inputClass": "text",
-        "pattern": "^[A-Z]{3}[0-9]{1,7}$",
+        "pattern": "^EMP[0-9]{7}$",
         "value": null
     }
 }
