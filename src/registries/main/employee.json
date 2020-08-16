@@ -10,7 +10,7 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^[A-Z]{3}[0-9]{1,7}$",
+        "pattern": "^EMP[0-9]{7}$",
         "value": null
     },
     "fullName": {
@@ -31,8 +31,8 @@
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
     },
-    "assignmentDate": {
-        "inputQuery": "#assignmentDate",
+    "addedDate": {
+        "inputQuery": "#addedDate",
         "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
@@ -43,11 +43,17 @@
         "pattern": "^\\d{9}([VX]|\\d{3})$",
         "value": null
     },
+    "email": {
+        "inputQuery": "#email",
+        "inputClass": "text",
+        "pattern": "^[a-z]{1,}@[a-z]{1,}[.][a-z]{1,}$",
+        "value": null
+    },
     "address": {
         "inputQuery": "#address",
-        "inputClass": "text",
-        "pattern": "^[\\w\\s\\d,/.]{3,150}$",
-        "value": null
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
     },
     "mobile": {
         "inputQuery": "#mobile",
@@ -84,5 +90,11 @@
         "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
     }
 }
