@@ -25,6 +25,7 @@ export class ValidationController {
                         //Check if the clientFormField has its value property present
                         if (clientBindingObject[key].hasOwnProperty("value")) {
                             if (serverObject[key].pattern !== null) {
+                                //CASE: There is pattern to match
                                 //Copy clientBindingObject's values to serverBindingObject after validating against the pattern
                                 if (serverObject[key].inputClass === "image") {
                                     //WARNING: Server only validates the blob.size
@@ -60,6 +61,14 @@ export class ValidationController {
                                         throw { title: "Whoa! Invalid data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us contain invalid data. This is unusual and we recommend you to check your system for malware", technicalMessage: "Invalid form field data detected" };
                                     }
                                 }
+                            } else {
+                                //CASE: There is no pattern to match
+                                //Just copy that value to serverFormField.value
+
+                                //WARNING: serverObject's structure will be altered here
+                                //NOTE: serverObject[key] will no longer hold a formFiled object
+                                //NOTE: serverObject[key] will hold it's relevant value directly
+                                serverObject[key] = clientBindingObject[key].value;
                             }
                         } else {
                             throw { title: "Whoa! Suspicious data detected", titleDescription: "Please contact your system administrator", message: "The form data you sent us doesn't have the required fields for us to validate. This is unusual and we recommend you to check your system for malware", technicalMessage: "Altered form field objects detected" };

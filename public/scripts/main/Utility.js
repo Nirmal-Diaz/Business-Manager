@@ -225,6 +225,8 @@ export class FormUtil {
         //Handle synchronization according to the inputClass
         if (formField.inputClass === "text") {
             input.value = value;
+        } else if (formField.inputClass === "textarea") {
+            input.value = value;
         } else if (formField.inputClass === "dropDown") {
             input.value = value;
         } else if (formField.inputClass === "image") {
@@ -253,7 +255,9 @@ export class FormUtil {
             formField.value = input.value;
         } else if (formField.inputClass === "dropDown") {
             formField.value = input.value;
-        } else if (formField.inputClass === "image") {
+        } else if (formField.inputClass === "textarea") {
+            formField.value = input.value;
+        }else if (formField.inputClass === "image") {
             formField.value = input.dataset.stringifiedBlob;
             formField.size = parseInt(input.dataset.size);
             formField.type = input.dataset.type;
