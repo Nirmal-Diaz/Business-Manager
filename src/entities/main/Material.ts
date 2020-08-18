@@ -9,15 +9,15 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { PreoductMaterial } from "./PreoductMaterial";
 import { MaterialStatus } from "./MaterialStatus";
 import { QuantityType } from "./QuantityType";
 import { User } from "./User";
-import { PreoductMaterial } from "./PreoductMaterial";
 import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_material_status1_idx", ["materialStatusId"], {})
 @Index("fk_material_quantity_type1_idx", ["quantityTypeId"], {})
+@Index("fk_material_material_status1_idx", ["materialStatusId"], {})
 @Index("fk_material_user1_idx", ["userId"], {})
 @Entity("material", { schema: "business_manager" })
 export class Material {
@@ -57,6 +57,12 @@ export class Material {
   @Column("int", { name: "user_id" })
   userId: number;
 
+  @OneToMany(
+    () => PreoductMaterial,
+    (preoductMaterial) => preoductMaterial.material
+  )
+  preoductMaterials: PreoductMaterial[];
+
   @ManyToOne(
     () => MaterialStatus,
     (materialStatus) => materialStatus.materials,
@@ -78,12 +84,6 @@ export class Material {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
-
-  @OneToMany(
-    () => PreoductMaterial,
-    (preoductMaterial) => preoductMaterial.material
-  )
-  preoductMaterials: PreoductMaterial[];
 
   @ManyToMany(() => Supplier, (supplier) => supplier.materials)
   @JoinTable({

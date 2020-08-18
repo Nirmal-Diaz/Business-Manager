@@ -9,9 +9,9 @@ import {
 } from "typeorm";
 import { PreoductMaterial } from "./PreoductMaterial";
 import { QuantityType } from "./QuantityType";
+import { ProductPackage } from "./ProductPackage";
 import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
-import { ProductPackage } from "./ProductPackage";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_quantity_type1_idx", ["quantityTypeId"], {})
@@ -68,6 +68,9 @@ export class Product {
   @JoinColumn([{ name: "quantity_type_id", referencedColumnName: "id" }])
   quantityType: QuantityType;
 
+  @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
+  productPackages: ProductPackage[];
+
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
@@ -81,7 +84,4 @@ export class Product {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
-
-  @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
-  productPackages: ProductPackage[];
 }

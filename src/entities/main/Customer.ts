@@ -20,6 +20,9 @@ export class Customer {
   @Column("varchar", { name: "code", unique: true, length: 45 })
   code: string;
 
+  @Column("blob", { name: "photo" })
+  photo: Buffer;
+
   @Column("varchar", { name: "person_name", length: 150 })
   personName: string;
 
@@ -32,8 +35,8 @@ export class Customer {
   @Column("varchar", { name: "business_name", length: 150 })
   businessName: string;
 
-  @Column("char", { name: "business_mobile", length: 10 })
-  businessMobile: string;
+  @Column("char", { name: "business_land", length: 10 })
+  businessLand: string;
 
   @Column("varchar", { name: "reg_number", length: 12 })
   regNumber: string;
