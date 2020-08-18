@@ -19,6 +19,9 @@ export class Supplier {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
+  @Column("blob", { name: "photo" })
+  photo: Buffer;
+
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
@@ -34,8 +37,8 @@ export class Supplier {
   @Column("varchar", { name: "business_name", length: 150 })
   businessName: string;
 
-  @Column("char", { name: "business_mobile", length: 10 })
-  businessMobile: string;
+  @Column("char", { name: "business_land", length: 10 })
+  businessLand: string;
 
   @Column("varchar", { name: "reg_number", length: 12 })
   regNumber: string;

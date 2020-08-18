@@ -15,6 +15,7 @@ import { EmployeeController } from "../../controllers/main/EmployeeController";
 import { RoleController } from "../../controllers/main/RoleController";
 import { FileController } from "../../controllers/main/FIleController";
 import { UserPreferenceController } from "../../controllers/main/UserPreferenceController";
+import { SupplierController } from "../../controllers/main/SupplierController";
 
 export const mainRouter = express.Router();
 /*
@@ -170,6 +171,56 @@ mainRouter.route("/employees/:employeeId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "employees", req.method)
             .then(() => EmployeeController.deleteOne(parseInt(req.params.employeeId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//SUPPLIERS
+mainRouter.route("/suppliers")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => {
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return SupplierController.createOne(req.body.bindingObject);
+            }).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => SupplierController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/suppliers/:supplierId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => SupplierController.getOne(parseInt(req.params.supplierId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => SupplierController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => SupplierController.deleteOne(parseInt(req.params.supplierId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
