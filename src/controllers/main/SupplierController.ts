@@ -34,10 +34,10 @@ export class SupplierController {
     }
 
     static async getMany(keyword: string) {
-        const supplier = await SupplierRepository.search(keyword);
+        const suppliers = await SupplierRepository.search(keyword);
 
-        if (supplier.length > 0) {
-            return supplier;
+        if (suppliers.length > 0) {
+            return suppliers;
         } else {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no supplier matching the keyword you provided", technicalMessage: "No suppliers for given keyword" };
         }
