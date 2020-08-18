@@ -79,14 +79,13 @@
                 });
             }
 
-            initInputs() {
-                return Promise.all([
-                    //Load modules
-                    FormComponent.createDropDownInputFragment("/tables/module", "name", "id")
-                        .then((dropDownInputFragment) => {
-                            this.permissionForm.getView().querySelector("#moduleId").appendChild(dropDownInputFragment);
-                        })
-                ]);
+            async initInputs() {
+                const dropDownInputs = this.permissionForm.getView().querySelectorAll(".inputContainer.dropDown > select");
+                for (const dropDownInput of dropDownInputs) {
+                    await FormComponent.refreshDropDownInput(dropDownInput);
+                }
+
+                return true;
             }
 
             extendInitPermissionForm() {
@@ -249,9 +248,11 @@
                     <p>The role determines a user's permissions on each module</p>
                     <p>If the role you want isn't listed below, go and add it in before proceeding</p>
                     <div class="inputContainer dropDown">
-                        <select id="moduleId">
+                        <select id="moduleId"  data-request-url="/tables/module" data-text-content-field="name"
+                        data-value-field="id">
     
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                     <div class="inputGroup">
                         <div class="inputContainer check">

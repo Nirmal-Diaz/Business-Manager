@@ -84,26 +84,22 @@
                         }
 
                         //Update birthDate textInput
-                        document.getElementById("birthDate").value = birthDate.toISOString().slice(0, 10);;
+                        document.getElementById("birthDate").value = birthDate.toISOString().slice(0, 10);
                     }
                 });
             }
 
-            initInputs() {
-                return Promise.all([
-                    //Load genders and select option with value "1"
-                    FormComponent.createDropDownInputFragment("/tables/gender", "name", "id")
-                        .then(dropDownInputFragment => this.form.getView().querySelector("#genderId").appendChild(dropDownInputFragment)),
-                    //Load civil statuses and select option with value "1"
-                    FormComponent.createDropDownInputFragment("/tables/civilStatus", "name", "id")
-                        .then(dropDownInputFragment => this.form.getView().querySelector("#civilStatusId").appendChild(dropDownInputFragment)),
-                    //Load employee statuses and select option with value "1"
-                    FormComponent.createDropDownInputFragment("/tables/employeeStatus", "name", "id")
-                        .then(dropDownInputFragment => this.form.getView().querySelector("#employeeStatusId").appendChild(dropDownInputFragment)),
-                    //Load designations and select option with value "1"
-                    FormComponent.createDropDownInputFragment("/tables/designation", "name", "id")
-                        .then(dropDownInputFragment => this.form.getView().querySelector("#designationId").appendChild(dropDownInputFragment)),
-                ]);
+            async initInputs() {
+                //Set the current date as value for "addedDate"
+                document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
+
+                //Fill dropDownInputs
+                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
+                for (const dropDownInput of dropDownInputs) {
+                    await FormComponent.refreshDropDownInput(dropDownInput);
+                }
+
+                return true;
             }
 
             initCreateForm() {
@@ -148,7 +144,7 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
-                <div class="formFieldContainer">
+                <div class="formFieldContainer wide">
                     <div class="titleContainer">
                         <h1 class="title">Photo</h1>
                         <h1 class="titleDescription">Click to change</h1>
@@ -166,12 +162,6 @@
                     <div class="titleContainer">
                         <h1 class="title">Employee Code</h1>
                     </div>
-                    <ul>
-                        <li>Must be unique</li>
-                        <li>Must consist only of letters and numbers</li>
-                        <li>Both uppercase and lowercase letters are allowed</li>
-                        <li>No spaces are allowed</li>
-                    </ul>
                     <div class="inputContainer text">
                         <input id="code" type="text" placeholder="eg: EMP2020019" />
                     </div>
@@ -236,13 +226,15 @@
                         <h1 class="title">Gender</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="genderId">
-    
+                        <select id="genderId" data-request-url="/tables/gender" data-text-content-field="name"
+                            data-value-field="id">
+
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer wide">
                     <div class="titleContainer">
                         <h1 class="title">Address</h1>
                     </div>
@@ -274,9 +266,11 @@
                         <h1 class="title">Civil Status</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="civilStatusId">
-    
+                        <select id="civilStatusId" data-request-url="/tables/civilStatus" data-text-content-field="name"
+                            data-value-field="id">
+
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
 
@@ -285,9 +279,11 @@
                         <h1 class="title">Employee Status</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="employeeStatusId">
-    
+                        <select id="employeeStatusId" data-request-url="/tables/employeeStatus"
+                            data-text-content-field="name" data-value-field="id">
+
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
 
@@ -296,13 +292,15 @@
                         <h1 class="title">Designation</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="designationId">
-    
+                        <select id="designationId" data-request-url="/tables/designation" data-text-content-field="name"
+                            data-value-field="id">
+
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer wide">
                     <div class="titleContainer">
                         <h1 class="title">Description</h1>
                     </div>

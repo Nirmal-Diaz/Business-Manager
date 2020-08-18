@@ -53,12 +53,13 @@
                 });
             }
 
-            initInputs() {
-                return Promise.all([
-                    //Load roles and select option with value "1"
-                    FormComponent.createDropDownInputFragment("/roles?keyword=", "name", "id")
-                        .then(dropDownInputFragment => this.form.getView().querySelector("#roleId").appendChild(dropDownInputFragment))
-                ]);
+            async initInputs() {
+                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
+                for (const dropDownInput of dropDownInputs) {
+                    await FormComponent.refreshDropDownInput(dropDownInput);
+                }
+
+                return true;
             }
 
             initCreateForm() {
@@ -143,9 +144,11 @@
                         <li>If the role you want isn't listed below, go and add it in before proceeding</li>
                     </ul>
                     <div class="inputContainer dropDown">
-                        <select id="roleId">
+                        <select id="roleId"  data-request-url="/roles?keyword=" data-text-content-field="name"
+                        data-value-field="id">
     
                         </select>
+                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
             </form>

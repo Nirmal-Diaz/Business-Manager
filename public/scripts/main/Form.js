@@ -1,5 +1,5 @@
 //@ts-check
-import { FormUtil } from "./Utility.js";
+import { FormUtil, FormComponent } from "./Utility.js";
 
 export class Form {
     bindingObject = null;
@@ -27,6 +27,16 @@ export class Form {
                 if (response.status) {
                     this.bindingObject = response.data;
                     this.referenceBindingObject = response.data;
+                    //Add onclick to each dropDownInput's reload button for updating values in realtime
+                    const reloadButtons = this.view.querySelectorAll(".inputContainer.dropDown>button");
+                    for (const reloadButton of reloadButtons) {
+                        reloadButton.addEventListener("click", (event) => {
+                            //NOTE: A button inside a form just inherently submits the form. It should be prevented
+                            event.preventDefault();
+                            FormComponent.refreshDropDownInput(reloadButton.previousElementSibling);
+                        });
+                    }
+                    
                     //Add onkeyup to each textInput for validate itself in realtime
                     const textInputs = this.view.querySelectorAll(".inputContainer.text>input");
                     for (const textInput of textInputs) {

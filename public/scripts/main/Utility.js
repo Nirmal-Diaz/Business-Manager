@@ -168,6 +168,12 @@ export class CardComponent {
 }
 
 export class FormComponent {
+    static refreshDropDownInput(dropDownInput) {
+        dropDownInput.innerHTML = "";
+
+        return FormComponent.createDropDownInputFragment(dropDownInput.dataset.requestUrl, dropDownInput.dataset.textContentField, dropDownInput.dataset.valueField).then(dropDownInputFragment => dropDownInput.appendChild(dropDownInputFragment));
+    }
+
     static createDropDownInputFragment(requestURL, textContentField, valueField) {
         //Fetch items
         return fetch(requestURL)

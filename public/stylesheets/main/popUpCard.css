@@ -33,6 +33,7 @@
 form {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     width: 100%;
 }
@@ -52,17 +53,15 @@ form {
     box-shadow: 0 5px 20px 0 var(--formControlsContainerBoxShadow);
 }
 
-/* @media (min-width: 60vw) and (max-width: 90vw) {
+@media (orientation: landscape) {
     .formFieldContainer {
-        width: calc(100% / 3);
+        width: 48%;
+    }
+
+    .formFieldContainer.wide {
+        width: 100%;
     }
 }
-
-@media (max-width: 60vw) {
-    .formFieldContainer {
-        width: 50%;
-    }
-} */
 
 @media print {
     /* * {
