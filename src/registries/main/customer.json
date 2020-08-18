@@ -1,0 +1,100 @@
+{
+    "photo": {
+        "inputQuery": "#photo",
+        "inputClass": "image",
+        "pattern": "62000;image/png,image/jpg",
+        "size": null,
+        "type": "image/png",
+        "value": null
+    },
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^SUP[0-9]{7}$",
+        "value": null
+    },
+    "personName": {
+        "inputQuery": "#personName",
+        "inputClass": "text",
+        "pattern": "^[\\w\\s]{3,150}$",
+        "value": null
+    },
+    "personMobile": {
+        "inputQuery": "#personMobile",
+        "inputClass": "text",
+        "pattern": "^0\\d{9}$",
+        "value": null
+    },
+    "nicNumber": {
+        "inputQuery": "#nicNumber",
+        "inputClass": "text",
+        "pattern": "^\\d{9}([VX]|\\d{3})$",
+        "value": null
+    },
+    "businessName": {
+        "inputQuery": "#businessName",
+        "inputClass": "text",
+        "pattern": "^[\\w\\s]{3,150}$",
+        "value": null
+    },
+    "businessLand": {
+        "inputQuery": "#businessLand",
+        "inputClass": "text",
+        "pattern": "^0\\d{9}$",
+        "value": null
+    },
+    "regNumber": {
+        "inputQuery": "#regNumber",
+        "inputClass": "text",
+        "pattern": ".{3,}",
+        "value": null
+    },
+    "email": {
+        "inputQuery": "#email",
+        "inputClass": "text",
+        "pattern": "^[a-z]{1,}@[a-z]{1,}[.][a-z]{1,}$",
+        "value": null
+    },
+    "address": {
+        "inputQuery": "#address",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "discountFactor": {
+        "inputQuery": "#discountFactor",
+        "inputClass": "text",
+        "pattern": "[01][.]\\d{1,}$",
+        "value": null
+    },
+    "arrears": {
+        "inputQuery": "#arrears",
+        "inputClass": "text",
+        "pattern": "\\d{1,6}[.]\\d{2}$",
+        "value": null
+    },
+    "customerStatusId": {
+        "inputQuery": "#customerStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "userId": {
+        "inputQuery": null,
+        "inputClass": null,
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    }
+}
