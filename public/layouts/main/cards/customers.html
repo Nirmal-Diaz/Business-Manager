@@ -111,7 +111,7 @@
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
                             for (const item of response.data) {
                                 const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.businessName, [item.personName, item.personMobile, item.email, item.customerStatus.name])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.businessName, [item.code, item.personName, item.personMobile, item.email, item.customerStatus.name])();
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }
@@ -135,24 +135,24 @@
     <!-- quickAccessArea -->
     <div id="quickAccessArea" style="display: none;">
         <div id="createControlsContainer">
-            <button class="buttonGlyph" title="Add employee">
+            <button class="buttonGlyph" title="Add customer">
                 <img src="/images/main/glyph_create.png" />
             </button>
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_search.png" title="Search employees"/>
+                <img src="/images/main/glyph_search.png" title="Search customers"/>
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>
         </div>
         <div id="updateControlsContainer">
-            <button class="buttonGlyph" title="Edit employee">
+            <button class="buttonGlyph" title="Edit customer">
                 <img src="/images/main/glyph_update.png" />
             </button>
         </div>
         <div id="deleteControlsContainer">
-            <button class="buttonGlyph" title="Remove employee">
+            <button class="buttonGlyph" title="Remove customer">
                 <img src="/images/main/glyph_delete.png" />
             </button>
         </div>
