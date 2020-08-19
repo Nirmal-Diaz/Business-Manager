@@ -229,20 +229,16 @@ export class FormUtil {
         }
 
         //Handle synchronization according to the inputClass
-        if (formField.inputClass === "text") {
-            input.value = value;
-        } else if (formField.inputClass === "textarea") {
-            input.value = value;
-        } else if (formField.inputClass === "dropDown") {
-            input.value = value;
-        } else if (formField.inputClass === "image") {
+        if (formField.inputClass === "image") {
             input.dataset.stringifiedBlob = value;
             input.dataset.size = formField.size;
             input.dataset.type = formField.type;
-
+            
             //NOTE: There is a sibling img tag to preview images
             const imageBlob = new Blob([new Uint8Array(JSON.parse(value))]);
             input.previousElementSibling.src = URL.createObjectURL(imageBlob);
+        } else {
+            input.value = value;
         }
     }
 
@@ -257,32 +253,28 @@ export class FormUtil {
         }
 
         //Handle synchronization according to the inputClass
-        if (formField.inputClass === "text") {
-            formField.value = input.value;
-        } else if (formField.inputClass === "dropDown") {
-            formField.value = input.value;
-        } else if (formField.inputClass === "textarea") {
-            formField.value = input.value;
-        }else if (formField.inputClass === "image") {
+        if (formField.inputClass === "image") {
             formField.value = input.dataset.stringifiedBlob;
             formField.size = parseInt(input.dataset.size);
             formField.type = input.dataset.type;
+        } else {
+            formField.value = input.value;
         }
     }
 
     static resetInput(formView, formField) {
-        if (formField.inputClass === "text") {
-            formView.querySelector(formField.inputQuery).value = "";
-        } else if (formField.inputClass === "dropDown") {
+        if (formField.inputClass === "dropDown") {
             formView.querySelector(formField.inputQuery).value = "1";
         } else if (formField.inputClass === "image") {
             const imageInput = formView.querySelector(formField.inputQuery);
-
+            
             imageInput.value = "";
             imageInput.dataset.stringifiedBlob = "";
             imageInput.dataset.size = "0";
             imageInput.dataset.type = "";
             imageInput.previousElementSibling.src = "";
+        } else {
+            formView.querySelector(formField.inputQuery).value = "";
         }
     }
 
