@@ -3532,6 +3532,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Rakhwale.mp3",
+                "artist": "Trishan",
+                "title": "Rakhwale",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Piya Aaye Na.mp3",
                 "artist": "KK/Tulsi Kumar",
                 "title": "Piya Aaye Na",
@@ -3787,6 +3793,12 @@
                 "path": "Sinhala Audios/Ranabime Viruwo.mp3",
                 "artist": "Flashback",
                 "title": "Ranabime Viruwo",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Nositha Sitha.mp3",
+                "artist": "Geyard Harith Gunawardana",
+                "title": "Nositha Sitha",
                 "lyricsFileName": null
             },
             {
@@ -4258,6 +4270,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Hamuwena Neth.mp3",
+                "artist": "Kaveesha Kaviraj",
+                "title": "Hamuwena Neth",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sithata Hora.mp3",
                 "artist": "Rahal Alwis",
                 "title": "Sithata Hora",
@@ -4558,6 +4576,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Me Nagaraya.mp3",
+                "artist": "Gayangana Amarasena",
+                "title": "Me Nagaraya",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Deadara Wilikun.mp3",
                 "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
                 "title": "Deadara Wilikun",
@@ -4582,6 +4606,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Obata Waram Nathi.mp3",
+                "artist": "Hashan gunarathne",
+                "title": "Obata Waram Nathi",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Werala Konaka Hida.mp3",
                 "artist": "Sanka Dineth",
                 "title": "Werala Konaka Hida",
@@ -4603,6 +4633,12 @@
                 "path": "Sinhala Audios/Sanda Kaluwara.mp3",
                 "artist": "Thisum Nalina",
                 "title": "Sanda Kaluwara",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Oba Maa Hamuwuna.mp3",
+                "artist": "",
+                "title": "Oba Maa Hamuwuna",
                 "lyricsFileName": null
             },
             {
