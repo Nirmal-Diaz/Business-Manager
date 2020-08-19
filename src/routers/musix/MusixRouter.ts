@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import * as express from "express";
+import * as archiver from "archiver";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -15,13 +16,15 @@ musixRouter: Middleware Setup
 musixRouter.use(express.static(__dirname + "/../../../public"));
 
 //Set static directory for music files
+let staticDirectoryPath = null;
 if (process.platform === "android") {
-    musixRouter.use(express.static("/storage/3ACD-101B/Music"));
+    staticDirectoryPath = "/storage/3ACD-101B/Music";
 } else if (process.platform === "linux") {
-    musixRouter.use(express.static("/home/assassino/Music"));
+    staticDirectoryPath = "/home/assassino/Music";
 } else if (process.platform === "win32") {
-    musixRouter.use(express.static("C:/Users/assassino/Music"));
+    staticDirectoryPath = "C:/Users/assassino/Music";
 }
+musixRouter.use(express.static(staticDirectoryPath));
 /*
 =====================================================================================
 musixRouter: Route Handlers Setup
@@ -34,6 +37,42 @@ musixRouter.route("/")
         } else {
             res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
         }
+    });
+
+musixRouter.route("/playlists/:playlistIndex")
+    .get((req, res) => {
+        const playlists = JSON.parse(fs.readFileSync("src/registries/musix/playlists.json", "utf-8"));
+        const playlistIndex = parseInt(req.params.playlistIndex);
+
+        if (playlistIndex >= playlists.length) {
+            res.json({
+                status: false,
+                serverError: {
+                    message: "There is no playlist at the specified index"
+                }
+            });
+        } else {
+            const tracks = playlists[playlistIndex].tracks;
+    
+            //Setup archive
+            const archive = archiver("zip", { store: true });
+            archive.on("end", () => res.end());
+            archive.on("error", (error) => {
+                console.log(error);
+                res.end();
+            });
+    
+            for (const track of tracks) {
+                archive.file(`${staticDirectoryPath}/${track.path}`, {
+                    name: track.path.slice(track.path.lastIndexOf("/") + 1)
+                });
+            }
+    
+            res.attachment(playlists[playlistIndex].name + ".zip").type("application/zip");
+            archive.pipe(res);
+            archive.finalize();
+        }
+
     });
 
 //EXPRESS ROUTING: NON-USER PATHS
@@ -66,30 +105,29 @@ musixRouter.route("/playlists")
             if (fs.existsSync(directoryPath)) {
                 if (fs.statSync(directoryPath).isDirectory()) {
                     musixRouter.use(express.static(directoryPath));
-    
-                    const supportedExtensions = [".mp3", ".wav"];
+
                     const itemNames = fs.readdirSync(directoryPath);
-    
+
                     const playlist = {
                         name: directoryPath.slice(directoryPath.lastIndexOf("/") + 1),
                         themeColor: "limegreen",
                         tracks: []
                     };
-    
+
                     for (const itemName of itemNames) {
                         const itemExtension = itemName.slice(itemName.lastIndexOf("."));
-                        if (supportedExtensions.includes(itemExtension)) {
+                        if (itemExtension === ".mp3") {
                             const track = {
                                 path: itemName.slice(itemName.lastIndexOf("/") + 1),
                                 artist: "",
                                 title: "",
                                 lyricsURI: null
                             };
-    
+
                             playlist.tracks.push(track);
                         }
                     }
-    
+
                     if (playlist.tracks.length > 0) {
                         res.json({
                             status: true,
@@ -111,7 +149,7 @@ musixRouter.route("/playlists")
                         }
                     });
                 }
-    
+
             } else {
                 res.json({
                     status: false,
