@@ -39,7 +39,7 @@ export class EmployeeController {
         if (employees.length > 0) {
             return employees;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no employee matching the keyword you provided", technicalMessage: "No employees for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no employees matching the keyword you provided", technicalMessage: "No employees for given keyword" };
         }
     }
 

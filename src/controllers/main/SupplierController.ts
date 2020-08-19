@@ -39,7 +39,7 @@ export class SupplierController {
         if (suppliers.length > 0) {
             return suppliers;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no supplier matching the keyword you provided", technicalMessage: "No suppliers for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no suppliers matching the keyword you provided", technicalMessage: "No suppliers for given keyword" };
         }
     }
 

@@ -39,7 +39,7 @@ export class CustomerController {
         if (customers.length > 0) {
             return customers;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no customer matching the keyword you provided", technicalMessage: "No customers for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no customers matching the keyword you provided", technicalMessage: "No customers for given keyword" };
         }
     }
 
