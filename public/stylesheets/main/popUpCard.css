@@ -76,7 +76,7 @@ form {
         padding: 0 0 20px 0;
     }
 
-    .formTitleContainer .titleDescription, .formFieldContainer .titleDescription, .formFieldContainer>ul, .formControlsContainer {
+    .formTitleContainer .titleDescription, .formFieldContainer .titleDescription, .formFieldContainer>ul, .formControlsContainer, .inputContainer.dropDown::after, .inputContainer.dropDown>button {
         display: none;
     }
 
@@ -124,17 +124,18 @@ form {
         border-width: 0 0 thin 0;
     }
 
-    .inputContainer.dropDown::after {
-        display: none;
-    }
-
-    .inputContainer>input, .inputContainer>select {
+    .inputContainer>input, .inputContainer>select, .inputContainer>textarea {
         margin: 0;
         padding: 0;
 
         border: none;
 
         color: black;
+    }
+
+    .inputContainer>textarea {
+        height: 40px;
+        padding: 10px 0 0 0;
     }
 
     .inputContainer.text>input::placeholder {

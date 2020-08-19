@@ -118,12 +118,6 @@ body {
     width: 100%;
 }
 
-.inputGroup>.inputContainer {
-    justify-content: flex-start;
-
-    width: 50%;
-}
-
 .inputContainer {
     display: flex;
     flex-wrap: wrap;
@@ -135,8 +129,29 @@ body {
     width: 100%;
 }
 
+.inputGroup>.inputContainer {
+    justify-content: flex-start;
+
+    width: 50%;
+}
+
 .inputContainer.invalid>*:first-child {
     border-color: var(--inputContainerBorderColor-invalid);
+}
+
+.inputContainer.dropDown {
+    position: relative;
+
+    justify-content: space-between;
+}
+
+.inputContainer.dropDown::after {
+    position: absolute;
+    top: 23px;
+    right: 75px;
+
+    font-size: xx-small;
+    content: "\25BC";
 }
 
 .inputContainer>input, .inputContainer>select, .inputContainer>textarea {
@@ -158,32 +173,13 @@ body {
     -webkit-user-select: text;
 }
 
-.inputContainer>input:hover, .inputContainer>select:hover, .inputContainer.dropDown>button:hover, .inputContainer.check>input:checked:hover, .inputContainer.radio>input:checked:hover {
-    background-color: var(--inputBackgroundColor-hover);
-}
-
-.inputContainer.text>input::placeholder {
-    color: var(--textInputPlaceholderColor);
-}
-
-.inputContainer.textarea>textarea {
+.inputContainer>textarea {
     height: 80px;
     padding: 20px;
 }
 
-.inputContainer.dropDown {
-    position: relative;
-
-    justify-content: space-between;
-}
-
-.inputContainer.dropDown::after {
-    position: absolute;
-    top: 23px;
-    right: 75px;
-
-    font-size: xx-small;
-    content: "\25BC";
+.inputContainer>input:hover, .inputContainer>select:hover, .inputContainer>textarea:hover, .inputContainer.dropDown>button:hover, .inputContainer.check>input:checked:hover, .inputContainer.radio>input:checked:hover {
+    background-color: var(--inputBackgroundColor-hover);
 }
 
 .inputContainer.dropDown>select {
@@ -226,6 +222,10 @@ body {
     width: 50px;
 
     border-radius: 50%;
+}
+
+.inputContainer.text>input::placeholder {
+    color: var(--textInputPlaceholderColor);
 }
 
 .inputContainer.check>input:checked, .inputContainer.radio>input:checked {
