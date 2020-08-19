@@ -17,6 +17,7 @@ import { FileController } from "../../controllers/main/FIleController";
 import { UserPreferenceController } from "../../controllers/main/UserPreferenceController";
 import { SupplierController } from "../../controllers/main/SupplierController";
 import { CustomerController } from "../../controllers/main/CustomerController";
+import { MaterialController } from "../../controllers/main/MaterialController";
 
 export const mainRouter = express.Router();
 /*
@@ -272,6 +273,56 @@ mainRouter.route("/customers/:customerId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "customers", req.method)
             .then(() => CustomerController.deleteOne(parseInt(req.params.customerId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//MATERIALS
+mainRouter.route("/materials")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => {
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return MaterialController.createOne(req.body.bindingObject);
+            }).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/materials/:materialId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.getOne(parseInt(req.params.materialId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.deleteOne(parseInt(req.params.materialId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

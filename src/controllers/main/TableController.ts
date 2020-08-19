@@ -8,6 +8,8 @@ import { Designation } from "../../entities/main/Designation";
 import { Module } from "../../entities/main/Module";
 import { CustomerStatus } from "../../entities/main/CustomerStatus";
 import { SupplierStatus } from "../../entities/main/SupplierStatus";
+import { MaterialStatus } from "../../entities/main/MaterialStatus";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -20,6 +22,8 @@ export class TableController {
             designation: Designation,
             customerStatus: CustomerStatus,
             supplierStatus: SupplierStatus,
+            materialStatus: MaterialStatus,
+            unitType: UnitType
         };
 
         if (generalEntities.hasOwnProperty(tableName)) {

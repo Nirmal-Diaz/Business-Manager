@@ -9,14 +9,14 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { PreoductMaterial } from "./PreoductMaterial";
 import { MaterialStatus } from "./MaterialStatus";
-import { QuantityType } from "./QuantityType";
+import { UnitType } from "./UnitType";
 import { User } from "./User";
+import { PreoductMaterial } from "./PreoductMaterial";
 import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_quantity_type1_idx", ["quantityTypeId"], {})
+@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_material_material_status1_idx", ["materialStatusId"], {})
 @Index("fk_material_user1_idx", ["userId"], {})
 @Entity("material", { schema: "business_manager" })
@@ -30,20 +30,17 @@ export class Material {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "available_amount", precision: 10, scale: 0 })
-  availableAmount: string;
-
   @Column("decimal", { name: "reorder_amount", precision: 10, scale: 0 })
   reorderAmount: string;
 
   @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
   unitPrice: string;
 
-  @Column("decimal", { name: "viable_period", precision: 4, scale: 2 })
-  viablePeriod: string;
+  @Column("int", { name: "viable_period" })
+  viablePeriod: number;
 
-  @Column("int", { name: "quantity_type_id" })
-  quantityTypeId: number;
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("int", { name: "material_status_id" })
   materialStatusId: number;
@@ -57,12 +54,6 @@ export class Material {
   @Column("int", { name: "user_id" })
   userId: number;
 
-  @OneToMany(
-    () => PreoductMaterial,
-    (preoductMaterial) => preoductMaterial.material
-  )
-  preoductMaterials: PreoductMaterial[];
-
   @ManyToOne(
     () => MaterialStatus,
     (materialStatus) => materialStatus.materials,
@@ -71,12 +62,12 @@ export class Material {
   @JoinColumn([{ name: "material_status_id", referencedColumnName: "id" }])
   materialStatus: MaterialStatus;
 
-  @ManyToOne(() => QuantityType, (quantityType) => quantityType.materials, {
+  @ManyToOne(() => UnitType, (unitType) => unitType.materials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "quantity_type_id", referencedColumnName: "id" }])
-  quantityType: QuantityType;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 
   @ManyToOne(() => User, (user) => user.materials, {
     onDelete: "NO ACTION",
@@ -84,6 +75,12 @@ export class Material {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @OneToMany(
+    () => PreoductMaterial,
+    (preoductMaterial) => preoductMaterial.material
+  )
+  preoductMaterials: PreoductMaterial[];
 
   @ManyToMany(() => Supplier, (supplier) => supplier.materials)
   @JoinTable({

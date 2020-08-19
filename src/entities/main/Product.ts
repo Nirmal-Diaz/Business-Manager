@@ -8,10 +8,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { PreoductMaterial } from "./PreoductMaterial";
-import { QuantityType } from "./QuantityType";
-import { ProductPackage } from "./ProductPackage";
+import { UnitType } from "./UnitType";
 import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
+import { ProductPackage } from "./ProductPackage";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_quantity_type1_idx", ["quantityTypeId"], {})
@@ -25,20 +25,17 @@ export class Product {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("varchar", { name: "name", length: 45 })
-  name: string;
-
-  @Column("mediumblob", { name: "photo" })
+  @Column("blob", { name: "photo" })
   photo: Buffer;
 
-  @Column("decimal", { name: "available_amount", precision: 10, scale: 0 })
-  availableAmount: string;
+  @Column("varchar", { name: "name", length: 45 })
+  name: string;
 
   @Column("decimal", { name: "unit_price_factor", precision: 7, scale: 2 })
   unitPriceFactor: string;
 
-  @Column("date", { name: "viable_period" })
-  viablePeriod: string;
+  @Column("int", { name: "viable_period" })
+  viablePeriod: number;
 
   @Column("int", { name: "quantity_type_id" })
   quantityTypeId: number;
@@ -61,15 +58,12 @@ export class Product {
   )
   preoductMaterials: PreoductMaterial[];
 
-  @ManyToOne(() => QuantityType, (quantityType) => quantityType.products, {
+  @ManyToOne(() => UnitType, (unitType) => unitType.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "quantity_type_id", referencedColumnName: "id" }])
-  quantityType: QuantityType;
-
-  @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
-  productPackages: ProductPackage[];
+  quantityType: UnitType;
 
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.products, {
     onDelete: "NO ACTION",
@@ -84,4 +78,7 @@ export class Product {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
+  productPackages: ProductPackage[];
 }
