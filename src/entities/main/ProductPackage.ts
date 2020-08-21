@@ -16,6 +16,9 @@ export class ProductPackage {
   @Column("int", { primary: true, name: "id" })
   id: number;
 
+  @Column("blob", { name: "photo" })
+  photo: Buffer;
+
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
@@ -31,8 +34,8 @@ export class ProductPackage {
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("int", { name: "product_amount" })
-  productAmount: number;
+  @Column("decimal", { name: "product_amount", precision: 10, scale: 0 })
+  productAmount: string;
 
   @Column("int", { name: "product_package_status_id" })
   productPackageStatusId: number;

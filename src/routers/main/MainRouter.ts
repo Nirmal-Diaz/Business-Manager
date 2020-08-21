@@ -19,6 +19,7 @@ import { SupplierController } from "../../controllers/main/SupplierController";
 import { CustomerController } from "../../controllers/main/CustomerController";
 import { MaterialController } from "../../controllers/main/MaterialController";
 import { ProductController } from "../../controllers/main/ProductController";
+import { ProductPackageController } from "../../controllers/main/ProductPackageController";
 
 export const mainRouter = express.Router();
 /*
@@ -374,6 +375,56 @@ mainRouter.route("/products/:productId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "products", req.method)
             .then(() => ProductController.deleteOne(parseInt(req.params.productId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//PRODUCT PACKAGES
+mainRouter.route("/productPackages")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
+            .then(() => {
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return ProductPackageController.createOne(req.body.bindingObject);
+            }).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
+            .then(() => ProductPackageController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/productPackages/:productPackageId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
+            .then(() => ProductPackageController.getOne(parseInt(req.params.productPackageId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
+            .then(() => ProductPackageController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
+            .then(() => ProductPackageController.deleteOne(parseInt(req.params.productPackageId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
