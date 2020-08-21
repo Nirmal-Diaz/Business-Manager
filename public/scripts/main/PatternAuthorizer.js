@@ -49,7 +49,7 @@ export class PatternAuthorizer {
         this.patternCanvas.width = this.patternCanvas.getBoundingClientRect().width;
         this.patternCanvas.height = this.patternCanvas.getBoundingClientRect().height;
         //Get patternViewBoundingRect
-        const patternViewRect = this.view.getBoundingClientRect();
+        const patternViewRect = this.view.firstElementChild.getBoundingClientRect();
         //Setup context2D for drawing
         this.context2D.strokeStyle = "white";
         this.context2D.lineWidth = 10;
