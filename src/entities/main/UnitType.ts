@@ -16,6 +16,6 @@ export class UnitType {
   @OneToMany(() => Material, (material) => material.unitType)
   materials: Material[];
 
-  @OneToMany(() => Product, (product) => product.quantityType)
+  @OneToMany(() => Product, (product) => product.unitType)
   products: Product[];
 }

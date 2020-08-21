@@ -14,7 +14,7 @@ import { User } from "./User";
 import { ProductPackage } from "./ProductPackage";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_quantity_type1_idx", ["quantityTypeId"], {})
+@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_product_product_status1_idx", ["productStatusId"], {})
 @Index("fk_product_user1_idx", ["userId"], {})
 @Entity("product", { schema: "business_manager" })
@@ -37,8 +37,8 @@ export class Product {
   @Column("int", { name: "viable_period" })
   viablePeriod: number;
 
-  @Column("int", { name: "quantity_type_id" })
-  quantityTypeId: number;
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("int", { name: "product_status_id" })
   productStatusId: number;
@@ -62,8 +62,8 @@ export class Product {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "quantity_type_id", referencedColumnName: "id" }])
-  quantityType: UnitType;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.products, {
     onDelete: "NO ACTION",
