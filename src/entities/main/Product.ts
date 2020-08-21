@@ -25,9 +25,6 @@ export class Product {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("blob", { name: "photo" })
-  photo: Buffer;
-
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
