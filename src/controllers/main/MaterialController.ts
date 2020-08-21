@@ -12,7 +12,7 @@ export class MaterialController {
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         return getRepository(Material).save(serverObject as Material)
-            .then(customer => customer)
+            .then(material => material)
             .catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
