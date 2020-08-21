@@ -3982,6 +3982,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Deadara Wilikun.mp3",
+                "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
+                "title": "Deadara Wilikun",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sansara Sihine.mp3",
                 "artist": "Sanuka Wickramasinghe",
                 "title": "Sansara Sihine",
@@ -4015,6 +4021,12 @@
                 "path": "Sinhala Audios/Ae Neela Warala Peerala.mp3",
                 "artist": "Danapala Udawaththa/Gayan Udawatta",
                 "title": "Ae Neela Warala Peerala",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sanda Latha.mp3",
+                "artist": "Sahan Liyanage",
+                "title": "Sanda Latha",
                 "lyricsFileName": null
             },
             {
@@ -4582,12 +4594,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Deadara Wilikun.mp3",
-                "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
-                "title": "Deadara Wilikun",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Aadara Priya Landune.mp3",
                 "artist": "Felix Anton/Ayomi Perera",
                 "title": "Aadara Priya Landune",
@@ -4597,12 +4603,6 @@
                 "path": "Sinhala Audios/Me Nagaraya Aluth Wela.mp3",
                 "artist": "Api Machan",
                 "title": "Me Nagaraya Aluth Wela",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sanda Latha.mp3",
-                "artist": "Sahan Liyanage",
-                "title": "Sanda Latha",
                 "lyricsFileName": null
             },
             {
