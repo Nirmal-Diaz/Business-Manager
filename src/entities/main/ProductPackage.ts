@@ -22,9 +22,6 @@ export class ProductPackage {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "available_amount", precision: 10, scale: 0 })
-  availableAmount: string;
-
   @Column("decimal", { name: "unit_price_factor", precision: 10, scale: 0 })
   unitPriceFactor: string;
 

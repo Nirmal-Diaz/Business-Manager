@@ -18,6 +18,7 @@ import { UserPreferenceController } from "../../controllers/main/UserPreferenceC
 import { SupplierController } from "../../controllers/main/SupplierController";
 import { CustomerController } from "../../controllers/main/CustomerController";
 import { MaterialController } from "../../controllers/main/MaterialController";
+import { ProductController } from "../../controllers/main/ProductController";
 
 export const mainRouter = express.Router();
 /*
@@ -323,6 +324,56 @@ mainRouter.route("/materials/:materialId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "materials", req.method)
             .then(() => MaterialController.deleteOne(parseInt(req.params.materialId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//PRODUCTS
+mainRouter.route("/products")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => {
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return ProductController.createOne(req.body.bindingObject);
+            }).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/products/:productId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.getOne(parseInt(req.params.productId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.deleteOne(parseInt(req.params.productId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

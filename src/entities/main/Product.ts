@@ -31,7 +31,7 @@ export class Product {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "unit_price_factor", precision: 7, scale: 2 })
+  @Column("decimal", { name: "unit_price_factor", precision: 10, scale: 0 })
   unitPriceFactor: string;
 
   @Column("int", { name: "viable_period" })

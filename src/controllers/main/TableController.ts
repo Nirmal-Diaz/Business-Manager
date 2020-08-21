@@ -10,6 +10,7 @@ import { CustomerStatus } from "../../entities/main/CustomerStatus";
 import { SupplierStatus } from "../../entities/main/SupplierStatus";
 import { MaterialStatus } from "../../entities/main/MaterialStatus";
 import { UnitType } from "../../entities/main/UnitType";
+import { ProductStatus } from "../../entities/main/ProductStatus";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -23,6 +24,7 @@ export class TableController {
             customerStatus: CustomerStatus,
             supplierStatus: SupplierStatus,
             materialStatus: MaterialStatus,
+            productStatus: ProductStatus,
             unitType: UnitType
         };
 

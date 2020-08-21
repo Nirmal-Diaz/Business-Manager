@@ -1,0 +1,64 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^PRO[0-9]{7}$",
+        "value": null
+    },
+    "photo": {
+        "inputQuery": "#photo",
+        "inputClass": "image",
+        "pattern": "62000;image/png,image/jpg",
+        "size": null,
+        "type": "image/png",
+        "value": null
+    },
+    "name": {
+        "inputQuery": "#name",
+        "inputClass": "text",
+        "pattern": "^[\\w\\s]{3,150}$",
+        "value": null
+    },
+    "unitPriceFactor": {
+        "inputQuery": "#unitPriceFactor",
+        "inputClass": "text",
+        "pattern": "^1[.]\\d{1,}$",
+        "value": null
+    },
+    "viablePeriod": {
+        "inputQuery": "#viablePeriod",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}$",
+        "value": null
+    },
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "productStatusId": {
+        "inputQuery": "#productStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "userId": {
+        "inputQuery": null,
+        "inputClass": null,
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    }
+}
