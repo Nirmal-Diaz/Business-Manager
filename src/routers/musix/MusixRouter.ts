@@ -39,43 +39,6 @@ musixRouter.route("/")
         }
     });
 
-musixRouter.route("/playlists/:playlistIndex")
-    .get((req, res) => {
-        const playlists = JSON.parse(fs.readFileSync("src/registries/musix/playlists.json", "utf-8"));
-        const playlistIndex = parseInt(req.params.playlistIndex);
-
-        if (playlistIndex >= playlists.length) {
-            res.json({
-                status: false,
-                serverError: {
-                    message: "There is no playlist at the specified index"
-                }
-            });
-        } else {
-            const tracks = playlists[playlistIndex].tracks;
-    
-            //Setup archive
-            const archive = archiver("zip", { store: true });
-            archive.on("end", () => res.end());
-            archive.on("error", (error) => {
-                console.log(error);
-                res.end();
-            });
-    
-            for (const track of tracks) {
-                archive.file(`${staticDirectoryPath}/${track.path}`, {
-                    name: track.path.slice(track.path.lastIndexOf("/") + 1)
-                });
-            }
-    
-            res.attachment(playlists[playlistIndex].name + ".zip").type("application/zip");
-            archive.pipe(res);
-            archive.finalize();
-        }
-
-    });
-
-//EXPRESS ROUTING: NON-USER PATHS
 musixRouter.route("/playlists")
     .get((req, res) => {
         res.json({
@@ -158,6 +121,66 @@ musixRouter.route("/playlists")
                     }
                 });
             }
+        }
+    });
+
+musixRouter.route("/playlists/:playlistIndex")
+    .get((req, res) => {
+        const playlists = JSON.parse(fs.readFileSync("src/registries/musix/playlists.json", "utf-8"));
+        const playlistIndex = parseInt(req.params.playlistIndex);
+
+        if (playlistIndex >= playlists.length) {
+            res.json({
+                status: false,
+                serverError: {
+                    message: "There is no playlist at the specified index"
+                }
+            });
+        } else {
+            const tracks = playlists[playlistIndex].tracks;
+
+            //Setup archive
+            const archive = archiver("zip", { store: true });
+            archive.on("end", () => res.end());
+            archive.on("error", (error) => {
+                console.log(error);
+                res.end();
+            });
+
+            for (const track of tracks) {
+                archive.file(`${staticDirectoryPath}/${track.path}`, {
+                    name: track.path.slice(track.path.lastIndexOf("/") + 1)
+                });
+            }
+
+            res.attachment(playlists[playlistIndex].name + ".zip").type("application/zip");
+            archive.pipe(res);
+            archive.finalize();
+        }
+    });
+
+musixRouter.route("/playlists/:playlistIndex/tracks/:trackIndex")
+    .get((req, res) => {
+        const playlists = JSON.parse(fs.readFileSync("src/registries/musix/playlists.json", "utf-8"));
+        const playlistIndex = parseInt(req.params.playlistIndex);
+        const trackIndex = parseInt(req.params.trackIndex);
+
+        if (playlistIndex >= playlists.length) {
+            res.json({
+                status: false,
+                serverError: {
+                    message: "There is no playlist at the specified index"
+                }
+            });
+        } else if (trackIndex >= playlists[playlistIndex].tracks.length) {
+            res.json({
+                status: false,
+                serverError: {
+                    message: "There is no track at the specified index in the specified playlist"
+                }
+            });
+        } else {
+            res.download(`${staticDirectoryPath}/${playlists[playlistIndex].tracks[trackIndex].path}`);
         }
     });
 

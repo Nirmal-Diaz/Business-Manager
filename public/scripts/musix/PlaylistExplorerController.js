@@ -5,7 +5,7 @@ export class PlaylistExplorerController {
     view = null;
     playlistViewTemplate = null;
     trackViewTemplate = null;
-    trackContextPopUp = document.getElementById("trackContextPopUp");
+    trackContextPanel = document.getElementById("trackContextPanel");
 
     constructor(cardInterface, panelView) {
         this.cardInterface = cardInterface;
@@ -24,11 +24,11 @@ export class PlaylistExplorerController {
         }
         this.view.firstElementChild.appendChild(playlistViewContainerFragment);
 
-        this.view.querySelector("#addPlaylistButton").addEventListener("click", () => {
+        this.view.querySelector("button").addEventListener("click", () => {
             const directoryPath = prompt("Specify an absolute directory path for your playlist");
             if (directoryPath) {
                 //Fetch a playlist for the directoryPath
-                fetch(`/playlists?directoryPath=${directoryPath}`, {
+                fetch(`/musix/playlists?directoryPath=${directoryPath}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
@@ -67,6 +67,12 @@ export class PlaylistExplorerController {
         playlistView.firstElementChild.textContent = playlist.name;
         playlistView.firstElementChild.style.color = playlist.themeColor;
 
+        playlistView.firstElementChild.addEventListener("contextmenu", () => {
+            event.preventDefault();
+            this.cardInterface.getTrackContextController().setupPlaylistContext(playlist.name, playlist.index);
+            this.cardInterface.getTrackContextController().show();
+        });
+
         for (let trackIndex = 0; trackIndex < playlist.tracks.length; trackIndex++) {
             const trackView = this.createTrackView({ playlistIndex: playlist.index, trackIndex: trackIndex });
             playlistView.appendChild(trackView);
@@ -95,8 +101,17 @@ export class PlaylistExplorerController {
 
         trackView.addEventListener("contextmenu", (event) => {
             event.preventDefault();
-            this.cardInterface.getPlaylistController().addToQuickPlaylist(this.cardInterface.getPlaylistController().getTrackAt(trackPosition));
-            trackView.classList.add("marked");
+
+            let titleTextContent = "";
+            if (playlists[trackPosition.playlistIndex].tracks[trackPosition.trackIndex].title) {
+                titleTextContent = playlists[trackPosition.playlistIndex].name + " . " + playlists[trackPosition.playlistIndex].tracks[trackPosition.trackIndex].title;
+            } else {
+                const track = playlists[trackPosition.playlistIndex].tracks[trackPosition.trackIndex];
+                titleTextContent = playlists[trackPosition.playlistIndex].name + " . " + track.path.slice(track.path.lastIndexOf("/") + 1, track.path.lastIndexOf("."))
+            }
+            
+            this.cardInterface.getTrackContextController().setupTrackContext(titleTextContent, trackPosition);
+            this.cardInterface.getTrackContextController().show();
         });
 
         return trackView;
