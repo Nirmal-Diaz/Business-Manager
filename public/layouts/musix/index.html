@@ -19,6 +19,7 @@
         //@ts-check
         import { NowPlayingController } from "/musix/scripts/musix/NowPlayingController.js";
         import { PlaylistExplorerController } from "/musix/scripts/musix/PlaylistExplorerController.js";
+        import { ContextController } from "/musix/scripts/musix/ContextController.js";
         import { PlaylistController } from "/musix/scripts/musix/PlaylistController.js";
         import { Utility } from "/musix/scripts/musix/Utility.js";
 
@@ -37,6 +38,7 @@
             title = document.querySelector("title").textContent;
             nowPlayingController = null;
             playlistExplorerController = null;
+            contextController = null;
             playlistsController = null;
 
             templatesContainerFragment = document.getElementById("templateContainer").content;
@@ -58,11 +60,11 @@
 
                 //Initialize PlaylistsController
                 this.playlistsController = new PlaylistController(this);
+                this.contextController = new ContextController(this, document.getElementById("contextPanel"));
                 this.playlistsController.init().then(() => {
                     //Initialize NowPlayingController and PlaylistExplorerController
                     this.nowPlayingController = new NowPlayingController(this, document.getElementById("nowPlayingViewport"));
                     this.playlistExplorerController = new PlaylistExplorerController(this, document.getElementById("playlistExplorerPanel"));
-
                 });
 
                 //Add events to navigation control
@@ -144,16 +146,24 @@
                 return window.socket;
             }
 
-            getNowPlayingController() {
-                return this.nowPlayingController;
-            }
+            getController(controllerType) {
+                switch(controllerType) {
+                    case "nowPlaying": {
+                        return this.nowPlayingController;
+                    }
 
-            getPlaylistExplorerController() {
-                return this.playlistExplorerController;
-            }
+                    case "playlistExplorer": {
+                        return this.playlistExplorerController;
+                    }
 
-            getPlaylistController() {
-                return this.playlistsController;
+                    case "context": {
+                        return this.contextController;
+                    }
+
+                    case "playlists": {
+                        return this.playlistsController;
+                    }
+                }
             }
 
             //EVENT HANDLER METHODS
@@ -271,7 +281,28 @@
 
             </div>
             <div class="buttonContainer">
-                <button id="addPlaylistButton" class="button" style="border-top-left-radius: 10px;">ADD</button>
+                <button style="border-top-left-radius: 10px;">ADD</button>
+            </div>
+        </div>
+
+        <div id="contextPanel" class="panel popOut">
+            <!-- playlistContextDivision -->
+            <div class="panelDivision" data-playlist-index="0">
+                <div class="panelDivisionSector">
+                    <div class="panelDivisionSectorItem">Playlist Name</div>
+                    <h1 class="title">Download Playlist</h1>
+                </div>
+            </div>
+            <!-- trackContextDivision -->
+            <div class="panelDivision" data-playlist-index="0" data-track-index="0">
+                <div class="panelDivisionSector">
+                    <div class="panelDivisionSectorItem">Song Name</div>
+                    <h1 class="title">Download Track</h1>
+                    <h1 class="title">Add to QuickPlaylist&trade;</h1>
+                </div>
+            </div>
+            <div class="buttonContainer">
+                <button style="border-top-left-radius: 10px;">CLOSE</button>
             </div>
         </div>
     </div>

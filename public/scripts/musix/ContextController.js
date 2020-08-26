@@ -1,5 +1,5 @@
 //@ts-check
-export class TrackContextController {
+export class ContextController {
     cardInterface = null;
 
     view = null;
@@ -27,7 +27,7 @@ export class TrackContextController {
         });
         //Add onclick to addToQuickPlaylist button for adding the track to quickPlaylist
         panelDivisions[1].firstElementChild.children[2].addEventListener("click", () => {
-            this.cardInterface.getPlaylistController().addToQuickPlaylist(this.cardInterface.getPlaylistController().getTrackAt({
+            this.cardInterface.getController("playlists").addToQuickPlaylist(this.cardInterface.getController("playlists").getTrackAt({
                 trackIndex: panelDivisions[1].dataset.trackIndex,
                 playlistIndex: panelDivisions[1].dataset.playlistIndex,
             }));

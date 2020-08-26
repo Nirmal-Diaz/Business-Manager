@@ -21,7 +21,7 @@ export class PlaylistController {
                         this.playlists[playlistIndex].index = playlistIndex;
                     }
                 } else if (response.serverError === "network") {
-                    this.cardInterface.getNowPlayingController().view.querySelector("#lyricsDisplay").innerHTML = "Oops! Something's up with the network connection";
+                    this.cardInterface.getController("nowPlaying").view.querySelector("#lyricsDisplay").innerHTML = "Oops! Something's up with the network connection";
                 } else {
                     alert(response.serverError);
                 }
@@ -130,7 +130,7 @@ export class PlaylistController {
         //Randomize themeColor
         playlist.themeColor = Utility.getRandColor();
 
-        this.cardInterface.getPlaylistExplorerController().appendNewPlaylistView(playlist);
+        this.cardInterface.getController("playlistExplorer").appendNewPlaylistView(playlist);
 
         return assignedPlaylistIndex;
     }
@@ -138,7 +138,7 @@ export class PlaylistController {
     appendTrackToPlaylist(playlist, track) {
         const assignedTrackIndex = playlist.tracks.push(track) - 1;
 
-        this.cardInterface.getPlaylistExplorerController().appendNewTrackView(playlist, {
+        this.cardInterface.getController("playlistExplorer").appendNewTrackView(playlist, {
             playlistIndex: playlist.index,
             trackIndex: assignedTrackIndex
         });
@@ -156,17 +156,17 @@ export class PlaylistController {
             //Ask to begin playback of quickPlaylist
             if (window.frameElement) {
                 window.parent.shellInterface.throwAlert("Got a question", "Do you want to start QuickPlaylist now?", "Tap YES if you want to start playback of the QuickPlaylist immediately. Otherwise tap on NO", null, "YES", "NO").then(() => {
-                    this.cardInterface.getNowPlayingController().setPlaylist(quickPlaylist);
-                    this.cardInterface.getNowPlayingController().loadTrackAt(0);
-                    this.cardInterface.getNowPlayingController().togglePlay();
+                    this.cardInterface.getController("nowPlaying").setPlaylist(quickPlaylist);
+                    this.cardInterface.getController("nowPlaying").loadTrackAt(0);
+                    this.cardInterface.getController("nowPlaying").togglePlay();
                 }, () => {
                     //Do nothing here
                 });
             } else {
                 if (confirm("Do you want to start playback of QuickPlaylist now?")) {
-                    this.cardInterface.getNowPlayingController().setPlaylist(quickPlaylist);
-                    this.cardInterface.getNowPlayingController().loadTrackAt(0);
-                    this.cardInterface.getNowPlayingController().togglePlay();
+                    this.cardInterface.getController("nowPlaying").setPlaylist(quickPlaylist);
+                    this.cardInterface.getController("nowPlaying").loadTrackAt(0);
+                    this.cardInterface.getController("nowPlaying").togglePlay();
                 };
             }
         } else {

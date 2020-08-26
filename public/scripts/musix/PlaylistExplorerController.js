@@ -14,7 +14,7 @@ export class PlaylistExplorerController {
         this.playlistViewTemplate = this.cardInterface.getTemplate(".panelDivisionSector");
         this.trackViewTemplate = this.cardInterface.getTemplate(".panelDivisionSectorItem");
 
-        const playlists = this.cardInterface.getPlaylistController().getPlaylists();
+        const playlists = this.cardInterface.getController("playlists").getPlaylists();
         //Load playlistExplorer
         //NOTE: A DocumentFragment is used to improve performance
         const playlistViewContainerFragment = new DocumentFragment();
@@ -37,7 +37,7 @@ export class PlaylistExplorerController {
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
-                            this.cardInterface.getPlaylistController().appendPlaylist(response.data);
+                            this.cardInterface.getController("playlists").appendPlaylist(response.data);
                         } else {
                             alert(response.serverError.message);
                         }
@@ -69,8 +69,8 @@ export class PlaylistExplorerController {
 
         playlistView.firstElementChild.addEventListener("contextmenu", () => {
             event.preventDefault();
-            this.cardInterface.getTrackContextController().setupPlaylistContext(playlist.name, playlist.index);
-            this.cardInterface.getTrackContextController().show();
+            this.cardInterface.getController("context").setupPlaylistContext(playlist.name, playlist.index);
+            this.cardInterface.getController("context").show();
         });
 
         for (let trackIndex = 0; trackIndex < playlist.tracks.length; trackIndex++) {
@@ -82,7 +82,7 @@ export class PlaylistExplorerController {
     }
 
     createTrackView(trackPosition) {
-        const playlists = this.cardInterface.getPlaylistController().getPlaylists();
+        const playlists = this.cardInterface.getController("playlists").getPlaylists();
         const trackView = this.trackViewTemplate.cloneNode(true);
         if (playlists[trackPosition.playlistIndex].tracks[trackPosition.trackIndex].title) {
             trackView.textContent = playlists[trackPosition.playlistIndex].tracks[trackPosition.trackIndex].title;
@@ -94,9 +94,9 @@ export class PlaylistExplorerController {
         trackView.dataset.trackIndex = trackPosition.trackIndex.toString();
 
         trackView.addEventListener("click", (event) => {
-            this.cardInterface.getNowPlayingController().setPlaylist(this.cardInterface.getPlaylistController().getPlaylistAt(trackPosition.playlistIndex))
-            this.cardInterface.getNowPlayingController().loadTrackAt(trackPosition.trackIndex);
-            this.cardInterface.getNowPlayingController().togglePlay();
+            this.cardInterface.getController("nowPlaying").setPlaylist(this.cardInterface.getController("playlists").getPlaylistAt(trackPosition.playlistIndex))
+            this.cardInterface.getController("nowPlaying").loadTrackAt(trackPosition.trackIndex);
+            this.cardInterface.getController("nowPlaying").togglePlay();
         });
 
         trackView.addEventListener("contextmenu", (event) => {
@@ -110,8 +110,8 @@ export class PlaylistExplorerController {
                 titleTextContent = playlists[trackPosition.playlistIndex].name + " . " + track.path.slice(track.path.lastIndexOf("/") + 1, track.path.lastIndexOf("."))
             }
             
-            this.cardInterface.getTrackContextController().setupTrackContext(titleTextContent, trackPosition);
-            this.cardInterface.getTrackContextController().show();
+            this.cardInterface.getController("context").setupTrackContext(titleTextContent, trackPosition);
+            this.cardInterface.getController("context").show();
         });
 
         return trackView;
