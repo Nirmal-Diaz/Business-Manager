@@ -283,12 +283,12 @@ body {
     border-width: 2px 0 2px 0;
 }
 
-#trackContextPanel {
+#contextPanel {
     width: 90%;
 
     padding: 20px 0 20px 0;
     
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .panelDivision {
