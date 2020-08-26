@@ -139,12 +139,22 @@ musixRouter.route("/playlists/:playlistIndex")
         } else {
             const tracks = playlists[playlistIndex].tracks;
 
+            //Setup response
+            res.on("close", () => {
+                res.end();
+            });
+
             //Setup archive
             const archive = archiver("zip", { store: true });
-            archive.on("end", () => res.end());
+
             archive.on("error", (error) => {
                 console.log(error);
-                res.end();
+                res.json({
+                    status: false,
+                    serverError: {
+                        message: "An error occurred while archiving the playlist"
+                    }
+                });
             });
 
             for (const track of tracks) {
@@ -153,7 +163,7 @@ musixRouter.route("/playlists/:playlistIndex")
                 });
             }
 
-            res.attachment(playlists[playlistIndex].name + ".zip").type("application/zip");
+            res.attachment(`${playlists[playlistIndex].name}.zip`).type("zip");
             archive.pipe(res);
             archive.finalize();
         }
