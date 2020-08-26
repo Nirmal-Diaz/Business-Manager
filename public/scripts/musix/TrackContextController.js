@@ -17,11 +17,13 @@ export class TrackContextController {
         //Add onclick to downloadPlaylistButton for downloading the playlist
         panelDivisions[0].firstElementChild.children[1].addEventListener("click", () => {
             location.href = `/musix/playlists/${panelDivisions[0].dataset.playlistIndex}`;
+            this.hide();
         });
 
         //Add onclick to downloadTrackButton for downloading the track
         panelDivisions[1].firstElementChild.children[1].addEventListener("click", () => {
                 location.href = `/musix/playlists/${panelDivisions[1].dataset.playlistIndex}/tracks/${panelDivisions[1].dataset.trackIndex}`;
+                this.hide();
         });
         //Add onclick to addToQuickPlaylist button for adding the track to quickPlaylist
         panelDivisions[1].firstElementChild.children[2].addEventListener("click", () => {
@@ -29,6 +31,7 @@ export class TrackContextController {
                 trackIndex: panelDivisions[1].dataset.trackIndex,
                 playlistIndex: panelDivisions[1].dataset.playlistIndex,
             }));
+            this.hide();
         });
     }
 
