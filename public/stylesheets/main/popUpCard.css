@@ -61,6 +61,10 @@ form {
     .formFieldContainer.wide {
         width: 100%;
     }
+
+    .inputGroup>.inputContainer.check, .inputGroup>.inputContainer.radio {
+        width: 50%;
+    }
 }
 
 @media print {

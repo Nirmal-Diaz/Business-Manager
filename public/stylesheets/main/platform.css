@@ -129,12 +129,6 @@ body {
     width: 100%;
 }
 
-.inputGroup>.inputContainer {
-    justify-content: flex-start;
-
-    width: 50%;
-}
-
 .inputContainer.invalid>*:first-child {
     border-color: var(--inputContainerBorderColor-invalid);
 }
@@ -209,6 +203,10 @@ body {
 
 .inputContainer.image>input {
     display: none;
+}
+
+.inputContainer.check {
+    justify-content: flex-start;
 }
 
 .inputContainer.check>input,
