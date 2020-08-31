@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { Material } from "../../entities/main/Material";
 import { MaterialRepository } from "../../repositories/main/MaterialRepository";
+import { Supplier } from "../../entities/main/Supplier";
 
 export class MaterialController {
     static async createOne(clientBindingObject) {
@@ -66,5 +67,40 @@ export class MaterialController {
             //WARNING: This error is thrown based on a possible error and not on the actual error
             throw { title: "First things first", titleDescription: "Remove dependant supplier records", message: "There are dependant supplier records for this material. Please remove those before removing this material", technicalMessage: error.sqlMessage }
         });
+    }
+
+    static async getSupplierRelations() {
+        const materials =  await getRepository(Material).find({
+            relations: ["suppliers"]
+        });
+
+        if (materials.length > 0) {
+            const materialId2SupplierIds = {};
+
+            for (const material of materials) {
+                materialId2SupplierIds[material.id] = [];
+                for (const supplier of material.suppliers) {
+                    materialId2SupplierIds[material.id].push(supplier.id);
+                }
+            }
+
+            return materialId2SupplierIds;
+        } else {
+            throw { title: "Oops!", titleDescription: "Add some items first", message: "We no materials in the material database", technicalMessage: "No materials in the database" };
+        }
+    }
+
+    static async setSupplierRelations(clientBindingObject) {
+        for (const materialId of Object.keys(clientBindingObject)) {
+            const material =  await getRepository(Material).findOne(materialId);
+            if (clientBindingObject[materialId].length === 0) {
+                material.suppliers = [];
+            } else {
+                material.suppliers = await getRepository(Supplier).findByIds(clientBindingObject[materialId]);
+            }
+            await getRepository(Material).save(material);
+        }
+
+        return true;
     }
 }

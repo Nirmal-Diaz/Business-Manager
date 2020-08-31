@@ -332,6 +332,24 @@ mainRouter.route("/materials/:materialId")
             });
     });
 
+mainRouter.route("/materials/@all/suppliers")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.setSupplierRelations(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.getSupplierRelations()).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //PRODUCTS
 mainRouter.route("/products")
     .put(express.json(), (req, res, next) => {
@@ -568,7 +586,7 @@ mainRouter.route("/users/:userId/userPreferences")
             res.locals.error = error; next();
         });
     })
-    .post(express.json({limit: 1000000}), (req, res, next) => {
+    .post(express.json({ limit: 1000000 }), (req, res, next) => {
         (() => {
             if (req.params.userId === "@me") {
                 return UserPreferenceController.updateOne(req.body.bindingObject);
@@ -678,7 +696,7 @@ mainRouter.route("/directories/:subDirectoryPath/items")
 
 mainRouter.route("/directories/:subDirectoryPath/files/:fileName")
     .get((req, res, next) => {
-        const resolvedPath = path.resolve(`${FileController.absolutePrivateDirectoryPath +req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`);
+        const resolvedPath = path.resolve(`${FileController.absolutePrivateDirectoryPath + req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`);
 
         PermissionController.checkPermission(req.session.userId, "files", req.method)
             .then(() => FileController.isPathExists(resolvedPath))

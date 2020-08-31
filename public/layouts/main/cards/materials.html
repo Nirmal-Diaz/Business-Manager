@@ -56,6 +56,17 @@
                         this.updateItem(this.selectedCardDivisionSectorItems[0]);
                     }
                 });
+                this.updateControls[1].addEventListener("click", () => {
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/suppliers2Materials_cu.html");
+                    // popUpCard.getView().style.width = "800px";
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.getView().style.width = "800px";
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm();
+                        });
+                    });
+                });
 
                 this.deleteControls[0].addEventListener("click", () => {
                     if (this.selectedCardDivisionSectorItems.length === 0) {
@@ -148,6 +159,9 @@
         </div>
         <div id="updateControlsContainer">
             <button class="buttonGlyph" title="Edit material">
+                <img src="/images/main/glyph_update.png" />
+            </button>
+            <button class="buttonGlyph" title="Edit material-supplier assignment">
                 <img src="/images/main/glyph_update.png" />
             </button>
         </div>
