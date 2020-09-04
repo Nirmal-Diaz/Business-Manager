@@ -46,7 +46,7 @@ musixRouter.route("/playlists")
             data: JSON.parse(fs.readFileSync("src/registries/musix/playlists.json", "utf-8"))
         });
     })
-    .patch(express.json(), (req, res) => {
+    .patch(express.json({ limit: 1000000 }), (req, res) => {
         fs.writeFileSync("src/registries/musix/playlists_backup.json", fs.readFileSync("src/registries/musix/playlists.json", "utf-8"));
         fs.writeFileSync("src/registries/musix/playlists.json", JSON.stringify(req.body.playlists, null, "    "));
 
