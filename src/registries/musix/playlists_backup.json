@@ -1252,6 +1252,12 @@
         "lyricsFileName": "Darkside - Alan Walker.json"
       },
       {
+        "path": "English Audios/Mr Loverman.mp3",
+        "artist": "Mohombi",
+        "title": "Mr. Loverman",
+        "lyricsFileName": null
+      },
+      {
         "path": "English Audios/Dusk Till Dawn.mp3",
         "artist": "Zayn/Sia",
         "title": "Dusk Till Dawn",
@@ -4588,6 +4594,18 @@
         "lyricsFileName": null
       },
       {
+        "path": "Sinhala Audios/Sonduru Atheethaye.mp3",
+        "artist": "Chamoth/Madush Diwyanga",
+        "title": "Sonduru Atheethaye",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Sulange Pawee.mp3",
+        "artist": "Madush Diwyangana",
+        "title": "Sulange Pawee",
+        "lyricsFileName": null
+      },
+      {
         "path": "Sinhala Audios/Me Nagaraya.mp3",
         "artist": "Gayangana Amarasena",
         "title": "Me Nagaraya",
@@ -4612,6 +4630,12 @@
         "lyricsFileName": null
       },
       {
+        "path": "Sinhala Audios/Premaya Lowa.mp3",
+        "artist": "Chandana Liyanarachchi",
+        "title": "Premaya Lowa",
+        "lyricsFileName": null
+      },
+      {
         "path": "Sinhala Audios/Werala Konaka Hida.mp3",
         "artist": "Sanka Dineth",
         "title": "Werala Konaka Hida",
@@ -4627,6 +4651,12 @@
         "path": "Sinhala Audios/Iki Gasa Handana Atheethayaka.mp3",
         "artist": "Amarasiri Peries",
         "title": "Iki Gasa Handana Atheethayaka",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Ninda Nathi Raye.mp3",
+        "artist": "Miyuru Sangeeth",
+        "title": "Ninda Nathi Raye",
         "lyricsFileName": null
       },
       {
@@ -4852,45 +4882,33 @@
     "themeColor": "gray",
     "tracks": [
       {
-        "path": "English Audios/Mr Loverman.mp3",
-        "artist": "Mohombi",
-        "title": "Mr. Loverman",
+        "path": "English Audios/World Of Our Own.mp3",
+        "artist": "",
+        "title": "",
         "lyricsFileName": null
       },
       {
-        "path": "Sinhala Audios/Premaya Lowa Hama Thanama Athi.mp3",
-        "artist": "Sanka Dineth",
-        "title": "Premaya Lowa Hama Thanama Athi",
+        "path": "English Audios/The Humming.mp3",
+        "artist": "Enya",
+        "title": "The Humming",
         "lyricsFileName": null
       },
       {
-        "path": "Sinhala Audios/Ninda Nathi Raye.mp3",
-        "artist": "Miyuru Sangeeth",
-        "title": "Ninda Nathi Raye",
+        "path": "English Audios/Where Do You Go.mp3",
+        "artist": "LaBouche",
+        "title": "Where Do You Go",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Hindi Audios/Ae Watan.mp3",
+        "artist": "Arijit Singh",
+        "title": "Ae Watan",
         "lyricsFileName": null
       },
       {
         "path": "Sinhala Audios/Abhimanaya Thurstan Namin Liyawila.mp3",
         "artist": "",
         "title": "Abhimanaya Thurstan Namin Liyawila",
-        "lyricsFileName": null
-      },
-      {
-        "path": "Sinhala Audios/Sulange Pawee.mp3",
-        "artist": "Madush Diwyangana",
-        "title": "Sulange Pawee",
-        "lyricsFileName": null
-      },
-      {
-        "path": "Sinhala Audios/Premaya Lowa.mp3",
-        "artist": "Chandana Liyanarachchi",
-        "title": "Premaya Lowa",
-        "lyricsFileName": null
-      },
-      {
-        "path": "Sinhala Audios/Sonduru Atheethayena.mp3",
-        "artist": "Chamoth/Madush Diwyanga",
-        "title": "Sonduru Atheethayena",
         "lyricsFileName": null
       }
     ]

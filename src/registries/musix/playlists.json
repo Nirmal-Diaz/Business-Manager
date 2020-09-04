@@ -70,6 +70,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/The Humming.mp3",
+                "artist": "Enya",
+                "title": "The Humming",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Pure Imagination.mp3",
                 "artist": "Fiona Apple",
                 "title": "Pure Imagination",
@@ -1486,6 +1492,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/World Of Our Own.mp3",
+                "artist": "",
+                "title": "",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Maniac.mp3",
                 "artist": "Michael Sembello",
                 "title": "Maniac",
@@ -1615,6 +1627,12 @@
                 "path": "English Audios/When Can I See You Again.mp3",
                 "artist": "Owl City",
                 "title": "When Can I See You Again?",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Where Do You Go.mp3",
+                "artist": "LaBouche",
+                "title": "Where Do You Go",
                 "lyricsFileName": null
             },
             {
@@ -3547,6 +3565,12 @@
                 "path": "Hindi Audios/Piya Aaye Na.mp3",
                 "artist": "KK/Tulsi Kumar",
                 "title": "Piya Aaye Na",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Ae Watan.mp3",
+                "artist": "Arijit Singh",
+                "title": "Ae Watan",
                 "lyricsFileName": null
             },
             {
