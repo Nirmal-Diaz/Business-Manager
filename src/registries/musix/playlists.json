@@ -580,6 +580,12 @@
                 "lyricsFileName": "Last To Know - Three Days Grace.json"
             },
             {
+                "path": "English Audios/21 Guns.mp3",
+                "artist": "Green Day",
+                "title": "21 Guns",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/California Calling.mp3",
                 "artist": "Enrique Iglesias",
                 "title": "California Calling",
@@ -1531,6 +1537,12 @@
                 "path": "English Audios/I Want It That Way.mp3",
                 "artist": "Backstreet Boys",
                 "title": "I Want It That Way",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Ma Baker.mp3",
+                "artist": "Boney M",
+                "title": "Ma Baker",
                 "lyricsFileName": null
             },
             {
@@ -3832,6 +3844,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sal Sapu Na Nil Manel.mp3",
+                "artist": "Kithsiri Jayasekara",
+                "title": "Sal Sapu Na Nil Manel",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Pansale Palliye.mp3",
                 "artist": "Charitha Priyadarshani/Ridma Weerawardena",
                 "title": "Pansale Palliye",
@@ -4039,6 +4057,12 @@
                 "path": "Sinhala Audios/Eka Yaye.mp3",
                 "artist": "Api Machan",
                 "title": "Eka Yaye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Amathumak.mp3",
+                "artist": "Ruwan Hettiarachchi",
+                "title": "Amathumak",
                 "lyricsFileName": null
             },
             {
@@ -4639,6 +4663,12 @@
                 "path": "Sinhala Audios/Aadara Priya Landune.mp3",
                 "artist": "Felix Anton/Ayomi Perera",
                 "title": "Aadara Priya Landune",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Enna Mada Nale.mp3",
+                "artist": "Rohana Siriwardana",
+                "title": "Enna Mada Nale",
                 "lyricsFileName": null
             },
             {
