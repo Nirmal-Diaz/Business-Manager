@@ -3574,6 +3574,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Mile Ho Tum.mp3",
+                "artist": "Neha Kakkar/Tony Kakkar",
+                "title": "Mile Ho Tum",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Piya Aaye Na.mp3",
                 "artist": "KK/Tulsi Kumar",
                 "title": "Piya Aaye Na",
@@ -3745,6 +3751,12 @@
                 "path": "Sinhala Hymns/Mage Divi Pana Nala Rakinne.mp3",
                 "artist": "",
                 "title": "Mage Divi Pana Nala Rakinne",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Pathana Prathiharyayan.mp3",
+                "artist": "",
+                "title": "Pathana Prathiharyayan",
                 "lyricsFileName": null
             },
             {
@@ -4027,6 +4039,12 @@
                 "path": "Sinhala Audios/Chanchala Dase Maya.mp3",
                 "artist": "Raini Charuka Gunathilaka",
                 "title": "Chanchala Dase Maya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Pem Seena Loke.mp3",
+                "artist": "Ishaq Baig/Gayatri Keanayake",
+                "title": "Pem Seena Loke",
                 "lyricsFileName": null
             },
             {
@@ -4318,9 +4336,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sithin Witharak.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Sithin Witharak",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Perada Dathe Weli.mp3",
                 "artist": "Wijaya Bandara Welituduwa",
                 "title": "Perada Dathe Weli",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Muthu Kandulin Ma Denethe.mp3",
+                "artist": "Saneera JanaKantha",
+                "title": "Muthu Kandulin Ma Denethe",
                 "lyricsFileName": null
             },
             {
@@ -4333,6 +4363,12 @@
                 "path": "Sinhala Audios/Man Ithaliye Thani Una.mp3",
                 "artist": "Gayan Udawatta",
                 "title": "Man Ithaliye Thani Una",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Perum Puragena.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Perum Puragena",
                 "lyricsFileName": null
             },
             {
@@ -4354,6 +4390,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Tharuka Niwa.mp3",
+                "artist": "Maathra",
+                "title": "Tharuka Niwa",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Saththai Man Doni.mp3",
                 "artist": "Shehara Sandaruwan",
                 "title": "Saththai Man Doni",
@@ -4369,6 +4411,12 @@
                 "path": "Sinhala Audios/Oru Sanam (Live).mp3",
                 "artist": "M. Dinushika/Savindi Sithmini",
                 "title": "Oru Sanam (Live)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mathakayan Obe.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Mathakayan Obe",
                 "lyricsFileName": null
             },
             {
@@ -4630,6 +4678,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
+                "artist": "Harsha Maduranga/Abishek Geethadewa",
+                "title": "Piyamanne",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Katharaka Thaniwee.mp3",
                 "artist": "Samith R",
                 "title": "Katharaka Thaniwee",
@@ -4642,9 +4696,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Awasan Liyumai.mp3",
+                "artist": "Sathish Perera",
+                "title": "Awasan Liyumai",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sonduru Atheethaye.mp3",
                 "artist": "Chamoth/Madush Diwyanga",
                 "title": "Sonduru Atheethaye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Hithin Ma Nosali.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Hithin Ma Nosali",
                 "lyricsFileName": null
             },
             {
@@ -4654,9 +4720,27 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sikuruliya.mp3",
+                "artist": "Nadeeka Guruge/Rukman Asitha",
+                "title": "Sikuruliya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sepalika Malai.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Sepalika Malai",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Me Nagaraya.mp3",
                 "artist": "Gayangana Amarasena",
                 "title": "Me Nagaraya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ganga Addara Ma.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Ganga Addara Ma",
                 "lyricsFileName": null
             },
             {
@@ -4927,18 +5011,6 @@
                 "path": "Sinhala Audios/Nethin Netha Balaala.mp3",
                 "artist": "Uddika Premarathna",
                 "title": "Nethin Netha Balaala",
-                "lyricsFileName": null
-            }
-        ]
-    },
-    {
-        "name": "#AutoGenerated",
-        "themeColor": "gray",
-        "tracks": [
-            {
-                "path": "Sinhala Audios/Abhimanaya Thurstan Namin Liyawila.mp3",
-                "artist": "",
-                "title": "Abhimanaya Thurstan Namin Liyawila",
                 "lyricsFileName": null
             }
         ]
