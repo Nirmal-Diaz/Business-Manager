@@ -59,11 +59,19 @@ body {
     border-width: thin 0 0 0;
 }
 
-#submitButton {
+#controlsContainer {
     position: sticky;
     bottom: 20px;
     left: 20px;
 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 400px
+}
+
+#submitButton {
     height: 50px;
     width: 50px;
 

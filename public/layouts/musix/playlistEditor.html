@@ -56,6 +56,9 @@
                                 trackView.textContent = track.path.slice(track.path.lastIndexOf("/") + 1, track.path.lastIndexOf("."));
                             }
 
+                            trackView.addEventListener("click", (event) => {
+                                document.getElementsByTagName("audio")[0].src = `/musix/${track.path}`;
+                            });
                             trackView.addEventListener("dragover", (event) => {
                                 event.preventDefault();
                             });
@@ -118,7 +121,10 @@
 
 <body onload="main();">
     <div id="playlistViewContainer"></div>
-    <button id="submitButton" onclick="updatePlaylistDatabase();">SUBMIT</button>
+    <span id="controlsContainer">
+        <button id="submitButton" onclick="updatePlaylistDatabase();">SUBMIT</button>
+        <audio src="" controls="controls" autoplay="autoplay"></audio>
+    </span>
 </body>
 
 </html>
