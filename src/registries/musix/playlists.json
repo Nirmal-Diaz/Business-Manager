@@ -3736,9 +3736,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Mata Daranna Ba.mp3",
+                "artist": "",
+                "title": "Mata Daranna Ba",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Ma Balavath Karana Samide.mp3",
                 "artist": "Kasun Kalhara",
                 "title": "Ma Balavath Karana Samide",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Jeewithe Eda.mp3",
+                "artist": "",
+                "title": "Jeewithe Eda",
                 "lyricsFileName": null
             },
             {
@@ -3760,9 +3772,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Oba Thurulata Wee.mp3",
+                "artist": "",
+                "title": "Oba Thurulata Wee",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Oba Thurulata Vee.mp3",
                 "artist": "",
                 "title": "Oba Thurulata Vee",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Samidun Mawwa Dinaya Adai.mp3",
+                "artist": "",
+                "title": "Samidun Mawwa Dinaya Adai",
                 "lyricsFileName": null
             },
             {
@@ -3820,6 +3844,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Dewure Dilena.mp3",
+                "artist": "Janaka Wickramasingha",
+                "title": "Dewure Dilena",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Mathu Pem Purana.mp3",
                 "artist": "Indika Upamali/Bachi Susan",
                 "title": "Mathu Pem Purana",
@@ -3841,6 +3871,12 @@
                 "path": "Sinhala Audios/Hankithi Kawana.mp3",
                 "artist": "Meena Prasadinee",
                 "title": "Hankithi Kawana",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Kirula Muthu Lihi.mp3",
+                "artist": "Janaka Wickramasingha",
+                "title": "Kirula Muthu Lihi",
                 "lyricsFileName": null
             },
             {
@@ -4366,6 +4402,18 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Himi Nathi Senehe.mp3",
+                "artist": "Asanka Priyamantha",
+                "title": "Himi Nathi Senehe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Rawatunu Tharam.mp3",
+                "artist": "Ruwan Hettiarachchi",
+                "title": "Rawatunu Tharam",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Perum Puragena.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Perum Puragena",
@@ -4393,6 +4441,12 @@
                 "path": "Sinhala Audios/Tharuka Niwa.mp3",
                 "artist": "Maathra",
                 "title": "Tharuka Niwa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mewalam Mokatada.mp3",
+                "artist": "Chandana Liyanarachchi",
+                "title": "Mewalam Mokatada",
                 "lyricsFileName": null
             },
             {
@@ -4667,7 +4721,7 @@
             },
             {
                 "path": "Sinhala Audios/Thawa Dawasak.mp3",
-                "artist": "Keerthi Pasquel",
+                "artist": "",
                 "title": "Thawa Dawasak",
                 "lyricsFileName": null
             },
@@ -4680,7 +4734,13 @@
             {
                 "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
                 "artist": "Harsha Maduranga/Abishek Geethadewa",
-                "title": "Piyamanne",
+                "title": "Siyumali Obe Vatha",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Siththam Karamin Manase.mp3",
+                "artist": "Samith R/Sumudu Dilshan",
+                "title": "Siththam Karamin Manase",
                 "lyricsFileName": null
             },
             {
@@ -4817,7 +4877,7 @@
             },
             {
                 "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Chamara Weerasinghe",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
                 "title": "Paaya Aa Sanda",
                 "lyricsFileName": null
             },
