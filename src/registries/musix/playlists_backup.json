@@ -1528,6 +1528,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Larger Than Life.mp3",
+                "artist": "BackStreet Boys",
+                "title": "Larger Than Life",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/I Lay My Love On You.mp3",
                 "artist": "Westlife",
                 "title": "I Lay My Love on You",
@@ -3436,6 +3442,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Khuda Jaane.mp3",
+                "artist": "KK/Shilpa Rao",
+                "title": "Khuda Jaane",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Bulleya.mp3",
                 "artist": "Amit Mishra/Shilpa Rao",
                 "title": "Bulleya",
@@ -3493,6 +3505,12 @@
                 "path": "Hindi Audios/Satyagraha.mp3",
                 "artist": "Rajiv Sundaresan/Shivam Pathak/Shweta Pandit",
                 "title": "Satyagraha",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Mera Dil Bhi Kitna Pagal Hai.mp3",
+                "artist": "",
+                "title": "Mera Dil Bhi Kitna Pagal Hai",
                 "lyricsFileName": null
             },
             {
@@ -3574,6 +3592,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Tum Bin Jaoon Kaha.mp3",
+                "artist": "Sarif Tarafdar",
+                "title": "Tum Bin Jaoon Kaha",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Mile Ho Tum.mp3",
                 "artist": "Neha Kakkar/Tony Kakkar",
                 "title": "Mile Ho Tum",
@@ -3649,12 +3673,6 @@
                 "path": "Hindi Audios/Ghungroo.mp3",
                 "artist": "Arjith Singh/Shilpa Rao",
                 "title": "Ghungroo",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Hindi Audios/Mera Dil Bhi Kitna Pagal Hai.mp3",
-                "artist": "",
-                "title": "Mera Dil Bhi Kitna Pagal Hai",
                 "lyricsFileName": null
             },
             {
@@ -3736,9 +3754,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Mata Daranna Ba.mp3",
+                "artist": "",
+                "title": "Mata Daranna Ba",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Ma Balavath Karana Samide.mp3",
                 "artist": "Kasun Kalhara",
                 "title": "Ma Balavath Karana Samide",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Jeewithe Eda.mp3",
+                "artist": "",
+                "title": "Jeewithe Eda",
                 "lyricsFileName": null
             },
             {
@@ -3760,9 +3790,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Oba Thurulata Wee.mp3",
+                "artist": "",
+                "title": "Oba Thurulata Wee",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Oba Thurulata Vee.mp3",
                 "artist": "",
                 "title": "Oba Thurulata Vee",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Samidun Mawwa Dinaya Adai.mp3",
+                "artist": "",
+                "title": "Samidun Mawwa Dinaya Adai",
                 "lyricsFileName": null
             },
             {
@@ -3820,6 +3862,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Dewure Dilena.mp3",
+                "artist": "Janaka Wickramasingha",
+                "title": "Dewure Dilena",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Mathu Pem Purana.mp3",
                 "artist": "Indika Upamali/Bachi Susan",
                 "title": "Mathu Pem Purana",
@@ -3829,6 +3877,12 @@
                 "path": "Sinhala Audios/Supun Sihine Nidan Puthune.mp3",
                 "artist": "Sangeeth Wijesooriya",
                 "title": "Supun Sihine Nidan Puthune",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Amma Sandaki.mp3",
+                "artist": "TM Jayarathna",
+                "title": "Amma Sandaki",
                 "lyricsFileName": null
             },
             {
@@ -3844,27 +3898,15 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Kirula Muthu Lihi.mp3",
+                "artist": "Janaka Wickramasingha",
+                "title": "Kirula Muthu Lihi",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Ranabime Viruwo.mp3",
                 "artist": "Flashback",
                 "title": "Ranabime Viruwo",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Nositha Sitha.mp3",
-                "artist": "Geyard Harith Gunawardana",
-                "title": "Nositha Sitha",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sal Sapu Na Nil Manel.mp3",
-                "artist": "Kithsiri Jayasekara",
-                "title": "Sal Sapu Na Nil Manel",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Pansale Palliye.mp3",
-                "artist": "Charitha Priyadarshani/Ridma Weerawardena",
-                "title": "Pansale Palliye",
                 "lyricsFileName": null
             },
             {
@@ -3874,21 +3916,15 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Anduru Kutiya Thula.mp3",
-                "artist": "Chanuka Moragoda",
-                "title": "Anduru Kutiya Thula",
+                "path": "Sinhala Audios/Ma Adara Amma.mp3",
+                "artist": "Chamara Weerasinghe",
+                "title": "Ma Adara Amma",
                 "lyricsFileName": null
             },
             {
                 "path": "Sinhala Audios/Api Kauwruda.mp3",
                 "artist": "Wayo",
                 "title": "Api Kauwruda",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Chakithaya.mp3",
-                "artist": "Nemesis",
-                "title": "Chakithaya",
                 "lyricsFileName": null
             },
             {
@@ -3916,12 +3952,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Sansaraye Nawathenaka.mp3",
-                "artist": "Kasun Kalhara",
-                "title": "Sansaraye Nawathenaka",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Miringuwa Parada.mp3",
                 "artist": "Chitral Somapala",
                 "title": "Miringuwa Parada",
@@ -3940,12 +3970,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Numba Sulanga Wage Awidin.mp3",
-                "artist": "",
-                "title": "Numba Sulanga Wage Awidin",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Rawana.mp3",
                 "artist": "Viraj Bhatiya/Poorna Sachintha",
                 "title": "Rawana",
@@ -3955,12 +3979,6 @@
                 "path": "Sinhala Audios/Sarath Sande.mp3",
                 "artist": "Charith Abesingha/Bachi Susan",
                 "title": "Sarath Sande",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Senehe Ammage.mp3",
-                "artist": "Shihan Mihiranga/Kasun Kalhara/Nirosha Virajini/Umaria Sinhawansha",
-                "title": "Senehe Ammage",
                 "lyricsFileName": null
             },
             {
@@ -4002,8 +4020,80 @@
         ]
     },
     {
-        "name": "Real (Native)",
+        "name": "Mashup (Native Touching)",
         "themeColor": "crimson",
+        "tracks": [
+            {
+                "path": "Sinhala Audios/Pansale Palliye.mp3",
+                "artist": "Charitha Priyadarshani/Ridma Weerawardena",
+                "title": "Pansale Palliye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Anduru Kutiya Thula.mp3",
+                "artist": "Chanuka Moragoda",
+                "title": "Anduru Kutiya Thula",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Karadiya Gambare.mp3",
+                "artist": "Api Machan",
+                "title": "Karadiya Gambare",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sansaraye Nawathenaka.mp3",
+                "artist": "Kasun Kalhara",
+                "title": "Sansaraye Nawathenaka",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Senehe Ammage.mp3",
+                "artist": "Shihan Mihiranga/Kasun Kalhara/Nirosha Virajini/Umaria Sinhawansha",
+                "title": "Senehe Ammage",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obath Mamath Hindina.mp3",
+                "artist": "Jagath Wickramasinghe",
+                "title": "Obath Mamath Hindina",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sabanda Api.mp3",
+                "artist": "Api Machan",
+                "title": "Sabanda Api",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Rane Igilenna.mp3",
+                "artist": "Api Machan",
+                "title": "Rane Igilenna",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Hadannata Wahi Binduwak.mp3",
+                "artist": "Samantha Perera",
+                "title": "Hadannata Wahi Binduwak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Nositha Sitha.mp3",
+                "artist": "Geyard Harith Gunawardana",
+                "title": "Nositha Sitha",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sal Sapu Na Nil Manel.mp3",
+                "artist": "Kithsiri Jayasekara",
+                "title": "Sal Sapu Na Nil Manel",
+                "lyricsFileName": null
+            }
+        ]
+    },
+    {
+        "name": "Real (Native)",
+        "themeColor": "hotpink",
         "tracks": [
             {
                 "path": "Sinhala Audios/Nurawee.mp3",
@@ -4039,6 +4129,12 @@
                 "path": "Sinhala Audios/Chanchala Dase Maya.mp3",
                 "artist": "Raini Charuka Gunathilaka",
                 "title": "Chanchala Dase Maya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ae Neela Nethu Sala.mp3",
+                "artist": "TM Jayarathna",
+                "title": "Ae Neela Nethu Sala",
                 "lyricsFileName": null
             },
             {
@@ -4078,9 +4174,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Amathumak.mp3",
-                "artist": "Ruwan Hettiarachchi",
-                "title": "Amathumak",
+                "path": "Sinhala Audios/Guru Gedarata Hamada Ena.mp3",
+                "artist": "Chamara Weerasingha",
+                "title": "Guru Gedarata Hamada Ena",
                 "lyricsFileName": null
             },
             {
@@ -4129,6 +4225,18 @@
                 "path": "Sinhala Audios/As Aadaren Purona.mp3",
                 "artist": "Kaveesha Kaviraj/Sadeeptha",
                 "title": "As Aadaren Purona",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Numba Sulanga Wage Awidin.mp3",
+                "artist": "",
+                "title": "Numba Sulanga Wage Awidin",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Gan Iwure.mp3",
+                "artist": "Edward Jayakody",
+                "title": "Gan Iwure",
                 "lyricsFileName": null
             },
             {
@@ -4314,8 +4422,122 @@
         ]
     },
     {
-        "name": "Dark Love",
+        "name": "Real (Native Touching)",
         "themeColor": "deepskyblue",
+        "tracks": [
+            {
+                "path": "Sinhala Audios/Wala Theerayen.mp3",
+                "artist": "Api Machan",
+                "title": "Wala Theerayen",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Hansa Bottuwe.mp3",
+                "artist": "Api Machan/Sumith Mandanayaka",
+                "title": "Hansa Bottuwe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sonduru Atheethaye.mp3",
+                "artist": "Chamoth/Madush Diwyanga",
+                "title": "Sonduru Atheethaye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Aadara Priya Landune.mp3",
+                "artist": "Felix Anton/Ayomi Perera",
+                "title": "Aadara Priya Landune",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Premaya Lowa.mp3",
+                "artist": "Chandana Liyanarachchi",
+                "title": "Premaya Lowa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Aakasa Kusum.mp3",
+                "artist": "",
+                "title": "Aakasa Kusum",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Wehi Bindu.mp3",
+                "artist": "Clifford Richard",
+                "title": "Wehi Bindu",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Madhu Mala Lesa.mp3",
+                "artist": "Shashika Nisansala",
+                "title": "Madhu Mala Lesa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/E Mage Malai.mp3",
+                "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
+                "title": "E Mage Malai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obe Susum Pawan Salai.mp3",
+                "artist": "Dayan Witharana/Lihini Hettiarachchi",
+                "title": "Obe Susum Pawan Salai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Me Prathama Wasanthayai.mp3",
+                "artist": "Sachithra Senanayake",
+                "title": "Me Prathama Wasanthayai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Adarayada Me.mp3",
+                "artist": "Amaradewa",
+                "title": "Adarayada Me",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Api Hangum Walata.mp3",
+                "artist": "Api Machan",
+                "title": "Api Hangum Walata",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sandaa Andura Lowa.mp3",
+                "artist": "Api Machan",
+                "title": "Sandaa Andura Lowa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Nim Him Sewwa.mp3",
+                "artist": "Samitha Mudunkotuwa/Nadeeka Guruge",
+                "title": "Nim Him Sewwa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Upul Nuwan Vidaha.mp3",
+                "artist": "Api Machan",
+                "title": "Upul Nuwan Vidaha",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Miyuru Kalpana.mp3",
+                "artist": "Raveen Kanishka",
+                "title": "Miyuru Kalpana",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obe Sina Langa.mp3",
+                "artist": "Prauda Buwaneka",
+                "title": "Obe Sina Langa",
+                "lyricsFileName": null
+            }
+        ]
+    },
+    {
+        "name": "Dark Love",
+        "themeColor": "chocolate",
         "tracks": [
             {
                 "path": "Sinhala Audios/Aayemath Aadaren.mp3",
@@ -4342,9 +4564,27 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
+                "artist": "Harsha Maduranga/Abishek Geethadewa",
+                "title": "Siyumali Obe Vatha",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Perada Dathe Weli.mp3",
                 "artist": "Wijaya Bandara Welituduwa",
                 "title": "Perada Dathe Weli",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Hima Meedum Wala Kule.mp3",
+                "artist": "Athula Sri Gamage",
+                "title": "Hima Meedum Wala Kule",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Thawa Dawasak.mp3",
+                "artist": "",
+                "title": "Thawa Dawasak",
                 "lyricsFileName": null
             },
             {
@@ -4366,9 +4606,21 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Perum Puragena.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Perum Puragena",
+                "path": "Sinhala Audios/Himi Nathi Senehe.mp3",
+                "artist": "Asanka Priyamantha",
+                "title": "Himi Nathi Senehe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Chakithaya.mp3",
+                "artist": "Nemesis",
+                "title": "Chakithaya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Rawatunu Tharam.mp3",
+                "artist": "Ruwan Hettiarachchi",
+                "title": "Rawatunu Tharam",
                 "lyricsFileName": null
             },
             {
@@ -4384,15 +4636,27 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Epa Thawath Oba.mp3",
-                "artist": "Ruchini Wijesundera",
-                "title": "Epa Thawath Oba",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Tharuka Niwa.mp3",
                 "artist": "Maathra",
                 "title": "Tharuka Niwa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mewalam Mokatada.mp3",
+                "artist": "Chandana Liyanarachchi",
+                "title": "Mewalam Mokatada",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Amathumak.mp3",
+                "artist": "Ruwan Hettiarachchi",
+                "title": "Amathumak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sanda Pahan Raye.mp3",
+                "artist": "Indika Upamali",
+                "title": "Sanda Pahan Raye",
                 "lyricsFileName": null
             },
             {
@@ -4426,6 +4690,18 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Ayeth Warak.mp3",
+                "artist": "Sandun Perera",
+                "title": "Ayeth Warak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Nandaneeya Pema.mp3",
+                "artist": "Senanayaka Weraliyadda",
+                "title": "Nandaneeya Pema",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Samanala Wewa Purawannata.mp3",
                 "artist": "Karunarathna Divulgane",
                 "title": "Samanala Wawa Purawannata",
@@ -4441,6 +4717,18 @@
                 "path": "Sinhala Audios/Wikasitha Pathuman Vs O Mere Dil Ke Chain.mp3",
                 "artist": "Sahan Hasthi/Pavan Mallawarachchi",
                 "title": "Wikasitha Pathuman vs. O Mere Dil Ke Chain",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Penena Thek Mane.mp3",
+                "artist": "Samith Sirimanna",
+                "title": "Penena Thek Mane",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obe Lowe Ada Ma.mp3",
+                "artist": "Namal Udugama",
+                "title": "Obe Lowe Ada Ma",
                 "lyricsFileName": null
             },
             {
@@ -4489,6 +4777,12 @@
                 "path": "Sinhala Audios/Namal Aaye.mp3",
                 "artist": "Clarence Wijewardhane",
                 "title": "Namal Aaye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Nethin Netha Balaala.mp3",
+                "artist": "Uddika Premarathna",
+                "title": "Nethin Netha Balaala",
                 "lyricsFileName": null
             },
             {
@@ -4656,31 +4950,13 @@
         ]
     },
     {
-        "name": "Touching",
-        "themeColor": "chocolate",
+        "name": "Dark Love (Touching)",
+        "themeColor": "violet",
         "tracks": [
             {
-                "path": "Sinhala Audios/Obe Sina Langa.mp3",
-                "artist": "Prauda Buwaneka",
-                "title": "Obe Sina Langa",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Thawa Dawasak.mp3",
-                "artist": "Keerthi Pasquel",
-                "title": "Thawa Dawasak",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Wala Theerayen.mp3",
-                "artist": "Api Machan",
-                "title": "Wala Theerayen",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
-                "artist": "Harsha Maduranga/Abishek Geethadewa",
-                "title": "Piyamanne",
+                "path": "Sinhala Audios/Siththam Karamin Manase.mp3",
+                "artist": "Samith R/Sumudu Dilshan",
+                "title": "Siththam Karamin Manase",
                 "lyricsFileName": null
             },
             {
@@ -4690,27 +4966,27 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Hansa Bottuwe.mp3",
-                "artist": "Api Machan/Sumith Mandanayaka",
-                "title": "Hansa Bottuwe",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Awasan Liyumai.mp3",
                 "artist": "Sathish Perera",
                 "title": "Awasan Liyumai",
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Sonduru Atheethaye.mp3",
-                "artist": "Chamoth/Madush Diwyanga",
-                "title": "Sonduru Atheethaye",
+                "path": "Sinhala Audios/Mata Heenayak Wela.mp3",
+                "artist": "Harsha Maduranga",
+                "title": "Mata Heenayak Wela",
                 "lyricsFileName": null
             },
             {
                 "path": "Sinhala Audios/Hithin Ma Nosali.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Hithin Ma Nosali",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Perum Puragena.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Perum Puragena",
                 "lyricsFileName": null
             },
             {
@@ -4738,15 +5014,15 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Ganga Addara Ma.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Ganga Addara Ma",
+                "path": "Sinhala Audios/Epa Thawath Oba.mp3",
+                "artist": "Ruchini Wijesundera",
+                "title": "Epa Thawath Oba",
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Aadara Priya Landune.mp3",
-                "artist": "Felix Anton/Ayomi Perera",
-                "title": "Aadara Priya Landune",
+                "path": "Sinhala Audios/Ganga Addara Ma.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Ganga Addara Ma",
                 "lyricsFileName": null
             },
             {
@@ -4762,27 +5038,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Kalak Thisse.mp3",
+                "artist": "Lukshan Wickramasekara",
+                "title": "Kalak Thisse",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Obata Waram Nathi.mp3",
                 "artist": "Hashan gunarathne",
                 "title": "Obata Waram Nathi",
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Premaya Lowa.mp3",
-                "artist": "Chandana Liyanarachchi",
-                "title": "Premaya Lowa",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Werala Konaka Hida.mp3",
                 "artist": "Sanka Dineth",
                 "title": "Werala Konaka Hida",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Aakasa Kusum.mp3",
-                "artist": "",
-                "title": "Aakasa Kusum",
                 "lyricsFileName": null
             },
             {
@@ -4810,21 +5080,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Obath Mamath Hindina.mp3",
-                "artist": "Jagath Wickramasinghe",
-                "title": "Obath Mamath Hindina",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Chamara Weerasinghe",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
                 "title": "Paaya Aa Sanda",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Wehi Bindu.mp3",
-                "artist": "Clifford Richard",
-                "title": "Wehi Bindu",
                 "lyricsFileName": null
             },
             {
@@ -4840,12 +5098,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Madhu Mala Lesa.mp3",
-                "artist": "Shashika Nisansala",
-                "title": "Madhu Mala Lesa",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Daiwayogayakin Nowedo.mp3",
                 "artist": "",
                 "title": "Daiwayogayakin Nowedo",
@@ -4855,18 +5107,6 @@
                 "path": "Sinhala Audios/Ma Aatha Bhawedi.mp3",
                 "artist": "Lahiru Perera",
                 "title": "Ma Aatha Bhawedi",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/E Mage Malai.mp3",
-                "artist": "Ranil Mallawarachchi/Pavan Mallawarachchi",
-                "title": "E Mage Malai",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sabanda Api.mp3",
-                "artist": "Api Machan",
-                "title": "Sabanda Api",
                 "lyricsFileName": null
             },
             {
@@ -4900,39 +5140,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Soduru Atheethaye.mp3",
-                "artist": "Jana",
-                "title": "Soduru Atheethaye",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Premaye Mandahasini.mp3",
                 "artist": "Karunarathna Divulgane",
                 "title": "Premaye Mandahasini",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Rane Igilenna.mp3",
-                "artist": "Api Machan",
-                "title": "Rane Igilenna",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Karadiya Gambare.mp3",
-                "artist": "Api Machan",
-                "title": "Karadiya Gambare",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Obe Susum Pawan Salai.mp3",
-                "artist": "Dayan Witharana/Lihini Hettiarachchi",
-                "title": "Obe Susum Pawan Salai",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Me Prathama Wasanthayai.mp3",
-                "artist": "Sachithra Senanayake",
-                "title": "Me Prathama Wasanthayai",
                 "lyricsFileName": null
             },
             {
@@ -4942,27 +5152,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Gan Iwure.mp3",
-                "artist": "Edward Jayakody",
-                "title": "Gan Iwure",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Oba Enna.mp3",
                 "artist": "Chandani Hettiarachchi",
                 "title": "Oba Enna",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Adarayada Me.mp3",
-                "artist": "Amaradewa",
-                "title": "Adarayada Me",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Hadannata Wahi Binduwak.mp3",
-                "artist": "Samantha Perera",
-                "title": "Hadannata Wahi Binduwak",
                 "lyricsFileName": null
             },
             {
@@ -4972,52 +5164,11 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Api Hangum Walata.mp3",
-                "artist": "Api Machan",
-                "title": "Api Hangum Walata",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Sehehasakata Aruthak.mp3",
                 "artist": "Prauda Buwaneka",
                 "title": "Sehehasakata Aruthak",
                 "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sandaa Andura Lowa.mp3",
-                "artist": "Api Machan",
-                "title": "Sandaa Andura Lowa",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Upul Nuwan Vidaha.mp3",
-                "artist": "Api Machan",
-                "title": "Upul Nuwan Vidaha",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Miyuru Kalpana.mp3",
-                "artist": "Raveen Kanishka",
-                "title": "Miyuru Kalpana",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Nim Him Sewwa.mp3",
-                "artist": "Samitha Mudunkotuwa/Nadeeka Guruge",
-                "title": "Nim Him Sewwa",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Nethin Netha Balaala.mp3",
-                "artist": "Uddika Premarathna",
-                "title": "Nethin Netha Balaala",
-                "lyricsFileName": null
             }
         ]
-    },
-    {
-        "name": "#AutoGenerated",
-        "themeColor": "gray",
-        "tracks": []
     }
 ]
