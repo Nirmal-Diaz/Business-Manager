@@ -3928,6 +3928,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sudu Neluma Ko Sora Bora Wawe.mp3",
+                "artist": "Amaradewa",
+                "title": "Sudu Neluma Ko Sora Bora Wawe",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Ma Adara Amma.mp3",
                 "artist": "Chamara Weerasinghe",
                 "title": "Ma Adara Amma",
@@ -4570,12 +4576,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Sithin Witharak.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Sithin Witharak",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
                 "artist": "Harsha Maduranga/Abishek Geethadewa",
                 "title": "Siyumali Obe Vatha",
@@ -4654,12 +4654,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Tharuka Niwa.mp3",
-                "artist": "Maathra",
-                "title": "Tharuka Niwa",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Mewalam Mokatada.mp3",
                 "artist": "Chandana Liyanarachchi",
                 "title": "Mewalam Mokatada",
@@ -4669,12 +4663,6 @@
                 "path": "Sinhala Audios/Amathumak.mp3",
                 "artist": "Ruwan Hettiarachchi",
                 "title": "Amathumak",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sanda Pahan Raye.mp3",
-                "artist": "Indika Upamali",
-                "title": "Sanda Pahan Raye",
                 "lyricsFileName": null
             },
             {
@@ -4693,12 +4681,6 @@
                 "path": "Sinhala Audios/Oru Sanam (Live).mp3",
                 "artist": "M. Dinushika/Savindi Sithmini",
                 "title": "Oru Sanam (Live)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Mathakayan Obe.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Mathakayan Obe",
                 "lyricsFileName": null
             },
             {
@@ -5014,6 +4996,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sithin Witharak.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Sithin Witharak",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Perum Puragena.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Perum Puragena",
@@ -5047,12 +5035,6 @@
                 "path": "Sinhala Audios/Epa Thawath Oba.mp3",
                 "artist": "Ruchini Wijesundera",
                 "title": "Epa Thawath Oba",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sudu Neluma Ko Sora Bora Wawe.mp3",
-                "artist": "Amaradewa",
-                "title": "Sudu Neluma Ko Sora Bora Wawe",
                 "lyricsFileName": null
             },
             {
@@ -5116,9 +5098,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sanda Pahan Raye.mp3",
+                "artist": "Indika Upamali",
+                "title": "Sanda Pahan Raye",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
                 "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
                 "title": "Paaya Aa Sanda",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Tharuka Niwa.mp3",
+                "artist": "Maathra",
+                "title": "Tharuka Niwa",
                 "lyricsFileName": null
             },
             {
@@ -5155,6 +5149,12 @@
                 "path": "Sinhala Audios/Hanthana Sihine.mp3",
                 "artist": "Amaradewa/Umariya Sinhawansha",
                 "title": "Hanthana Sihine",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mathakayan Obe.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Mathakayan Obe",
                 "lyricsFileName": null
             },
             {

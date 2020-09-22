@@ -4702,6 +4702,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
+                "title": "Paaya Aa Sanda",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Samanala Wewa Purawannata.mp3",
                 "artist": "Karunarathna Divulgane",
                 "title": "Samanala Wawa Purawannata",
@@ -4735,6 +4741,12 @@
                 "path": "Sinhala Audios/Nosalenna Kandulak Dasin.mp3",
                 "artist": "Poorna Sachintha",
                 "title": "Nosalenna Kandulak Dasin",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Me Mal Yaye.mp3",
+                "artist": "Jude Rogans",
+                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
@@ -5104,12 +5116,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
-                "title": "Paaya Aa Sanda",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Tharuka Niwa.mp3",
                 "artist": "Maathra",
                 "title": "Tharuka Niwa",
@@ -5119,12 +5125,6 @@
                 "path": "Sinhala Audios/Age Sinahawa Thahanam.mp3",
                 "artist": "Chandra Kumar/Mihindu Ariyarathna",
                 "title": "Age Sinahawa Thahanam",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Me Mal Yaye.mp3",
-                "artist": "Jude Rogans",
-                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
