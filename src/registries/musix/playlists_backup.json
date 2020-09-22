@@ -3928,6 +3928,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sudu Neluma Ko Sora Bora Wawe.mp3",
+                "artist": "Amaradewa",
+                "title": "Sudu Neluma Ko Sora Bora Wawe",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Ma Adara Amma.mp3",
                 "artist": "Chamara Weerasinghe",
                 "title": "Ma Adara Amma",
@@ -4570,12 +4576,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Sithin Witharak.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Sithin Witharak",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
                 "artist": "Harsha Maduranga/Abishek Geethadewa",
                 "title": "Siyumali Obe Vatha",
@@ -4609,12 +4609,6 @@
                 "path": "Sinhala Audios/Guru Gedarata Hamada Ena.mp3",
                 "artist": "Chamara Weerasingha",
                 "title": "Guru Gedarata Hamada Ena",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
-                "artist": "Dulaj Danushka",
-                "title": "Apa Hamuweema Wenweema",
                 "lyricsFileName": null
             },
             {
@@ -4654,12 +4648,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Tharuka Niwa.mp3",
-                "artist": "Maathra",
-                "title": "Tharuka Niwa",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Mewalam Mokatada.mp3",
                 "artist": "Chandana Liyanarachchi",
                 "title": "Mewalam Mokatada",
@@ -4669,12 +4657,6 @@
                 "path": "Sinhala Audios/Amathumak.mp3",
                 "artist": "Ruwan Hettiarachchi",
                 "title": "Amathumak",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sanda Pahan Raye.mp3",
-                "artist": "Indika Upamali",
-                "title": "Sanda Pahan Raye",
                 "lyricsFileName": null
             },
             {
@@ -4696,12 +4678,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Mathakayan Obe.mp3",
-                "artist": "Miyuru Sangeeth",
-                "title": "Mathakayan Obe",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Hamuwuna.mp3",
                 "artist": "Shalitha/Mahesh/Sanka/Thilina",
                 "title": "Hamuwuna",
@@ -4717,6 +4693,12 @@
                 "path": "Sinhala Audios/Nandaneeya Pema.mp3",
                 "artist": "Senanayaka Weraliyadda",
                 "title": "Nandaneeya Pema",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
+                "title": "Paaya Aa Sanda",
                 "lyricsFileName": null
             },
             {
@@ -4753,6 +4735,12 @@
                 "path": "Sinhala Audios/Nosalenna Kandulak Dasin.mp3",
                 "artist": "Poorna Sachintha",
                 "title": "Nosalenna Kandulak Dasin",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Me Mal Yaye.mp3",
+                "artist": "Jude Rogans",
+                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
@@ -5014,6 +5002,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sithin Witharak.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Sithin Witharak",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Perum Puragena.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Perum Puragena",
@@ -5023,6 +5017,12 @@
                 "path": "Sinhala Audios/Sulange Pawee.mp3",
                 "artist": "Madush Diwyangana",
                 "title": "Sulange Pawee",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
+                "artist": "Dulaj Danushka",
+                "title": "Apa Hamuweema Wenweema",
                 "lyricsFileName": null
             },
             {
@@ -5047,12 +5047,6 @@
                 "path": "Sinhala Audios/Epa Thawath Oba.mp3",
                 "artist": "Ruchini Wijesundera",
                 "title": "Epa Thawath Oba",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Sudu Neluma Ko Sora Bora Wawe.mp3",
-                "artist": "Amaradewa",
-                "title": "Sudu Neluma Ko Sora Bora Wawe",
                 "lyricsFileName": null
             },
             {
@@ -5116,21 +5110,21 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
-                "title": "Paaya Aa Sanda",
+                "path": "Sinhala Audios/Sanda Pahan Raye.mp3",
+                "artist": "Indika Upamali",
+                "title": "Sanda Pahan Raye",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Tharuka Niwa.mp3",
+                "artist": "Maathra",
+                "title": "Tharuka Niwa",
                 "lyricsFileName": null
             },
             {
                 "path": "Sinhala Audios/Age Sinahawa Thahanam.mp3",
                 "artist": "Chandra Kumar/Mihindu Ariyarathna",
                 "title": "Age Sinahawa Thahanam",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Me Mal Yaye.mp3",
-                "artist": "Jude Rogans",
-                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
@@ -5155,6 +5149,12 @@
                 "path": "Sinhala Audios/Hanthana Sihine.mp3",
                 "artist": "Amaradewa/Umariya Sinhawansha",
                 "title": "Hanthana Sihine",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mathakayan Obe.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Mathakayan Obe",
                 "lyricsFileName": null
             },
             {

@@ -4612,12 +4612,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
-                "artist": "Dulaj Danushka",
-                "title": "Apa Hamuweema Wenweema",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Man Ithaliye Thani Una.mp3",
                 "artist": "Gayan Udawatta",
                 "title": "Man Ithaliye Thani Una",
@@ -4678,12 +4672,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Oru Sanam (Live).mp3",
-                "artist": "M. Dinushika/Savindi Sithmini",
-                "title": "Oru Sanam (Live)",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Hamuwuna.mp3",
                 "artist": "Shalitha/Mahesh/Sanka/Thilina",
                 "title": "Hamuwuna",
@@ -4699,6 +4687,12 @@
                 "path": "Sinhala Audios/Nandaneeya Pema.mp3",
                 "artist": "Senanayaka Weraliyadda",
                 "title": "Nandaneeya Pema",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
+                "title": "Paaya Aa Sanda",
                 "lyricsFileName": null
             },
             {
@@ -4735,6 +4729,12 @@
                 "path": "Sinhala Audios/Nosalenna Kandulak Dasin.mp3",
                 "artist": "Poorna Sachintha",
                 "title": "Nosalenna Kandulak Dasin",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Me Mal Yaye.mp3",
+                "artist": "Jude Rogans",
+                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
@@ -5014,6 +5014,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Apa Hamuweema Wenweema.mp3",
+                "artist": "Dulaj Danushka",
+                "title": "Apa Hamuweema Wenweema",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sikuruliya.mp3",
                 "artist": "Nadeeka Guruge/Rukman Asitha",
                 "title": "Sikuruliya",
@@ -5074,6 +5080,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Oru Sanam (Live).mp3",
+                "artist": "M. Dinushika/Savindi Sithmini",
+                "title": "Oru Sanam (Live)",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Iki Gasa Handana Atheethayaka.mp3",
                 "artist": "Amarasiri Peries",
                 "title": "Iki Gasa Handana Atheethayaka",
@@ -5104,12 +5116,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
-                "title": "Paaya Aa Sanda",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Tharuka Niwa.mp3",
                 "artist": "Maathra",
                 "title": "Tharuka Niwa",
@@ -5119,12 +5125,6 @@
                 "path": "Sinhala Audios/Age Sinahawa Thahanam.mp3",
                 "artist": "Chandra Kumar/Mihindu Ariyarathna",
                 "title": "Age Sinahawa Thahanam",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Me Mal Yaye.mp3",
-                "artist": "Jude Rogans",
-                "title": "Me Mal Yaye",
                 "lyricsFileName": null
             },
             {
