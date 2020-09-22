@@ -3886,12 +3886,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Supun Sihine Nidan Puthune.mp3",
-                "artist": "Sangeeth Wijesooriya",
-                "title": "Supun Sihine Nidan Puthune",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Amma Sandaki.mp3",
                 "artist": "TM Jayarathna",
                 "title": "Amma Sandaki",
@@ -4015,12 +4009,6 @@
                 "path": "Sinhala Audios/Soldier.mp3",
                 "artist": "Hiran",
                 "title": "Soldier",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Suruwama Ayine Punchi Pale.mp3",
-                "artist": "Chamara Ranawaka",
-                "title": "Suruwama Ayine Punchi Pale",
                 "lyricsFileName": null
             },
             {
@@ -4606,6 +4594,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Supun Sihine Nidan Puthune.mp3",
+                "artist": "Sangeeth Wijesooriya",
+                "title": "Supun Sihine Nidan Puthune",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Guru Gedarata Hamada Ena.mp3",
                 "artist": "Chamara Weerasingha",
                 "title": "Guru Gedarata Hamada Ena",
@@ -4675,6 +4669,12 @@
                 "path": "Sinhala Audios/Hamuwuna.mp3",
                 "artist": "Shalitha/Mahesh/Sanka/Thilina",
                 "title": "Hamuwuna",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Suruwama Ayine Punchi Pale.mp3",
+                "artist": "Chamara Ranawaka",
+                "title": "Suruwama Ayine Punchi Pale",
                 "lyricsFileName": null
             },
             {
