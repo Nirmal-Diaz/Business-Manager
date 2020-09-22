@@ -4672,12 +4672,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Oru Sanam (Live).mp3",
-                "artist": "M. Dinushika/Savindi Sithmini",
-                "title": "Oru Sanam (Live)",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Hamuwuna.mp3",
                 "artist": "Shalitha/Mahesh/Sanka/Thilina",
                 "title": "Hamuwuna",
@@ -5083,6 +5077,12 @@
                 "path": "Sinhala Audios/Werala Konaka Hida.mp3",
                 "artist": "Sanka Dineth",
                 "title": "Werala Konaka Hida",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Oru Sanam (Live).mp3",
+                "artist": "M. Dinushika/Savindi Sithmini",
+                "title": "Oru Sanam (Live)",
                 "lyricsFileName": null
             },
             {
