@@ -3760,6 +3760,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Nirwana Swarna Dhawarayen.mp3",
+                "artist": "Sanath Nandasiri",
+                "title": "Nirwana Swarna Dhawarayen",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Ma Balavath Karana Samide.mp3",
                 "artist": "Kasun Kalhara",
                 "title": "Ma Balavath Karana Samide",
@@ -3769,6 +3775,12 @@
                 "path": "Sinhala Hymns/Jeewithe Eda.mp3",
                 "artist": "",
                 "title": "Jeewithe Eda",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Gilem Obe Guna.mp3",
+                "artist": "Amaradewa",
+                "title": "Gilem Obe Guna",
                 "lyricsFileName": null
             },
             {
@@ -4054,6 +4066,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sudu Neluma Ko Sora Bora Wawe.mp3",
+                "artist": "Amaradewa",
+                "title": "Sudu Neluma Ko Sora Bora Wawe",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Obath Mamath Hindina.mp3",
                 "artist": "Jagath Wickramasinghe",
                 "title": "Obath Mamath Hindina",
@@ -4063,6 +4081,12 @@
                 "path": "Sinhala Audios/Sabanda Api.mp3",
                 "artist": "Api Machan",
                 "title": "Sabanda Api",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Kawuruwath Na.mp3",
+                "artist": "Amarasiri Peiris",
+                "title": "Kawuruwath Na",
                 "lyricsFileName": null
             },
             {
@@ -4171,12 +4195,6 @@
                 "path": "Sinhala Audios/Eka Yaye.mp3",
                 "artist": "Api Machan",
                 "title": "Eka Yaye",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Guru Gedarata Hamada Ena.mp3",
-                "artist": "Chamara Weerasingha",
-                "title": "Guru Gedarata Hamada Ena",
                 "lyricsFileName": null
             },
             {
@@ -4439,7 +4457,7 @@
             },
             {
                 "path": "Sinhala Audios/Sonduru Atheethaye.mp3",
-                "artist": "Chamoth/Madush Diwyanga",
+                "artist": "Jana",
                 "title": "Sonduru Atheethaye",
                 "lyricsFileName": null
             },
@@ -4591,6 +4609,12 @@
                 "path": "Sinhala Audios/Muthu Kandulin Ma Denethe.mp3",
                 "artist": "Saneera JanaKantha",
                 "title": "Muthu Kandulin Ma Denethe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Guru Gedarata Hamada Ena.mp3",
+                "artist": "Chamara Weerasingha",
+                "title": "Guru Gedarata Hamada Ena",
                 "lyricsFileName": null
             },
             {
@@ -4972,6 +4996,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Aya Yanna Giya Makila.mp3",
+                "artist": "Amarasiri_Peiris",
+                "title": "Aya Yanna Giya Makila",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Mata Heenayak Wela.mp3",
                 "artist": "Harsha Maduranga",
                 "title": "Mata Heenayak Wela",
@@ -4981,6 +5011,12 @@
                 "path": "Sinhala Audios/Hithin Ma Nosali.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Hithin Ma Nosali",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Kandu Para.mp3",
+                "artist": "Api Machan",
+                "title": "Kandu Para",
                 "lyricsFileName": null
             },
             {
