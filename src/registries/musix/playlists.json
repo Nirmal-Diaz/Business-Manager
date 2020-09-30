@@ -3472,6 +3472,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Bahut Pyar Karte Hai.mp3",
+                "artist": "Rahul Jain",
+                "title": "Bahut Pyar Karte Hai",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Jee Karda.mp3",
                 "artist": "Divya Kumar",
                 "title": "Jee Karda",
@@ -3574,6 +3580,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Hindi Audios/Shivam.mp3",
+                "artist": "Kaala Bhairava",
+                "title": "Shivam",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Hindi Audios/Yeh Wada Raha.mp3",
                 "artist": "",
                 "title": "Yeh Wada Raha",
@@ -3606,7 +3618,7 @@
             {
                 "path": "Hindi Audios/Rakhwale.mp3",
                 "artist": "Trishan",
-                "title": "Rakhwale",
+                "title": "O Duniya Ke Rakhwale (Cover)",
                 "lyricsFileName": null
             },
             {
@@ -3910,6 +3922,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Ahan Inna (2).mp3",
+                "artist": "Indrachapa Liyanage",
+                "title": "Ahan Inna",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Gagana Sarannata Kiya.mp3",
                 "artist": "Roony",
                 "title": "Gagana Sarannata Kiya",
@@ -3940,15 +3958,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Hiruge Lovedi.mp3",
-                "artist": "Aruna Lian",
-                "title": "Hiruge Lovedi",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Budune Jesune.mp3",
-                "artist": "Bachi Susan",
-                "title": "Budune Jesune",
+                "path": "Sinhala Audios/Hiruge Lowedi.mp3",
+                "artist": "",
+                "title": "Hiruge Lowedi",
                 "lyricsFileName": null
             },
             {
@@ -4186,15 +4198,21 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Masha (Live).mp3",
-                "artist": "Sandun Mahesh/Ashintha Perera",
-                "title": "Masha (Live)",
+                "path": "Sinhala Audios/Masha.mp3",
+                "artist": "Theekshana Anuradha",
+                "title": "Masha",
                 "lyricsFileName": null
             },
             {
                 "path": "Sinhala Audios/Nilwan Muhudu Theere.mp3",
                 "artist": "Shehan Kaushalya",
                 "title": "Nilwan Muhudu Theere",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obata Thiyena Adare.mp3",
+                "artist": "Roshan Fernando",
+                "title": "Obata Thiyena Adare",
                 "lyricsFileName": null
             },
             {
@@ -4228,9 +4246,27 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Pem Banda Sith Banda.mp3",
+                "artist": "Chandra Kumara Kandanarachchi",
+                "title": "Pem Banda Sith Banda",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Husma Oya.mp3",
                 "artist": "Sandeep Jayalath",
                 "title": "Husma Oya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sanda Ebennepa.mp3",
+                "artist": "Athula Adhikari/Samitha Mudunkotuwa",
+                "title": "Sanda Ebennepa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Oba Mage Wela.mp3",
+                "artist": "",
+                "title": "Oba Mage Wela",
                 "lyricsFileName": null
             },
             {
@@ -4445,7 +4481,7 @@
             },
             {
                 "path": "Sinhala Audios/Tharu Werale.mp3",
-                "artist": "",
+                "artist": "Damith Asanka",
                 "title": "Tharu Werale",
                 "lyricsFileName": null
             },
@@ -4558,6 +4594,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Supem Suwadak Aran.mp3",
+                "artist": "Sahan Liyanage",
+                "title": "Supem Suwadak Aran",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Obe Susum Pawan Salai.mp3",
                 "artist": "Dayan Witharana/Lihini Hettiarachchi",
                 "title": "Obe Susum Pawan Salai",
@@ -4637,7 +4679,7 @@
             },
             {
                 "path": "Sinhala Audios/Perada Dathe Weli.mp3",
-                "artist": "Wijaya Bandara Welituduwa",
+                "artist": "",
                 "title": "Perada Dathe Weli",
                 "lyricsFileName": null
             },
@@ -4649,14 +4691,14 @@
             },
             {
                 "path": "Sinhala Audios/Thawa Dawasak.mp3",
-                "artist": "",
+                "artist": "Sahan Liyanage",
                 "title": "Thawa Dawasak",
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Muthu Kandulin Ma Denethe.mp3",
-                "artist": "Saneera JanaKantha",
-                "title": "Muthu Kandulin Ma Denethe",
+                "path": "Sinhala Audios/Oba Wenuwenma Thama.mp3",
+                "artist": "Udaya Sri",
+                "title": "",
                 "lyricsFileName": null
             },
             {
@@ -4678,15 +4720,45 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Heenayak Wage.mp3",
+                "artist": "Surendra_Perera",
+                "title": "Heenayak Wage",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Ahanna Adare Tharam.mp3",
                 "artist": "Dushyanth Weeraman",
                 "title": "Ahanna Adare Tharam",
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Thawa Eka Sarayak.mp3",
+                "artist": "Roshan Fernando",
+                "title": "Thawa Eka Sarayak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Saththai Man Doni.mp3",
+                "artist": "Shehara Sandaruwan",
+                "title": "Saththai Man Doni",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Mathake Hasaral.mp3",
+                "artist": "Dushyanth Weeraman/Umara Sinhawansha",
+                "title": "Mathake Hasaral",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Hadawatha Illa.mp3",
                 "artist": "Priya Sooriyasena",
                 "title": "Hadawatha Illa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obage Dothin Pidu Adare.mp3",
+                "artist": "Somasiri Madagedara",
+                "title": "Obage Dothin Pidu Adare",
                 "lyricsFileName": null
             },
             {
@@ -4720,6 +4792,24 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Nethu Saluna.mp3",
+                "artist": "Romesh Sugathapala/Lakshan",
+                "title": "Nethu Saluna",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obath Giya Mata Pitupa.mp3",
+                "artist": "Jude Rogans",
+                "title": "Obath Giya Mata Pitupa",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Dasa Nilupul Thema.mp3",
+                "artist": "Somasiri Madagedara",
+                "title": "Dasa Nilupul Thema",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Anuraga Nethu Sala.mp3",
                 "artist": "",
                 "title": "Anuraga Nethu Sala",
@@ -4729,6 +4819,12 @@
                 "path": "Sinhala Audios/Chakithaya.mp3",
                 "artist": "Nemesis",
                 "title": "Chakithaya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Lengathu Hitha.mp3",
+                "artist": "Noel Raj",
+                "title": "Lengathu Hitha",
                 "lyricsFileName": null
             },
             {
@@ -4978,12 +5074,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Me Anantha Rathriye.mp3",
-                "artist": "Damith Asanka",
-                "title": "Me Anantha Rathriye",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Laa Rosa.mp3",
                 "artist": "Chillie/Sineth",
                 "title": "Laa Rosa",
@@ -5111,14 +5201,8 @@
             },
             {
                 "path": "Sinhala Audios/Awasan Liyumai.mp3",
-                "artist": "Sathish Perera",
+                "artist": "Pramith Ganearachchi",
                 "title": "Awasan Liyumai",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Aya Yanna Giya Makila.mp3",
-                "artist": "Amarasiri_Peiris",
-                "title": "Aya Yanna Giya Makila",
                 "lyricsFileName": null
             },
             {
@@ -5146,6 +5230,24 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Hadawatha Gahena.mp3",
+                "artist": "Sahan Liyanage",
+                "title": "Hadawatha Gahena",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ma Dase Wedana.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Ma Dase Wedana",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Muthu Kandulin Ma Denethe.mp3",
+                "artist": "Chandrasena Hettiarachchi",
+                "title": "Muthu Kandulin Ma Denethe",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sithin Witharak.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Sithin Witharak",
@@ -5164,6 +5266,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Nihanda Kalpana.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Nihanda Kalpana",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sulange Pawee.mp3",
                 "artist": "Madush Diwyangana",
                 "title": "Sulange Pawee",
@@ -5179,6 +5287,12 @@
                 "path": "Sinhala Audios/Sikuruliya.mp3",
                 "artist": "Nadeeka Guruge/Rukman Asitha",
                 "title": "Sikuruliya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Lokayen Yamu.mp3",
+                "artist": "Sahan Liyanage",
+                "title": "Lokayen Yamu",
                 "lyricsFileName": null
             },
             {
@@ -5230,9 +5344,21 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Api Wen Wena Tharamata.mp3",
+                "artist": "Sahan Liyanage",
+                "title": "Api Wen Wena Tharamata",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Werala Konaka Hida.mp3",
                 "artist": "Sanka Dineth",
                 "title": "Werala Konaka Hida",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sulanga Numba Wage.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Sulanga Numba Wage",
                 "lyricsFileName": null
             },
             {
@@ -5344,6 +5470,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Me Anantha Rathriye.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Me Anantha Rathriye",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Oba Enna.mp3",
                 "artist": "Chandani Hettiarachchi",
                 "title": "Oba Enna",
@@ -5359,6 +5491,12 @@
                 "path": "Sinhala Audios/Sehehasakata Aruthak.mp3",
                 "artist": "Prauda Buwaneka",
                 "title": "Sehehasakata Aruthak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Aya Yanna Giya Makila.mp3",
+                "artist": "Amarasiri_Peiris",
+                "title": "Aya Yanna Giya Makila",
                 "lyricsFileName": null
             }
         ]
