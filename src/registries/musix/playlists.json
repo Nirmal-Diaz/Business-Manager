@@ -4126,12 +4126,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Unmada Vu Premadare.mp3",
-                "artist": "Kamal Addararachchi/Damayanthi Jayasooriya",
-                "title": "Unmada Vu Premadare",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Sabanda Api.mp3",
                 "artist": "Api Machan",
                 "title": "Sabanda Api",
@@ -4603,6 +4597,12 @@
                 "path": "Sinhala Audios/Obe Susum Pawan Salai.mp3",
                 "artist": "Dayan Witharana/Lihini Hettiarachchi",
                 "title": "Obe Susum Pawan Salai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Unmada Vu Premadare.mp3",
+                "artist": "Kamal Addararachchi/Damayanthi Jayasooriya",
+                "title": "Unmada Vu Premadare",
                 "lyricsFileName": null
             },
             {
