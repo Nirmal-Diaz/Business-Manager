@@ -856,6 +856,12 @@
                 "lyricsFileName": "Castle Of Glass - Linkin Park.json"
             },
             {
+                "path": "English Audios/Backwards.mp3",
+                "artist": "Alexander Stewart",
+                "title": "Backwards",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Bleeding Out.mp3",
                 "artist": "Imagine Dragons",
                 "title": "Bleeding Out",
@@ -1105,6 +1111,12 @@
                 "path": "English Audios/I'll Be Waiting.mp3",
                 "artist": "Arjun/Arjit Singh",
                 "title": "I'll Be Waiting",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Down.mp3",
+                "artist": "Jay Sean & Lil Wayne",
+                "title": "Down",
                 "lyricsFileName": null
             },
             {
