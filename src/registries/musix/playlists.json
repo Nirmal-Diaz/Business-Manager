@@ -1084,6 +1084,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/Tonight Belongs To You.mp3",
+                "artist": "In Real Life",
+                "title": "Tonight Belongs To You",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Happy.mp3",
                 "artist": "Pharrel Williams",
                 "title": "Happy",
@@ -1117,6 +1123,12 @@
                 "path": "English Audios/Marry You.mp3",
                 "artist": "Bruno Mars",
                 "title": "Marry You",
+                "lyricsFileName": null
+            },
+            {
+                "path": "English Audios/Backwards.mp3",
+                "artist": "Alexander Stewart",
+                "title": "Backwards",
                 "lyricsFileName": null
             },
             {
@@ -1244,6 +1256,12 @@
                 "artist": "Zac Brown & Sir Rosevelt",
                 "title": "It Goes On",
                 "lyricsFileName": "It Goes On - Zac Brown, Sir Rosevelt.json"
+            },
+            {
+                "path": "English Audios/Down.mp3",
+                "artist": "Jay Sean & Lil Wayne",
+                "title": "Down",
+                "lyricsFileName": null
             },
             {
                 "path": "English Audios/The Heart Wants What It Wants.mp3",
@@ -3790,6 +3808,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Soya Pilisaranak.mp3",
+                "artist": "Sunil Edirisinghe",
+                "title": "Soya Pilisaranak",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Nirwana Swarna Dhawarayen.mp3",
                 "artist": "Sanath Nandasiri",
                 "title": "Nirwana Swarna Dhawarayen",
@@ -3799,6 +3823,12 @@
                 "path": "Sinhala Hymns/Ma Balavath Karana Samide.mp3",
                 "artist": "Kasun Kalhara",
                 "title": "Ma Balavath Karana Samide",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Sakala Sathama Bodu Bathiyen.mp3",
+                "artist": "Mohideen Baig",
+                "title": "Sakala Sathama Bodu Bathiyen",
                 "lyricsFileName": null
             },
             {
@@ -3820,6 +3850,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Budu Hamuduruwo Apith Dakinnethi.mp3",
+                "artist": "Victor Rathnayake",
+                "title": "Budu Hamuduruwo Apith Dakinnethi",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Mage Divi Pana Nala Rakinne.mp3",
                 "artist": "",
                 "title": "Mage Divi Pana Nala Rakinne",
@@ -3838,9 +3874,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Hymns/Oba Thurulata Vee.mp3",
-                "artist": "",
-                "title": "Oba Thurulata Vee",
+                "path": "Sinhala Hymns/Niwan Dutu Himi.mp3",
+                "artist": "Victor Rathnayake",
+                "title": "Niwan Dutu Himi",
                 "lyricsFileName": null
             },
             {
@@ -3853,6 +3889,12 @@
                 "path": "Sinhala Hymns/Saadu Saadu Seya Wandim.mp3",
                 "artist": "Kasun Uyanhewa/Tharushi Mayomi",
                 "title": "Saadu Saadu Seya Wandim",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Dewram Wehere.mp3",
+                "artist": "Victor Rathnayake",
+                "title": "Dewram Wehere",
                 "lyricsFileName": null
             },
             {
@@ -4828,6 +4870,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Ahimi As Deka Mage.mp3",
+                "artist": "Manjula Pushpakumara",
+                "title": "Ahimi As Deka Mage",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Lengathu Hitha.mp3",
                 "artist": "Noel Raj",
                 "title": "Lengathu Hitha",
@@ -5260,6 +5308,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Obatai Me Aradana.mp3",
+                "artist": "Rohana Bogoda",
+                "title": "Obatai Me Aradana",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Siyumali Obe Vatha (2).mp3",
                 "artist": "Harsha Maduranga/Abishek Geethadewa",
                 "title": "Siyumali Obe Vatha",
@@ -5506,5 +5560,22 @@
                 "lyricsFileName": null
             }
         ]
+    },
+    {
+        "name": "#AutoGenerated",
+        "themeColor": "gray",
+        "tracks": [
+            {
+                "path": "Sinhala Audios/Abhimanaya Thurstan Namin Liyawila.mp3",
+                "artist": "",
+                "title": "Abhimanaya Thurstan Namin Liyawila",
+                "lyricsFileName": null
+            }
+        ]
+    },
+    {
+        "name": "#AutoGenerated",
+        "themeColor": "gray",
+        "tracks": []
     }
 ]
