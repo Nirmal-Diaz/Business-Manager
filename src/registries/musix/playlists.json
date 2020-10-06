@@ -1270,6 +1270,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "English Audios/No Tears Left To Cry.mp3",
+                "artist": "Ariana Grande",
+                "title": "No Tears Left To Cry",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Sugar And Brownies.mp3",
                 "artist": "Dharia",
                 "title": "Sugar & Brownies",
@@ -2746,6 +2752,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Music Catalog/Assassin' Creed Origins Main Theme.mp3",
+                "artist": "Sarah Schachner",
+                "title": "Assassin’s Creed Origins Main Theme",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Music Catalog/Arrival To Earth.mp3",
                 "artist": "Steve Jablonsky",
                 "title": "Arrival To Earth",
@@ -2761,6 +2773,12 @@
                 "path": "Music Catalog/The Stone Masons.ogg",
                 "artist": "",
                 "title": "The Stone Masons (Guns Drums and Steel remix)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Tubbs And Valerie.mp3",
+                "artist": "The New World Orchestra",
+                "title": "Tubbs and Valerie",
                 "lyricsFileName": null
             },
             {
