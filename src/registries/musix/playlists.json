@@ -12,7 +12,7 @@
             {
                 "path": "English Audios/Everybody Wants To Rule The World.mp3",
                 "artist": "Lorde",
-                "title": "Everybody Wants to Rule The World",
+                "title": "Everybody Wants to Rule the World",
                 "lyricsFileName": "Everybody Wants To Rule The World - Lorde.json"
             },
             {
@@ -1302,7 +1302,7 @@
             {
                 "path": "English Audios/East Of Eden.mp3",
                 "artist": "Zella Day",
-                "title": "East Of Eden",
+                "title": "East of Eden",
                 "lyricsFileName": null
             },
             {
@@ -1529,7 +1529,7 @@
             },
             {
                 "path": "English Audios/Maniac.mp3",
-                "artist": "The Hattori",
+                "artist": "Popgun",
                 "title": "Maniac",
                 "lyricsFileName": null
             },
@@ -2704,9 +2704,129 @@
         "themeColor": "violet",
         "tracks": [
             {
-                "path": "Music Catalog/A Song Of Ice And Fire.mp3",
-                "artist": "Ramin Djawadi",
-                "title": "A Song of Ice and Fire",
+                "path": "Music Catalog/The Siren Song Of Home.mp3",
+                "artist": "Dynamedion",
+                "title": "The Siren Song of Home",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Asoka Theme.mp3",
+                "artist": "",
+                "title": "Asoka Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Arrival To Earth.mp3",
+                "artist": "Steve Jablonsky",
+                "title": "Arrival to Earth",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Assassin's Creed Revelations Main Theme.mp3",
+                "artist": "",
+                "title": "Assassin's Creed Revelations Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA The Ballad Of Gay Tony Main Theme.mp3",
+                "artist": "Rockstar Games",
+                "title": "GTA The Ballad of Gay Tony Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/It Started Small, Like These Things Do.mp3",
+                "artist": "Dynamedion",
+                "title": "It Started Small, Like These Things Do",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Holy Pearl Theme.mp3",
+                "artist": "Unknown Artist",
+                "title": "The Holy Pearl Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Soviet Connection.mp3",
+                "artist": "Michael Hunter",
+                "title": "Soviet Connection",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get To Work (Quiet 3).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get to Work Music - Build and CAS Music 3 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Deadline.mp3",
+                "artist": "Rockstar Games",
+                "title": "Deadline",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Butterfly Dance.mp3",
+                "artist": "Yanni",
+                "title": "Butterfly Dance",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA Vice City Intro.mp3",
+                "artist": "Rockstar Games",
+                "title": "GTA Vice City Intro",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Sul Sul.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Sul Sul",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Transformers Theme.mp3",
+                "artist": "Steve Jablonsky",
+                "title": "Transformers Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/City Living (Full 3).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 City Living Music - Build and CAS Music 3 (Full)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Assassins Creed IV Black Flag Main Theme.mp3",
+                "artist": "Brian Tyler",
+                "title": "Assassins Creed IV Black Flag Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA V Lowriders Theme.mp3",
+                "artist": "Rockstar Games",
+                "title": "Lowriders Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get To Work (Full 3).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get to Work Music - Build and CAS Music 3 (Full)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Call Of Destiny.mp3",
+                "artist": "Rob Lane",
+                "title": "The Call of Destiny",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/England Anno 1066.ogg",
+                "artist": "",
+                "title": "England Anno 1066",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Shrek Theme.mp3",
+                "artist": "",
+                "title": "Shrek Theme",
                 "lyricsFileName": null
             },
             {
@@ -2716,75 +2836,45 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Ancient Times And Kingdoms (Soundtrack 1) The Settlers 7.mp3",
+                "path": "Music Catalog/Circle.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Circle",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/United Again Soundtrack.mp3",
                 "artist": "Dynamedion",
-                "title": "Ancient Times And Kingdoms",
+                "title": "United Again Soundtrack",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/August (Soundtrack 1) The Sims 4.mp3",
+                "path": "Music Catalog/Dine Out (Full 2).mp3",
                 "artist": "Ilan Eshkeri",
-                "title": "August",
+                "title": "The Sims 4 Dine Out Music - Build and CAS Music 2 (Full)",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Asoka Theme Music.mp3",
-                "artist": "",
-                "title": "Asoka Theme Music",
+                "path": "Music Catalog/Golden Gems.mp3",
+                "artist": "Dynamedion",
+                "title": "Golden Gems",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Ayal Intro.mp3",
-                "artist": "Ravihans Watakepotha",
-                "title": "Ayal Intro",
+                "path": "Music Catalog/New Worlds Dawn.mp3",
+                "artist": "Dynamedion",
+                "title": "New Worlds Dawn",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Beatrix (Soundtrack 1) The Sims 4.mp3",
+                "path": "Music Catalog/Get To Work (Quiet 1).mp3",
                 "artist": "Ilan Eshkeri",
-                "title": "Beatrix",
+                "title": "The Sims 4 Get to Work Music - Build and CAS Music 1 (Quiet)",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Battle Of Lepano.mp3",
-                "artist": "Paradox Interactive",
-                "title": "Battle Of Lepano (Guns Drums and Steel Remix)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Assassin' Creed Origins Main Theme.mp3",
-                "artist": "Sarah Schachner",
-                "title": "Assassin’s Creed Origins Main Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Arrival To Earth.mp3",
-                "artist": "Steve Jablonsky",
-                "title": "Arrival To Earth",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Breakfast (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Breakfast",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Stone Masons.ogg",
-                "artist": "",
-                "title": "The Stone Masons (Guns Drums and Steel remix)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Tubbs And Valerie.mp3",
-                "artist": "The New World Orchestra",
-                "title": "Tubbs and Valerie",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Butterfly Dance.mp3",
-                "artist": "Yanni",
-                "title": "Butterfly Dance",
+                "path": "Music Catalog/Victory.mp3",
+                "artist": "Two Steps From Hell",
+                "title": "Victory",
                 "lyricsFileName": null
             },
             {
@@ -2800,9 +2890,249 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/England Anno 1066.ogg",
+                "path": "Music Catalog/Tubbs And Valerie.mp3",
+                "artist": "The New World Orchestra",
+                "title": "Tubbs and Valerie",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Flute Fantasy.mp3",
+                "artist": "Various Artists",
+                "title": "Flute Fantasy",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get Together (Full 1).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get Together Music - Build and CAS Music 1 (Full)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Dancing Jodi Theme.mp3",
                 "artist": "",
-                "title": "England Anno 1066",
+                "title": "Dancing Jodi Theme (Instrumental)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Milan.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Milan",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Follow The Holy Book.mp3",
+                "artist": "Dynamedion",
+                "title": "Follow the Holy Book",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA IV Main Theme.mp3",
+                "artist": "Rockstar Games",
+                "title": "GTA IV Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/It's The Sims.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "It's the Sims",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Old World Order.mp3",
+                "artist": "Dynamedion",
+                "title": "The Old World Order",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/God Smiles.mp3",
+                "artist": "Dynamedion",
+                "title": "God Smiles",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Stone Masons.ogg",
+                "artist": "",
+                "title": "The Stone Masons (Guns Drums and Steel Remix)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The X Files Theme.mp3",
+                "artist": "Unknown Artist",
+                "title": "The X Files Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Topography.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Topography",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get To Work (Quiet 4).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get to Work Music - Build and CAS Music 4 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Assassin's Creed 3 Main Theme.mp3",
+                "artist": "Lorne Balfe",
+                "title": "Assassin's Creed III Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Meadows And Hills.mp3",
+                "artist": "Dynamedion",
+                "title": "Meadows And Hills",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Dine Out (Full 1).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Dine Out Music - Build and CAS Music 1 (Full)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Industrial Landscapes.mp3",
+                "artist": "Dynamedion",
+                "title": "Industrial Landscapes",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Spell Binder Theme.mp3",
+                "artist": "Ian Davidson",
+                "title": "Spell Binder Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Love.mp3",
+                "artist": "Unknown Artist",
+                "title": "Love",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Test Card 44.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Test Card 44",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Ancient Times And Kingdoms.mp3",
+                "artist": "Dynamedion",
+                "title": "Ancient Times and Kingdoms",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Assassin' Creed Origins Main Theme.mp3",
+                "artist": "Sarah Schachner",
+                "title": "Assassin’s Creed Origins Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Ayal Theme.mp3",
+                "artist": "Ravihans Watakepotha",
+                "title": "Ayal Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Bond of Sacrifice.mp3",
+                "artist": "Unknown Artist",
+                "title": "The Bond of Sacrifice",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/The Legend Of William Tell Theme.mp3",
+                "artist": "",
+                "title": "The Legend of William Tell Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Vampires (Quiet 3).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Vampires Music - Build and CAS Music 3 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Josine.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Josine",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Test Card 68.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Test Card 68",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Money Rules The World.mp3",
+                "artist": "Dynamedion",
+                "title": "Money Rules the World",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/To The End Of The Galaxy.mp3",
+                "artist": "Paradox Interactive",
+                "title": "To the End of the Galaxy",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Beatrix.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Beatrix",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/History Of The Ring.ogg",
+                "artist": "Howard Shore",
+                "title": "The One Ring: History of the Ring",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Take This.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Take This",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA Librty City Stories Main Theme.mp3",
+                "artist": "Rockstar Games",
+                "title": "GTA Liberty City Stories Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Surviving Mars Main Theme.mp3",
+                "artist": "Paradox Interactive",
+                "title": "Surving Mars Main Theme",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get Together (Quiet 1).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get Together Music - Build and CAS Music 1 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Earth Sleeps.mp3",
+                "artist": "Dynamedion",
+                "title": "Earth Sleeps",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Sad Romance.mp3",
+                "artist": "Thao Nguyen Xanh",
+                "title": "Sad Romance",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Alexander Nevsky Rides To Battle.ogg",
+                "artist": "Alexander Nevsky",
+                "title": "Alexander Nevsky Rides to Battle (Electro Orchestral Mix)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Divine Power.mp3",
+                "artist": "Dynamedion",
+                "title": "Divine Power",
                 "lyricsFileName": null
             },
             {
@@ -2812,69 +3142,57 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Circle (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Circle",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/City Living (Soundtrack 5) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 City Living Music - Build and CAS Music 3 (Full)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/City Living (Soundtrack 6) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 City Living Music - Build and CAS Music 3 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Dancing Jodi (Instrumental).mp3",
-                "artist": "",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Industrial Landscapes (Soundtrack 1) Anno 2070.mp3",
-                "artist": "Dynamedion",
-                "title": "Industrial Landscapes",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Deadline (Soundtrack 1) GTA V.mp3",
+                "path": "Music Catalog/GTA The Lost And Damned Main Theme.mp3",
                 "artist": "Rockstar Games",
-                "title": "Deadline",
+                "title": "GTA The Lost and Damned Main Theme",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Dine Out (Soundtrack 1) The Sims 4.mp3",
+                "path": "Music Catalog/August.mp3",
                 "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Dine Out Music - Build and CAS Music 1 (Full)",
+                "title": "August",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Dine Out (Soundtrack 3) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Dine Out Music - Build and CAS Music 2 (Full)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Dine Out (Soundtrack 4) The Sims 4.mp3",
+                "path": "Music Catalog/Dine Out (Quiet 2).mp3",
                 "artist": "Ilan Eshkeri",
                 "title": "The Sims 4 Dine Out Music - Build and CAS Music 2 (Quiet)",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Divine Power (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Divine Power",
+                "path": "Music Catalog/Breakfast.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Breakfast",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Victory.mp3",
-                "artist": "Two Steps From Hell",
-                "title": "Victory",
+                "path": "Music Catalog/Knight Rider Intro.mp3",
+                "artist": "",
+                "title": "Knight Rider Intro",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Fields Of Woe.mp3",
+                "artist": "",
+                "title": "Fields of Woe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Working Apart (Soundtrack 1) The Settlers 7.mp3",
+                "artist": "Dynamedion",
+                "title": "Working Apart",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/GTA IV Loading Screen Music.mp3",
+                "artist": "Rockstar Games",
+                "title": "Loading Screen Music (Soundtrack 1) GTA IV",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Here Come The Autumn.mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "Here Come the Autumn",
                 "lyricsFileName": null
             },
             {
@@ -2890,351 +3208,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Alexander Nevsky Rides To Battle.ogg",
-                "artist": "Alexander Nevsky",
-                "title": "Alexander Nevsky Rides To Battle (Electro Orchestral Mix)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Earth Sleeps (Soundtrack 1) Anno 2070.mp3",
-                "artist": "Dynamedion",
-                "title": "Earth Sleeps",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Ezio's Family.mp3",
-                "artist": "Jesper Kyd",
-                "title": "Ezio's Family",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Money Rules The World (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Money Rules The World",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Fields Of Woe (Soundtrack 1) War Of The Vikings.mp3",
-                "artist": "",
-                "title": "Fields Of Woe",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Flute Fantasy.mp3",
-                "artist": "Various Artists",
-                "title": "Flute Fantasy",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Follow The Holy Book (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Follow The Holy Book",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get To Work (Soundtrack 2) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get to Work Music - Build and CAS Music 1 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get To Work (Soundtrack 5) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get to Work Music - Build and CAS Music 3 (Full)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get To Work (Soundtrack 6) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get to Work Music - Build and CAS Music 3 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get To Work (Soundtrack 8) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get to Work Music - Build and CAS Music 4 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get Together (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get Together Music - Build and CAS Music 1 (Full)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get Together (Soundtrack 2) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get Together Music - Build and CAS Music 1 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Get Together (Soundtrack 8) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Get Together Music - Build and CAS Music 4 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/God Smiles (Soundtrack 1) Anno 2070.mp3",
-                "artist": "Dynamedion",
-                "title": "God Smiles",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Golden Gems (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Golden Gems",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/He's A Pirate.mp3",
-                "artist": "Klaus Badelt",
-                "title": "He's A Pirate",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Here Come The Autumn (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Here Come the Autumn",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/History Of The Ring.ogg",
-                "artist": "Howard Shore",
-                "title": "The One Ring: History of the Ring",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Intro (Soundtrack 1) Knight Rider.mp3",
-                "artist": "Unknown Artist",
-                "title": "Intro (Soundtrack 1) Knight Rider",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/It Started Small, Like These Things Do (Soundtrack 1) Champions Of Anteria.mp3",
-                "artist": "Dynamedion",
-                "title": "It Started Small, Like These Things Do",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/It's The Sims (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "It's the Sims",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Josine (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Josine",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Loading Screen Music (Soundtrack 1) GTA IV.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Love (Soundtrack 1) Merlin.mp3",
-                "artist": "Unknown Artist",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Lowriders (Soundtrack 1) GTA V.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Main Theme (Soundtrack 1) Assassin's Creed 3.mp3",
-                "artist": "Lorne Balfe",
-                "title": "Assassin's Creed III Main Theme Variation",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Main Theme (Soundtrack 1) Cities XL.mp3",
+                "path": "Music Catalog/Cities XL Main Theme.mp3",
                 "artist": "Focus Home Interactive",
-                "title": "Main Theme (Soundtrack 1) Cities XL",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Main Theme (Soundtrack 1) GTA IV.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Main Theme (Soundtrack 1) Surviving Mars.mp3",
-                "artist": "Paradox Interactive",
-                "title": "Main Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Meadows And Hills (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Meadows And Hills",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Milan (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Milan",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/New Worlds Dawn (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "New Worlds Dawn",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Nightingale.mp3",
-                "artist": "Yanni",
-                "title": "Nightingale",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Official Theme (Soundtrack 1) GTA Librty City Stories.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Official Theme (Soundtrack 1) GTA The Ballad Of Gay Tony.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Official Theme (Soundtrack 1) GTA The Lost And Damned.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Openning Intro (Soundtrack 1) GTA Vice City.mp3",
-                "artist": "Rockstar Games",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Out Game (Soundtrack 1) Cities XL.mp3",
-                "artist": "Focus Home Interactive",
-                "title": "Out Game (Soundtrack 1) Cities XL",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Pirate (Soundtrack 1) Assassins Creed IV Black Flag.mp3",
-                "artist": "Brian Tyler",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Roundtable Rival.mp3",
-                "artist": "Unknown Artist",
-                "title": "Roundtable Rival",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Sad Romance.mp3",
-                "artist": "Thao Nguyen Xanh",
-                "title": "Sad Romance",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Saints And Settlers (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Saints And Settlers",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Shrek Theme.mp3",
-                "artist": "",
-                "title": "",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Soviet Connection (Soundtrack 1) GTA IV.mp3",
-                "artist": "Michael Hunter",
-                "title": "Soviet Connection",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Spell Binder Theme.mp3",
-                "artist": "Ian Davidson",
-                "title": "Spell Binder Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Sul Sul (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Sul Sul",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Take This (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Take This",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Test Card 44 (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Test Card 44",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Test Card 68 (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Test Card 68",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Bond of Sacrifice (Soundtrack 1) Merlin.mp3",
-                "artist": "Unknown Artist",
-                "title": "The Bond of Sacrifice",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Call Of Destiny (Soundtrack 1) Merlin.mp3",
-                "artist": "Rob Lane",
-                "title": "The Call of Destiny",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Holy Pearl Theme.mp3",
-                "artist": "Unknown Artist",
-                "title": "The Holy Pearl Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Old World Order (Soundtrack 1) Anno 2070.mp3",
-                "artist": "Dynamedion",
-                "title": "The Old World Order",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Legend Of William Tell Theme.mp3",
-                "artist": "Unknown Artist",
-                "title": "The Legend Of William Tell Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The Siren Song Of Home (Soundtrack 1) Champions Of Anteria.mp3",
-                "artist": "Dynamedion",
-                "title": "The Siren Song Of Home",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/The X Files Theme.mp3",
-                "artist": "Unknown Artist",
-                "title": "The X Files Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Theme (Soundtrack 1) Assassin's Creed Revelations.mp3",
-                "artist": "",
-                "title": "",
+                "title": "Cities XL Main Theme",
                 "lyricsFileName": null
             },
             {
@@ -3244,45 +3220,63 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/To The End Of The Galaxy (Soundtrack 1) Stellaris.mp3",
-                "artist": "Paradox Interactive",
-                "title": "To the End of the Galaxy",
+                "path": "Music Catalog/He's A Pirate.mp3",
+                "artist": "Klaus Badelt",
+                "title": "He's a Pirate",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Topography (Soundtrack 1) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "Topography",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Transformers Theme.mp3",
+                "path": "Music Catalog/Roundtable Rival.mp3",
                 "artist": "Unknown Artist",
-                "title": "Transformers Theme",
+                "title": "Roundtable Rival",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/United Again Soundtrack.mp3",
+                "path": "Music Catalog/City Living (Quiet 3).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 City Living Music - Build and CAS Music 3 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Saints And Settlers.mp3",
                 "artist": "Dynamedion",
-                "title": "United Again Soundtrack",
+                "title": "Saints and Settlers",
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Vampires (Soundtrack 5) The Sims 4.mp3",
+                "path": "Music Catalog/Cities XL Out Game.mp3",
+                "artist": "Focus Home Interactive",
+                "title": "Out Game",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Ezio's Family.mp3",
+                "artist": "Jesper Kyd",
+                "title": "Ezio's Family",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Nightingale.mp3",
+                "artist": "Yanni",
+                "title": "Nightingale",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Get Together (Quiet 4).mp3",
+                "artist": "Ilan Eshkeri",
+                "title": "The Sims 4 Get Together Music - Build and CAS Music 4 (Quiet)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Battle Of Lepano.mp3",
+                "artist": "Paradox Interactive",
+                "title": "Battle of Lepano (Guns Drums and Steel Remix)",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Vampires (Full 3).mp3",
                 "artist": "Ilan Eshkeri",
                 "title": "The Sims 4 Vampires Music - Build and CAS Music 3 (Full)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Vampires (Soundtrack 6) The Sims 4.mp3",
-                "artist": "Ilan Eshkeri",
-                "title": "The Sims 4 Vampires Music - Build and CAS Music 3 (Quiet)",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Working Apart (Soundtrack 1) The Settlers 7.mp3",
-                "artist": "Dynamedion",
-                "title": "Working Apart",
                 "lyricsFileName": null
             }
         ]
@@ -3521,14 +3515,20 @@
             },
             {
                 "path": "Hindi Audios/Bahut Pyar Karte Hai.mp3",
-                "artist": "Rahul Jain",
-                "title": "Bahut Pyar Karte Hai",
+                "artist": "Siddharth Slathia",
+                "title": "Bahut Pyar Karte Hain Unplugged Cover",
                 "lyricsFileName": null
             },
             {
                 "path": "Hindi Audios/Jee Karda.mp3",
                 "artist": "Divya Kumar",
                 "title": "Jee Karda",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/First Class.mp3",
+                "artist": "Arijit Singh/Neeti Mohan",
+                "title": "First Class",
                 "lyricsFileName": null
             },
             {
@@ -3661,6 +3661,12 @@
                 "path": "Hindi Audios/Tu Hi Meri Shab Hei.mp3",
                 "artist": "KK",
                 "title": "Tu Hi Meri Shab Hai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Jo Bhi Kasmein.mp3",
+                "artist": "Udit Narayan/Ankit Rai",
+                "title": "Jo Bhi Kasmein",
                 "lyricsFileName": null
             },
             {
@@ -3844,6 +3850,18 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Api Asarana Wela Wage.mp3",
+                "artist": "Gunadasa Kapuge",
+                "title": "Api Asarana Wela Wage",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Sanda Wathurak Se.mp3",
+                "artist": "TM Jayarathna",
+                "title": "Sanda Wathurak Se",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Nirwana Swarna Dhawarayen.mp3",
                 "artist": "Sanath Nandasiri",
                 "title": "Nirwana Swarna Dhawarayen",
@@ -3865,6 +3883,12 @@
                 "path": "Sinhala Hymns/Jeewithe Eda.mp3",
                 "artist": "",
                 "title": "Jeewithe Eda",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Pipena Malakata.mp3",
+                "artist": "Malani Bulathsinhala",
+                "title": "Pipena Malakata",
                 "lyricsFileName": null
             },
             {
@@ -4205,7 +4229,7 @@
             },
             {
                 "path": "Sinhala Audios/Ahan Inna.mp3",
-                "artist": "Mekala_Gamage",
+                "artist": "Mekala Gamage",
                 "title": "Ahan Inna",
                 "lyricsFileName": null
             },
@@ -4291,6 +4315,12 @@
                 "path": "Sinhala Audios/Ae Neela Nethu Sala.mp3",
                 "artist": "TM Jayarathna",
                 "title": "Ae Neela Nethu Sala",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Malata Bambareku Se.mp3",
+                "artist": "Prihan Madappuli",
+                "title": "Malata Bambareku Se (Remake)",
                 "lyricsFileName": null
             },
             {
@@ -4636,6 +4666,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Kameliya Mal Suwandata.mp3",
+                "artist": "Lahiru Kasun",
+                "title": "Kameliya Mal Suwandata",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Aakasa Kusum.mp3",
                 "artist": "",
                 "title": "Aakasa Kusum",
@@ -4768,6 +4804,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Pamawee Pipunu Mal Suwandai.mp3",
+                "artist": "Kasun Kalhara",
+                "title": "Pamawee Pipunu Mal Suwandai",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Oba Wenuwenma Thama.mp3",
                 "artist": "Udaya Sri",
                 "title": "",
@@ -4789,6 +4831,18 @@
                 "path": "Sinhala Audios/Supun Sihine Nidan Puthune.mp3",
                 "artist": "Sangeeth Wijesooriya",
                 "title": "Supun Sihine Nidan Puthune",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ko Ma Pathu Obe Adare.mp3",
+                "artist": "TM Jayarathna",
+                "title": "Ko Ma Pathu Obe Adare",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Apa Hamuwuna Thana.mp3",
+                "artist": "Shashika Nisansala",
+                "title": "Apa Hamuwuna Thana",
                 "lyricsFileName": null
             },
             {
@@ -4848,7 +4902,7 @@
             {
                 "path": "Sinhala Audios/Epa Kandulal Sala.mp3",
                 "artist": "Athma Liyanage",
-                "title": "Epa Kandula Sala",
+                "title": "Epa Kandulal Sala",
                 "lyricsFileName": null
             },
             {
@@ -5284,6 +5338,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Duka Hadu Dena Raye.mp3",
+                "artist": "Miyuru Sangeeth",
+                "title": "Duka Hadu Dena Raye",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Arambumama Kandulak Wela.mp3",
                 "artist": "Kasun Kalhara",
                 "title": "Arambumama Kandulak Wela",
@@ -5308,6 +5368,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Ran Tharakawan Dilena.mp3",
+                "artist": "Jagath Wickramasinghe",
+                "title": "Ran Tharakawan Dilena",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Hadawatha Gahena.mp3",
                 "artist": "Sahan Liyanage",
                 "title": "Hadawatha Gahena",
@@ -5326,6 +5392,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Wika Sitha Pem.mp3",
+                "artist": "Amaradewa",
+                "title": "Wika Sitha Pem",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Sithin Witharak.mp3",
                 "artist": "Miyuru Sangeeth",
                 "title": "Sithin Witharak",
@@ -5335,6 +5407,12 @@
                 "path": "Sinhala Audios/Obatai Me Aradana.mp3",
                 "artist": "Rohana Bogoda",
                 "title": "Obatai Me Aradana",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Arabumama Kandulak Wela.mp3",
+                "artist": "Kasun Kalhara",
+                "title": "Arabumama Kandulak Wela",
                 "lyricsFileName": null
             },
             {
@@ -5579,7 +5657,7 @@
             },
             {
                 "path": "Sinhala Audios/Aya Yanna Giya Makila.mp3",
-                "artist": "Amarasiri_Peiris",
+                "artist": "Amarasiri Peiris",
                 "title": "Aya Yanna Giya Makila",
                 "lyricsFileName": null
             }
