@@ -83,13 +83,11 @@ export class NowPlayingController {
         //Add onpointerdown to volumeSlider for changing volume
         //NOTE: Changing volume is done in realtime except in RemotePlay
         this.volumeSlider.addEventListener("pointerdown", (event) => {
-            this.startSlide(event, 70.5, 221.8, () => {
+            this.startSlide(event, 70.5, 221.8, null, () => {
                 const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
                 this.mediaController.volume = volume;
                 localStorage.setItem("currentVolume", volume.toString());
-            }, () => {
-                const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
-                document.getElementById("volumeDisplay").textContent = Math.round(volume*100).toString() + "%";
+                this.playTimeDisplays[2].textContent = Math.round(volume*100).toString() + "%";
             }, () => {
                 //NOTE: Setting volume for RemotePlay doesn't require realtime volume update
                 if (this.remotePlay) {
@@ -143,7 +141,7 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentVolume", volume.toString());
         //Update UI
-        document.getElementById("volumeDisplay").textContent = Math.round(volume*100).toString() + "%";
+        this.playTimeDisplays[2].textContent = Math.round(volume*100).toString() + "%";
         Utility.setCircularSliderView(this.volumeSlider, 70.5, 221.8, 1, volume);
     }
 
