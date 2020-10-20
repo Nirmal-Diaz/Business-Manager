@@ -160,8 +160,8 @@ body {
 
 #displayContainer {
     position: absolute;
-    top: 200px;
-    right: -110px;
+    top: 350px;
+    right: -160px;
 
     width: 60vh;
 
@@ -169,7 +169,11 @@ body {
 }
 
 #displayContainer > * {
-    text-align: left;
+    text-align: right;
+}
+
+#playlistDisplay, #artistDisplay {
+    color: var(--themeColor);
 }
 
 #titleDisplay {
@@ -224,13 +228,14 @@ body {
 
 #panelContainer {
     position: absolute;
+    right: 0;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     width: 100%;
-    height: 60%;
+    height: 100%;
 
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
@@ -264,7 +269,6 @@ body {
 .panel {
     background-color: rgba(100, 100, 100, 0.9);
     backdrop-filter: blur(10px);
-    border: 2px solid var(--themeColor);
     box-shadow: 0 0 10px black;
 
     animation-duration: 0.3s;
@@ -336,6 +340,8 @@ body {
 
     height: 60px;
 
+    color:black;
+    
     background-color: var(--themeColor);
     border: none;
     outline: none;
@@ -346,8 +352,8 @@ body {
     left: 100px;
     bottom: 70px;
     
-    height: 45px;
-    width: 45px;
+    height: 60px;
+    width: 60px;
 
     background-color: transparent;
     box-shadow: 0 0 10px black;
