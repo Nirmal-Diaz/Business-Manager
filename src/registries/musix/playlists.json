@@ -2746,6 +2746,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Music Catalog/The Wolf And The Moon.mp3",
+                "artist": "BrunuhVille",
+                "title": "The Wolf And The Moon",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Music Catalog/It Started Small, Like These Things Do.mp3",
                 "artist": "Dynamedion",
                 "title": "It Started Small, Like These Things Do",
@@ -2797,6 +2803,12 @@
                 "path": "Music Catalog/Sul Sul.mp3",
                 "artist": "Ilan Eshkeri",
                 "title": "Sul Sul",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Music Catalog/Star Sky.mp3",
+                "artist": "Two Steps From Hell",
+                "title": "Star Sky",
                 "lyricsFileName": null
             },
             {
@@ -3196,7 +3208,7 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Music Catalog/Working Apart (Soundtrack 1) The Settlers 7.mp3",
+                "path": "Music Catalog/Working Apart.mp3",
                 "artist": "Dynamedion",
                 "title": "Working Apart",
                 "lyricsFileName": null
@@ -3204,7 +3216,7 @@
             {
                 "path": "Music Catalog/GTA IV Loading Screen Music.mp3",
                 "artist": "Rockstar Games",
-                "title": "Loading Screen Music (Soundtrack 1) GTA IV",
+                "title": "GTA IV Loading Screen Music",
                 "lyricsFileName": null
             },
             {
