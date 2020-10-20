@@ -14,6 +14,7 @@ export class NowPlayingController {
     mediaController = null;
     seekSlider = null;
     volumeSlider = null;
+    playTimeDisplays = null;
 
     constructor(cardInterface, viewport) {
         this.cardInterface = cardInterface;
@@ -22,6 +23,7 @@ export class NowPlayingController {
         this.mediaController = this.view.querySelector("#mediaController");
         this.seekSlider = this.view.querySelector("#seekSlider");
         this.volumeSlider = this.view.querySelector("#volumeSlider");
+        this.playTimeDisplays = this.view.querySelectorAll(".playTimeDisplay");
 
         //Initiate localStorage if not exist
         if (!localStorage.getItem("hasPlaybackState")) {
@@ -81,14 +83,17 @@ export class NowPlayingController {
         //Add onpointerdown to volumeSlider for changing volume
         //NOTE: Changing volume is done in realtime except in RemotePlay
         this.volumeSlider.addEventListener("pointerdown", (event) => {
-            this.startSlide(event, null, () => {
-                const volume = Utility.getCircularSliderValue(this.volumeSlider, 1);
+            this.startSlide(event, 70.5, 221.8, () => {
+                const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
                 this.mediaController.volume = volume;
                 localStorage.setItem("currentVolume", volume.toString());
             }, () => {
+                const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
+                document.getElementById("volumeDisplay").textContent = Math.round(volume*100).toString() + "%";
+            }, () => {
                 //NOTE: Setting volume for RemotePlay doesn't require realtime volume update
                 if (this.remotePlay) {
-                    const volume = Utility.getCircularSliderValue(this.volumeSlider, 1);
+                    const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
                     this.setVolume(volume);
                 }
             });
@@ -138,7 +143,8 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentVolume", volume.toString());
         //Update UI
-        Utility.setCircularSliderView(this.volumeSlider, 1, volume);
+        document.getElementById("volumeDisplay").textContent = Math.round(volume*100).toString() + "%";
+        Utility.setCircularSliderView(this.volumeSlider, 70.5, 221.8, 1, volume);
     }
 
     setPlaylist(playlist) {
@@ -266,19 +272,24 @@ export class NowPlayingController {
     //EVENT HANDLER METHODS
     startSeek(event) {
         //NOTE: Seek isn't done in realtime. It is done as soon as the user leaves the seekSlider
-        this.startSlide(event, () => {
+        this.startSlide(event, 196.5, 343.5, () => {
             //Remove ontimeupdate from mediaController
             this.mediaController.removeEventListener("timeupdate", this.boundedHandlers.handleTimeUpdate);
-        }, null, () => {
+        }, () => {
+            //Update the seeked time
+            const seekedTime = Utility.formatTime(Utility.getCircularSliderValue(this.seekSlider, 196.5, 343.5, this.mediaController.duration));
+            this.playTimeDisplays[0].textContent = seekedTime[0];
+            this.playTimeDisplays[1].textContent = seekedTime[1];
+        }, () => {
             //NOTE: We have to check is RemotePlay enabled
             if (this.remotePlay) {
                 //NOTE: Only broadcasting the params is enough. No need to update our client
                 //Get sliderValue
-                const seekedTime = Utility.getCircularSliderValue(this.seekSlider, this.mediaController.duration);
+                const seekedTime = Utility.getCircularSliderValue(this.seekSlider, 196.5, 343.5, this.mediaController.duration);
                 this.seekTo(seekedTime);
             } else {
                 //Get sliderValue
-                const seekedTime = Utility.getCircularSliderValue(this.seekSlider, this.mediaController.duration);
+                const seekedTime = Utility.getCircularSliderValue(this.seekSlider, 196.5, 343.5, this.mediaController.duration);
                 //Set mediaController's currentTime to match seekedTime
                 this.mediaController.currentTime = seekedTime;
                 //Reinstate removed ontimeupdate of mediaController
@@ -287,7 +298,7 @@ export class NowPlayingController {
         });
     }
 
-    startSlide(event, executeBeforeDoSlide, executeWithDoSlide, executeAfterDoSlide) {
+    startSlide(event, startTheta, endTheta, executeBeforeDoSlide, executeWithDoSlide, executeAfterDoSlide) {
         //Get a reference of "event.currentTarget" for inner functions
         const slider = event.currentTarget;
         //Get the boundary of the slider
@@ -330,8 +341,10 @@ export class NowPlayingController {
             } else if (distanceDifferenceX < 0 && distanceDifferenceY === 0) {
                 theta = 270;
             }
-            //Rotate slider theta degrees
-            slider.style.transform = `rotate(${theta}deg)`;
+            if (startTheta < theta && theta < endTheta) {
+                //Rotate slider theta degrees
+                slider.style.transform = `rotate(${theta}deg)`;
+            }
             //Execute additional functionality
             if (executeWithDoSlide) {
                 executeWithDoSlide();
@@ -355,6 +368,9 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentTrackTime", this.mediaController.currentTime.toString());
         //Update UI
-        Utility.setCircularSliderView(this.seekSlider, this.mediaController.duration, this.mediaController.currentTime);
+        Utility.setCircularSliderView(this.seekSlider, 196.5, 343.5,this.mediaController.duration, this.mediaController.currentTime);
+        const elapsedTime = Utility.formatTime(this.mediaController.currentTime);
+        this.playTimeDisplays[0].textContent = elapsedTime[0];
+        this.playTimeDisplays[1].textContent = elapsedTime[1];
     }
 }

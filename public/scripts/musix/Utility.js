@@ -1,23 +1,23 @@
 //@ts-check
 export class Utility {
-    static getCircularSliderValue(slider, rangeUpperLimit) {
+    static getCircularSliderValue(slider, startTheta, endTheta, rangeUpperLimit) {
         //Get sliderValue as theta
         const thetaString = slider.style.transform;
         const theta = thetaString.slice(7, thetaString.length - 4);
         //Calculate currentSeekedValue according to theta
-        const unit = rangeUpperLimit / 360;
-        const currentSeekedValue = theta * unit;
+        const unit = rangeUpperLimit / (endTheta-startTheta);
+        const currentSeekedValue = (theta-startTheta) * unit;
         //Output currentSeekedValue
         return currentSeekedValue;
     }
 
-    static setCircularSliderView(slider, rangeUpperLimit, value) {
+    static setCircularSliderView(slider, startTheta, endTheta, rangeUpperLimit, value) {
         //Calculate the size of a single unit (seconds per degree)
-        const unit = rangeUpperLimit / 360;
+        const unit = rangeUpperLimit / (endTheta - startTheta);
         //Calculate theta using currentTime
         const theta = value / unit;
         //Rotate seekSlider theta degrees
-        slider.style.transform = `rotate(${theta}deg)`;
+        slider.style.transform = `rotate(${startTheta+theta}deg)`;
     }
 
     static formatTime(totalSeconds) {
@@ -29,7 +29,7 @@ export class Utility {
         if (wholeMinutes < 10) { wholeMinutes = "0" + wholeMinutes; }
         if (resultingSeconds < 10) { resultingSeconds = "0" + resultingSeconds; }
         //Output formatted time
-        return (wholeMinutes + ":" + resultingSeconds);
+        return [wholeMinutes, resultingSeconds];
     }
 
     static getRandInt(min, max) {
