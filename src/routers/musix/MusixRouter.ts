@@ -34,10 +34,10 @@ musixRouter.route("/")
     .all((req, res) => {
         if (req.query?.interface === "legacy") {
             res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index_legacy.html"));
-        } else if (req.query?.interface === "new") {
-            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index2.html"));
-        } else {
+        } else if (req.query?.interface === "old") {
             res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
+        } else {
+            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index2.html"));
         }
     });
 
