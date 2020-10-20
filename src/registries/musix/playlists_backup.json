@@ -4828,33 +4828,9 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Ran Tharakawan Dilena.mp3",
-                "artist": "Jagath Wickramasinghe",
-                "title": "Ran Tharakawan Dilena",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Muthu Kandulin Ma Denethe.mp3",
                 "artist": "Chandrasena Hettiarachchi",
                 "title": "Muthu Kandulin Ma Denethe",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Ko Ma Pathu Obe Adare.mp3",
-                "artist": "TM Jayarathna",
-                "title": "Ko Ma Pathu Obe Adare",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Obatai Me Aradana.mp3",
-                "artist": "Rohana Bogoda",
-                "title": "Obatai Me Aradana",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Wikasitha Pathuman Vs O Mere Dil Ke Chain.mp3",
-                "artist": "Sahan Hasthi/Pavan Mallawarachchi",
-                "title": "Wikasitha Pathuman vs. O Mere Dil Ke Chain",
                 "lyricsFileName": null
             },
             {
@@ -4876,45 +4852,15 @@
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Oya Es Dekata Pem Keruwe.mp3",
-                "artist": "Kingsly Peiris",
-                "title": "Oya Es Dekata Pem Keruwe",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Dasa Nilupul Thema.mp3",
-                "artist": "Somasiri Madagedara",
-                "title": "Dasa Nilupul Thema",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Thani Wenna Ida Denna.mp3",
                 "artist": "Ajith Perera",
                 "title": "Thani Wenna Ida Denna",
                 "lyricsFileName": null
             },
             {
-                "path": "Sinhala Audios/Eka Yayata Mal Peedunu Bim Theere.mp3",
-                "artist": "Sanath Nandasiri",
-                "title": "Eka Yayata Mal Peedunu Bim Theere",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
-                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
-                "title": "Paaya Aa Sanda",
-                "lyricsFileName": null
-            },
-            {
                 "path": "Sinhala Audios/Atha Atha Chandra Mandale.mp3",
                 "artist": "Chandrasena Hettiarachchi",
                 "title": "Atha Atha Chandra Mandale",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Eda Ra.mp3",
-                "artist": "Dilukshan Mahendra",
-                "title": "Eda Ra",
                 "lyricsFileName": null
             },
             {
@@ -4927,6 +4873,60 @@
                 "path": "Sinhala Audios/Hima Meedum Wala Kule.mp3",
                 "artist": "Athula Sri Gamage",
                 "title": "Hima Meedum Wala Kule",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obage Dothin Pidu Adare.mp3",
+                "artist": "Somasiri Madagedara",
+                "title": "Obage Dothin Pidu Adare",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Eda Ra.mp3",
+                "artist": "Dilukshan Mahendra",
+                "title": "Eda Ra",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ko Ma Pathu Obe Adare.mp3",
+                "artist": "TM Jayarathna",
+                "title": "Ko Ma Pathu Obe Adare",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Obatai Me Aradana.mp3",
+                "artist": "Rohana Bogoda",
+                "title": "Obatai Me Aradana",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Ran Tharakawan Dilena.mp3",
+                "artist": "Jagath Wickramasinghe",
+                "title": "Ran Tharakawan Dilena",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Wikasitha Pathuman Vs O Mere Dil Ke Chain.mp3",
+                "artist": "Sahan Hasthi/Pavan Mallawarachchi",
+                "title": "Wikasitha Pathuman vs. O Mere Dil Ke Chain",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Dasa Nilupul Thema.mp3",
+                "artist": "Somasiri Madagedara",
+                "title": "Dasa Nilupul Thema",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Eka Yayata Mal Peedunu Bim Theere.mp3",
+                "artist": "Sanath Nandasiri",
+                "title": "Eka Yayata Mal Peedunu Bim Theere",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Paaya Aa Sanda.mp3",
+                "artist": "Pavan Mallawarachchi/Ranil Mallawarachchi",
+                "title": "Paaya Aa Sanda",
                 "lyricsFileName": null
             },
             {
@@ -5041,12 +5041,6 @@
                 "path": "Sinhala Audios/Mathake Hasaral.mp3",
                 "artist": "Dushyanth Weeraman/Umara Sinhawansha",
                 "title": "Mathake Hasaral",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Sinhala Audios/Obage Dothin Pidu Adare.mp3",
-                "artist": "Somasiri Madagedara",
-                "title": "Obage Dothin Pidu Adare",
                 "lyricsFileName": null
             },
             {
