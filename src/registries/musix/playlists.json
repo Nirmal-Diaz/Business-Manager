@@ -496,12 +496,6 @@
                 "lyricsFileName": null
             },
             {
-                "path": "English Audios/Tujhe Bhula Diya Vs Hello.mp3",
-                "artist": "Gaurav Dagaonkar",
-                "title": "Tujhe Bhula Diya Vs Hello",
-                "lyricsFileName": null
-            },
-            {
                 "path": "English Audios/Unbreak My Heart.mp3",
                 "artist": "Toni Braxton",
                 "title": "Un-Break My Heart",
@@ -3691,6 +3685,12 @@
                 "path": "Hindi Audios/Tu Hi Meri Shab Hei.mp3",
                 "artist": "KK",
                 "title": "Tu Hi Meri Shab Hai",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Hindi Audios/Tujhe Bhula Diya Vs Hello.mp3",
+                "artist": "Gaurav Dagaonkar",
+                "title": "Tujhe Bhula Diya Vs Hello",
                 "lyricsFileName": null
             },
             {
