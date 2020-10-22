@@ -84,15 +84,11 @@ export class NowPlayingController {
         //NOTE: Changing volume is done in realtime except in RemotePlay
         this.volumeSlider.addEventListener("pointerdown", (event) => {
             this.startSlide(event, 70.5, 221.8, null, () => {
-                const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
-                this.mediaController.volume = volume;
-                localStorage.setItem("currentVolume", volume.toString());
-                this.playTimeDisplays[2].textContent = Math.round(volume*100).toString() + "%";
+                this.setVolume(Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1));
             }, () => {
                 //NOTE: Setting volume for RemotePlay doesn't require realtime volume update
                 if (this.remotePlay) {
-                    const volume = Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1);
-                    this.setVolume(volume);
+                    this.setVolume(Utility.getCircularSliderValue(this.volumeSlider, 70.5, 221.8, 1));
                 }
             });
         });
@@ -102,7 +98,6 @@ export class NowPlayingController {
         this.setPlaylist(this.cardInterface.getController("playlists").getPlaylistAt(parseInt(localStorage.getItem("currentPlaylistIndex"))));
         this.loadTrackAt(parseInt(localStorage.getItem("currentTrackIndex")));
         this.seekTo(parseFloat(localStorage.getItem("currentTrackTime")));
-
     }
 
     toggleRemotePlay() {
@@ -141,7 +136,7 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentVolume", volume.toString());
         //Update UI
-        this.playTimeDisplays[2].textContent = Math.round(volume*100).toString() + "%";
+        this.playTimeDisplays[2].textContent = Math.round(volume*100).toString();
         Utility.setCircularSliderView(this.volumeSlider, 70.5, 221.8, 1, volume);
     }
 
