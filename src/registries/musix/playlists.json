@@ -10,6 +10,12 @@
                 "lyricsFileName": "Battle Cry - Imagine Dragons.json"
             },
             {
+                "path": "English Audios/Song of Durin.mp3",
+                "artist": "Eurielle",
+                "title": "Song of Durin",
+                "lyricsFileName": null
+            },
+            {
                 "path": "English Audios/Everybody Wants To Rule The World.mp3",
                 "artist": "Lorde",
                 "title": "Everybody Wants to Rule the World",
@@ -2731,12 +2737,6 @@
                 "path": "Music Catalog/GTA The Ballad Of Gay Tony Main Theme.mp3",
                 "artist": "Rockstar Games",
                 "title": "GTA The Ballad of Gay Tony Main Theme",
-                "lyricsFileName": null
-            },
-            {
-                "path": "Music Catalog/Song of Durin.mp3",
-                "artist": "Eurielle",
-                "title": "Song of Durin",
                 "lyricsFileName": null
             },
             {
