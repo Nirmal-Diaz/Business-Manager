@@ -3,8 +3,15 @@
     src: url("../../fonts/SourceSansPro-Regular.ttf");
 }
 
+@font-face {
+    font-family: "Impact";
+    src: url("../../fonts/Digital\ Font.ttf");
+}
+
 :root {
     --themeColor: darkcyan;
+    --secondaryColor: rgb(100, 100, 100);
+    --tertiaryColor: rgb(20, 20, 20);
 }
 
 * {
@@ -111,8 +118,8 @@ body {
     position: absolute;
     left: 15px;
 
-    color: rgb(100, 100, 100);
-    font-weight: bolder;
+    font-family: "Impact";
+    color: var(--themeColor);
 }
 
 #seekSlider {
@@ -126,8 +133,10 @@ body {
     height: 70vh;
     width: 70vh;
 
-    border: 8px solid var(--themeColor) !important;
+    border: 8px solid  var(--secondaryColor) !important;
+    box-shadow: 0 0 30px var(--themeColor);
     border-radius: 50%;
+    background-color: var(--tertiaryColor);
 
     transform: rotate(196.5deg);
 }
@@ -140,18 +149,19 @@ body {
 
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-    border-bottom: 10px solid var(--themeColor);
+    border-bottom: 15px solid var(--secondaryColor);
 }
 
 #volumeSlider {
     position: absolute;
     bottom: -10vh;
     right: -5vh;
-
+    
     height: 30vh;
     width: 30vh;
-
-    border: thick solid rgb(100, 100, 100);
+    
+    border: thick solid var(--secondaryColor);
+    box-shadow: 0 0 30px var(--themeColor);
     border-bottom-color: var(--themeColor);
     border-radius: 50%;
 
@@ -160,7 +170,7 @@ body {
 
 #displayContainer {
     position: absolute;
-    top: 350px;
+    bottom: 55vh;
     right: -160px;
 
     width: 60vh;
@@ -168,17 +178,17 @@ body {
     transform: rotate(-90deg);
 }
 
-#displayContainer > * {
-    text-align: right;
+#displayContainer > p {
+    text-align: left;
 }
 
-#playlistDisplay, #artistDisplay {
+#playlistDisplay {
     color: var(--themeColor);
 }
 
 #titleDisplay {
     font-size: 200%;
-    color: rgb(100, 100, 100);
+    color: var(--secondaryColor);
 }
 
 #lyricsContainer {
@@ -351,19 +361,17 @@ body {
     position: absolute;
     left: 100px;
     bottom: 70px;
-    
+
     height: 60px;
     width: 60px;
 
     background-color: transparent;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px var(--themeColor);
     border: solid var(--themeColor);
     border-width: 2px 2px 2px 2px;
     border-radius: 50%;
     outline: none;
-
-    font-size: 250%;
-
+    
     z-index: 3;
 }
 
@@ -380,7 +388,7 @@ body {
     }
 
     #seekSlider {
-        border: 8px solid rgb(100, 100, 100);
+        border: 8px solid var(--secondaryColor);
     }
 
     #displayContainer {
