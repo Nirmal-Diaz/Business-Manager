@@ -63,36 +63,18 @@ export class PlaylistExplorerController {
         playlistView.appendChild(trackView);
     }
 
-    // createPlaylistName(playlist, playlistIndex) {
-    //     const playlistName = document.createElement("div");
-    //     playlistName.setAttribute("class", "panelDivisionSectorItem");
-    //     playlistName.textContent = playlist.name;
-    //     playlistName.style.color = playlist.themeColor;
-    //     playlistName.dataset.playlistIndex = playlistIndex;
-
-    //     playlistName.addEventListener("click", (event) => {
-    //         const playlistExplorerPanel = playlistName.parentElement.parentElement.parentElement;
-
-    //         playlistExplorerPanel.children[1].children[parseInt(playlistExplorerPanel.dataset.activePlaylistIndex)].style.display = "none";
-    //         playlistExplorerPanel.children[1].children[playlistIndex].style.display = "flex";
-    //         playlistExplorerPanel.dataset.activePlaylistIndex = playlistIndex;
-    //     });
-
-    //     playlistName.addEventListener("contextmenu", (event) => {
-    //         event.preventDefault();
-    //         this.cardInterface.getController("context").setupPlaylistContext(playlist.name, playlist.index);
-    //         this.cardInterface.getController("context").show();
-    //     });
-
-    //     return playlistName;
-    // }
-
     createPlaylistView(playlist) {
         const playlistView = this.playlistViewTemplate.cloneNode(true);
         playlistView.firstElementChild.firstElementChild.textContent = playlist.name;
         playlistView.firstElementChild.firstElementChild.style.color = playlist.themeColor;
         playlistView.firstElementChild.firstElementChild.addEventListener("click", () => {
             playlistView.children[1].classList.toggle("inactive");
+        });
+
+        playlistView.firstElementChild.firstElementChild.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            this.cardInterface.getController("context").setupPlaylistContext(playlist.name, playlist.index);
+            this.cardInterface.getController("context").show();
         });
 
         for (let trackIndex = 0; trackIndex < playlist.tracks.length; trackIndex++) {
