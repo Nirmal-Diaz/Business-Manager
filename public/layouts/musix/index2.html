@@ -206,12 +206,12 @@
                     if (absoluteDifferenceX >= absoluteDifferenceY) {
                         //CASE: x axis must be prioritized
                         if (differenceX > 0) {
-                            cardInterface.controls[2].style.borderWidth = "0 2px 0 0";
+                            cardInterface.controls[2].firstElementChild.src = "/images/musix/glyph_skipNext.png";
                             procedureToExecute = () => {
                                 cardInterface.nowPlayingController.skipTrack("next");
                             };
                         } else if (differenceX < 0) {
-                            cardInterface.controls[2].style.borderWidth = "0 0 0 2px";
+                            cardInterface.controls[2].firstElementChild.src = "/images/musix/glyph_skipPrevious.png";
                             procedureToExecute = () => {
                                 cardInterface.nowPlayingController.skipTrack("previous");
                             };
@@ -219,7 +219,6 @@
                     } else {
                         //CASE: y axis must be prioritized
                         if (differenceY > 0) {
-                            cardInterface.controls[2].style.borderWidth = "0 0 2px 0";
                             procedureToExecute = () => {
                                 const panelContainer = document.getElementById("panelContainer");
                                 if (panelContainer.classList.contains("popIn")) {
@@ -229,7 +228,6 @@
                                 }
                             };
                         } else if (differenceY < 0) {
-                            cardInterface.controls[2].style.borderWidth = "2px 0 0 0";
                             procedureToExecute = () => {
 
                             };
@@ -239,8 +237,6 @@
 
                 function executeProcedure() {
                     procedureToExecute();
-                    //Reinstate border
-                    cardInterface.controls[2].style.borderWidth = "2px 2px 2px 2px";
                     //Remove all previously added eventListeners
                     window.removeEventListener("touchmove", determineProcedure);
                     window.removeEventListener("mousemove", determineProcedure);
@@ -271,6 +267,7 @@
                     </div>
                     <div style="transform: rotate(145deg);">
                         <button id="navigationControl">
+                            <img src="/images/musix/glyph_play.png" style="transform: rotate(-145deg);" alt="">
                         </button>
                     </div>
                 </div>
