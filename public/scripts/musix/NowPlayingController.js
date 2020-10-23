@@ -60,7 +60,7 @@ export class NowPlayingController {
         //Add onplay to mediaController for displaying current state on navigationControl
         this.mediaController.addEventListener("play", () => {
             this.cardInterface.retrieveControls[1].firstElementChild.src = "/images/musix/glyph_pause.png";
-            this.cardInterface.getNavigationControl().style.boxShadow = "0 0 10px black, inset 0 0 10px white";
+            this.cardInterface.getControl("navigation").classList.add("active");
         });
         //Add ontimeupdate to mediaController for updating state and UI
         this.mediaController.addEventListener("timeupdate", this.boundedHandlers.handleTimeUpdate);
@@ -73,7 +73,7 @@ export class NowPlayingController {
         //Add onplay to mediaController for displaying current state on navigationControl
         this.mediaController.addEventListener("pause", () => {
             this.cardInterface.retrieveControls[1].firstElementChild.src = "/images/musix/glyph_play.png";
-            this.cardInterface.getNavigationControl().style.boxShadow = "0 0 10px black";
+            this.cardInterface.getControl("navigation").classList.remove("active");
         });
         //Add onended to mediaController for playing next track
         this.mediaController.addEventListener("ended", () => {
@@ -103,20 +103,18 @@ export class NowPlayingController {
     toggleRemotePlay() {
         if (this.remotePlay) {
             this.remotePlay = false;
+            this.cardInterface.getControl("remotePlay").classList.remove("active");
             if (window.frameElement) {
                 window.parent.shellInterface.throwAlert("RemotePlay is off", "You no longer control other instances", "From now on every action you take on Musix won't affect other instances. YOu can control your instance", null, "OK", null);
-            } else {
-                alert("RemotePlay is off");
             }
         } else {
             this.remotePlay = true;
+            this.cardInterface.getControl("remotePlay").classList.add("active");
             this.cardInterface.getWebSocket().emit("broadcast-event", {
                 eventName: "remote-disable"
             });
             if (window.frameElement) {
                 window.parent.shellInterface.throwAlert("RemotePlay is on", "You are in control of other instances", "From now on every action you take on Musix won't affect the current instance. Instead they are reflected throughout all other instances which are connected to the web socket server\n\nAll other clients are expected to interact with the DOM before RemotePlay can work properly", null, "OK", null);
-            } else {
-                alert("RemotePlay is enabled. All other clients are expected to interact with the DOM before RemotePlay can work properly");
             }
         }
     }
@@ -152,7 +150,7 @@ export class NowPlayingController {
         localStorage.setItem("currentPlaylistIndex", playlist.index.toString());
         //Update UI
         this.view.querySelector("#playlistDisplay").innerHTML = playlist.name;
-        document.styleSheets[0].cssRules[1].style.setProperty("--themeColor", playlist.themeColor);
+        document.styleSheets[0].cssRules[2].style.setProperty("--themeColor", playlist.themeColor);
     }
 
     loadTrackAt(trackIndex) {
@@ -166,26 +164,26 @@ export class NowPlayingController {
         const track = this.playlist.tracks[trackIndex];
 
         //Request lyrics if a URI is present
-        const lyricsDisplay = this.view.querySelector("#lyricsDisplay");
-        lyricsDisplay.scrollTo(0, 0);
-        if (track.lyricsFileName) {
-            fetch(`/musix/lyrics/${encodeURIComponent(track.lyricsFileName)}`)
-                .then(response => response.json())
-                .then(data => {
-                    for (let i = 0; i < data.blocks.length; i++) {
-                        if (data.blocks[i][0].startsWith("Chorus") || data.blocks[i][0].startsWith("(x")) {
-                            data.blocks[i][0] = `<span style="color: var(--themeColor)">${data.blocks[i][0]}</span>`;
-                        }
-                        data.blocks[i] = data.blocks[i].join("<br />");
-                    }
-                    lyricsDisplay.innerHTML = data.blocks.join("<br /><br />");
-                })
-                .catch(() => {
-                    lyricsDisplay.innerHTML = '<span style="color: var(--themeColor)">Aw! Snap</span><br />Couldn\'t connect with the server';
-                });
-        } else {
-            lyricsDisplay.innerHTML = "";
-        }
+        // const lyricsDisplay = this.view.querySelector("#lyricsDisplay");
+        // lyricsDisplay.scrollTo(0, 0);
+        // if (track.lyricsFileName) {
+        //     fetch(`/musix/lyrics/${encodeURIComponent(track.lyricsFileName)}`)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             for (let i = 0; i < data.blocks.length; i++) {
+        //                 if (data.blocks[i][0].startsWith("Chorus") || data.blocks[i][0].startsWith("(x")) {
+        //                     data.blocks[i][0] = `<span style="color: var(--themeColor)">${data.blocks[i][0]}</span>`;
+        //                 }
+        //                 data.blocks[i] = data.blocks[i].join("<br />");
+        //             }
+        //             lyricsDisplay.innerHTML = data.blocks.join("<br /><br />");
+        //         })
+        //         .catch(() => {
+        //             lyricsDisplay.innerHTML = '<span style="color: var(--themeColor)">Aw! Snap</span><br />Couldn\'t connect with the server';
+        //         });
+        // } else {
+        //     lyricsDisplay.innerHTML = "";
+        // }
 
         //Update mediaController
         this.mediaController.src = `/musix/${track.path}`;

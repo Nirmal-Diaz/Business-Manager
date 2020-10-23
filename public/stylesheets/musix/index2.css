@@ -4,7 +4,7 @@
 }
 
 @font-face {
-    font-family: "Impact";
+    font-family: "Digital";
     src: url("../../fonts/Digital\ Font.ttf");
 }
 
@@ -114,34 +114,64 @@ body {
     width: 100%;
 }
 
-.playTimeDisplay {
+#controlsContainer {
     position: absolute;
-    left: 15px;
-
-    font-family: "Impact";
-    color: var(--themeColor);
-}
-
-#seekSlider {
-    position: absolute;
-    left: -45vh;
+    left: -55.5vh;
 
     display: flex;
     justify-content: center;
     align-items: flex-end;
 
-    height: 70vh;
-    width: 70vh;
-
-    border: 8px solid  var(--secondaryColor) !important;
-    box-shadow: 0 0 30px var(--themeColor);
-    border-radius: 50%;
-    background-color: var(--tertiaryColor);
-
-    transform: rotate(196.5deg);
+    height: 95vh;
+    width: 95vh;
 }
 
-#seekSlider>div {
+#controlsContainer > div {
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+
+    height: 100%;
+    width: 60px;
+
+    transform-origin: center center;
+}
+
+#controlsContainer > div > button {
+    height: 60px;
+    width: 60px;
+    
+    background-color: var(--tertiaryColor);
+    box-shadow: 0 0 10px var(--themeColor);
+    border: solid var(--secondaryColor);
+    border-width: 2px 2px 2px 2px;
+    border-radius: 50%;
+    outline: none;
+    
+    transform-origin: center center;
+}
+
+#controlsContainer > div > button.active {
+    box-shadow: 0 0 10px var(--themeColor), inset 0 0 10px white;
+}
+
+.slider {
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    box-shadow: 0 0 30px var(--themeColor), inset 0 0 10px black;
+    border-radius: 50%;
+    border: 8px solid var(--secondaryColor);
+    background-color: var(--tertiaryColor);
+}
+
+.slider>div {
     box-sizing: content-box;
 
     width: 0;
@@ -152,18 +182,29 @@ body {
     border-bottom: 15px solid var(--secondaryColor);
 }
 
-#volumeSlider {
+#seekSlider {
+    left: -45vh;
+
+    height: 70vh;
+    width: 70vh;
+
+    transform: rotate(196.5deg);
+}
+
+.playTimeDisplay {
     position: absolute;
+    left: 15px;
+
+    font-family: "Digital";
+    color: var(--themeColor);
+}
+
+#volumeSlider {
     bottom: -10vh;
     right: -5vh;
     
     height: 30vh;
     width: 30vh;
-    
-    border: thick solid var(--secondaryColor);
-    box-shadow: 0 0 30px var(--themeColor);
-    border-bottom-color: var(--themeColor);
-    border-radius: 50%;
 
     transform: rotate(70.5deg);
 }
@@ -224,28 +265,28 @@ body {
 @keyframes popInPanelContainer {
     0% {
         opacity: 0;
-        transform: translateY(20vh);
+        transform: translateY(-20vh);
     }
 }
 
 @keyframes popOutPanelContainer {
     100% {
         opacity: 0;
-        transform: translateY(-20vh);
+        transform: translateY(20vh);
         visibility: hidden;
     }
 }
 
 #panelContainer {
     position: absolute;
-    right: 0;
+    top: 150px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     width: 100%;
-    height: 100%;
+    height: 60%;
 
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
@@ -315,6 +356,9 @@ body {
 .panelDivision {
     overflow: auto;
 
+    display: flex;
+    flex-wrap: wrap;
+
     width: 100%;
     height: 100%;
 }
@@ -326,6 +370,10 @@ body {
 
     width: 100%;
     padding: 0 10px 0 10px;
+}
+
+.panelDivisionSector.inactive {
+    display: none;
 }
 
 .panelDivisionSectorItem {
@@ -355,24 +403,6 @@ body {
     background-color: var(--themeColor);
     border: none;
     outline: none;
-}
-
-#navigationControl {
-    position: absolute;
-    left: 100px;
-    bottom: 70px;
-
-    height: 60px;
-    width: 60px;
-
-    background-color: transparent;
-    box-shadow: 0 0 10px var(--themeColor);
-    border: solid var(--themeColor);
-    border-width: 2px 2px 2px 2px;
-    border-radius: 50%;
-    outline: none;
-    
-    z-index: 3;
 }
 
 @media (orientation: landscape) {
@@ -430,10 +460,5 @@ body {
 
     .buttonContainer > button {
         display: none;
-    }
-
-    #navigationControl {
-        bottom: calc(50vh - 100px);
-        left: calc(15vw - 22.5px);
     }
 }

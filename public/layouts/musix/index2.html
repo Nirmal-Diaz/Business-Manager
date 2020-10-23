@@ -13,7 +13,7 @@
     <!-- This script tag will unite the module and global scope -->
     <script>
         //Initialize a new socket with the server
-        window.socket = io("/musix", {transports: ["websocket"], upgrade: false});
+        window.socket = io("/musix", { transports: ["websocket"], upgrade: false });
     </script>
     <script type="module">
         //@ts-check
@@ -42,7 +42,7 @@
             playlistsController = null;
 
             templatesContainerFragment = document.getElementById("templateContainer").content;
-            navigationControl = document.getElementById("navigationControl");
+            controls = document.querySelectorAll("#controlsContainer>div>button");
             createControls = document.querySelectorAll("#createControlsContainer > button");
             retrieveControls = document.querySelectorAll("#retrieveControlsContainer > button");
             updateControls = document.querySelectorAll("#updateControlsContainer > button");
@@ -67,14 +67,23 @@
                     this.playlistExplorerController = new PlaylistExplorerController(this, document.getElementById("playlistExplorerPanel"));
                 });
 
-                //Add events to navigation control
-                this.navigationControl.addEventListener("click", () => {
+                //Add events to all controls
+                this.controls[0].addEventListener("click", (event) => {
+                    const keyword = prompt("Specify a keyword to start search");
+                    if (keyword) {
+                        cardInterface.playlistExplorerController.search(keyword);
+                    }
+                });
+                this.controls[1].addEventListener("click", (event) => {
+                    cardInterface.nowPlayingController.toggleRemotePlay();
+                });
+                this.controls[2].addEventListener("click", () => {
                     this.nowPlayingController.togglePlay();
                 });
-                this.navigationControl.addEventListener("touchstart", (event) => {
+                this.controls[2].addEventListener("touchstart", (event) => {
                     this.startNavigation(event);
                 });
-                this.navigationControl.addEventListener("mousedown", (event) => {
+                this.controls[2].addEventListener("mousedown", (event) => {
                     this.startNavigation(event);
                 });
 
@@ -138,8 +147,12 @@
                 return this.templatesContainerFragment.querySelector(cssQuery);
             }
 
-            getNavigationControl() {
-                return this.navigationControl;
+            getControl(controlType) {
+                if (controlType === "navigation") {
+                    return this.controls[2];
+                } else if (controlType === "remotePlay") {
+                    return this.controls[1];
+                }
             }
 
             getWebSocket() {
@@ -147,7 +160,7 @@
             }
 
             getController(controllerType) {
-                switch(controllerType) {
+                switch (controllerType) {
                     case "nowPlaying": {
                         return this.nowPlayingController;
                     }
@@ -193,34 +206,20 @@
                     if (absoluteDifferenceX >= absoluteDifferenceY) {
                         //CASE: x axis must be prioritized
                         if (differenceX > 0) {
-                            cardInterface.navigationControl.style.borderWidth = "0 2px 0 0";
+                            cardInterface.controls[2].style.borderWidth = "0 2px 0 0";
                             procedureToExecute = () => {
                                 cardInterface.nowPlayingController.skipTrack("next");
                             };
                         } else if (differenceX < 0) {
-                            cardInterface.navigationControl.style.borderWidth = "0 0 0 2px";
+                            cardInterface.controls[2].style.borderWidth = "0 0 0 2px";
                             procedureToExecute = () => {
-                                if (window.frameElement) {
-                                    //CASE: Musix is running inside a frame element
-                                    //NOTE: There is a better way to start a search. So don't allow search this way
-                                    cardInterface.nowPlayingController.skipTrack("previous");
-                                } else {
-                                    const keyword = prompt("Specify a keyword to start search");
-                                    if (keyword) {
-                                        cardInterface.playlistExplorerController.search(keyword);
-                                    }
-                                }
+                                cardInterface.nowPlayingController.skipTrack("previous");
                             };
                         }
                     } else {
                         //CASE: y axis must be prioritized
                         if (differenceY > 0) {
-                            cardInterface.navigationControl.style.borderWidth = "0 0 2px 0";
-                            procedureToExecute = () => {
-                                cardInterface.nowPlayingController.toggleRemotePlay();
-                            };
-                        } else if (differenceY < 0) {
-                            cardInterface.navigationControl.style.borderWidth = "2px 0 0 0";
+                            cardInterface.controls[2].style.borderWidth = "0 0 2px 0";
                             procedureToExecute = () => {
                                 const panelContainer = document.getElementById("panelContainer");
                                 if (panelContainer.classList.contains("popIn")) {
@@ -229,6 +228,11 @@
                                     panelContainer.classList.replace("popOut", "popIn");
                                 }
                             };
+                        } else if (differenceY < 0) {
+                            cardInterface.controls[2].style.borderWidth = "2px 0 0 0";
+                            procedureToExecute = () => {
+
+                            };
                         }
                     }
                 }
@@ -236,7 +240,7 @@
                 function executeProcedure() {
                     procedureToExecute();
                     //Reinstate border
-                    cardInterface.navigationControl.style.borderWidth = "2px 2px 2px 2px";
+                    cardInterface.controls[2].style.borderWidth = "2px 2px 2px 2px";
                     //Remove all previously added eventListeners
                     window.removeEventListener("touchmove", determineProcedure);
                     window.removeEventListener("mousemove", determineProcedure);
@@ -254,38 +258,56 @@
         <div id="nowPlayingViewport" class="viewport">
             <audio id="mediaController"></audio>
             <div id="sliderContainer">
-                <div id="seekSlider" class="rest">
+                <div id="controlsContainer">
+                    <div style="transform: rotate(30deg);">
+                        <button>
+                            <img src="/images/musix/glyph_search.png" style="transform: rotate(-30deg);" alt="">
+                        </button>
+                    </div>
+                    <div style="transform: rotate(50deg);">
+                        <button>
+                            <img src="/images/musix/glyph_remotePlay.png" style="transform: rotate(-50deg);" alt="">
+                        </button>
+                    </div>
+                    <div style="transform: rotate(145deg);">
+                        <button id="navigationControl">
+                        </button>
+                    </div>
+                </div>
+                <div id="seekSlider" class="slider">
                     <div></div>
                 </div>
                 <p class="playTimeDisplay" style="top: 33vh; font-size: 500%;">00</p>
                 <p class="playTimeDisplay" style="font-size: 700%;">00</p>
                 <p class="playTimeDisplay" style="bottom: 33vh; font-size: 500%;">0</p>
-                <div id="volumeSlider" class="rest" style="transform: rotate(180deg)"></div>
+                <div id="volumeSlider" class="slider">
+                    <div></div>
+                </div>
             </div>
             <div id="displayContainer">
                 <p id="playlistDisplay">Playlist Name</p>
                 <p id="titleDisplay">Artist</p>
                 <p id="artistDisplay">Track Name</p>
             </div>
-            <div id="lyricsContainer">
+            <!-- <div id="lyricsContainer">
                 <div class="shadower" style="top: 0;"></div>
                 <p id="lyricsDisplay">
-                    <!-- Lyrics goes here -->
+
                 </p>
                 <div class="shadower" style="bottom: 0; background-image: linear-gradient(transparent, black, black);">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <div id="panelContainer" class="popIn">
-        <div id="playlistExplorerPanel" class="panel">
+        <div id="playlistExplorerPanel" class="panel" data-active-playlist-index="0">
             <div class="panelDivision">
 
             </div>
-            <div class="buttonContainer">
-                <button style="border-top-left-radius: 10px;">ADD</button>
-            </div>
+            <!-- <div class="buttonContainer">
+                <button style="border-top-left-radius: 10px; display:none">ADD</button>
+            </div> -->
         </div>
 
         <div id="contextPanel" class="panel popOut">
@@ -309,8 +331,6 @@
             </div>
         </div>
     </div>
-
-    <button id="navigationControl"></button>
 </body>
 
 <!-- quickAccessArea -->
@@ -346,8 +366,13 @@
 </div>
 
 <template id="templateContainer">
-    <div class="panelDivisionSector">
-        <h1 class="title"></h1>
+    <div id="playlistViewTemplate">
+        <div class="panelDivisionSector" style="width:auto;">
+            <h1 class="title">Playlist Name</h1>
+        </div>
+        <div class="panelDivisionSector">
+            
+        </div>
     </div>
 
     <div class="panelDivisionSectorItem" data-playlist-index="" data-track-index="">
