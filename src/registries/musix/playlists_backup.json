@@ -10,6 +10,12 @@
         "lyricsFileName": "Battle Cry - Imagine Dragons.json"
       },
       {
+        "path": "English Audios/Song of Durin.mp3",
+        "artist": "Eurielle",
+        "title": "Song of Durin",
+        "lyricsFileName": null
+      },
+      {
         "path": "English Audios/Everybody Wants To Rule The World.mp3",
         "artist": "Lorde",
         "title": "Everybody Wants to Rule the World",
@@ -493,12 +499,6 @@
         "path": "English Audios/This Is It.mp3",
         "artist": "Michael Jackson",
         "title": "This Is It",
-        "lyricsFileName": null
-      },
-      {
-        "path": "English Audios/Tujhe Bhula Diya Vs Hello.mp3",
-        "artist": "Gaurav Dagaonkar",
-        "title": "Tujhe Bhula Diya Vs Hello",
         "lyricsFileName": null
       },
       {
@@ -2740,9 +2740,9 @@
         "lyricsFileName": null
       },
       {
-        "path": "Music Catalog/Song of Durin.mp3",
-        "artist": "Eurielle",
-        "title": "Song of Durin",
+        "path": "Music Catalog/The Wolf And The Moon.mp3",
+        "artist": "BrunuhVille",
+        "title": "The Wolf And The Moon",
         "lyricsFileName": null
       },
       {
@@ -2797,6 +2797,12 @@
         "path": "Music Catalog/Sul Sul.mp3",
         "artist": "Ilan Eshkeri",
         "title": "Sul Sul",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Music Catalog/Star Sky.mp3",
+        "artist": "Two Steps From Hell",
+        "title": "Star Sky",
         "lyricsFileName": null
       },
       {
@@ -3533,8 +3539,8 @@
       },
       {
         "path": "Hindi Audios/Bahut Pyar Karte Hai.mp3",
-        "artist": "Siddharth Slathia",
-        "title": "Bahut Pyar Karte Hain Unplugged Cover",
+        "artist": "Rahul Jain",
+        "title": "Bahut Pyar Karte Hai",
         "lyricsFileName": null
       },
       {
@@ -3682,6 +3688,12 @@
         "lyricsFileName": null
       },
       {
+        "path": "Hindi Audios/Tujhe Bhula Diya Vs Hello.mp3",
+        "artist": "Gaurav Dagaonkar",
+        "title": "Tujhe Bhula Diya Vs Hello",
+        "lyricsFileName": null
+      },
+      {
         "path": "Hindi Audios/Jo Bhi Kasmein.mp3",
         "artist": "Udit Narayan/Ankit Rai",
         "title": "Jo Bhi Kasmein",
@@ -3695,8 +3707,8 @@
       },
       {
         "path": "Hindi Audios/Tum Bin Jaoon Kaha.mp3",
-        "artist": "Sarif Tarafdar",
-        "title": "Tum Bin Jaoon Kaha",
+        "artist": "",
+        "title": "Tum Bin Jaon Kaha",
         "lyricsFileName": null
       },
       {
@@ -3877,6 +3889,12 @@
         "path": "Sinhala Hymns/Sanda Wathurak Se.mp3",
         "artist": "TM Jayarathna",
         "title": "Sanda Wathurak Se",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Hymns/Samide Oba Depa Sewane.mp3",
+        "artist": "",
+        "title": "Samide Oba Depa Sewane",
         "lyricsFileName": null
       },
       {
@@ -4822,6 +4840,12 @@
         "lyricsFileName": null
       },
       {
+        "path": "Sinhala Audios/Watena Kandulu Pisalannata.mp3",
+        "artist": "Ajith Perera",
+        "title": "Watena Kandulu Pisalannata",
+        "lyricsFileName": null
+      },
+      {
         "path": "Sinhala Audios/Basa Yana Sanda.mp3",
         "artist": "Namal Udugama",
         "title": "Basa Yana Sanda",
@@ -4861,6 +4885,12 @@
         "path": "Sinhala Audios/Atha Atha Chandra Mandale.mp3",
         "artist": "Chandrasena Hettiarachchi",
         "title": "Atha Atha Chandra Mandale",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Himi Una Oba Mata.mp3",
+        "artist": "Manjula Pushpakumara",
+        "title": "Himi Una Oba Mata",
         "lyricsFileName": null
       },
       {
@@ -5770,21 +5800,57 @@
     "themeColor": "gray",
     "tracks": [
       {
-        "path": "Music Catalog/Star Sky.mp3",
-        "artist": "Two Steps From Hell",
-        "title": "Star Sky",
+        "path": "Sinhala Audios/Ahala Mal Pipena.mp3",
+        "artist": "Chandana Liyanarachchi",
+        "title": "Ahala Mal Pipena Dewata Dige",
         "lyricsFileName": null
       },
       {
-        "path": "Music Catalog/The Wolf And The Moon.mp3",
-        "artist": "BrunuhVille",
-        "title": "The Wolf And The Moon",
+        "path": "Sinhala Audios/Heenayaki Mata Adare.mp3",
+        "artist": "Kasun_Kalhara",
+        "title": "Heenayaki Mata Adare",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Na Thawath Hithak.mp3",
+        "artist": "Athma Liyanage",
+        "title": "Na Thawath Hithak",
         "lyricsFileName": null
       },
       {
         "path": "Sinhala Audios/Abhimanaya Thurstan Namin Liyawila.mp3",
         "artist": "",
         "title": "Abhimanaya Thurstan Namin Liyawila",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Sina Thotak Wiya.mp3",
+        "artist": "Nirosha Virajini",
+        "title": "Sina Thotak Wiya",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Kusumata Lanwee Ron Ganna.mp3",
+        "artist": "Chandraleka Perera",
+        "title": "Kusumata Lanwee Ron Ganna",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Sada Horen Horen.mp3",
+        "artist": "WD Amaradewa",
+        "title": "Sada Horen Horen",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Audios/Hitha Assata Heena Godak.mp3",
+        "artist": "Athula_Adikari",
+        "title": "Hitha Assata Heena Godak",
+        "lyricsFileName": null
+      },
+      {
+        "path": "Sinhala Hymns/Ma Piyumak Lesa.mp3",
+        "artist": "",
+        "title": "Ma Piyumak Lesa",
         "lyricsFileName": null
       }
     ]

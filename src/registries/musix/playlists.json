@@ -3539,8 +3539,8 @@
             },
             {
                 "path": "Hindi Audios/Bahut Pyar Karte Hai.mp3",
-                "artist": "Siddharth Slathia",
-                "title": "Bahut Pyar Karte Hain Unplugged Cover",
+                "artist": "Rahul Jain",
+                "title": "Bahut Pyar Karte Hai",
                 "lyricsFileName": null
             },
             {
@@ -3707,8 +3707,8 @@
             },
             {
                 "path": "Hindi Audios/Tum Bin Jaoon Kaha.mp3",
-                "artist": "Sarif Tarafdar",
-                "title": "Tum Bin Jaoon Kaha",
+                "artist": "",
+                "title": "Tum Bin Jaon Kaha",
                 "lyricsFileName": null
             },
             {
@@ -3880,6 +3880,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Hymns/Ma Piyumak Lesa.mp3",
+                "artist": "",
+                "title": "Ma Piyumak Lesa",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Hymns/Api Asarana Wela Wage.mp3",
                 "artist": "Gunadasa Kapuge",
                 "title": "Api Asarana Wela Wage",
@@ -3889,6 +3895,12 @@
                 "path": "Sinhala Hymns/Sanda Wathurak Se.mp3",
                 "artist": "TM Jayarathna",
                 "title": "Sanda Wathurak Se",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Hymns/Samide Oba Depa Sewane.mp3",
+                "artist": "",
+                "title": "Samide Oba Depa Sewane",
                 "lyricsFileName": null
             },
             {
@@ -4336,6 +4348,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Ahala Mal Pipena.mp3",
+                "artist": "Chandana Liyanarachchi",
+                "title": "Ahala Mal Pipena Dewata Dige",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Nilwan Muhudu Theere.mp3",
                 "artist": "Shehan Kaushalya",
                 "title": "Nilwan Muhudu Theere",
@@ -4351,6 +4369,12 @@
                 "path": "Sinhala Audios/Chanchala Dase Maya.mp3",
                 "artist": "Raini Charuka Gunathilaka",
                 "title": "Chanchala Dase Maya",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Heenayaki Mata Adare.mp3",
+                "artist": "Kasun_Kalhara",
+                "title": "Heenayaki Mata Adare",
                 "lyricsFileName": null
             },
             {
@@ -4381,6 +4405,12 @@
                 "path": "Sinhala Audios/Sansara Sihine.mp3",
                 "artist": "Sanuka Wickramasinghe",
                 "title": "Sansara Sihine",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Sada Horen Horen.mp3",
+                "artist": "WD Amaradewa",
+                "title": "Sada Horen Horen",
                 "lyricsFileName": null
             },
             {
@@ -4828,9 +4858,27 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Sina Thotak Wiya.mp3",
+                "artist": "Nirosha Virajini",
+                "title": "Sina Thotak Wiya",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Oya As Dekata Pem Keruwe.mp3",
                 "artist": "Kingsly Peiris",
                 "title": "Oya As Dekata Pem Keruwe",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Na Thawath Hithak.mp3",
+                "artist": "Athma Liyanage",
+                "title": "Na Thawath Hithak",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Watena Kandulu Pisalannata.mp3",
+                "artist": "Ajith Perera",
+                "title": "Watena Kandulu Pisalannata",
                 "lyricsFileName": null
             },
             {
@@ -4864,6 +4912,12 @@
                 "lyricsFileName": null
             },
             {
+                "path": "Sinhala Audios/Hitha Assata Heena Godak.mp3",
+                "artist": "Athula_Adikari",
+                "title": "Hitha Assata Heena Godak",
+                "lyricsFileName": null
+            },
+            {
                 "path": "Sinhala Audios/Thani Wenna Ida Denna.mp3",
                 "artist": "Ajith Perera",
                 "title": "Thani Wenna Ida Denna",
@@ -4873,6 +4927,18 @@
                 "path": "Sinhala Audios/Atha Atha Chandra Mandale.mp3",
                 "artist": "Chandrasena Hettiarachchi",
                 "title": "Atha Atha Chandra Mandale",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Kusumata Lanwee Ron Ganna.mp3",
+                "artist": "Chandraleka Perera",
+                "title": "Kusumata Lanwee Ron Ganna",
+                "lyricsFileName": null
+            },
+            {
+                "path": "Sinhala Audios/Himi Una Oba Mata.mp3",
+                "artist": "Manjula Pushpakumara",
+                "title": "Himi Una Oba Mata",
                 "lyricsFileName": null
             },
             {
