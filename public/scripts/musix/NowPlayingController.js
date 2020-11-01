@@ -139,7 +139,7 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentVolume", volume.toString());
         //Update UI
-        this.playTimeDisplays[2].textContent = Math.round(volume*100).toString();
+        this.playTimeDisplays[2].textContent = Math.round(volume * 100).toString();
         Utility.setCircularSliderView(this.volumeSlider, 70.5, 221.8, 1, volume);
     }
 
@@ -198,17 +198,34 @@ export class NowPlayingController {
         localStorage.setItem("currentTrackIndex", trackIndex.toString());
 
         //Update UI
+        const mediaMetadata = {
+            title: track.title,
+            artist: track.artist,
+            album: this.playlist.name,
+            artwork: [
+                { src: 'images/musix/launcher_192.png', sizes: '192x192', type: 'image/png' }
+            ]
+        };
+
         if (track.artist) {
             this.view.querySelector("#artistDisplay").textContent = track.artist;
+            mediaMetadata.artist = track.title;
         } else {
             this.view.querySelector("#artistDisplay").textContent = "Unknown Artist";
+            mediaMetadata.artist = "Unknown Artist";
         }
 
         if (track.title) {
             this.view.querySelector("#titleDisplay").textContent = track.title;
+            mediaMetadata.title = track.title;
         } else {
-            this.view.querySelector("#titleDisplay").textContent = track.path.slice(track.path.lastIndexOf("/") + 1, track.path.lastIndexOf("."));
+            const calculatedTitle = track.path.slice(track.path.lastIndexOf("/") + 1, track.path.lastIndexOf("."));
+            this.view.querySelector("#titleDisplay").textContent = calculatedTitle;
+            mediaMetadata.title = calculatedTitle;
         }
+
+        //Update media session metadata
+        navigator.mediaSession.metadata = new MediaMetadata(mediaMetadata);
     }
 
     seekTo(time) {
@@ -233,8 +250,10 @@ export class NowPlayingController {
         } else {
             if (this.mediaController.paused) {
                 this.mediaController.play();
+                navigator.mediaSession.playbackState = "playing";
             } else {
                 this.mediaController.pause();
+                navigator.mediaSession.playbackState = "paused";
             }
         }
     }
@@ -364,7 +383,7 @@ export class NowPlayingController {
         //Update playback state
         localStorage.setItem("currentTrackTime", this.mediaController.currentTime.toString());
         //Update UI
-        Utility.setCircularSliderView(this.seekSlider, 196.5, 343.5,this.mediaController.duration, this.mediaController.currentTime);
+        Utility.setCircularSliderView(this.seekSlider, 196.5, 343.5, this.mediaController.duration, this.mediaController.currentTime);
         const elapsedTime = Utility.formatTime(this.mediaController.currentTime);
         this.playTimeDisplays[0].textContent = elapsedTime[0];
         this.playTimeDisplays[1].textContent = elapsedTime[1];

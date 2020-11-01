@@ -55,9 +55,6 @@
                     navigator.serviceWorker.register("/musix.serviceWorker.js", { scope: "/musix" });
                 }
 
-                //Add webSocket listeners
-                this.initWebSocket();
-
                 //Initialize PlaylistsController
                 this.playlistsController = new PlaylistController(this);
                 this.contextController = new ContextController(this, document.getElementById("contextPanel"));
@@ -65,7 +62,13 @@
                     //Initialize NowPlayingController and PlaylistExplorerController
                     this.nowPlayingController = new NowPlayingController(this, document.getElementById("nowPlayingViewport"));
                     this.playlistExplorerController = new PlaylistExplorerController(this, document.getElementById("playlistExplorerPanel"));
+
+                    //Add mediaSession listeners
+                    this.initMediaSession();
                 });
+
+                //Add webSocket listeners
+                this.initWebSocket();
 
                 //Add events to all controls
                 this.controls[0].addEventListener("click", (event) => {
@@ -141,6 +144,22 @@
                 window.socket.on("remote-skip-track", (params) => {
                     this.nowPlayingController.skipTrack(params.direction);
                 });
+            }
+
+            initMediaSession() {
+                navigator.mediaSession.setActionHandler("play", () => {
+                    this.nowPlayingController.togglePlay();
+                });
+                navigator.mediaSession.setActionHandler("pause", () => {
+                    this.nowPlayingController.togglePlay();
+                });
+                navigator.mediaSession.setActionHandler("previoustrack", () => {
+                    this.nowPlayingController.skipTrack("previous")
+                });
+                navigator.mediaSession.setActionHandler("nexttrack", () => {
+                    this.nowPlayingController.skipTrack("next")
+                });
+                
             }
 
             getTemplate(cssQuery) {
