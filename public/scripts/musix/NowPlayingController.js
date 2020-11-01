@@ -203,13 +203,13 @@ export class NowPlayingController {
             artist: track.artist,
             album: this.playlist.name,
             artwork: [
-                { src: 'images/musix/launcher_192.png', sizes: '192x192', type: 'image/png' }
+                { src: "images/musix/launcher_192.png", sizes: "192x192", type: "image/png" }
             ]
         };
 
         if (track.artist) {
             this.view.querySelector("#artistDisplay").textContent = track.artist;
-            mediaMetadata.artist = track.title;
+            mediaMetadata.artist = track.artist;
         } else {
             this.view.querySelector("#artistDisplay").textContent = "Unknown Artist";
             mediaMetadata.artist = "Unknown Artist";
