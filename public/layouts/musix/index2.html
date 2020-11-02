@@ -154,12 +154,11 @@
                     this.nowPlayingController.togglePlay();
                 });
                 navigator.mediaSession.setActionHandler("previoustrack", () => {
-                    this.nowPlayingController.skipTrack("previous")
+                    this.nowPlayingController.skipTrack("previous");
                 });
                 navigator.mediaSession.setActionHandler("nexttrack", () => {
-                    this.nowPlayingController.skipTrack("next")
+                    this.nowPlayingController.skipTrack("next");
                 });
-                
             }
 
             getTemplate(cssQuery) {
