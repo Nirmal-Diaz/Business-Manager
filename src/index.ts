@@ -5,9 +5,9 @@ import * as http from "http";
 import * as express from "express";
 import * as socketIo from "socket.io";
 
-import { musixRouter } from "./routers/musix/MusixRouter";
-import { liveWallRouter } from "./routers/liveWall/LiveWallRouter";
-import { mainRouter } from "./routers/main/MainRouter";
+import { musixRouter } from "./routers/MusixRouter";
+import { liveWallRouter } from "./routers/LiveWallRouter";
+import { mainRouter } from "./routers/MainRouter";
 
 /*
 =====================================================================================

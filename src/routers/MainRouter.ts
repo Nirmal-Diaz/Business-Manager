@@ -6,20 +6,20 @@ import * as express from "express";
 import * as session from "express-session";
 import { createConnection } from "typeorm";
 
-import { SessionController } from "../../controllers/main/SessionController";
-import { UserController } from "../../controllers/main/UserController";
-import { TableController } from "../../controllers/main/TableController";
-import { RegistryController } from "../../controllers/main/RegistryController";
-import { PermissionController } from "../../controllers/main/PermissionController";
-import { EmployeeController } from "../../controllers/main/EmployeeController";
-import { RoleController } from "../../controllers/main/RoleController";
-import { FileController } from "../../controllers/main/FIleController";
-import { UserPreferenceController } from "../../controllers/main/UserPreferenceController";
-import { SupplierController } from "../../controllers/main/SupplierController";
-import { CustomerController } from "../../controllers/main/CustomerController";
-import { MaterialController } from "../../controllers/main/MaterialController";
-import { ProductController } from "../../controllers/main/ProductController";
-import { ProductPackageController } from "../../controllers/main/ProductPackageController";
+import { SessionController } from "../controllers/main/SessionController";
+import { UserController } from "../controllers/main/UserController";
+import { TableController } from "../controllers/main/TableController";
+import { RegistryController } from "../controllers/main/RegistryController";
+import { PermissionController } from "../controllers/main/PermissionController";
+import { EmployeeController } from "../controllers/main/EmployeeController";
+import { RoleController } from "../controllers/main/RoleController";
+import { FileController } from "../controllers/main/FIleController";
+import { UserPreferenceController } from "../controllers/main/UserPreferenceController";
+import { SupplierController } from "../controllers/main/SupplierController";
+import { CustomerController } from "../controllers/main/CustomerController";
+import { MaterialController } from "../controllers/main/MaterialController";
+import { ProductController } from "../controllers/main/ProductController";
+import { ProductPackageController } from "../controllers/main/ProductPackageController";
 
 export const mainRouter = express.Router();
 /*
@@ -45,7 +45,7 @@ mainRouter.use(session({
 }));
 
 //Set static directory
-mainRouter.use(express.static(__dirname + "/../../../public"));
+mainRouter.use(express.static(__dirname + "/../../public"));
 
 //Initialize login validator
 mainRouter.use((req, res, next) => {
@@ -73,7 +73,7 @@ mainRouter: Route Handlers Setup
 */
 mainRouter.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/main/index.html"));
+        res.sendFile(path.resolve(__dirname + "/../../public/layouts/main/index.html"));
     });
 
 mainRouter.route("/sessions")

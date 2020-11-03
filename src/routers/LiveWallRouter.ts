@@ -11,7 +11,7 @@ liveWallRouter: Middleware Setup
 =====================================================================================
 */
 //Set static directory
-liveWallRouter.use(express.static(__dirname + "/../../../public"));
+liveWallRouter.use(express.static(__dirname + "/../../public"));
 /*
 =====================================================================================
 liveWallRouter: Route Handlers Setup
@@ -19,7 +19,7 @@ liveWallRouter: Route Handlers Setup
 */
 liveWallRouter.route("/")
     .all((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../../public/layouts/liveWall/index.html"));
+        res.sendFile(path.resolve(__dirname + "/../../public/layouts/liveWall/index.html"));
     });
 
 liveWallRouter.route("/directories/:absoluteDirectoryPath")

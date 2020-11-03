@@ -33,11 +33,11 @@ musixRouter: Route Handlers Setup
 musixRouter.route("/")
     .all((req, res) => {
         if (req.query?.interface === "legacy") {
-            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index_legacy.html"));
+            res.sendFile(path.resolve(__dirname + "/../../public/layouts/musix/index_legacy.html"));
         } else if (req.query?.interface === "old") {
-            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index.html"));
+            res.sendFile(path.resolve(__dirname + "/../../public/layouts/musix/index.html"));
         } else {
-            res.sendFile(path.resolve(__dirname + "/../../../public/layouts/musix/index2.html"));
+            res.sendFile(path.resolve(__dirname + "/../../public/layouts/musix/index2.html"));
         }
     });
 
@@ -198,5 +198,5 @@ musixRouter.route("/playlists/:playlistIndex/tracks/:trackIndex")
 
 musixRouter.route("/lyrics/:lyricsFileName")
     .get((req, res) => {
-        res.sendFile(path.resolve(__dirname + "/../../registries/musix/lyrics/" + req.params.lyricsFileName));
+        res.sendFile(path.resolve(__dirname + "/../registries/musix/lyrics/" + req.params.lyricsFileName));
     });
