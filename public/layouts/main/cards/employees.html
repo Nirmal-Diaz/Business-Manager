@@ -105,29 +105,16 @@
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
-                            // this.selectedCardDivisionSectorItems.length = 0;
-                            // const cardDivision = document.getElementById("mainCardDivision");
-                            // cardDivision.innerHTML = "";
-                            // const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            // for (const item of response.data) {
-                            //     const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
-                            //     const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.preferredName, [item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name])();
-                            //     cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                            //     cardDivisionSector.appendChild(cardDivisionSectorItem);
-                            // }
-                            // cardDivision.appendChild(cardDivisionSector);
-
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            const table = CardComponent.createTable(["Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
+                            const table = CardComponent.createTable(["Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Status", "Designation"]);
                             const tableBody = table.querySelector("tbody");
                             for (const item of response.data) {
-                                const iconURL = "/main/images/main/icon_user_default.png";
-                                const bodyRow = CardComponent.createTableRow([item.code, item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
-                                bodyRow.dataset.bindingObjectId = item.id;
-                                tableBody.appendChild(bodyRow);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                tableBody.appendChild(cardDivisionSectorItem);
                             }
                             cardDivision.appendChild(cardDivisionSector);
                             cardDivisionSector.appendChild(table);

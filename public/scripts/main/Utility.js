@@ -154,16 +154,49 @@ export class CardComponent {
         return table;
     }
 
-    static createTableRow(fieldContent) {
-        const bodyRow = document.createElement("tr");
+    static createTableRow(selectedCardDivisionSectorItems, informationContents) {
+        //NOTE: A table row is considered as a cardDivisionSectorItem
+        const cardDivisionSectorItem = document.createElement("tr");
+        cardDivisionSectorItem.setAttribute("class", "cardDivisionSectorItem");
 
-        for (let i = 0; i < fieldContent.length; i++) {
+        //Add onclick to cardDivisionSectorItem for selecting it
+        cardDivisionSectorItem.addEventListener("click", (event) => {
+            //Check if the ctrlKey is pressed
+            if (event.ctrlKey) {
+                //Try to retrieve already existing of cardDivisionSectorItem form selectedCardDivisionSectorItems (returns -1 if not)
+                const existingLocation = selectedCardDivisionSectorItems.indexOf(cardDivisionSectorItem);
+                if (existingLocation === -1) {
+                    //Just add the cardDivisionSectorItem to selected cardDivisionSectorItems
+                    selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
+                    //Add styles tho the selectedCardDivisionSectorItem
+                    cardDivisionSectorItem.classList.add("active");
+                } else {
+                    //Remove cardDivisionSectorItem from selectedCardDivisionSectorItems along with its styles
+                    selectedCardDivisionSectorItems.splice(existingLocation, 1)
+                    cardDivisionSectorItem.classList.remove("active");
+                }
+            } else {
+                //Remove styles of each selectedCardDivisionSectorItems
+                for (const selectedCardDivisionSectorItem of selectedCardDivisionSectorItems) {
+                    selectedCardDivisionSectorItem.classList.remove("active");
+                }
+                //Empty the selectedCardDivisionSectorItems
+                selectedCardDivisionSectorItems.length = 0;
+                //Finally add the cardDivisionSectorItem to selected cardDivisionSectorItems
+                selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
+                //Add styles tho the selectedCardDivisionSectorItem
+                cardDivisionSectorItem.classList.add("active");
+            }
+
+        });
+
+        for (let i = 0; i < informationContents.length; i++) {
             const td = document.createElement("td");
-            td.textContent = fieldContent[i];
-            bodyRow.appendChild(td);
+            td.textContent = informationContents[i];
+            cardDivisionSectorItem.appendChild(td);
         }
 
-        return bodyRow;
+        return cardDivisionSectorItem;
     }
 }
 
