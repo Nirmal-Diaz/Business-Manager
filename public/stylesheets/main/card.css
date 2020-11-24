@@ -11,6 +11,9 @@
 }
 
 .cardDivisionSector {
+    overflow-x: auto;
+    overflow: overlay;
+
     display: flex;
     align-content: flex-start;
     flex-wrap: wrap;
@@ -23,7 +26,7 @@
 }
 
 .cardDivisionSector > table {
-    width: 100%;
+    min-width: 100%;
 
     border-collapse: collapse;
 }

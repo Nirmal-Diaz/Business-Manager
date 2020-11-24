@@ -109,7 +109,7 @@
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
                             const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            const table = CardComponent.createTable(["Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Status", "Designation"]);
+                            const table = CardComponent.createTable(["Code", "Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
                             const tableBody = table.querySelector("tbody");
                             for (const item of response.data) {
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
