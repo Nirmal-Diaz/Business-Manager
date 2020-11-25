@@ -12,14 +12,16 @@ import { Customer } from "./Customer";
 import { Material } from "./Material";
 import { Product } from "./Product";
 import { ProductPackage } from "./ProductPackage";
+import { Quotation } from "./Quotation";
+import { QuotationRequest } from "./QuotationRequest";
 import { Supplier } from "./Supplier";
 import { Employee } from "./Employee";
 import { Role } from "./Role";
 import { UserPreference } from "./UserPreference";
 
-@Index("fk_user_employee1_idx", ["employeeCode"], {})
-@Index("fk_user_occupation1_idx", ["roleId"], {})
 @Index("username_UNIQUE", ["username"], { unique: true })
+@Index("fk_user_occupation1_idx", ["roleId"], {})
+@Index("fk_user_employee1_idx", ["employeeCode"], {})
 @Entity("user", { schema: "business_manager" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -51,6 +53,15 @@ export class User {
 
   @OneToMany(() => ProductPackage, (productPackage) => productPackage.user)
   productPackages: ProductPackage[];
+
+  @OneToMany(() => Quotation, (quotation) => quotation.user)
+  quotations: Quotation[];
+
+  @OneToMany(
+    () => QuotationRequest,
+    (quotationRequest) => quotationRequest.user
+  )
+  quotationRequests: QuotationRequest[];
 
   @OneToMany(() => Supplier, (supplier) => supplier.user)
   suppliers: Supplier[];

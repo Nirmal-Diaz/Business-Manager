@@ -5,8 +5,10 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { QuotationRequest } from "./QuotationRequest";
 import { SupplierStatus } from "./SupplierStatus";
 import { User } from "./User";
 import { Material } from "./Material";
@@ -63,6 +65,12 @@ export class Supplier {
 
   @Column("date", { name: "added_date" })
   addedDate: string;
+
+  @OneToMany(
+    () => QuotationRequest,
+    (quotationRequest) => quotationRequest.supplier
+  )
+  quotationRequests: QuotationRequest[];
 
   @ManyToOne(
     () => SupplierStatus,

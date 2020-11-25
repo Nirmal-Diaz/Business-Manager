@@ -69,7 +69,7 @@ export class MaterialController {
         });
     }
 
-    static async getSupplierRelations() {
+    static async getMaterialSupplierRelations() {
         const materials =  await getRepository(Material).find({
             relations: ["suppliers"]
         });
@@ -86,11 +86,26 @@ export class MaterialController {
 
             return materialId2SupplierIds;
         } else {
-            throw { title: "Oops!", titleDescription: "Add some items first", message: "We no materials in the material database", technicalMessage: "No materials in the database" };
+            throw { title: "Oops!", titleDescription: "Add some items first", message: "We found no materials in the material database", technicalMessage: "No materials in the database" };
         }
     }
 
-    static async setSupplierRelations(clientBindingObject) {
+    static async getSuppliersByMaterial(materialId: number) {
+        const material = await getRepository(Material).findOne({
+            where: {
+                id: materialId
+            },
+            relations: ["suppliers"]
+        });
+
+        if (material.suppliers.length > 0) {
+            return material.suppliers;
+        } else {
+            throw { title: "Oops!", titleDescription: "Add some items first", message: "We found no suppliers for this material", technicalMessage: "No suppliers for the material" };
+        }
+    }
+
+    static async setMaterialSupplierRelations(clientBindingObject) {
         for (const materialId of Object.keys(clientBindingObject)) {
             const material =  await getRepository(Material).findOne(materialId);
             if (clientBindingObject[materialId].length === 0) {
