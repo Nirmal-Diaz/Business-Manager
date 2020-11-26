@@ -14,4 +14,11 @@ export class ProductRepository {
         .orWhere("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
+
+    static generateNextCode() {
+        return getRepository(Product)
+        .createQueryBuilder("p")
+        .select("CONCAT('PRO', SUBSTRING(MAX(p.code),4)+1)", "value")
+        .getRawOne();
+    }
 }

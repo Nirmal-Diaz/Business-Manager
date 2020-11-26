@@ -11,6 +11,9 @@ export class EmployeeController {
         const serverObject = await RegistryController.getParsedRegistry("employee.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //Update the code field with next possible value
+        serverObject.code = (await EmployeeRepository.generateNextCode()).value;
+
         return getRepository(Employee).save(serverObject as Employee)
             .then(employee => employee)
             .catch((error) => {

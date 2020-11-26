@@ -11,6 +11,9 @@ export class SupplierController {
         const serverObject = await RegistryController.getParsedRegistry("supplier.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //Update the code field with next possible value
+        serverObject.code = (await SupplierRepository.generateNextCode()).value;
+
         return getRepository(Supplier).save(serverObject as Supplier)
             .then(supplier => supplier)
             .catch((error) => {

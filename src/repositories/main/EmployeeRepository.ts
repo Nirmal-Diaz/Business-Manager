@@ -23,4 +23,11 @@ export class EmployeeRepository {
         .orWhere("d.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
+
+    static generateNextCode() {
+        return getRepository(Employee)
+        .createQueryBuilder("e")
+        .select("CONCAT('EMP', SUBSTRING(MAX(e.code),4)+1)", "value")
+        .getRawOne();
+    }
 }

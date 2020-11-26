@@ -18,4 +18,11 @@ export class CustomerRepository {
         .orWhere("cs.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
+
+    static generateNextCode() {
+        return getRepository(Customer)
+        .createQueryBuilder("c")
+        .select("CONCAT('CUS', SUBSTRING(MAX(c.code),4)+1)", "value")
+        .getRawOne();
+    }
 }

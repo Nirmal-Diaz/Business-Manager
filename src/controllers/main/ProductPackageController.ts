@@ -11,6 +11,9 @@ export class ProductPackageController {
         const serverObject = await RegistryController.getParsedRegistry("productPackage.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //Update the code field with next possible value
+        serverObject.code = (await ProductPackageRepository.generateNextCode()).value;
+
         return getRepository(ProductPackage).save(serverObject as ProductPackage)
             .then(productPackage => productPackage)
             .catch((error) => {

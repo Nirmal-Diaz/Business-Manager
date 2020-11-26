@@ -11,6 +11,9 @@ export class CustomerController {
         const serverObject = await RegistryController.getParsedRegistry("customer.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //Update the code field with next possible value
+        serverObject.code = (await CustomerRepository.generateNextCode()).value;
+
         return getRepository(Customer).save(serverObject as Customer)
             .then(customer => customer)
             .catch((error) => {

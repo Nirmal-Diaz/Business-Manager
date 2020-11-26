@@ -10,7 +10,7 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^SUP[0-9]{7}$",
+        "pattern": "^CUS[0-9]{7}$",
         "value": null
     },
     "personName": {

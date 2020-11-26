@@ -14,4 +14,11 @@ export class MaterialRepository {
         .orWhere("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
+
+    static generateNextCode() {
+        return getRepository(Material)
+        .createQueryBuilder("m")
+        .select("CONCAT('MAT', SUBSTRING(MAX(m.code),4)+1)", "value")
+        .getRawOne();
+    }
 }

@@ -12,6 +12,9 @@ export class MaterialController {
         const serverObject = await RegistryController.getParsedRegistry("material.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //Update the code field with next possible value
+        serverObject.code = (await MaterialRepository.generateNextCode()).value;
+
         return getRepository(Material).save(serverObject as Material)
             .then(material => material)
             .catch((error) => {
