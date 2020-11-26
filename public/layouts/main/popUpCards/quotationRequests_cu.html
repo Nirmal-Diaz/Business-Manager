@@ -31,12 +31,10 @@
 
                 document.getElementById("saveButton").addEventListener("click", () => {
                     if (this.form.getSubmissionMethod() === "PUT") {
-                        //WARNING: The following code alters the structure of the binding object
-                        //NOTE: We have made the binding object to refer to a single element of an array
-                        //Manually update the bindingObject
-                        this.form.updateBindingObject();
-    
-                        //Create copies of the form object with different supplier ids and remake the array
+                        //Manually validate the bindingObject because we are changing its structure
+                        this.form.validateBindingObject(this.form.getBindingObject());
+                        //WARNING: Following code alters the structure of the bindingObject  
+                        //Create copies of the bindingObject with different supplier ids and make an array
                         const stringifiedFirstElement = JSON.stringify(this.form.getBindingObject());
                         this.form.bindingObject = [];
                         for (const selectedSupplierId of this.selectedSupplierIds) {
@@ -119,12 +117,7 @@
                 //Hide the correct view for the supplier selection based on the form type
                 document.getElementById("supplierId").parentElement.style.display = "none";
 
-                this.form.init("/registries/quotationRequests.json", "/quotationRequests", "PUT").then(() => {
-                    //WARNING: The following code alters the structure of the binding object
-                    //NOTE: bindingObject is a an array and contains one element
-                    //Get that element out of the array and use it as bindingObject
-                    this.form.bindingObject = this.form.getBindingObject()[0];
-                });
+                this.form.init("/registries/quotationRequests.json", "/quotationRequests", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
@@ -141,12 +134,6 @@
                         .then(response => response.json())
                         .then(response => {
                             if (response.status) {
-                                //WARNING: The following code alters the structure of the binding object
-                                //NOTE: bindingObject is a an array and contains one element
-                                //Get that element out of the array and use it as bindingObject
-                                this.form.bindingObject = this.form.getBindingObject()[0];
-                                this.form.referenceBindingObject = this.form.getReferenceBindingObject()[0];
-
                                 this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
                                 //Update the inputs according to the binding object
                                 this.form.updateInputs(this.form.getBindingObject());

@@ -50,8 +50,8 @@ export class QuotationRequestController {
         if (originalObject) {
             const serverObject = await RegistryController.getParsedRegistry("quotationRequests.json");
             //NOTE: Server object is an array. But we are only updating one item
-            ValidationController.validateBindingObject(serverObject[0], clientBindingObject);
-            ValidationController.updateOriginalObject(originalObject, serverObject[0]);
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
 
             return await getRepository(QuotationRequest).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
