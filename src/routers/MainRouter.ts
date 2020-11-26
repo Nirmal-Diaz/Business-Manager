@@ -466,11 +466,9 @@ mainRouter.route("/quotationRequests")
     .put(express.json(), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
             .then(() => {
-                //Add userId to every item to record the created user
-                for (let i = 0; i < req.body.bindingObject.length; i++) {
-                    req.body.bindingObject[i].userId.value = req.session.userId;
-                }
-                return QuotationRequestController.cerateMany(req.body.bindingObject);
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return QuotationRequestController.cerateMany(req.body.bindingObject, req.body.additionalData.selectedSupplierIds);
             }).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

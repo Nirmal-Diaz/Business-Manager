@@ -30,21 +30,13 @@
                 super();
 
                 document.getElementById("saveButton").addEventListener("click", () => {
+                    let additionalData = {};
                     if (this.form.getSubmissionMethod() === "PUT") {
-                        //Manually validate the bindingObject because we are changing its structure
-                        this.form.validateBindingObject(this.form.getBindingObject());
-                        //WARNING: Following code alters the structure of the bindingObject  
-                        //Create copies of the bindingObject with different supplier ids and make an array
-                        const stringifiedFirstElement = JSON.stringify(this.form.getBindingObject());
-                        this.form.bindingObject = [];
-                        for (const selectedSupplierId of this.selectedSupplierIds) {
-                            const parsedFirstElement = JSON.parse(stringifiedFirstElement);
-                            parsedFirstElement.supplierId.value = selectedSupplierId;
-                            this.form.getBindingObject().push(parsedFirstElement);
-                        }
+                        //Add additionalData to send selectedSupplierIds
+                        additionalData.selectedSupplierIds = Array.from(this.selectedSupplierIds);
                     }
 
-                    this.form.submit().then(submission => {
+                    this.form.submit(additionalData).then(submission => {
                         if (submission.status) {
                             //Refresh (not reload) the parentCardInterface
                             if (this.form.getSubmissionMethod() === "PUT") {
@@ -82,6 +74,7 @@
                         .then(response => {
                             if (response.status) {
                                 //Create a check input for each supplier
+                                const supplierDropDown = this.form.getView().querySelector("#supplierId");
                                 const formFieldContainer = this.form.getView().querySelector(".inputGroup");
                                 formFieldContainer.innerHTML = "";
                                 const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
@@ -117,7 +110,7 @@
                 //Hide the correct view for the supplier selection based on the form type
                 document.getElementById("supplierId").parentElement.style.display = "none";
 
-                this.form.init("/registries/quotationRequests.json", "/quotationRequests", "PUT");
+                this.form.init("/registries/quotationRequest.json", "/quotationRequests", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
@@ -129,7 +122,7 @@
                 titleContainer.children[1].textContent = "Quotation Request";
 
                 const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
-                this.form.init("/registries/quotationRequests.json", `/quotationRequests/${selectedItemId}`, "POST").then((form) => {
+                this.form.init("/registries/quotationRequest.json", `/quotationRequests/${selectedItemId}`, "POST").then((form) => {
                     fetch(`/quotationRequests/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
@@ -168,7 +161,7 @@
                         <h1 class="title">Quotation request code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: QRQ2020019" />
+                        <input id="code" type="text" placeholder="eg: QRQ2020019" value="QRQ0000000"/>
                     </div>
                 </div>
 
@@ -181,7 +174,7 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer wide">
+                <div class="formFieldContainer">
                     <div class="titleContainer">
                         <h1 class="title">Material</h1>
                     </div>

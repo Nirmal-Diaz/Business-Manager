@@ -6,12 +6,25 @@ import { QuotationRequest } from "../../entities/main/QuotationRequest";
 import { QuotationRequestRepository } from "../../repositories/main/QuotationRequestRepository";
 
 export class QuotationRequestController {
-    static async cerateMany(clientBindingObject) {
+    static async cerateMany(clientBindingObject, selectedSupplierIds) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("quotationRequests.json");
+        const serverObject = await RegistryController.getParsedRegistry("quotationRequest.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        return getRepository(QuotationRequest).save(serverObject as QuotationRequest[])
+        //Clone the serverObject and change the code and supplierId fields for each selectedSupplierId
+        const clonedServerObjects = [];
+
+        const stringifiedServerObject = JSON.stringify(serverObject);
+        let nextCode: string = (await QuotationRequestRepository.generateNextCode()).value;
+        for (let i = 0; i < selectedSupplierIds.length; i++) {
+            clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
+            clonedServerObjects[i].supplierId = selectedSupplierIds[i];
+            clonedServerObjects[i].code = nextCode;
+
+            nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
+        }
+        
+        return getRepository(QuotationRequest).save(clonedServerObjects as QuotationRequest[])
             .catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql };
             });
@@ -48,7 +61,7 @@ export class QuotationRequestController {
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("quotationRequests.json");
+            const serverObject = await RegistryController.getParsedRegistry("quotationRequest.json");
             //NOTE: Server object is an array. But we are only updating one item
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);

@@ -15,4 +15,11 @@ export class QuotationRequestRepository {
         .orWhere("m.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
+
+    static generateNextCode() {
+        return getRepository(QuotationRequest)
+        .createQueryBuilder("qr")
+        .select("CONCAT('QRQ', SUBSTRING(MAX(qr.code),4)+1)", "value")
+        .getRawOne();
+    }
 }

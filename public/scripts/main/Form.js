@@ -200,7 +200,7 @@ export class Form {
         }
     }
 
-    async submit() {
+    async submit(additionalData = {}) {
         this.updateBindingObject(this.bindingObject);
 
         //Reset invalidBindingObject flag
@@ -221,7 +221,8 @@ export class Form {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    bindingObject: this.bindingObject
+                    bindingObject: this.bindingObject,
+                    additionalData: additionalData
                 })
             })
                 .then(response => response.json())
