@@ -13,7 +13,7 @@ export class UserPreferenceController {
         //Create userPreference with system defaults
         const newUserPreference = new UserPreference();
         newUserPreference.userId = user.id;
-        newUserPreference.hash = crypto.createHash("sha256").update(`${user.username} : A9E5I1`).digest("hex");
+        newUserPreference.hash = crypto.createHash("sha256").update("A9E5I1").digest("hex");
         newUserPreference.preferredName = user.username;
         newUserPreference.themeId = 1;
         newUserPreference.avatar = fs.readFileSync("./public/images/main/icon_user_default.png");
@@ -77,31 +77,29 @@ export class UserPreferenceController {
     }
 
     static async updatePattern(userId: number, cellCombination: string) {
-        const user = await getRepository(User).findOne({
+        const userPreference = await getRepository(UserPreference).findOne({
             where: {
-                id: userId
-            },
-            relations: ["userPreference"]
+                userId: userId
+            }
         });
 
-        user.userPreference.hash = crypto.createHash("sha256").update(`${user.username} : ${cellCombination}`).digest("hex");
+        userPreference.hash = crypto.createHash("sha256").update(cellCombination).digest("hex");
 
-        return getRepository(UserPreference).save(user.userPreference).catch((error) => {
+        return getRepository(UserPreference).save(userPreference).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
 
     static async checkPattern(userId: number, cellCombination: string) {
-        const user = await getRepository(User).findOne({
+        const userPreference = await getRepository(UserPreference).findOne({
             where: {
-                id: userId
-            },
-            relations: ["userPreference"]
+                userId: userId
+            }
         });
 
-        const generatedHash = crypto.createHash("sha256").update(`${user.username} : ${cellCombination}`).digest("hex");
+        const generatedHash = crypto.createHash("sha256").update(cellCombination).digest("hex");
 
-        if (user.userPreference.hash === generatedHash) {
+        if (userPreference.hash === generatedHash) {
             return true;
         } else {
             throw { title: "Oops! Pattern mismatch", titleDescription: "Try again with the correct pattern", message: "", technicalMessage: "Inequivalent hashes" };
