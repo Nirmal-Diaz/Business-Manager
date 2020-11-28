@@ -16,5 +16,11 @@
         "inputClass": "text",
         "pattern": "^EMP[0-9]{7}$",
         "value": null
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
     }
 }

@@ -54,6 +54,9 @@
             }
 
             async initInputs() {
+                //Set the current date as value for "addedDate"
+                document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
+                
                 const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
                 for (const dropDownInput of dropDownInputs) {
                     await FormComponent.refreshDropDownInput(dropDownInput);
@@ -149,6 +152,15 @@
     
                         </select>
                         <button title="Reload values">&#x1F5D8;</button>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
+                        <h1 class="title">Date added</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="addedDate" type="text" placeholder="eg: 2020-01-01">
                     </div>
                 </div>
             </form>
