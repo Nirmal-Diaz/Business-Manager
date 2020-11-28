@@ -493,14 +493,6 @@ mainRouter.route("/quotationRequests/:quotationRequestId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
-            .then(() => QuotationRequestController.updateOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
             .then(() => QuotationRequestController.deleteOne(parseInt(req.params.quotationRequestId)))

@@ -27,7 +27,7 @@
         "inputQuery": "#quotationRequestStatusId",
         "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
-        "value": null
+        "value": "1"
     },
     "description": {
         "inputQuery": "#description",

@@ -110,6 +110,10 @@
                     const onChangeEvent = new Event("change");
                     materialDropDownInput.dispatchEvent(onChangeEvent);
                 } else if (submissionMethod === "POST") {
+                    //Remove the save and reset buttons
+                    document.getElementById("saveButton").style.display = "none";
+                    document.getElementById("resetButton").style.display = "none";
+
                     //Make all form fields disabled
                     const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
                     for (const formFieldContainer of formFieldContainers) {

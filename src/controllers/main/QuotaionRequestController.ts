@@ -11,6 +11,9 @@ export class QuotationRequestController {
         const serverObject = await RegistryController.getParsedRegistry("quotationRequest.json");
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
+        //NOTE: Every quotation request must initially be at "Pending" state
+        serverObject.quotationRequestStatusId = "1";
+
         //Clone the serverObject and change the code and supplierId fields for each selectedSupplierId
         const clonedServerObjects = [];
 
@@ -55,7 +58,8 @@ export class QuotationRequestController {
         }
     }
 
-    static async updateOne(clientBindingObject) {
+    //WARNING: Quotation request updates are not presented to the user
+    private static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(QuotationRequest).findOne({
             id: clientBindingObject.id.value
         });
