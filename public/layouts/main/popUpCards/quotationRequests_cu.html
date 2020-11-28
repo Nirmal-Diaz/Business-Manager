@@ -65,7 +65,7 @@
 
                 if (submissionMethod === "PUT") {
                     //Disable the quotation request status fields
-                    this.form.getView().querySelectorAll(".formFieldContainer").children[4].classList.add("disabled");
+                    this.form.getView().querySelectorAll(".formFieldContainer")[4].classList.add("disabled");
 
                     //Set the current date as value for "addedDate"
                     document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
