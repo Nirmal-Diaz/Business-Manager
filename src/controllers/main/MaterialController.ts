@@ -2,85 +2,86 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { Material } from "../../entities/main/Material";
-import { MaterialRepository } from "../../repositories/main/MaterialRepository";
+import { Material as Entity } from "../../entities/main/Material";
+import { MaterialRepository as EntityRepository } from "../../repositories/main/MaterialRepository";
 import { Supplier } from "../../entities/main/Supplier";
 
 export class MaterialController {
+    private static entityName: string = "material";
+    private static entityJSONName: string = "material";
+
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("material.json");
+        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //Update the code field with next possible value
-        serverObject.code = (await MaterialRepository.generateNextCode()).value;
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        return getRepository(Material).save(serverObject as Material)
-            .then(material => material)
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
-    static async getOne(materialId: number) {
-        const material = await getRepository(Material).findOne({
+    static async getOne(id: number) {
+        const item = await getRepository(Entity).findOne({
             where: {
-                id: materialId
+                id: id
             },
             relations: ["materialStatus", "unitType"]
         });
 
-        if (material) {
-            return material;
+        if (item) {
+            return item;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a material that matches your arguments", technicalMessage: "No material for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
     static async getMany(keyword: string) {
-        const materials = await MaterialRepository.search(keyword);
+        const items = await EntityRepository.search(keyword);
 
-        if (materials.length > 0) {
-            return materials;
+        if (items.length > 0) {
+            return items;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no materials matching the keyword you provided", technicalMessage: "No materials for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
         }
     }
 
     static async updateOne(clientBindingObject) {
-        const originalObject = await getRepository(Material).findOne({
+        const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("material.json");
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Material).save(originalObject).catch((error) => {
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a material that matches your arguments", technicalMessage: "No material for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
-    static async deleteOne(materialId: number) {
-        return getRepository(Material).delete(materialId).catch((error) => {
+    static async deleteOne(id: number) {
+        return getRepository(Entity).delete(id).catch((error) => {
             //WARNING: This error is thrown based on a possible error and not on the actual error
-            throw { title: "First things first", titleDescription: "Remove dependant supplier records", message: "There are dependant supplier records for this material. Please remove those before removing this material", technicalMessage: error.sqlMessage }
+            throw { title: "First things first", titleDescription: "Remove any dependant records", message: `There are dependant records for this ${this.entityName}. Please remove those before removing this ${this.entityName}`, technicalMessage: error.sqlMessage }
         });
     }
 
     static async getMaterialSupplierRelations() {
-        const materials =  await getRepository(Material).find({
+        const items = await getRepository(Entity).find({
             relations: ["suppliers"]
         });
 
-        if (materials.length > 0) {
+        if (items.length > 0) {
             const materialId2SupplierIds = {};
 
-            for (const material of materials) {
+            for (const material of items) {
                 materialId2SupplierIds[material.id] = [];
                 for (const supplier of material.suppliers) {
                     materialId2SupplierIds[material.id].push(supplier.id);
@@ -89,12 +90,12 @@ export class MaterialController {
 
             return materialId2SupplierIds;
         } else {
-            throw { title: "Oops!", titleDescription: "Add some items first", message: "We found no materials in the material database", technicalMessage: "No materials in the database" };
+            throw { title: "Oops!", titleDescription: "Add some items first", message: `We found no ${this.entityName}s in the material database`, technicalMessage: `No ${this.entityName}s in the database` };
         }
     }
 
     static async getSuppliersByMaterial(materialId: number) {
-        const material = await getRepository(Material).findOne({
+        const material = await getRepository(Entity).findOne({
             where: {
                 id: materialId
             },
@@ -109,14 +110,14 @@ export class MaterialController {
     }
 
     static async setMaterialSupplierRelations(clientBindingObject) {
-        for (const materialId of Object.keys(clientBindingObject)) {
-            const material =  await getRepository(Material).findOne(materialId);
-            if (clientBindingObject[materialId].length === 0) {
-                material.suppliers = [];
+        for (const id of Object.keys(clientBindingObject)) {
+            const item = await getRepository(Entity).findOne(id);
+            if (clientBindingObject[id].length === 0) {
+                item.suppliers = [];
             } else {
-                material.suppliers = await getRepository(Supplier).findByIds(clientBindingObject[materialId]);
+                item.suppliers = await getRepository(Supplier).findByIds(clientBindingObject[id]);
             }
-            await getRepository(Material).save(material);
+            await getRepository(Entity).save(item);
         }
 
         return true;

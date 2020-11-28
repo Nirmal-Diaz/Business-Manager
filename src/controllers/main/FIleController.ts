@@ -28,7 +28,7 @@ export class FileController {
     }
 
     static async readDirectory(relativeDirectoryPath: string) {
-        const fullRelativeDirectoryPath = FileController.absolutePrivateDirectoryPath+relativeDirectoryPath;
+        const fullRelativeDirectoryPath = FileController.absolutePrivateDirectoryPath + relativeDirectoryPath;
 
         return FileController.isPathExists(fullRelativeDirectoryPath)
             .then(() => FileController.isPathDirectory(fullRelativeDirectoryPath))
@@ -66,7 +66,7 @@ export class FileController {
     }
 
     static async deleteDirectory(relativeDirectoryPath: string) {
-        const fullRelativeDirectoryPath = FileController.absolutePrivateDirectoryPath+relativeDirectoryPath;
+        const fullRelativeDirectoryPath = FileController.absolutePrivateDirectoryPath + relativeDirectoryPath;
 
         return FileController.isPathExists(fullRelativeDirectoryPath)
             .then(() => FileController.isPathDirectory(fullRelativeDirectoryPath))
@@ -93,7 +93,7 @@ export class FileController {
     }
 
     static async getFileBuffer(relativeFilePath: string) {
-        const fullRelativeFilePath = FileController.absolutePrivateDirectoryPath+relativeFilePath;
+        const fullRelativeFilePath = FileController.absolutePrivateDirectoryPath + relativeFilePath;
 
         return FileController.isPathExists(fullRelativeFilePath)
             .then(() => FileController.isPathFile(fullRelativeFilePath))
@@ -104,7 +104,7 @@ export class FileController {
     }
 
     static async deleteFile(relativeFilePath: string) {
-        const fullRelativeFilePath = FileController.absolutePrivateDirectoryPath+relativeFilePath;
+        const fullRelativeFilePath = FileController.absolutePrivateDirectoryPath + relativeFilePath;
 
         return FileController.isPathExists(fullRelativeFilePath)
             .then(() => FileController.isPathFile(fullRelativeFilePath))

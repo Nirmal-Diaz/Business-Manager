@@ -4,6 +4,7 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { QuotationRequest } from "./QuotationRequest";
@@ -12,6 +13,9 @@ import { UnitType } from "./UnitType";
 import { User } from "./User";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
+@Index("quotation_request_code_UNIQUE", ["quotationRequestCode"], {
+  unique: true,
+})
 @Index("fk_quotation_user1_idx", ["userId"], {})
 @Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
 @Index("fk_quotation_unit_type1_idx", ["unitTypeId"], {})
@@ -24,7 +28,7 @@ export class Quotation {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("char", { name: "quotation_request_code", length: 10 })
+  @Column("char", { name: "quotation_request_code", unique: true, length: 10 })
   quotationRequestCode: string;
 
   @Column("date", { name: "valid_from" })
@@ -64,9 +68,9 @@ export class Quotation {
   @Column("int", { name: "user_id" })
   userId: number;
 
-  @ManyToOne(
+  @OneToOne(
     () => QuotationRequest,
-    (quotationRequest) => quotationRequest.quotations,
+    (quotationRequest) => quotationRequest.quotation,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([

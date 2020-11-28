@@ -2,81 +2,80 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { PermissionController } from "./PermissionController";
-import { RoleRepository } from "../../repositories/main/RoleRepository";
-import { Role } from "../../entities/main/Role";
+import { Role as Entity } from "../../entities/main/Role";
+import { RoleRepository as EntityRepository } from "../../repositories/main/RoleRepository";
 import { User } from "../../entities/main/User";
+import { PermissionController } from "./PermissionController";
 
 export class RoleController {
+    private static entityName: string = "role";
+    private static entityJSONName: string = "role";
+
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("role.json");
+        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        return getRepository(Role).save(serverObject as Role)
-            .then(role => role)
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
-    static async getOne(roleId: number) {
-        const role = await getRepository(Role).findOne({
+    static async getOne(id: number) {
+        const item = await getRepository(Entity).findOne({
             where: {
-                id: roleId
+                id: id
             },
             relations: ["permissions", "permissions.module"]
         });
 
-        if (role) {
-            return role;
+        if (item) {
+            return item;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a role that matches your arguments", technicalMessage: "No user for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
     static async getMany(keyword: string) {
-        const roles = await RoleRepository.search(keyword);
+        const items = await EntityRepository.search(keyword);
 
-        if (roles.length > 0) {
-            return roles;
+        if (items.length > 0) {
+            return items;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There is no role matching the keyword you provided", technicalMessage: "No roles for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
         }
     }
 
     static async updateOne(clientBindingObject) {
-        const originalObject = await getRepository(Role).findOne({
+        const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("role.json");
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Role).save(originalObject).catch((error) => {
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a role that matches your arguments", technicalMessage: "No role for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
-    static async deleteOne(roleId: number) {
+    static async deleteOne(id: number) {
         const users = await getRepository(User).find({
-            roleId: roleId
+            roleId: id
         });
 
         if (users.length > 0) {
             throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are users that have this role assigned. Please remove those users before removing this role", technicalMessage: "Role to be deleted is still in use" }
         } else {
-            return PermissionController.deleteMany(roleId).then(() => getRepository(Role).delete(roleId))
+            return PermissionController.deleteMany(id).then(() => getRepository(Entity).delete(id))
                 .catch((error) => {
                     throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
                 });
         }
-
-
     }
 }

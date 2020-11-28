@@ -2,72 +2,73 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { Product } from "../../entities/main/Product";
-import { ProductRepository } from "../../repositories/main/ProductRepository";
+import { Product as Entity } from "../../entities/main/Product";
+import { ProductRepository as EntityRepository } from "../../repositories/main/ProductRepository";
 
 export class ProductController {
+    private static entityName: string = "product";
+    private static entityJSONName: string = "product";
+
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("product.json");
+        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //Update the code field with next possible value
-        serverObject.code = (await ProductRepository.generateNextCode()).value;
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        return getRepository(Product).save(serverObject as Product)
-            .then(product => product)
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
-    static async getOne(productId: number) {
-        const product = await getRepository(Product).findOne({
+    static async getOne(id: number) {
+        const item = await getRepository(Entity).findOne({
             where: {
-                id: productId
+                id: id
             },
             relations: ["productStatus", "unitType"]
         });
 
-        if (product) {
-            return product;
+        if (item) {
+            return item;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a product that matches your arguments", technicalMessage: "No product for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
     static async getMany(keyword: string) {
-        const products = await ProductRepository.search(keyword);
+        const items = await EntityRepository.search(keyword);
 
-        if (products.length > 0) {
-            return products;
+        if (items.length > 0) {
+            return items;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no products matching the keyword you provided", technicalMessage: "No products for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
         }
     }
 
     static async updateOne(clientBindingObject) {
-        const originalObject = await getRepository(Product).findOne({
+        const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("product.json");
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Product).save(originalObject).catch((error) => {
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a product that matches your arguments", technicalMessage: "No product for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
-    static async deleteOne(productId: number) {
-        return getRepository(Product).delete(productId).catch((error) => {
+    static async deleteOne(id: number) {
+        return getRepository(Entity).delete(id).catch((error) => {
             //WARNING: This error is thrown based on a possible error and not on the actual error
-            throw { title: "First things first", titleDescription: "Remove dependant product package records", message: "There are dependant product packages for this product. Please remove those records before removing this product", technicalMessage: error.sqlMessage }
+            throw { title: "First things first", titleDescription: "Remove any dependant records", message: `There are dependant records for this ${this.entityName}. Please remove those before removing this ${this.entityName}`, technicalMessage: error.sqlMessage }
         });
     }
 }

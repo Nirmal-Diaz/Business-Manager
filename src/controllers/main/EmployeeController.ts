@@ -1,73 +1,74 @@
 import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
-import { EmployeeRepository } from "../../repositories/main/EmployeeRepository";
 import { RegistryController } from "./RegistryController";
-import { Employee } from "../../entities/main/Employee";
+import { Employee as Entity } from "../../entities/main/Employee";
+import { EmployeeRepository as EntityRepository } from "../../repositories/main/EmployeeRepository";
 
 export class EmployeeController {
+    private static entityName: string = "employee";
+    private static entityJSONName: string = "employee";
+
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("employee.json");
+        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //Update the code field with next possible value
-        serverObject.code = (await EmployeeRepository.generateNextCode()).value;
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        return getRepository(Employee).save(serverObject as Employee)
-            .then(employee => employee)
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
-    static async getOne(employeeId: number) {
-        const employee = await getRepository(Employee).findOne({
+    static async getOne(id: number) {
+        const item = await getRepository(Entity).findOne({
             where: {
-                id: employeeId
+                id: id
             },
             relations: ["gender", "employeeStatus", "civilStatus", "designation"]
         });
 
-        if (employee) {
-            return employee;
+        if (item) {
+            return item;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
     static async getMany(keyword: string) {
-        const employees = await EmployeeRepository.search(keyword);
+        const items = await EntityRepository.search(keyword);
 
-        if (employees.length > 0) {
-            return employees;
+        if (items.length > 0) {
+            return items;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no employees matching the keyword you provided", technicalMessage: "No employees for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
         }
     }
 
     static async updateOne(clientBindingObject) {
-        const originalObject = await getRepository(Employee).findOne({
+        const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("employee.json");
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Employee).save(originalObject).catch((error) => {
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find an employee that matches your arguments", technicalMessage: "No employee for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
-    static async deleteOne(employeeId: number) {
-        return getRepository(Employee).delete(employeeId).catch((error) => {
+    static async deleteOne(id: number) {
+        return getRepository(Entity).delete(id).catch((error) => {
             //WARNING: This error is thrown based on a possible error and not on the actual error
-            throw { title: "First things first", titleDescription: "Remove dependant users first", message: "There are system users assigned to this employee. Please remove those users before removing this employee", technicalMessage: error.sqlMessage }
+            throw { title: "First things first", titleDescription: "Remove any dependant records", message: `There are dependant records for this ${this.entityName}. Please remove those before removing this ${this.entityName}`, technicalMessage: error.sqlMessage }
         });
     }
 }

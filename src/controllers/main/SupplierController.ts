@@ -2,72 +2,73 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { Supplier } from "../../entities/main/Supplier";
-import { SupplierRepository } from "../../repositories/main/SupplierRepository";
+import { Supplier as Entity } from "../../entities/main/Supplier";
+import { SupplierRepository as EntityRepository } from "../../repositories/main/SupplierRepository";
 
 export class SupplierController {
+    private static entityName: string = "supplier";
+    private static entityJSONName: string = "supplier";
+
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry("supplier.json");
+        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //Update the code field with next possible value
-        serverObject.code = (await SupplierRepository.generateNextCode()).value;
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        return getRepository(Supplier).save(serverObject as Supplier)
-            .then(supplier => supplier)
-            .catch((error) => {
-                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-            });
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+        });
     }
 
-    static async getOne(supplierId: number) {
-        const supplier = await getRepository(Supplier).findOne({
+    static async getOne(id: number) {
+        const item = await getRepository(Entity).findOne({
             where: {
-                id: supplierId
+                id: id
             },
             relations: ["supplierStatus"]
         });
 
-        if (supplier) {
-            return supplier;
+        if (item) {
+            return item;
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a supplier that matches your arguments", technicalMessage: "No supplier for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
     static async getMany(keyword: string) {
-        const suppliers = await SupplierRepository.search(keyword);
+        const items = await EntityRepository.search(keyword);
 
-        if (suppliers.length > 0) {
-            return suppliers;
+        if (items.length > 0) {
+            return items;
         } else {
-            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: "There are no suppliers matching the keyword you provided", technicalMessage: "No suppliers for given keyword" };
+            throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
         }
     }
 
     static async updateOne(clientBindingObject) {
-        const originalObject = await getRepository(Supplier).findOne({
+        const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });
 
         if (originalObject) {
-            const serverObject = await RegistryController.getParsedRegistry("supplier.json");
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return await getRepository(Supplier).save(originalObject).catch((error) => {
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {
-            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: "We couldn't find a supplier that matches your arguments", technicalMessage: "No supplier for given arguments" };
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
-    static async deleteOne(supplierId: number) {
-        return getRepository(Supplier).delete(supplierId).catch((error) => {
+    static async deleteOne(id: number) {
+        return getRepository(Entity).delete(id).catch((error) => {
             //WARNING: This error is thrown based on a possible error and not on the actual error
-            throw { title: "First things first", titleDescription: "Remove dependant materials first", message: "There are assigned material to this supplier. Please remove those materials before removing this supplier", technicalMessage: error.sqlMessage }
+            throw { title: "First things first", titleDescription: "Remove any dependant records", message: `There are dependant records for this ${this.entityName}. Please remove those before removing this ${this.entityName}`, technicalMessage: error.sqlMessage }
         });
     }
 }
