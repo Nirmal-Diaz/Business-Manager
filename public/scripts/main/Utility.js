@@ -229,7 +229,7 @@ export class FormComponent {
                 }
             })
             .catch(error => {
-                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch roles list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch roles list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
     }
 }
