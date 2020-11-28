@@ -55,6 +55,10 @@
                 document.getElementById("resetButton").addEventListener("click", () => {
                     this.form.bindingObject = this.form.referenceBindingObject;
                 });
+
+                document.getElementById("printButton").addEventListener("click", () => {
+                    print();
+                });
             }
 
             async initInputs(submissionMethod) {
@@ -259,6 +263,7 @@
         <!-- formControlsContainer -->
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
+            <button id="printButton" class="buttonText link">PRINT</button>
             <button id="resetButton" class="buttonText link">RESET</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
