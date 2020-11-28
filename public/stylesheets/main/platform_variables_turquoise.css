@@ -16,6 +16,7 @@
 
     --color2-1: rgba(0, 0, 0, 0.9);
     --color2-2: black;
+    --color2-3: gray;
     
     --color3-1: rgba(65, 105, 225, 1);
     --color3-2: rgb(50, 90, 200);
@@ -30,7 +31,8 @@
     --inputContainerBorderColor-invalid: var(--color0-2);
 
     --inputBackgroundColor: var(--color0-3);
-    --inputBackgroundColor-active: var(--color3-1);
+    --inputBackgroundColor-active: var(--color2-1);
+    --inputBackgroundColor-disabled: var(--color2-3);
     --inputBackgroundColor-hover: var(--color1-1);
     --inputBorderColor: var(--color0-1);
 

@@ -57,66 +57,77 @@
                 });
             }
 
-            async initInputs() {
-                //Set the current date as value for "addedDate"
-                document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
-
+            async initInputs(submissionMethod) {
                 const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
                 for (const dropDownInput of dropDownInputs) {
                     await FormComponent.refreshDropDownInput(dropDownInput);
                 }
-                
-                //Add onchange to material dropDown for loading the suppliers
-                const materialDropDownInput = document.getElementById("materialId");
-                materialDropDownInput.addEventListener("change", () => {
-                    fetch(`/materials/${materialDropDownInput.value}/suppliers`)
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                //Create a check input for each supplier
-                                const supplierDropDown = this.form.getView().querySelector("#supplierId");
-                                const formFieldContainer = this.form.getView().querySelector(".inputGroup");
-                                formFieldContainer.innerHTML = "";
-                                const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
-                                for (const supplier of response.data) {
-                                    const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
-                                    checkInputContainer.children[1].textContent = supplier.businessName;
-                                    checkInputContainer.dataset.supplierId = supplier.id;
-                                    formFieldContainer.appendChild(checkInputContainer);
 
-                                    checkInputContainer.children[0].addEventListener("change", () => {
-                                        //Add or remove the supplier id from the selectedSupplierIds according to the selection
-                                        if (checkInputContainer.children[0].checked) {
-                                            this.selectedSupplierIds.add(checkInputContainer.dataset.supplierId);
-                                        } else {
-                                            this.selectedSupplierIds.delete(checkInputContainer.dataset.supplierId);
-                                        }
-                                    });
+                if (submissionMethod === "PUT") {
+                    //Disable the quotation request status fields
+                    this.form.getView().querySelectorAll(".formFieldContainer").children[4].classList.add("disabled");
+
+                    //Set the current date as value for "addedDate"
+                    document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
+
+                    //Hide the supplier dropdown
+                    document.getElementById("supplierId").parentElement.style.display = "none";
+
+                    //Add onchange to material dropDown for loading the suppliers
+                    const materialDropDownInput = document.getElementById("materialId");
+                    materialDropDownInput.addEventListener("change", () => {
+                        fetch(`/materials/${materialDropDownInput.value}/suppliers`)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    //Create a check input for each supplier
+                                    const supplierDropDown = this.form.getView().querySelector("#supplierId");
+                                    const formFieldContainer = this.form.getView().querySelector(".inputGroup");
+                                    formFieldContainer.innerHTML = "";
+                                    const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
+                                    for (const supplier of response.data) {
+                                        const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
+                                        checkInputContainer.children[1].textContent = supplier.businessName;
+                                        checkInputContainer.dataset.supplierId = supplier.id;
+                                        formFieldContainer.appendChild(checkInputContainer);
+
+                                        checkInputContainer.children[0].addEventListener("change", () => {
+                                            //Add or remove the supplier id from the selectedSupplierIds according to the selection
+                                            if (checkInputContainer.children[0].checked) {
+                                                this.selectedSupplierIds.add(checkInputContainer.dataset.supplierId);
+                                            } else {
+                                                this.selectedSupplierIds.delete(checkInputContainer.dataset.supplierId);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                                 }
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        });
-                });
+                            });
+                    });
 
-                //Dispatch the change event on the materialDropDownInput
-                const onChangeEvent = new Event("change");
-                materialDropDownInput.dispatchEvent(onChangeEvent);
+                    //Dispatch the change event on the materialDropDownInput for selecting the first material
+                    const onChangeEvent = new Event("change");
+                    materialDropDownInput.dispatchEvent(onChangeEvent);
+                } else if (submissionMethod === "POST") {
+                    //Make all form fields disabled
+                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
+                    for (const formFieldContainer of formFieldContainers) {
+                        formFieldContainer.classList.add("disabled");
+                    }
+
+                    //Hide the multi supplier selection
+                    document.getElementById("supplierId").parentElement.nextElementSibling.style.display = "none";
+                }
 
                 return true;
             }
 
             initCreateForm() {
-                //Hide the correct view for the supplier selection based on the form type
-                document.getElementById("supplierId").parentElement.style.display = "none";
-
                 this.form.init("/registries/quotationRequest.json", "/quotationRequests", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
-                //Hide the correct view for the supplier selection based on the form type
-                document.getElementById("supplierId").parentElement.nextElementSibling.style.display = "none";
-
                 const titleContainer = document.querySelector(".formTitleContainer>.titleContainer");
                 titleContainer.children[0].textContent = "Update";
                 titleContainer.children[1].textContent = "Quotation Request";
@@ -135,7 +146,7 @@
                             }
                         })
                         .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required customer from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required quotation request from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                         });
                 });
             }
@@ -156,12 +167,12 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="title">Quotation request code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: QRQ2020019" value="QRQ0000000"/>
+                        <input id="code" type="text" placeholder="eg: QRQ2020019" value="QRQ0000000" />
                     </div>
                 </div>
 
@@ -194,8 +205,8 @@
 
                     <!-- NOTE: This element is needed only for the update from -->
                     <div class="inputContainer dropDown">
-                        <select id="supplierId" data-request-url="/suppliers?keyword=" data-text-content-field="businessName"
-                            data-value-field="id">
+                        <select id="supplierId" data-request-url="/suppliers?keyword="
+                            data-text-content-field="businessName" data-value-field="id">
 
                         </select>
                         <button title="Reload values">&#x1F5D8;</button>
@@ -203,7 +214,7 @@
 
                     <!-- NOTE: This element is needed only for the create from -->
                     <div class="inputGroup">
-                        
+
                     </div>
                 </div>
 

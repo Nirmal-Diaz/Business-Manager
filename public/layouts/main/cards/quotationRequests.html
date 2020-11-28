@@ -27,7 +27,7 @@
                     const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/quotationRequests_cu.html");
                     popUpCard.getView().style.width = "800px";
                     popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                        popUpCard.popUpCardInterface.initInputs("PUT").then(() => {
                             popUpCard.popUpCardInterface.initCreateForm();
                         });
                     });
@@ -93,7 +93,7 @@
                 const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/quotationRequests_cu.html");
                 popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                    popUpCard.popUpCardInterface.initInputs().then(() => {
+                    popUpCard.popUpCardInterface.initInputs("POST").then(() => {
                         popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
                     });
                 });

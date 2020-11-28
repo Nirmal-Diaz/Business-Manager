@@ -42,6 +42,12 @@ form {
     width: 100%;
 }
 
+.formFieldContainer.disabled input, .formFieldContainer.disabled select, .formFieldContainer.disabled textarea {
+    pointer-events: none;
+
+    background-color: var(--inputBackgroundColor-disabled);
+}
+
 .formControlsContainer {
     position: absolute;
     bottom: 0;
