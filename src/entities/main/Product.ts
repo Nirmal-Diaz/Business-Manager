@@ -7,10 +7,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { PreoductMaterial } from "./PreoductMaterial";
 import { UnitType } from "./UnitType";
 import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
+import { ProductMaterial } from "./ProductMaterial";
 import { ProductPackage } from "./ProductPackage";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -49,12 +49,6 @@ export class Product {
   @Column("int", { name: "user_id" })
   userId: number;
 
-  @OneToMany(
-    () => PreoductMaterial,
-    (preoductMaterial) => preoductMaterial.product
-  )
-  preoductMaterials: PreoductMaterial[];
-
   @ManyToOne(() => UnitType, (unitType) => unitType.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
@@ -75,6 +69,12 @@ export class Product {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @OneToMany(
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.product
+  )
+  productMaterials: ProductMaterial[];
 
   @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
   productPackages: ProductPackage[];

@@ -13,20 +13,21 @@ import { QuotationRequestStatus } from "./QuotationRequestStatus";
 import { Supplier } from "./Supplier";
 import { User } from "./User";
 
+@Index("code_UNIQUE", ["code"], { unique: true })
+@Index("fk_quotation_request_supplier1_idx", ["supplierId"], {})
+@Index("fk_quotation_request_material1_idx", ["materialId"], {})
+@Index("fk_quotation_request_user1_idx", ["userId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
   ["quotationRequestStatusId"],
   {}
 )
-@Index("fk_quotation_request_supplier1_idx", ["supplierId"], {})
-@Index("fk_quotation_request_material1_idx", ["materialId"], {})
-@Index("fk_quotation_request_user1_idx", ["userId"], {})
 @Entity("quotation_request", { schema: "business_manager" })
 export class QuotationRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("char", { name: "code", length: 10 })
+  @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
   @Column("date", { name: "valid_till" })
@@ -50,7 +51,7 @@ export class QuotationRequest {
   @Column("int", { name: "user_id" })
   userId: number;
 
-  @OneToMany(() => Quotation, (quotation) => quotation.quotationRequest)
+  @OneToMany(() => Quotation, (quotation) => quotation.quotationRequestCode2)
   quotations: Quotation[];
 
   @ManyToOne(() => Material, (material) => material.quotationRequests, {

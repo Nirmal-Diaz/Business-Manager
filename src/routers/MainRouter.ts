@@ -21,6 +21,7 @@ import { MaterialController } from "../controllers/main/MaterialController";
 import { ProductController } from "../controllers/main/ProductController";
 import { ProductPackageController } from "../controllers/main/ProductPackageController";
 import { QuotationRequestController } from "../controllers/main/QuotaionRequestController";
+import { QuotationController } from "../controllers/main/QuotationController";
 
 export const mainRouter = express.Router();
 /*
@@ -496,6 +497,56 @@ mainRouter.route("/quotationRequests/:quotationRequestId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
             .then(() => QuotationRequestController.deleteOne(parseInt(req.params.quotationRequestId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//QUOTATIONS
+mainRouter.route("/quotations")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
+            .then(() => {
+                //Add userId to record the created user
+                req.body.bindingObject.userId.value = req.session.userId;
+                return QuotationController.createOne(req.body.bindingObject);
+            }).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
+            .then(() => QuotationController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/quotations/:quotationId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
+            .then(() => QuotationController.getOne(parseInt(req.params.quotationId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
+            .then(() => QuotationController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
+            .then(() => QuotationController.deleteOne(parseInt(req.params.quotationId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

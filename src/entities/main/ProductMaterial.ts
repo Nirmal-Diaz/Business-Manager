@@ -4,8 +4,8 @@ import { Product } from "./Product";
 
 @Index("fk_material_has_product_product1_idx", ["productId"], {})
 @Index("fk_material_has_product_material1_idx", ["materialId"], {})
-@Entity("preoduct_material", { schema: "business_manager" })
-export class PreoductMaterial {
+@Entity("product_material", { schema: "business_manager" })
+export class ProductMaterial {
   @Column("int", { primary: true, name: "material_id" })
   materialId: number;
 
@@ -15,14 +15,14 @@ export class PreoductMaterial {
   @Column("decimal", { name: "material_amount", precision: 10, scale: 0 })
   materialAmount: string;
 
-  @ManyToOne(() => Material, (material) => material.preoductMaterials, {
+  @ManyToOne(() => Material, (material) => material.productMaterials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
   material: Material;
 
-  @ManyToOne(() => Product, (product) => product.preoductMaterials, {
+  @ManyToOne(() => Product, (product) => product.productMaterials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })

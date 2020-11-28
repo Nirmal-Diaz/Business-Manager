@@ -14,7 +14,7 @@ import { MaterialStatus } from "./MaterialStatus";
 import { UnitType } from "./UnitType";
 import { User } from "./User";
 import { MaterialInventory } from "./MaterialInventory";
-import { PreoductMaterial } from "./PreoductMaterial";
+import { ProductMaterial } from "./ProductMaterial";
 import { QuotationRequest } from "./QuotationRequest";
 import { Supplier } from "./Supplier";
 
@@ -86,10 +86,10 @@ export class Material {
   materialInventory: MaterialInventory;
 
   @OneToMany(
-    () => PreoductMaterial,
-    (preoductMaterial) => preoductMaterial.material
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.material
   )
-  preoductMaterials: PreoductMaterial[];
+  productMaterials: ProductMaterial[];
 
   @OneToMany(
     () => QuotationRequest,
