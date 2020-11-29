@@ -68,11 +68,11 @@
                 }
 
                 if (submissionMethod === "PUT") {
-                    //Disable the quotation request status fields
+                    //Disable the quotation request status field
                     this.form.getView().querySelectorAll(".formFieldContainer")[4].classList.add("disabled");
 
                     //Set the current date as value for "addedDate"
-                    document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
+                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
 
                     //Hide the supplier dropdown
                     document.getElementById("supplierId").parentElement.style.display = "none";
@@ -137,7 +137,7 @@
 
             initUpdateForm(selectedCardDivisionSectorItem) {
                 const titleContainer = document.querySelector(".formTitleContainer>.titleContainer");
-                titleContainer.children[0].textContent = "Update";
+                titleContainer.children[0].textContent = "View";
                 titleContainer.children[1].textContent = "Quotation Request";
 
                 const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;

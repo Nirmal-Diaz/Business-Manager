@@ -53,7 +53,7 @@
 
             async initInputs() {
                 //Set the current date as value for "addedDate"
-                document.getElementById("addedDate").value = new Date().toISOString().slice(0, 10);
+                this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
 
                 //Fill dropDownInputs
                 const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
