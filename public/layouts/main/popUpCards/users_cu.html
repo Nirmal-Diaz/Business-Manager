@@ -57,7 +57,7 @@
                 //Set the current date as value for "addedDate"
                 this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
                 
-                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
+                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select, .inputContainer.text > datalist");
                 for (const dropDownInput of dropDownInputs) {
                     await FormComponent.refreshDropDownInput(dropDownInput);
                 }
@@ -134,7 +134,11 @@
                         <li>Every user has a corresponding employee</li>
                     </ul>
                     <div class="inputContainer text">
-                        <input id="employeeCode" type="text" placeholder="eg: PCB1125">
+                        <input id="employeeCode" list="employeeCodeList" type="text" placeholder="eg: EMP2020102">
+                        <datalist id="employeeCodeList"  data-request-url="/employees?keyword=" data-text-content-field="fullName"
+                        data-value-field="code">
+    
+                        </datalist>
                     </div>
                 </div>
                 
