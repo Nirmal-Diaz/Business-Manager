@@ -40,7 +40,7 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All customers", "Select an item to view, update or delete");
+                            this.searchItems("", "All quotation requests", "Select an item to view, update or delete");
                         } else {
                             this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
                         }
@@ -85,7 +85,7 @@
                     }
                 });
 
-                this.searchItems("", "Quotation Requests", "Select an item to view, update or delete");
+                this.searchItems("", "Quotation requests", "Select an item to view, update or delete");
             }
 
             updateItem(selectedCardDivisionSectorItem) {

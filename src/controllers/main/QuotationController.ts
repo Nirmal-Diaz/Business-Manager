@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { Quotation as Entity } from "../../entities/main/Quotation";
 import { QuotationRepository as EntityRepository } from "../../repositories/main/QuotationRepository";
+import { QuotationRequest } from "../../entities/main/QuotationRequest";
 
 export class QuotationController {
     private static entityName: string = "quotation";
@@ -17,7 +18,18 @@ export class QuotationController {
         //NOTE: Quotation code must be equal to the referring quotation request code except the letter code
         serverObject.code = serverObject.quotationRequestCode.replace("QRQ", "QUO");
 
-        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+        return getRepository(Entity).save(serverObject as Entity).then(async item => {
+            //Update the relevant quotation request to "Accepted" state
+            const quotationRequest = await getRepository(QuotationRequest).findOne({
+                where: {
+                    code: item.quotationRequestCode
+                }
+            });
+
+            quotationRequest.quotationRequestStatusId = 2;
+
+            return getRepository(QuotationRequest).save(quotationRequest as QuotationRequest);
+        }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
