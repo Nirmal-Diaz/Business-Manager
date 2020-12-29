@@ -2,13 +2,13 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^IMQ[0-9]{7}$",
+        "pattern": "^MIQ[0-9]{7}$",
         "value": null
     },
     "requestCode": {
         "inputQuery": "#requestCode",
         "inputClass": "text",
-        "pattern": "^IMR[0-9]{7}$",
+        "pattern": "^MIR[0-9]{7}$",
         "value": null
     },
     "validFrom": {

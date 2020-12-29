@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { MaterialImportQuotation as Entity } from "../../entities/main/MaterialImportQuotation";
 import { MaterialImportQuotationRepository as EntityRepository } from "../../repositories/main/MaterialImportQuotationRepository";
+import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
 
 export class MaterialImportQuotationController {
     private static entityName: string = "material import quotation";
@@ -15,19 +16,19 @@ export class MaterialImportQuotationController {
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //NOTE: Quotation code must be equal to the referring quotation request code except the letter code
-        serverObject.code = serverObject.quotationRequestCode.replace("MIR", "MIQ");
+        serverObject.code = serverObject.requestCode.replace("MIR", "MIQ");
 
         return getRepository(Entity).save(serverObject as Entity).then(async item => {
             //Update the relevant quotation request to "Accepted" state
-            const materialImportQuotation = await getRepository(Entity).findOne({
+            const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
                 where: {
                     code: item.requestCode
                 }
             });
 
-            materialImportQuotation.quotationStatusId = 2;
+            materialImportRequest.requestStatusId = 2;
 
-            return getRepository(Entity).save(materialImportQuotation as Entity);
+            return getRepository(MaterialImportRequest).save(materialImportRequest);
         }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });

@@ -133,6 +133,9 @@
 
             initCreateForm() {
                 this.form.init("/registries/materialImportRequest.json", "/materialImportRequests", "PUT");
+
+                //Remove print button
+                document.getElementById("printButton").remove();
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
