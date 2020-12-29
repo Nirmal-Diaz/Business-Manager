@@ -4,10 +4,12 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { CustomerStatus } from "./CustomerStatus";
 import { User } from "./User";
+import { ProductExportRequest } from "./ProductExportRequest";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_customer_customer_status1_idx", ["customerStatusId"], {})
@@ -79,4 +81,10 @@ export class Customer {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @OneToMany(
+    () => ProductExportRequest,
+    (productExportRequest) => productExportRequest.customer
+  )
+  productExportRequests: ProductExportRequest[];
 }

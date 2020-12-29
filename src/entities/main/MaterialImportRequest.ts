@@ -7,23 +7,21 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Quotation } from "./Quotation";
+import { MaterialImportQuotation } from "./MaterialImportQuotation";
 import { Material } from "./Material";
-import { QuotationRequestStatus } from "./QuotationRequestStatus";
+import { RequestStatus } from "./RequestStatus";
 import { Supplier } from "./Supplier";
-import { User } from "./User";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_quotation_request_supplier1_idx", ["supplierId"], {})
 @Index("fk_quotation_request_material1_idx", ["materialId"], {})
-@Index("fk_quotation_request_user1_idx", ["userId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
-  ["quotationRequestStatusId"],
+  ["requestStatusId"],
   {}
 )
-@Entity("quotation_request", { schema: "business_manager" })
-export class QuotationRequest {
+@Entity("material_import_request", { schema: "business_manager" })
+export class MaterialImportRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
@@ -33,8 +31,8 @@ export class QuotationRequest {
   @Column("date", { name: "valid_till" })
   validTill: string;
 
-  @Column("int", { name: "quotation_request_status_id" })
-  quotationRequestStatusId: number;
+  @Column("int", { name: "request_status_id" })
+  requestStatusId: number;
 
   @Column("int", { name: "supplier_id" })
   supplierId: number;
@@ -48,13 +46,13 @@ export class QuotationRequest {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @Column("int", { name: "user_id" })
-  userId: number;
+  @OneToOne(
+    () => MaterialImportQuotation,
+    (materialImportQuotation) => materialImportQuotation.requestCode2
+  )
+  materialImportQuotation: MaterialImportQuotation;
 
-  @OneToOne(() => Quotation, (quotation) => quotation.quotationRequestCode2)
-  quotation: Quotation;
-
-  @ManyToOne(() => Material, (material) => material.quotationRequests, {
+  @ManyToOne(() => Material, (material) => material.materialImportRequests, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
@@ -62,26 +60,17 @@ export class QuotationRequest {
   material: Material;
 
   @ManyToOne(
-    () => QuotationRequestStatus,
-    (quotationRequestStatus) => quotationRequestStatus.quotationRequests,
+    () => RequestStatus,
+    (requestStatus) => requestStatus.materialImportRequests,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([
-    { name: "quotation_request_status_id", referencedColumnName: "id" },
-  ])
-  quotationRequestStatus: QuotationRequestStatus;
+  @JoinColumn([{ name: "request_status_id", referencedColumnName: "id" }])
+  requestStatus: RequestStatus;
 
-  @ManyToOne(() => Supplier, (supplier) => supplier.quotationRequests, {
+  @ManyToOne(() => Supplier, (supplier) => supplier.materialImportRequests, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "supplier_id", referencedColumnName: "id" }])
   supplier: Supplier;
-
-  @ManyToOne(() => User, (user) => user.quotationRequests, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
 }

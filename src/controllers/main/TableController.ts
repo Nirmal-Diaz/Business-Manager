@@ -11,9 +11,8 @@ import { SupplierStatus } from "../../entities/main/SupplierStatus";
 import { MaterialStatus } from "../../entities/main/MaterialStatus";
 import { UnitType } from "../../entities/main/UnitType";
 import { ProductStatus } from "../../entities/main/ProductStatus";
-import { ProductPackageStatus } from "../../entities/main/ProductPackageStatus";
-import { QuotationRequestStatus } from "../../entities/main/QuotationRequestStatus";
 import { QuotationStatus } from "../../entities/main/QuotationStatus";
+import { RequestStatus } from "../../entities/main/RequestStatus";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -28,9 +27,8 @@ export class TableController {
             supplierStatus: SupplierStatus,
             materialStatus: MaterialStatus,
             productStatus: ProductStatus,
-            productPackageStatus: ProductPackageStatus,
             unitType: UnitType,
-            quotationRequestStatus: QuotationRequestStatus,
+            requestStatus: RequestStatus,
             quotationStatus: QuotationStatus
         };
 

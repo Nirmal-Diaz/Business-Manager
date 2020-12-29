@@ -2,22 +2,37 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { ProductPackage as Entity } from "../../entities/main/ProductPackage";
-import { ProductPackageRepository as EntityRepository } from "../../repositories/main/ProductPackageRepository";
+import { MaterialImportRequest as Entity } from "../../entities/main/MaterialImportRequest";
+import { MaterialImportRequestRepository as EntityRepository } from "../../repositories/main/MaterialImportRequestRepository";
 
-export class ProductPackageController {
-    private static entityName: string = "product package";
-    private static entityJSONName: string = "productPackage";
+export class MaterialImportRequestController {
+    private static entityName: string = "material import request";
+    private static entityJSONName: string = "materialImportRequest";
 
-    static async createOne(clientBindingObject) {
+    static async createMany(clientBindingObject, selectedSupplierIds) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //Update the code field with next possible value
-        serverObject.code = (await EntityRepository.generateNextCode()).value;
+        //NOTE: Every quotation request must initially be at "Pending" state
+        serverObject.quotationRequestStatusId = "1";
 
-        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+        //Clone the serverObject and change the code and supplierId fields for each selectedSupplierId
+        const clonedServerObjects = [];
+
+        const stringifiedServerObject = JSON.stringify(serverObject);
+        let nextCode: string = (await EntityRepository.generateNextCode()).value;
+        for (let i = 0; i < selectedSupplierIds.length; i++) {
+            clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
+            clonedServerObjects[i].supplierId = selectedSupplierIds[i];
+
+            //Update the code field with next possible value
+            clonedServerObjects[i].code = nextCode;
+
+            nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
+        }
+
+        return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
@@ -27,7 +42,7 @@ export class ProductPackageController {
             where: {
                 id: id
             },
-            relations: ["productPackageStatus", "product"]
+            relations: ["requestStatus", "supplier", "material"]
         });
 
         if (item) {
@@ -47,7 +62,8 @@ export class ProductPackageController {
         }
     }
 
-    static async updateOne(clientBindingObject) {
+    //WARNING: Quotation request updates are handled internally
+    private static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });

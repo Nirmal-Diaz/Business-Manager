@@ -23,8 +23,8 @@
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
-    "quotationRequestStatusId": {
-        "inputQuery": "#quotationRequestStatusId",
+    "requestStatusId": {
+        "inputQuery": "#requestStatusId",
         "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": "1"
@@ -39,12 +39,6 @@
         "inputQuery": "#addedDate",
         "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
-        "value": null
-    },
-    "userId": {
-        "inputQuery": null,
-        "inputClass": null,
-        "pattern": "^[1-9]{1,}$",
         "value": null
     }
 }

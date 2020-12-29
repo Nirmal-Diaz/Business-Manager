@@ -11,9 +11,6 @@ import {
 import { Customer } from "./Customer";
 import { Material } from "./Material";
 import { Product } from "./Product";
-import { ProductPackage } from "./ProductPackage";
-import { Quotation } from "./Quotation";
-import { QuotationRequest } from "./QuotationRequest";
 import { Supplier } from "./Supplier";
 import { Employee } from "./Employee";
 import { Role } from "./Role";
@@ -50,18 +47,6 @@ export class User {
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];
-
-  @OneToMany(() => ProductPackage, (productPackage) => productPackage.user)
-  productPackages: ProductPackage[];
-
-  @OneToMany(() => Quotation, (quotation) => quotation.user)
-  quotations: Quotation[];
-
-  @OneToMany(
-    () => QuotationRequest,
-    (quotationRequest) => quotationRequest.user
-  )
-  quotationRequests: QuotationRequest[];
 
   @OneToMany(() => Supplier, (supplier) => supplier.user)
   suppliers: Supplier[];

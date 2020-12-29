@@ -10,8 +10,9 @@ import {
 import { UnitType } from "./UnitType";
 import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
+import { ProductBatch } from "./ProductBatch";
+import { ProductExportRequest } from "./ProductExportRequest";
 import { ProductMaterial } from "./ProductMaterial";
-import { ProductPackage } from "./ProductPackage";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
@@ -22,14 +23,17 @@ export class Product {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
+  @Column("blob", { name: "photo" })
+  photo: Buffer;
+
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "unit_price_factor", precision: 10, scale: 0 })
-  unitPriceFactor: string;
+  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  unitPrice: string;
 
   @Column("int", { name: "viable_period" })
   viablePeriod: number;
@@ -70,12 +74,18 @@ export class Product {
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
 
+  @OneToMany(() => ProductBatch, (productBatch) => productBatch.product)
+  productBatches: ProductBatch[];
+
+  @OneToMany(
+    () => ProductExportRequest,
+    (productExportRequest) => productExportRequest.product
+  )
+  productExportRequests: ProductExportRequest[];
+
   @OneToMany(
     () => ProductMaterial,
     (productMaterial) => productMaterial.product
   )
   productMaterials: ProductMaterial[];
-
-  @OneToMany(() => ProductPackage, (productPackage) => productPackage.product)
-  productPackages: ProductPackage[];
 }

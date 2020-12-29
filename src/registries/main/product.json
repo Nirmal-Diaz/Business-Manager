@@ -5,14 +5,22 @@
         "pattern": "^PRO[0-9]{7}$",
         "value": null
     },
+    "photo": {
+        "inputQuery": "#photo",
+        "inputClass": "image",
+        "pattern": "62000;image/png,image/jpg",
+        "size": null,
+        "type": "image/png",
+        "value": null
+    },
     "name": {
         "inputQuery": "#name",
         "inputClass": "text",
         "pattern": "^[\\w\\s]{3,150}$",
         "value": null
     },
-    "unitPriceFactor": {
-        "inputQuery": "#unitPriceFactor",
+    "unitPrice": {
+        "inputQuery": "#unitPrice",
         "inputClass": "text",
         "pattern": "^1[.]\\d{1,}$",
         "value": null

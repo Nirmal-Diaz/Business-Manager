@@ -2,37 +2,33 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { QuotationRequest as Entity } from "../../entities/main/QuotationRequest";
-import { QuotationRequestRepository as EntityRepository } from "../../repositories/main/QuotationRequestRepository";
+import { MaterialImportQuotation as Entity } from "../../entities/main/MaterialImportQuotation";
+import { MaterialImportQuotationRepository as EntityRepository } from "../../repositories/main/MaterialImportQuotationRepository";
 
-export class QuotationRequestController {
-    private static entityName: string = "quotation request";
-    private static entityJSONName: string = "quotationRequest";
+export class MaterialImportQuotationController {
+    private static entityName: string = "material import quotation";
+    private static entityJSONName: string = "materialImportQuotation";
 
-    static async createMany(clientBindingObject, selectedSupplierIds) {
+    static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //NOTE: Every quotation request must initially be at "Pending" state
-        serverObject.quotationRequestStatusId = "1";
+        //NOTE: Quotation code must be equal to the referring quotation request code except the letter code
+        serverObject.code = serverObject.quotationRequestCode.replace("MIR", "MIQ");
 
-        //Clone the serverObject and change the code and supplierId fields for each selectedSupplierId
-        const clonedServerObjects = [];
+        return getRepository(Entity).save(serverObject as Entity).then(async item => {
+            //Update the relevant quotation request to "Accepted" state
+            const materialImportQuotation = await getRepository(Entity).findOne({
+                where: {
+                    code: item.requestCode
+                }
+            });
 
-        const stringifiedServerObject = JSON.stringify(serverObject);
-        let nextCode: string = (await EntityRepository.generateNextCode()).value;
-        for (let i = 0; i < selectedSupplierIds.length; i++) {
-            clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
-            clonedServerObjects[i].supplierId = selectedSupplierIds[i];
+            materialImportQuotation.quotationStatusId = 2;
 
-            //Update the code field with next possible value
-            clonedServerObjects[i].code = nextCode;
-
-            nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
-        }
-
-        return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
+            return getRepository(Entity).save(materialImportQuotation as Entity);
+        }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
@@ -42,7 +38,7 @@ export class QuotationRequestController {
             where: {
                 id: id
             },
-            relations: ["quotationRequestStatus", "supplier", "material"]
+            relations: ["quotationStatus"]
         });
 
         if (item) {
@@ -62,8 +58,7 @@ export class QuotationRequestController {
         }
     }
 
-    //WARNING: Quotation request updates are handled internally
-    private static async updateOne(clientBindingObject) {
+    static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });

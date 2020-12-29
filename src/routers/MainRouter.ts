@@ -19,9 +19,8 @@ import { SupplierController } from "../controllers/main/SupplierController";
 import { CustomerController } from "../controllers/main/CustomerController";
 import { MaterialController } from "../controllers/main/MaterialController";
 import { ProductController } from "../controllers/main/ProductController";
-import { ProductPackageController } from "../controllers/main/ProductPackageController";
-import { QuotationRequestController } from "../controllers/main/QuotaionRequestController";
-import { QuotationController } from "../controllers/main/QuotationController";
+import { MaterialImportRequestController } from "../controllers/main/MaterialImportRequestController";
+import { MaterialImportQuotationController } from "../controllers/main/MaterialImportQuotationController";
 
 export const mainRouter = express.Router();
 /*
@@ -412,49 +411,37 @@ mainRouter.route("/products/:productId")
             });
     });
 
-//PRODUCT PACKAGES
-mainRouter.route("/productPackages")
+//MATERIA IMPORT REQUESTS
+mainRouter.route("/materialImportRequests")
     .put(express.json({limit: "500kB"}), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
-            .then(() => {
-                //Add userId to record the created user
-                req.body.bindingObject.userId.value = req.session.userId;
-                return ProductPackageController.createOne(req.body.bindingObject);
-            }).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.createMany(req.body.bindingObject, req.body.additionalData.selectedSupplierIds)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     })
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
-            .then(() => ProductPackageController.getMany(req.query.keyword)).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.getMany(req.query.keyword)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     });
 
-mainRouter.route("/productPackages/:productPackageId")
+mainRouter.route("/materialImportRequests/:materialImportRequestId")
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
-            .then(() => ProductPackageController.getOne(parseInt(req.params.productPackageId))).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
-            .then(() => ProductPackageController.updateOne(req.body.bindingObject)).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.getOne(parseInt(req.params.materialImportRequestId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     })
     .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product packages", req.method)
-            .then(() => ProductPackageController.deleteOne(parseInt(req.params.productPackageId)))
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.deleteOne(parseInt(req.params.materialImportRequestId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
@@ -462,91 +449,45 @@ mainRouter.route("/productPackages/:productPackageId")
             });
     });
 
-//QUOTATION REQUESTS
-mainRouter.route("/quotationRequests")
+//MATERIAL IMPORT QUOTATIONS
+mainRouter.route("/materialImportQuotations")
     .put(express.json({limit: "500kB"}), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
-            .then(() => {
-                //Add userId to record the created user
-                req.body.bindingObject.userId.value = req.session.userId;
-                return QuotationRequestController.createMany(req.body.bindingObject, req.body.additionalData.selectedSupplierIds);
-            }).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     })
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
-            .then(() => QuotationRequestController.getMany(req.query.keyword)).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.getMany(req.query.keyword)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     });
 
-mainRouter.route("/quotationRequests/:quotationRequestId")
+mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
     .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
-            .then(() => QuotationRequestController.getOne(parseInt(req.params.quotationRequestId))).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotation requests", req.method)
-            .then(() => QuotationRequestController.deleteOne(parseInt(req.params.quotationRequestId)))
-            .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-//QUOTATIONS
-mainRouter.route("/quotations")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
-            .then(() => {
-                //Add userId to record the created user
-                req.body.bindingObject.userId.value = req.session.userId;
-                return QuotationController.createOne(req.body.bindingObject);
-            }).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
-            .then(() => QuotationController.getMany(req.query.keyword)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/quotations/:quotationId")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
-            .then(() => QuotationController.getOne(parseInt(req.params.quotationId))).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.getOne(parseInt(req.params.materialImportQuotationId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     })
     .post(express.json({limit: "500kB"}), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
-            .then(() => QuotationController.updateOne(req.body.bindingObject)).then(data => {
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
             });
     })
     .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "quotations", req.method)
-            .then(() => QuotationController.deleteOne(parseInt(req.params.quotationId)))
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.deleteOne(parseInt(req.params.materialImportQuotationId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {

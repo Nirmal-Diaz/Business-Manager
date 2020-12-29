@@ -5,8 +5,8 @@
         "pattern": "^QUO[0-9]{7}$",
         "value": null
     },
-    "quotationRequestCode": {
-        "inputQuery": "#quotationRequestCode",
+    "requestCode": {
+        "inputQuery": "#requestCode",
         "inputClass": "text",
         "pattern": "^QRQ[0-9]{7}$",
         "value": null
@@ -57,12 +57,6 @@
         "inputQuery": "#addedDate",
         "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
-        "value": null
-    },
-    "userId": {
-        "inputQuery": null,
-        "inputClass": null,
-        "pattern": "^[1-9]{1,}$",
         "value": null
     }
 }

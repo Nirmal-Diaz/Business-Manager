@@ -7,15 +7,14 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { MaterialStatus } from "./MaterialStatus";
 import { UnitType } from "./UnitType";
 import { User } from "./User";
-import { MaterialInventory } from "./MaterialInventory";
+import { MaterialBatch } from "./MaterialBatch";
+import { MaterialImportRequest } from "./MaterialImportRequest";
 import { ProductMaterial } from "./ProductMaterial";
-import { QuotationRequest } from "./QuotationRequest";
 import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -38,9 +37,6 @@ export class Material {
 
   @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
   unitPrice: string;
-
-  @Column("int", { name: "viable_period" })
-  viablePeriod: number;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
@@ -79,23 +75,20 @@ export class Material {
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
 
-  @OneToOne(
-    () => MaterialInventory,
-    (materialInventory) => materialInventory.material
+  @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.material)
+  materialBatches: MaterialBatch[];
+
+  @OneToMany(
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.material
   )
-  materialInventory: MaterialInventory;
+  materialImportRequests: MaterialImportRequest[];
 
   @OneToMany(
     () => ProductMaterial,
     (productMaterial) => productMaterial.material
   )
   productMaterials: ProductMaterial[];
-
-  @OneToMany(
-    () => QuotationRequest,
-    (quotationRequest) => quotationRequest.material
-  )
-  quotationRequests: QuotationRequest[];
 
   @ManyToMany(() => Supplier, (supplier) => supplier.materials)
   @JoinTable({

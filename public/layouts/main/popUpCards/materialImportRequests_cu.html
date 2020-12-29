@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Material Import Request</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+
+    <script type="module">
+        //@ts-check
+        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
+        import { Form } from "/scripts/main/Form.js";
+        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
+
+        //Add onload to window for initializing popUpCardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.popUpCardInterface = new PopUpCardInterface();
+        });
+
+        class PopUpCardInterface extends BasePopUpCardInterface {
+            form = new Form(document.querySelector("form"));
+            selectedSupplierIds = new Set();
+
+            templateContainerFragment = document.getElementById("templateContainer").content;
+
+            constructor() {
+                super();
+
+                document.getElementById("saveButton").addEventListener("click", () => {
+                    let additionalData = {};
+                    if (this.form.getSubmissionMethod() === "PUT") {
+                        //Add additionalData to send selectedSupplierIds
+                        additionalData.selectedSupplierIds = Array.from(this.selectedSupplierIds);
+                    }
+
+                    this.form.submit(additionalData).then(submission => {
+                        if (submission.status) {
+                            //Refresh (not reload) the parentCardInterface
+                            if (this.form.getSubmissionMethod() === "PUT") {
+                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got new quotation requests", "Double tap to view and update");
+                            } else if (this.form.getSubmissionMethod() === "POST") {
+                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a quotation request recently", "Double tap to view");
+                            }
+
+                            this.popUpCardObject.close();
+                        } else {
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                        }
+                    });
+                });
+
+                document.getElementById("resetButton").addEventListener("click", () => {
+                    this.form.bindingObject = this.form.referenceBindingObject;
+                });
+
+                document.getElementById("printButton").addEventListener("click", () => {
+                    print();
+                });
+            }
+
+            async initInputs(submissionMethod) {
+                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
+                for (const dropDownInput of dropDownInputs) {
+                    await FormComponent.refreshDropDownInput(dropDownInput);
+                }
+
+                if (submissionMethod === "PUT") {
+                    //Disable the quotation request status field
+                    this.form.getView().querySelectorAll(".formFieldContainer")[4].classList.add("disabled");
+
+                    //Set the current date as value for "addedDate"
+                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
+
+                    //Hide the supplier dropdown
+                    document.getElementById("supplierId").parentElement.style.display = "none";
+
+                    //Add onchange to material dropDown for loading the suppliers
+                    const materialDropDownInput = document.getElementById("materialId");
+                    materialDropDownInput.addEventListener("change", () => {
+                        fetch(`/materials/${materialDropDownInput.value}/suppliers`)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    //Create a check input for each supplier
+                                    const supplierDropDown = this.form.getView().querySelector("#supplierId");
+                                    const formFieldContainer = this.form.getView().querySelector(".inputGroup");
+                                    formFieldContainer.innerHTML = "";
+                                    const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
+                                    for (const supplier of response.data) {
+                                        const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
+                                        checkInputContainer.children[1].textContent = supplier.businessName;
+                                        checkInputContainer.dataset.supplierId = supplier.id;
+                                        formFieldContainer.appendChild(checkInputContainer);
+
+                                        checkInputContainer.children[0].addEventListener("change", () => {
+                                            //Add or remove the supplier id from the selectedSupplierIds according to the selection
+                                            if (checkInputContainer.children[0].checked) {
+                                                this.selectedSupplierIds.add(checkInputContainer.dataset.supplierId);
+                                            } else {
+                                                this.selectedSupplierIds.delete(checkInputContainer.dataset.supplierId);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            });
+                    });
+
+                    //Dispatch the change event on the materialDropDownInput for selecting the first material
+                    const onChangeEvent = new Event("change");
+                    materialDropDownInput.dispatchEvent(onChangeEvent);
+                } else if (submissionMethod === "POST") {
+                    //Remove the save and reset buttons
+                    document.getElementById("saveButton").style.display = "none";
+                    document.getElementById("resetButton").style.display = "none";
+
+                    //Make all form fields disabled
+                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
+                    for (const formFieldContainer of formFieldContainers) {
+                        formFieldContainer.classList.add("disabled");
+                    }
+
+                    //Hide the multi supplier selection
+                    document.getElementById("supplierId").parentElement.nextElementSibling.style.display = "none";
+                }
+
+                return true;
+            }
+
+            initCreateForm() {
+                this.form.init("/registries/materialImportRequest.json", "/materialImportRequests", "PUT");
+            }
+
+            initUpdateForm(selectedCardDivisionSectorItem) {
+                const titleContainer = document.querySelector(".formTitleContainer>.titleContainer");
+                titleContainer.children[0].textContent = "View";
+                titleContainer.children[1].textContent = "Material Import Request";
+
+                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
+                this.form.init("/registries/materialImportRequest.json", `/materialImportRequests/${selectedItemId}`, "POST").then((form) => {
+                    fetch(`/materialImportRequests/${selectedItemId}`)
+                        .then(response => response.json())
+                        .then(response => {
+                            if (response.status) {
+                                this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                                //Update the inputs according to the binding object
+                                this.form.updateInputs(this.form.getBindingObject());
+                            } else {
+                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                            }
+                        })
+                        .catch(error => {
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required quotation request from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                        });
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="popUpDivision">
+        <!-- formTitleContainer -->
+        <div class="formTitleContainer">
+            <div class="titleContainer">
+                <div class="titleDescription">Add</div>
+                <div class="title">Material Import Request</div>
+            </div>
+        </div>
+
+        <!-- formsContainer -->
+        <div class="formsContainer">
+            <form>
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
+                        <h1 class="title">Request code</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="code" type="text" placeholder="eg: MIR2020019" value="MIR0000000" />
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Valid till</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="validTill" type="text" placeholder="eg: 2020-04-28" />
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Material</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="materialId" data-request-url="/materials?keyword=" data-text-content-field="name"
+                            data-value-field="id">
+
+                        </select>
+                        <button title="Reload values">&#x1F5D8;</button>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer wide">
+                    <div class="titleContainer">
+                        <h1 class="title">Supplier</h1>
+                    </div>
+
+                    <!-- NOTE: This element is needed only for the update from -->
+                    <div class="inputContainer dropDown">
+                        <select id="supplierId" data-request-url="/suppliers?keyword="
+                            data-text-content-field="businessName" data-value-field="id">
+
+                        </select>
+                        <button title="Reload values">&#x1F5D8;</button>
+                    </div>
+
+                    <!-- NOTE: This element is needed only for the create from -->
+                    <div class="inputGroup">
+
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Request status</h1>
+                    </div>
+                    <div class="inputContainer dropDown">
+                        <select id="requestStatusId" data-request-url="/tables/requestStatus"
+                            data-text-content-field="name" data-value-field="id">
+
+                        </select>
+                        <button title="Reload values">&#x1F5D8;</button>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
+                        <h1 class="title">Date added</h1>
+                    </div>
+                    <div class="inputContainer text">
+                        <input id="addedDate" type="text" placeholder="eg: 2020-01-01">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer wide">
+                    <div class="titleContainer">
+                        <h1 class="title">Description</h1>
+                    </div>
+                    <div class="inputContainer textarea">
+                        <textarea id="description"></textarea>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- formControlsContainer -->
+        <div class="formControlsContainer">
+            <button id="saveButton" class="buttonText link">SAVE</button>
+            <button id="printButton" class="buttonText link">PRINT</button>
+            <button id="resetButton" class="buttonText link">RESET</button>
+            <button class="buttonText link closeButton">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- checkInputContainer template -->
+    <template id="templateContainer">
+        <div class="inputContainer check" data-supplier-id="0">
+            <input type="checkbox" />
+            <label>Supplier</label>
+        </div>
+    </template>
+</body>
+
+</html>

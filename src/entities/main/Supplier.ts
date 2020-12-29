@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { QuotationRequest } from "./QuotationRequest";
+import { MaterialImportRequest } from "./MaterialImportRequest";
 import { SupplierStatus } from "./SupplierStatus";
 import { User } from "./User";
 import { Material } from "./Material";
@@ -67,10 +67,10 @@ export class Supplier {
   addedDate: string;
 
   @OneToMany(
-    () => QuotationRequest,
-    (quotationRequest) => quotationRequest.supplier
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.supplier
   )
-  quotationRequests: QuotationRequest[];
+  materialImportRequests: MaterialImportRequest[];
 
   @ManyToOne(
     () => SupplierStatus,

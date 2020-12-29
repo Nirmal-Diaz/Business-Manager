@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany } from "typeorm";
-import { Quotation } from "./Quotation";
+import { MaterialImportQuotation } from "./MaterialImportQuotation";
+import { ProductExportQuotation } from "./ProductExportQuotation";
 
 @Entity("quotation_status", { schema: "business_manager" })
 export class QuotationStatus {
@@ -9,6 +10,15 @@ export class QuotationStatus {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @OneToMany(() => Quotation, (quotation) => quotation.quotationStatus)
-  quotations: Quotation[];
+  @OneToMany(
+    () => MaterialImportQuotation,
+    (materialImportQuotation) => materialImportQuotation.quotationStatus
+  )
+  materialImportQuotations: MaterialImportQuotation[];
+
+  @OneToMany(
+    () => ProductExportQuotation,
+    (productExportQuotation) => productExportQuotation.quotationStatus
+  )
+  productExportQuotations: ProductExportQuotation[];
 }
