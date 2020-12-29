@@ -39,9 +39,9 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All roles", "Select an item to view, update or delete");
+                            this.searchItems("", "Showing all items");
                         } else {
-                            this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
+                            this.searchItems(event.currentTarget.value, `Filtered by ${event.currentTarget.value}`);
                         }
                     }
                 });
@@ -84,7 +84,7 @@
                     }
                 });
 
-                this.searchItems("", "Roles", "Select an item to view, update or delete");
+                this.searchItems("", "Showing all items");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -98,7 +98,7 @@
             }
 
             //EVENT HANDLER METHODS
-            searchItems(keyword, titleText, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText) {
                 fetch(`/roles?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
@@ -106,7 +106,7 @@
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
-                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+                            const cardDivisionSector = CardComponent.createCardDivisionSector("Available Roles", titleDescriptionText);
                             for (const item of response.data) {
                                 const iconURL = `../../../images/main/icon_user_default.png`;
                                 //NOTE: Bounded method is immediately invoked

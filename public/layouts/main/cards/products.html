@@ -40,9 +40,9 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All products", "Select an item to view, update or delete");
+                            this.searchItems("", "Showing all items");
                         } else {
-                            this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
+                            this.searchItems(event.currentTarget.value, `Filtered by ${event.currentTarget.value}`);
                         }
                     }
                 });
@@ -85,7 +85,7 @@
                     }
                 });
 
-                this.searchItems("", "Products", "Select an item to view, update or delete");
+                this.searchItems("", "Showing all items");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -100,7 +100,7 @@
             }
 
             //EVENT HANDLER METHODS
-            searchItems(keyword, titleText, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText) {
                 fetch(`/products?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
@@ -108,14 +108,23 @@
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
-                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+
+                            const states = {};
+
                             for (const item of response.data) {
+                                if (!states.hasOwnProperty(item.productStatus.id)) {
+                                    states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
+                                }
+
                                 const iconURL = "/images/main/glyph_search.png";
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPriceFactor, item.unitType.name, item.productStatus.name])();
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                states[item.productStatus.id].appendChild(cardDivisionSectorItem);
                             }
-                            cardDivision.appendChild(cardDivisionSector);
+
+                            for (const state of Object.keys(states)) {
+                                cardDivision.appendChild(states[state]);
+                            }
                         } else {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
@@ -141,7 +150,7 @@
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_search.png" title="Search products"/>
+                <img src="/images/main/glyph_search.png" title="Search products" />
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>

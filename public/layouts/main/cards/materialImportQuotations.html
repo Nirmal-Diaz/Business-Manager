@@ -40,9 +40,9 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All quotations", "Select an item to view, update or delete");
+                            this.searchItems("", "Showing all items");
                         } else {
-                            this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
+                            this.searchItems(event.currentTarget.value, `Filtered by ${event.currentTarget.value}`);
                         }
                     }
                 });
@@ -85,7 +85,7 @@
                     }
                 });
 
-                this.searchItems("", "Quotations", "Select an item to view, update or delete");
+                this.searchItems("", "Showing all items");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -100,7 +100,7 @@
             }
 
             //EVENT HANDLER METHODS
-            searchItems(keyword, titleText, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText) {
                 fetch(`/materialImportQuotations?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
@@ -108,14 +108,23 @@
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
-                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
+
+                            const states = {};
+
                             for (const item of response.data) {
+                                if (!states.hasOwnProperty(item.quotationStatus.id)) {
+                                    states[item.quotationStatus.id] = CardComponent.createCardDivisionSector(item.quotationStatus.name + " " + document.title, titleDescriptionText);
+                                }
+
                                 const iconURL = "/images/main/glyph_search.png";
                                 const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.code, [])();
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                cardDivisionSector.appendChild(cardDivisionSectorItem);
+                                states[item.quotationStatus.id].appendChild(cardDivisionSectorItem);
                             }
-                            cardDivision.appendChild(cardDivisionSector);
+
+                            for (const state of Object.keys(states)) {
+                                cardDivision.appendChild(states[state]);
+                            }
                         } else {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }

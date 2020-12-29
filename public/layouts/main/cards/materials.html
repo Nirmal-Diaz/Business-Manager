@@ -40,9 +40,9 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All materials", "Select an item to view, update or delete");
+                            this.searchItems("", "Showing all items");
                         } else {
-                            this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
+                            this.searchItems(event.currentTarget.value, `FIltered by ${event.currentTarget.value}`);
                         }
                     }
                 });
@@ -96,7 +96,7 @@
                     }
                 });
 
-                this.searchItems("", "Materials", "Select an item to view, update or delete");
+                this.searchItems("", "Showing all items");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -111,24 +111,29 @@
             }
 
             //EVENT HANDLER METHODS
-            searchItems(keyword, titleText, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText) {
                 fetch(`/materials?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
-                        if (response.status) {
-                            this.selectedCardDivisionSectorItems.length = 0;
-                            const cardDivision = document.getElementById("mainCardDivision");
-                            cardDivision.innerHTML = "";
-                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            for (const item of response.data) {
-                                const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.materialStatus.name])();
-                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                cardDivisionSector.appendChild(cardDivisionSectorItem);
+                        this.selectedCardDivisionSectorItems.length = 0;
+                        const cardDivision = document.getElementById("mainCardDivision");
+                        cardDivision.innerHTML = "";
+
+                        const states = {};
+
+                        for (const item of response.data) {
+                            if (!states.hasOwnProperty(item.materialStatus.id)) {
+                                states[item.materialStatus.id] = CardComponent.createCardDivisionSector(item.materialStatus.name + " " + document.title, titleDescriptionText);
                             }
-                            cardDivision.appendChild(cardDivisionSector);
-                        } else {
-                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+
+                            const iconURL = "/images/main/glyph_search.png";
+                            const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.materialStatus.name])();
+                            cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                            states[item.materialStatus.id].appendChild(cardDivisionSectorItem);
+                        }
+
+                        for (const state of Object.keys(states)) {
+                            cardDivision.appendChild(states[state]);
                         }
                     })
                     .catch(error => {
@@ -152,7 +157,7 @@
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_search.png" title="Search materials"/>
+                <img src="/images/main/glyph_search.png" title="Search materials" />
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>
