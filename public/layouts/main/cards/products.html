@@ -116,8 +116,8 @@
                                     states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
                                 }
 
-                                const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPriceFactor, item.unitType.name, item.productStatus.name])();
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.productStatus.name])();
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 states[item.productStatus.id].appendChild(cardDivisionSectorItem);
                             }
