@@ -2,13 +2,13 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^QUO[0-9]{7}$",
+        "pattern": "^IMQ[0-9]{7}$",
         "value": null
     },
     "requestCode": {
         "inputQuery": "#requestCode",
         "inputClass": "text",
-        "pattern": "^QRQ[0-9]{7}$",
+        "pattern": "^IMR[0-9]{7}$",
         "value": null
     },
     "validFrom": {
@@ -38,7 +38,7 @@
     "unitPrice": {
         "inputQuery": "#unitPrice",
         "inputClass": "text",
-        "pattern": "^\\d{5,}[.]\\d{2}$",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
         "value": null
     },
     "quotationStatusId": {

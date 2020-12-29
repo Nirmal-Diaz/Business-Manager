@@ -22,7 +22,7 @@
     "unitPrice": {
         "inputQuery": "#unitPrice",
         "inputClass": "text",
-        "pattern": "^1[.]\\d{1,}$",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
         "value": null
     },
     "viablePeriod": {

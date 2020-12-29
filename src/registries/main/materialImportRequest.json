@@ -2,7 +2,7 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^QRQ[0-9]{7}$",
+        "pattern": "^IMR[0-9]{7}$",
         "value": null
     },
     "validTill": {
