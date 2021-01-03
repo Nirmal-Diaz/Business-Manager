@@ -115,25 +115,29 @@
                 fetch(`/materials?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
-                        this.selectedCardDivisionSectorItems.length = 0;
-                        const cardDivision = document.getElementById("mainCardDivision");
-                        cardDivision.innerHTML = "";
+                        if (response.status) {
+                            this.selectedCardDivisionSectorItems.length = 0;
+                            const cardDivision = document.getElementById("mainCardDivision");
+                            cardDivision.innerHTML = "";
 
-                        const states = {};
+                            const states = {};
 
-                        for (const item of response.data) {
-                            if (!states.hasOwnProperty(item.materialStatus.id)) {
-                                states[item.materialStatus.id] = CardComponent.createCardDivisionSector(item.materialStatus.name + " " + document.title, titleDescriptionText);
+                            for (const item of response.data) {
+                                if (!states.hasOwnProperty(item.materialStatus.id)) {
+                                    states[item.materialStatus.id] = CardComponent.createCardDivisionSector(item.materialStatus.name + " " + document.title, titleDescriptionText);
+                                }
+
+                                const iconURL = "/images/main/glyph_search.png";
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.materialStatus.name])();
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                states[item.materialStatus.id].appendChild(cardDivisionSectorItem);
                             }
 
-                            const iconURL = "/images/main/glyph_search.png";
-                            const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.materialStatus.name])();
-                            cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                            states[item.materialStatus.id].appendChild(cardDivisionSectorItem);
-                        }
-
-                        for (const state of Object.keys(states)) {
-                            cardDivision.appendChild(states[state]);
+                            for (const state of Object.keys(states)) {
+                                cardDivision.appendChild(states[state]);
+                            }
+                        } else {
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
                     })
                     .catch(error => {
@@ -145,7 +149,22 @@
 </head>
 
 <body>
-    <div id="mainCardDivision" class="cardDivision">
+    <div id="mainCardDivision" class="cardDivision" style="width: 80%;">
+    </div>
+
+    <div id="sideCardDivision" class="cardDivision" style="width: 20%; right:0;">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Titanium O</h1>
+                <div class="titleDescription">MAT1234567</div>
+            </div>
+        </div>
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <div class="titleDescription">Available amount</div>
+                <h1 class="title">256 liters</h1>
+            </div>
+        </div>
     </div>
 
     <!-- quickAccessArea -->
