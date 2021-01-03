@@ -40,9 +40,9 @@
                     if (event.key === 'Enter') {
                         ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
-                            this.searchItems("", "All employees", "Select an item to view, update or delete");
+                            this.searchItems("", "AShowing all items");
                         } else {
-                            this.searchItems(event.currentTarget.value, "Here's what we've found", `For ${event.currentTarget.value}`);
+                            this.searchItems(event.currentTarget.value, `Filtered by ${event.currentTarget.value}`);
                         }
                     }
                 });
@@ -85,7 +85,7 @@
                     }
                 });
 
-                this.searchItems("", "Employees", "Select an item to view, update or delete");
+                this.searchItems("", "Showing all items");
             }
 
             updateItem(selectedCardDivisionSectorItem) {
@@ -100,7 +100,7 @@
             }
 
             //EVENT HANDLER METHODS
-            searchItems(keyword, titleText, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText) {
                 fetch(`/employees?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
@@ -108,16 +108,26 @@
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
-                            const cardDivisionSector = CardComponent.createCardDivisionSector(titleText, titleDescriptionText);
-                            const table = CardComponent.createTable(["Code", "Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
-                            const tableBody = table.querySelector("tbody");
+
+                            const states = {};
+
                             for (const item of response.data) {
+                                if (!states.hasOwnProperty(item.employeeStatus.id)) {
+                                    states[item.employeeStatus.id] = CardComponent.createCardDivisionSector(item.employeeStatus.name + " " + document.title, titleDescriptionText);
+                                }
+                                
+                                const table = CardComponent.createTable(["Code", "Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
+                                const tableBody = table.querySelector("tbody");
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
+
+                                states[item.employeeStatus.id].appendChild(table);
                             }
-                            cardDivision.appendChild(cardDivisionSector);
-                            cardDivisionSector.appendChild(table);
+
+                            for (const state of Object.keys(states)) {
+                                cardDivision.appendChild(states[state]);
+                            }
                         } else {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
