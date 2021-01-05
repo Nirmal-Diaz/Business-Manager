@@ -4,7 +4,6 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -38,21 +37,11 @@ export class MaterialImportQuotation {
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
 
-  @Column("decimal", {
-    name: "available_amount",
-    nullable: true,
-    precision: 7,
-    scale: 2,
-  })
-  availableAmount: string | null;
+  @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
+  availableAmount: string;
 
-  @Column("decimal", {
-    name: "unit_price",
-    nullable: true,
-    precision: 7,
-    scale: 2,
-  })
-  unitPrice: string | null;
+  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  unitPrice: string;
 
   @Column("int", { name: "quotation_status_id" })
   quotationStatusId: number;
@@ -63,11 +52,11 @@ export class MaterialImportQuotation {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToMany(
+  @OneToOne(
     () => MaterialImportInvoice,
-    (materialImportInvoice) => materialImportInvoice.quotation
+    (materialImportInvoice) => materialImportInvoice.quotationCode2
   )
-  materialImportInvoices: MaterialImportInvoice[];
+  materialImportInvoice: MaterialImportInvoice;
 
   @OneToOne(
     () => MaterialImportRequest,

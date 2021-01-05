@@ -1,4 +1,11 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { BatchStatus } from "./BatchStatus";
 import { Material } from "./Material";
 
@@ -7,7 +14,7 @@ import { Material } from "./Material";
 @Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
 @Entity("material_batch", { schema: "business_manager" })
 export class MaterialBatch {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("int", { name: "material_id" })
@@ -28,7 +35,7 @@ export class MaterialBatch {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @Column("int", { primary: true, name: "batch_status_id" })
+  @Column("int", { name: "batch_status_id" })
   batchStatusId: number;
 
   @ManyToOne(() => BatchStatus, (batchStatus) => batchStatus.materialBatches, {

@@ -1,4 +1,11 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Product } from "./Product";
 import { BatchStatus } from "./BatchStatus";
 
@@ -7,7 +14,7 @@ import { BatchStatus } from "./BatchStatus";
 @Index("fk_product_batch_batch_status1_idx", ["batchStatusId"], {})
 @Entity("product_batch", { schema: "business_manager" })
 export class ProductBatch {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("int", { name: "product_id" })

@@ -21,6 +21,7 @@ import { MaterialController } from "../controllers/main/MaterialController";
 import { ProductController } from "../controllers/main/ProductController";
 import { MaterialImportRequestController } from "../controllers/main/MaterialImportRequestController";
 import { MaterialImportQuotationController } from "../controllers/main/MaterialImportQuotationController";
+import { MaterialBatchController } from "../controllers/main/MaterialBatchController";
 
 export const mainRouter = express.Router();
 /*
@@ -85,7 +86,7 @@ mainRouter.route("/sessions")
             res.locals.error = error; next();
         });
     })
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         SessionController.createOne(req.session, req.body.username, req.body.cellCombination).then(data => {
             res.locals.data = data; next();
         }).catch(error => {
@@ -139,7 +140,7 @@ mainRouter: Route Handlers Setup (Both login and permission validation)
 */
 //EMPLOYEES
 mainRouter.route("/employees")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "employees", req.method)
             .then(() => EmployeeController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -165,7 +166,7 @@ mainRouter.route("/employees/:employeeId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "employees", req.method)
             .then(() => EmployeeController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -185,7 +186,7 @@ mainRouter.route("/employees/:employeeId")
 
 //SUPPLIERS
 mainRouter.route("/suppliers")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
             .then(() => {
                 //Add userId to record the created user
@@ -215,7 +216,7 @@ mainRouter.route("/suppliers/:supplierId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
             .then(() => SupplierController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -235,7 +236,7 @@ mainRouter.route("/suppliers/:supplierId")
 
 //CUSTOMERS
 mainRouter.route("/customers")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "customers", req.method)
             .then(() => {
                 //Add userId to record the created user
@@ -265,7 +266,7 @@ mainRouter.route("/customers/:customerId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "customers", req.method)
             .then(() => CustomerController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -285,7 +286,7 @@ mainRouter.route("/customers/:customerId")
 
 //MATERIALS
 mainRouter.route("/materials")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "materials", req.method)
             .then(() => {
                 //Add userId to record the created user
@@ -315,7 +316,7 @@ mainRouter.route("/materials/:materialId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "materials", req.method)
             .then(() => MaterialController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -344,7 +345,7 @@ mainRouter.route("/materials/:materialId/suppliers")
     });
 
 mainRouter.route("/materials/@all/suppliers")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "materials", req.method)
             .then(() => MaterialController.setMaterialSupplierRelations(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -361,9 +362,55 @@ mainRouter.route("/materials/@all/suppliers")
             });
     });
 
+//MATERIAL BATCHES
+mainRouter.route("/materialBatches")
+    .put(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/materialBatches/:materialBatchId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.getOne(parseInt(req.params.materialBatchId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json(), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.deleteOne(parseInt(req.params.materialBatchId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //PRODUCTS
 mainRouter.route("/products")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "products", req.method)
             .then(() => {
                 //Add userId to record the created user
@@ -393,7 +440,7 @@ mainRouter.route("/products/:productId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "products", req.method)
             .then(() => ProductController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -413,7 +460,7 @@ mainRouter.route("/products/:productId")
 
 //MATERIA IMPORT REQUESTS
 mainRouter.route("/materialImportRequests")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
             .then(() => MaterialImportRequestController.createMany(req.body.bindingObject, req.body.additionalData.selectedSupplierIds)).then(data => {
                 res.locals.data = data; next();
@@ -451,7 +498,7 @@ mainRouter.route("/materialImportRequests/:materialImportRequestId")
 
 //MATERIAL IMPORT QUOTATIONS
 mainRouter.route("/materialImportQuotations")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
             .then(() => MaterialImportQuotationController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -477,7 +524,7 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
             .then(() => MaterialImportQuotationController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -497,7 +544,7 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
 
 //USERS
 mainRouter.route("/users")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => UserController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -529,7 +576,7 @@ mainRouter.route("/users/:userId")
             res.locals.error = error; next();
         });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "users", req.method)
             .then(() => UserController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -601,7 +648,7 @@ mainRouter.route("/users/:userId/pattern")
             res.locals.error = error; next();
         });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         (() => {
             if (req.params.userId === "@me") {
                 return UserPreferenceController.updatePattern(req.session.userId, req.body.cellCombination);
@@ -647,7 +694,7 @@ mainRouter.route("/users/:userId/userPreferences")
     });
 
 mainRouter.route("/roles")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -673,7 +720,7 @@ mainRouter.route("/roles/:roleId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => RoleController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -691,7 +738,7 @@ mainRouter.route("/roles/:roleId")
     });
 
 mainRouter.route("/permissions")
-    .put(express.json({limit: "500kB"}), (req, res, next) => {
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => PermissionController.cerateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
@@ -709,7 +756,7 @@ mainRouter.route("/permissions/:roleId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({limit: "500kB"}), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "roles", req.method)
             .then(() => PermissionController.updateMany(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();

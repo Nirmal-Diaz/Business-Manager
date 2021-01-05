@@ -13,6 +13,7 @@ import { UnitType } from "../../entities/main/UnitType";
 import { ProductStatus } from "../../entities/main/ProductStatus";
 import { QuotationStatus } from "../../entities/main/QuotationStatus";
 import { RequestStatus } from "../../entities/main/RequestStatus";
+import { BatchStatus } from "../../entities/main/BatchStatus";
 
 export class TableController {
     static async getMany(tableName: string) {
@@ -29,7 +30,8 @@ export class TableController {
             productStatus: ProductStatus,
             unitType: UnitType,
             requestStatus: RequestStatus,
-            quotationStatus: QuotationStatus
+            quotationStatus: QuotationStatus,
+            batchStatus: BatchStatus
         };
 
         if (generalEntities.hasOwnProperty(tableName)) {
