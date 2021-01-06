@@ -1,3 +1,8 @@
+body {
+    display: flex;
+    align-items: center;
+}
+
 .cardDivision {
     position: absolute;
 
@@ -87,4 +92,21 @@ div.cardDivisionSectorItem {
 
 .itemInformation:hover {
     color: var(--itemInformationColor);
+}
+
+.sidePanel {
+    position: absolute;
+    right: 0;
+
+    overflow: auto;
+    overflow: overlay;
+
+    background-color: var(--cardBackgroundColor);
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0 0 5px var(--sidePanelBoxShadowColor);
+
+}
+
+.sidePanel * {
+    color: black;
 }

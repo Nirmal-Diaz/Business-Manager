@@ -90,6 +90,8 @@
     --cardDivisionSectorItemBackgroundColor-hover: var(--color1-2);
     --cardDivisionSectorItemBoxShadowColor-active: var(--color1-4);
 
+    --sidePanelBoxShadowColor: var(--color2-2);
+
     /* popUpCardStyleVariables */
     --formTitleContainerBoxShadow: var(--color2-2);
     --formTitleContainerColor_child: var(--color1-3);
