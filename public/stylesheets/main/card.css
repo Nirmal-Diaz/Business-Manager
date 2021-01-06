@@ -36,6 +36,14 @@ body {
     border-collapse: collapse;
 }
 
+.cardDivisionSector > table tr {
+    border-bottom: thin solid var(--tableBorderColor);
+}
+
+.cardDivisionSector > table th {
+    color: var(--titleDescriptionColor);
+}
+
 .cardDivisionSector > table th, .cardDivisionSector > table td {
     padding: 20px 10px 20px 10px;
 

@@ -87,6 +87,8 @@
     /* cardStyleVariables */
     --cardDivisionBackgroundColor: var(--color1-3);
 
+    --tableBorderColor: var(--color2-2);
+
     --cardDivisionSectorItemBackgroundColor-hover: var(--color1-2);
     --cardDivisionSectorItemBoxShadowColor-active: var(--color1-4);
 
