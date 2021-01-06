@@ -1,7 +1,6 @@
 import { getRepository } from "typeorm";
 
 import { Material } from "../../entities/main/Material";
-import { MaterialBatch } from "../../entities/main/MaterialBatch";
 
 export class MaterialRepository {
     static search(keyword) {
@@ -23,29 +22,17 @@ export class MaterialRepository {
         .getRawOne();
     }
 
-    static checkForLow(materialId: number) {
-        return getRepository(Material)
-        .createQueryBuilder("m")
-        .select("IF(m.reorder_amount > SUM(mb.amount), 1, 0)", "value")
-        .from(MaterialBatch, "mb")
-        .where("mb.material_id = m.id")
-        .andWhere("mb.material_id = :materialId", {materialId: materialId})
-        .getRawOne();
-    }
-
-    //TODO: Implement updateTable() using SQL
-    //WARNING: A temporary solution is implemented in the controller
-    static updateMaterialStatus(materialId: number) {
-        return MaterialRepository.checkForLow(materialId).then((lowStatus) => {
-            if (lowStatus.value === "1") {
-                return getRepository(Material)
-                .createQueryBuilder()
-                .update(Material)
-                .set({materialStatusId: 2})
-                .where("material.id = :materialId", {materialId: materialId})
-                .execute()
-            }
-        }); 
-
+    static updateTable() {
+        return getRepository(Material).query(`
+            UPDATE material m
+            LEFT JOIN
+                (SELECT mb.material_id, SUM(mb.amount) viable_amount
+                FROM material_batch mb
+                WHERE mb.batch_status_id = 1
+                GROUP BY mb.material_id) viable
+            ON m.id = viable.material_id
+            SET m.material_status_id = 2
+            WHERE m.reorder_amount >= viable.viable_amount
+        `);
     }
 }

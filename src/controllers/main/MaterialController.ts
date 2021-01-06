@@ -38,8 +38,12 @@ export class MaterialController {
         }
     }
 
+    static async getEnhancedOne(id: number) {
+        
+    }
+
     static async getMany(keyword: string) {
-        await MaterialController.updateTable();
+        await EntityRepository.updateTable();
 
         const items = await EntityRepository.search(keyword);
 
@@ -120,18 +124,6 @@ export class MaterialController {
                 item.suppliers = await getRepository(Supplier).findByIds(clientBindingObject[id]);
             }
             await getRepository(Entity).save(item);
-        }
-
-        return true;
-    }
-
-    //TODO: Convert this method into complete SQL and move to EntityRepository
-    //TOFIX: Method not working
-    static async updateTable() {
-        const items = await EntityRepository.search("");
-
-        for (const item of items) {
-            await EntityRepository.updateMaterialStatus(item.id);
         }
 
         return true;
