@@ -131,10 +131,7 @@ export class MaterialController {
         const items = await EntityRepository.search("");
 
         for (const item of items) {
-            if ((await EntityRepository.isLow(item.id)).value === "1") {
-                item.materialStatusId = 2;
-                await getRepository(Entity).save(item);
-            }
+            await EntityRepository.updateMaterialStatus(item.id);
         }
 
         return true;

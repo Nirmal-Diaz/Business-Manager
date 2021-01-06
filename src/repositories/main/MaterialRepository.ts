@@ -23,7 +23,7 @@ export class MaterialRepository {
         .getRawOne();
     }
 
-    static isLow(materialId: number) {
+    static checkForLow(materialId: number) {
         return getRepository(Material)
         .createQueryBuilder("m")
         .select("IF(m.reorder_amount > SUM(mb.amount), 1, 0)", "value")
@@ -35,7 +35,17 @@ export class MaterialRepository {
 
     //TODO: Implement updateTable() using SQL
     //WARNING: A temporary solution is implemented in the controller
-    // static updateTable() {
+    static updateMaterialStatus(materialId: number) {
+        return MaterialRepository.checkForLow(materialId).then((lowStatus) => {
+            if (lowStatus.value === "1") {
+                return getRepository(Material)
+                .createQueryBuilder()
+                .update(Material)
+                .set({materialStatusId: 2})
+                .where("material.id = :materialId", {materialId: materialId})
+                .execute()
+            }
+        }); 
 
-    // }
+    }
 }
