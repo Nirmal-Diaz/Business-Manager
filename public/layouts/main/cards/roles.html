@@ -109,8 +109,7 @@
                             const cardDivisionSector = CardComponent.createCardDivisionSector("Available Roles", titleDescriptionText);
                             for (const item of response.data) {
                                 const iconURL = `../../../images/main/icon_user_default.png`;
-                                //NOTE: Bounded method is immediately invoked
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, []);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 cardDivisionSector.appendChild(cardDivisionSectorItem);
                             }

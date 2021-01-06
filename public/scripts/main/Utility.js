@@ -79,7 +79,7 @@ export class CardComponent {
     }
 
     //WARNING: This method must be bounded to a "CardInterface" instance before using
-    static createCardDivisionSectorItem(iconURL, title, informationContents) {
+    static createCardDivisionSectorItem(selectedCardDivisionSectorItems, iconURL, title, informationContents) {
         const cardDivisionSectorItem = document.createElement("div");
         cardDivisionSectorItem.setAttribute("class", "cardDivisionSectorItem");
         //Add onclick to cardDivisionSectorItem for selecting it
@@ -87,26 +87,26 @@ export class CardComponent {
             //Check if the ctrlKey is pressed
             if (event.ctrlKey) {
                 //Try to retrieve already existing of cardDivisionSectorItem form selectedCardDivisionSectorItems (returns -1 if not)
-                const existingLocation = this.selectedCardDivisionSectorItems.indexOf(cardDivisionSectorItem);
+                const existingLocation = selectedCardDivisionSectorItems.indexOf(cardDivisionSectorItem);
                 if (existingLocation === -1) {
                     //Just add the cardDivisionSectorItem to selected cardDivisionSectorItems
-                    this.selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
+                    selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
                     //Add styles tho the selectedCardDivisionSectorItem
                     cardDivisionSectorItem.classList.add("active");
                 } else {
                     //Remove cardDivisionSectorItem from selectedCardDivisionSectorItems along with its styles
-                    this.selectedCardDivisionSectorItems.splice(existingLocation, 1)
+                    selectedCardDivisionSectorItems.splice(existingLocation, 1)
                     cardDivisionSectorItem.classList.remove("active");
                 }
             } else {
                 //Remove styles of each selectedCardDivisionSectorItems
-                for (const selectedCardDivisionSectorItem of this.selectedCardDivisionSectorItems) {
+                for (const selectedCardDivisionSectorItem of selectedCardDivisionSectorItems) {
                     selectedCardDivisionSectorItem.classList.remove("active");
                 }
                 //Empty the selectedCardDivisionSectorItems
-                this.selectedCardDivisionSectorItems.length = 0;
+                selectedCardDivisionSectorItems.length = 0;
                 //Finally add the cardDivisionSectorItem to selected cardDivisionSectorItems
-                this.selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
+                selectedCardDivisionSectorItems.push(cardDivisionSectorItem);
                 //Add styles tho the selectedCardDivisionSectorItem
                 cardDivisionSectorItem.classList.add("active");
             }
