@@ -117,7 +117,7 @@
                                 }
 
                                 const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.code, [])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, []);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 states[item.quotationStatus.id].appendChild(cardDivisionSectorItem);
                             }

@@ -100,11 +100,11 @@
                                         //NOTE: Bounded method is immediately invoked
                                         let cardDivisionSectorItem = null;
                                         if (this.fileMetadata.hasOwnProperty(file.extension)) {
-                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, this.fileMetadata[file.extension].iconPath, file.name, [this.fileMetadata[file.extension].fileType, `${(file.size / 1049000).toFixed(2)} MiB`])();
+                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, this.fileMetadata[file.extension].iconPath, file.name, [this.fileMetadata[file.extension].fileType, `${(file.size / 1049000).toFixed(2)} MiB`]);
                                             //Store itemCategory in the cardDivisionSector
                                             cardDivisionSectorItem.dataset.fileCategory = this.fileMetadata[file.extension].category;
                                         } else {
-                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, this.fileMetadata.unknown.iconPath, file.name, [this.fileMetadata.unknown.fileType, `${(file.size / 1049000).toFixed(2)} MiB`])();
+                                            cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, this.fileMetadata.unknown.iconPath, file.name, [this.fileMetadata.unknown.fileType, `${(file.size / 1049000).toFixed(2)} MiB`]);
                                             //Store itemCategory in the cardDivisionSector
                                             cardDivisionSectorItem.dataset.fileCategory = this.fileMetadata.unknown.category;
                                         }

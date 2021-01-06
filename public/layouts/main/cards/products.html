@@ -117,7 +117,7 @@
                                 }
 
                                 const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.productStatus.name])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 states[item.productStatus.id].appendChild(cardDivisionSectorItem);
                             }

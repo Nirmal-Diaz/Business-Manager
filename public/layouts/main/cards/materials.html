@@ -128,7 +128,7 @@
                                 }
 
                                 const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem.bind(this, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name, item.materialStatus.name])();
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 states[item.materialStatus.id].appendChild(cardDivisionSectorItem);
                             }
@@ -155,15 +155,15 @@
     <div id="sideCardDivision" class="sidePanel">
         <div class="cardDivisionSector">
             <div class="titleContainer">
-                <h1 class="title">Titanium O</h1>
-                <div class="titleDescription">MAT1234567</div>
+                <h1 class="title">Name</h1>
+                <div class="titleDescription">Titanium O</div>
+                <h1 class="title">Code</h1>
+                <div class="titleDescription">MAT123</div>
+                <h1 class="title">Viable Amount</h1>
+                <div class="titleDescription">1234.56 liters</div>
             </div>
-        </div>
-        <div class="cardDivisionSector">
-            <div class="titleContainer">
-                <div class="titleDescription">Available amount</div>
-                <h1 class="title">256 liters</h1>
-            </div>
+            <!-- <div class="titleContainer">
+            </div> -->
         </div>
     </div>
 
