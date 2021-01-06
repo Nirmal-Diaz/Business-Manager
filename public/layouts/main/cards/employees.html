@@ -115,14 +115,11 @@
                                 if (!states.hasOwnProperty(item.employeeStatus.id)) {
                                     states[item.employeeStatus.id] = CardComponent.createCardDivisionSector(item.employeeStatus.name + " " + document.title, titleDescriptionText);
                                 }
-                                
-                                const table = CardComponent.createTable(["Code", "Preferred Name", "NIC Number", "Mobile", "Gender", "Employee Status", "Designation"]);
-                                const tableBody = table.querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.preferredName, item.nicNumber, item.mobile, item.gender.name, item.employeeStatus.name, item.designation.name]);
-                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                tableBody.appendChild(cardDivisionSectorItem);
 
-                                states[item.employeeStatus.id].appendChild(table);
+                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.preferredName, [item.code, item.nicNumber, item.mobile, item.gender.name, item.designation.name]);
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                states[item.employeeStatus.id].appendChild(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {
