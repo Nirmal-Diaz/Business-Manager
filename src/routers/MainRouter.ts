@@ -362,6 +362,16 @@ mainRouter.route("/materials/@all/suppliers")
             });
     });
 
+mainRouter.route("/derivedMaterials/:materialId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.getDerivedOne(parseInt(req.params.materialId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+
 //MATERIAL BATCHES
 mainRouter.route("/materialBatches")
     .put(express.json(), (req, res, next) => {

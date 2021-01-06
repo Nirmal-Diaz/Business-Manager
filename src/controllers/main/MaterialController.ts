@@ -38,8 +38,8 @@ export class MaterialController {
         }
     }
 
-    static async getEnhancedOne(id: number) {
-        
+    static async getDerivedOne(id: number) {
+        return (await EntityRepository.getDerivedOne(id))[0];
     }
 
     static async getMany(keyword: string) {
