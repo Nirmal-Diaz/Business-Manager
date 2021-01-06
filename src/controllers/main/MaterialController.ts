@@ -39,6 +39,8 @@ export class MaterialController {
     }
 
     static async getMany(keyword: string) {
+        await MaterialController.updateTable();
+
         const items = await EntityRepository.search(keyword);
 
         if (items.length > 0) {
@@ -118,6 +120,21 @@ export class MaterialController {
                 item.suppliers = await getRepository(Supplier).findByIds(clientBindingObject[id]);
             }
             await getRepository(Entity).save(item);
+        }
+
+        return true;
+    }
+
+    //TODO: Convert this method into complete SQL and move to EntityRepository
+    //TOFIX: Method not working
+    static async updateTable() {
+        const items = await EntityRepository.search("");
+
+        for (const item of items) {
+            if ((await EntityRepository.isLow(item.id)).value === "1") {
+                item.materialStatusId = 2;
+                await getRepository(Entity).save(item);
+            }
         }
 
         return true;

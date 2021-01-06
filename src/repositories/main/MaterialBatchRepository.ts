@@ -18,4 +18,13 @@ export class MaterialBatchRepository {
         .select("CONCAT('MBT', SUBSTRING(MAX(mb.code),4)+1)", "value")
         .getRawOne();
     }
+
+    static updateTable() {
+        return getRepository(MaterialBatch)
+        .createQueryBuilder()
+        .update(MaterialBatch)
+        .set({batchStatusId: 2})
+        .where("DATEDIFF(NOW(), material_batch.added_date) >= material_batch.viable_period")
+        .execute();
+    }
 }
