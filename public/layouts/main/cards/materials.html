@@ -125,12 +125,16 @@
                             for (const item of response.data) {
                                 if (!states.hasOwnProperty(item.materialStatus.id)) {
                                     states[item.materialStatus.id] = CardComponent.createCardDivisionSector(item.materialStatus.name + " " + document.title, titleDescriptionText);
-                                }
 
-                                const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
+                                    const table = CardComponent.createTable(["Name", "Code", "Unit Price", "Measured by"]);
+
+                                    states[item.materialStatus.id].appendChild(table);
+                                }
+                                
+                                const tableBody = states[item.materialStatus.id].querySelector("tbody");
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.name, item.code, item.unitPrice, item.unitType.name]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                states[item.materialStatus.id].appendChild(cardDivisionSectorItem);
+                                tableBody.appendChild(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {
