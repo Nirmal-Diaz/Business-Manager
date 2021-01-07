@@ -32,7 +32,7 @@ export class MaterialRepository {
                 GROUP BY mb.material_id) expired
             ON m.id = expired.material_id
             WHERE m.id = ${materialId};
-        `,);
+        `);
     }
 
     static generateNextCode() {
@@ -43,28 +43,19 @@ export class MaterialRepository {
     }
 
     static updateTable() {
-        return Promise.all(
-            [getRepository(Material).query(`
-                UPDATE material m
-                LEFT JOIN
-                    (SELECT mb.material_id, SUM(mb.amount) viable_amount
-                    FROM material_batch mb
-                    WHERE mb.batch_status_id = 1
-                    GROUP BY mb.material_id) viable
-                ON m.id = viable.material_id
-                SET m.material_status_id = 1
-                WHERE m.reorder_amount < viable.viable_amount
-            `), getRepository(Material).query(`
-                UPDATE material m
-                LEFT JOIN
-                    (SELECT mb.material_id, SUM(mb.amount) viable_amount
-                    FROM material_batch mb
-                    WHERE mb.batch_status_id = 1
-                    GROUP BY mb.material_id) viable
-                ON m.id = viable.material_id
-                SET m.material_status_id = 2
-                WHERE m.reorder_amount >= viable.viable_amount
-        `)]
-        );
+        return getRepository(Material).query(`
+            UPDATE material m
+            LEFT JOIN
+                (SELECT mb.material_id, SUM(mb.amount) viable_amount
+                FROM material_batch mb
+                WHERE mb.batch_status_id = 1
+                GROUP BY mb.material_id) viable
+            ON m.id = viable.material_id
+            SET m.material_status_id =
+            CASE
+                WHEN m.reorder_amount < viable.viable_amount THEN 1
+                ELSE 2
+            END
+        `);
     }
 }

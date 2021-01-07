@@ -22,4 +22,13 @@ export class MaterialImportRequestRepository {
         .select("CONCAT('MIR', SUBSTRING(MAX(mir.code),4)+1)", "value")
         .getRawOne();
     }
+
+    static updateTable() {
+        return getRepository(MaterialImportRequest)
+        .createQueryBuilder()
+        .update(MaterialImportRequest)
+        .set({requestStatusId: 3})
+        .where("DATEDIFF(NOW(), material_import_request.added_date) >= material_import_request.valid_till")
+        .execute();
+    }
 }
