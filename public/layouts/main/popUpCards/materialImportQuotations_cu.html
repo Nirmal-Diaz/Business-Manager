@@ -53,7 +53,14 @@
 
             async initInputs() {
                 //Set the current date as value for "addedDate"
-                this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
+                const validFromInput = this.form.getView().querySelector("#validFrom");
+                const addedDateInput = this.form.getView().querySelector("#addedDate");
+
+                addedDateInput.value = new Date().toISOString().slice(0, 10);
+                validFromInput.min = addedDateInput.value;
+                this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
+                    event.target.min = validFromInput.value;
+                });
 
                 //Fill dropDownInputs
                 const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select, .inputContainer.text > datalist");
@@ -133,7 +140,7 @@
                         <h1 class="title">Valid from</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="validFrom" type="text" placeholder="eg: 2020-04-30">
+                        <input id="validFrom" type="date" min="2020-04-28" placeholder="eg: 2020-04-30">
                     </div>
                 </div>
 
@@ -142,7 +149,7 @@
                         <h1 class="title">Valid till</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="validTill" type="text" placeholder="eg: 2020-05-10">
+                        <input id="validTill" type="date" placeholder="eg: 2020-05-10">
                     </div>
                 </div>
 
@@ -194,7 +201,7 @@
                         <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="addedDate" type="text" placeholder="eg: 2020-01-01">
+                        <input id="addedDate" type="date" placeholder="eg: 2020-01-01">
                     </div>
                 </div>
 

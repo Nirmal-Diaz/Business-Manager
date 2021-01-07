@@ -72,7 +72,9 @@
                     this.form.getView().querySelectorAll(".formFieldContainer")[4].classList.add("disabled");
 
                     //Set the current date as value for "addedDate"
-                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
+                    const addedDateInput = this.form.getView().querySelector("#addedDate");
+                    addedDateInput.value = new Date().toISOString().slice(0, 10);
+                    this.form.getView().querySelector("#validTill").min = addedDateInput.value;
 
                     //Hide the supplier dropdown
                     document.getElementById("supplierId").parentElement.style.display = "none";
@@ -192,7 +194,7 @@
                         <h1 class="title">Valid till</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="validTill" type="text" placeholder="eg: 2020-04-28" />
+                        <input id="validTill" type="date" placeholder="eg: 2020-04-28" />
                     </div>
                 </div>
 
