@@ -469,7 +469,7 @@ export class WorkspaceScreenController extends ScreenController {
                     //Transit screen
                     window.shellInterface.transitScreen(new LogInScreenController(document.getElementById("logInScreen")));
                     //Remove actionOverlayChips
-                    document.getElementById("actionOverlayChipPane").innerHTML = "";
+                    this.actionOverlayView.firstElementChild.innerHTML = "";
                 }
             })
             .catch(error => {
