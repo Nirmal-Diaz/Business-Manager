@@ -209,8 +209,8 @@ body {
     justify-content: flex-start;
 }
 
-.inputContainer.check>input,
-.inputContainer.radio>input {
+.inputContainer.check>input[type="checkbox"],
+.inputContainer.radio>input[type="radio"] {
     display: flex;
     justify-content: center;
     align-items: center;
