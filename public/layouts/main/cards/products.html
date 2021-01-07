@@ -107,6 +107,27 @@
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
+                            // this.selectedCardDivisionSectorItems.length = 0;
+                            // const cardDivision = document.getElementById("mainCardDivision");
+                            // cardDivision.innerHTML = "";
+
+                            // const states = {};
+
+                            // for (const item of response.data) {
+                            //     if (!states.hasOwnProperty(item.productStatus.id)) {
+                            //         states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
+                            //     }
+
+                            //     const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
+                            //     const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
+                            //     cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                            //     states[item.productStatus.id].appendChild(cardDivisionSectorItem);
+                            // }
+
+                            // for (const state of Object.keys(states)) {
+                            //     cardDivision.appendChild(states[state]);
+                            // }
+
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
@@ -116,12 +137,16 @@
                             for (const item of response.data) {
                                 if (!states.hasOwnProperty(item.productStatus.id)) {
                                     states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
-                                }
 
-                                const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
+                                    const table = CardComponent.createTable(["Name", "Code", "Unit Price", "Measured by"]);
+
+                                    states[item.productStatus.id].appendChild(table);
+                                }
+                                
+                                const tableBody = states[item.productStatus.id].querySelector("tbody");
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.name, item.code, item.unitPrice, item.unitType.name]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                states[item.productStatus.id].appendChild(cardDivisionSectorItem);
+                                tableBody.appendChild(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {
