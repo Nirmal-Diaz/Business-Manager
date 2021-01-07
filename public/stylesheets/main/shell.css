@@ -319,31 +319,33 @@
 
 /* actionOverlayStyles */
 #actionOverlay {
-    background-color: var(--actionOverlayBackgroundColor);
-}
-
-#actionOverlay>.overlayBackground {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    height: 100%;
-    width: 100%;
+    background-color: var(--actionOverlayBackgroundColor);
 }
 
-#actionOverlay>.overlayBackground>.titleContainer>* {
-    text-align: center;
-}
-
-#actionOverlayChipPane {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+#actionOverlay>.overlayBackground {
     overflow: auto;
     overflow: overlay;
 
+    height: 80%;
+    width: 100%;
+}
+
+.actionOverlayChipPane {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
     padding: 10px 0 10px 0;
+    width: 100%;
+}
+
+.actionOverlayChipPane>.titleContainer>* {
+    text-align: center;
 }
 
 .actionOverlayChip {

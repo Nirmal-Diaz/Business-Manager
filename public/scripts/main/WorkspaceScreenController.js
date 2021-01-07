@@ -55,12 +55,23 @@ export class WorkspaceScreenController extends ScreenController {
             .then(response => {
                 if (response.status) {
                     //Create actionOverlayChips for each permission if its value[1] === "1"
-                    const actionOverlayChipPaneFragment = new DocumentFragment();
+                    const categories = {};
+                    const templateContainerFragment = document.getElementById("templateContainer").content;
+
+                    // const actionOverlayChipPaneFragment = 
                     for (let i = 0; i < response.data.length; i++) {
-                        const actionOverlayChip = ShellComponent.createActionOverlayChip(response.data[i], this);
-                        actionOverlayChipPaneFragment.appendChild(actionOverlayChip);
+                        if (!categories.hasOwnProperty(response.data[i].moduleCategory.id)) {
+                            categories[response.data[i].moduleCategory.id] = templateContainerFragment.querySelector(".actionOverlayChipPane").cloneNode(true);
+                            categories[response.data[i].moduleCategory.id].firstElementChild.children[0].textContent = response.data[i].moduleCategory.name;
+                            categories[response.data[i].moduleCategory.id].firstElementChild.children[1].textContent = response.data[i].moduleCategory.description;
+                        }
+
+                        categories[response.data[i].moduleCategory.id].appendChild(ShellComponent.createActionOverlayChip(response.data[i], this));
                     }
-                    document.getElementById("actionOverlayChipPane").appendChild(actionOverlayChipPaneFragment);
+
+                    for (const category of Object.keys(categories)) {
+                        this.actionOverlayView.firstElementChild.appendChild(categories[category]);
+                    }
 
                     //Present Action Overlay
                     this.actionOverlayView.classList.replace("popOut", "popIn");
@@ -216,7 +227,7 @@ export class WorkspaceScreenController extends ScreenController {
             }
         });
         //Add onclick to the close button in actionOverlay for closing actionOverlay
-        this.actionOverlayView.firstElementChild.children[2].firstElementChild.addEventListener("click", () => {
+        this.actionOverlayView.lastElementChild.addEventListener("click", () => {
             this.actionOverlayBackground.classList.replace("popIn", "popOut");
             setTimeout(() => {
                 this.actionOverlayView.classList.replace("popIn", "popOut");

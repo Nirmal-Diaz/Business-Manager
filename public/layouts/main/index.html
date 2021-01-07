@@ -143,17 +143,11 @@
     <!-- actionOverlay -->
     <div id="actionOverlay" class="overlay popOut">
         <div class="overlayBackground popOut">
-            <div class="titleContainer">
-                <div class="title">Available Cards</div>
-                <div class="titleDescription">Select a card to start working</div>
-            </div>
-            <div id="actionOverlayChipPane">
+            <!-- <div id="actionOverlayChipPane">
 
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <button class="buttonText">CLOSE</button>
-            </div>
+            </div> -->
         </div>
+        <button class="buttonText">CLOSE</button>
     </div>
 
     <!-- alertOverlay -->
@@ -174,5 +168,14 @@
         </div>
     </div>
 </body>
+
+<template id="templateContainer">
+    <div class="actionOverlayChipPane">
+        <div class="titleContainer">
+            <div class="title">Module Category Name</div>
+            <div class="titleDescription">Module category description</div>
+        </div>
+    </div>
+</template>
 
 </html>

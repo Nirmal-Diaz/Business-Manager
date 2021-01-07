@@ -62,7 +62,7 @@ export class PermissionController {
             where: {
                 roleId: roleId
             },
-            relations: ["module"]
+            relations: ["module", "module.moduleCategory"]
         });
 
         if (permissions.length > 0) {
