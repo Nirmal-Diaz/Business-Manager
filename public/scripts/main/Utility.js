@@ -50,6 +50,7 @@ export class ShellComponent {
 
 export class ShellUtil {
     static toggleButtonGlyph(buttonGlyph) {
+        console.log("ran");
         if (buttonGlyph.classList.toggle("revealed")) {
             buttonGlyph.children[1].style.display = "block";
             buttonGlyph.children[1].focus();

@@ -38,13 +38,15 @@
                 });
                 this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter') {
-                        ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
                         if (event.currentTarget.value === "") {
                             this.searchItems("", "Showing all items");
                         } else {
                             this.searchItems(event.currentTarget.value, `Filtered by ${event.currentTarget.value}`);
                         }
                     }
+                });
+                this.retrieveControls[1].addEventListener("click", () => {
+                    this.searchItems("", "Showing all items");
                 });
 
                 this.updateControls[0].addEventListener("click", () => {
@@ -153,6 +155,9 @@
                 <img src="/images/main/glyph_search.png" title="Search import requests"/>
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_refresh.png" title="Refresh"/>
             </button>
         </div>
         <div id="updateControlsContainer">

@@ -41,6 +41,9 @@
                 });
                 //Add onclick to returnFromDirectoryButton for return form current directory
                 this.retrieveControls[1].addEventListener("click", this.returnFromDirectory.bind(this));
+                this.retrieveControls[2].addEventListener("click", () => {
+                    this.navigateDirectory(this.mainCardDivision, this.presentWorkingDirectoryPath);
+                });
                 //Initially cache the fileMetadata and navigate the root user directory
                 fetch("/registries/fileMetadata.json")
                     .then(response => response.json())
@@ -221,6 +224,9 @@
             <!-- navigateUp -->
             <button class="buttonGlyph">
                 <span>NV</span>
+            </button>
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_refresh.png" title="Refresh"/>
             </button>
         </div>
         <div id="updateControlsContainer">
