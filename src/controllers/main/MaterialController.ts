@@ -96,7 +96,7 @@ export class MaterialController {
 
             return materialId2SupplierIds;
         } else {
-            throw { title: "Oops!", titleDescription: "Add some items first", message: `We found no ${this.entityName}s in the material database`, technicalMessage: `No ${this.entityName}s in the database` };
+            throw { title: "Oops!", titleDescription: "Add some items first", message: `We found no ${this.entityName}s in the ${this.entityName} database`, technicalMessage: `No ${this.entityName}s in the database` };
         }
     }
 
