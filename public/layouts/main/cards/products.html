@@ -58,6 +58,17 @@
                         this.updateItem(this.selectedCardDivisionSectorItems[0]);
                     }
                 });
+                this.updateControls[1].addEventListener("click", () => {
+                    //Add onload to iframe for initializing update form
+                    const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/materials2products_cu.html");
+                    // popUpCard.getView().style.width = "800px";
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.getView().style.width = "800px";
+                        popUpCard.popUpCardInterface.initInputs().then(() => {
+                            popUpCard.popUpCardInterface.initUpdateForm();
+                        });
+                    });
+                });
 
                 this.deleteControls[0].addEventListener("click", () => {
                     if (this.selectedCardDivisionSectorItems.length === 0) {
@@ -107,27 +118,6 @@
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
-                            // this.selectedCardDivisionSectorItems.length = 0;
-                            // const cardDivision = document.getElementById("mainCardDivision");
-                            // cardDivision.innerHTML = "";
-
-                            // const states = {};
-
-                            // for (const item of response.data) {
-                            //     if (!states.hasOwnProperty(item.productStatus.id)) {
-                            //         states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
-                            //     }
-
-                            //     const iconURL = URL.createObjectURL(new Blob([new Uint8Array(item.photo.data)]));
-                            //     const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.name, [item.code, item.unitPrice, item.unitType.name]);
-                            //     cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                            //     states[item.productStatus.id].appendChild(cardDivisionSectorItem);
-                            // }
-
-                            // for (const state of Object.keys(states)) {
-                            //     cardDivision.appendChild(states[state]);
-                            // }
-
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
                             cardDivision.innerHTML = "";
@@ -187,6 +177,9 @@
         </div>
         <div id="updateControlsContainer">
             <button class="buttonGlyph" title="Edit product">
+                <img src="/images/main/glyph_update.png" />
+            </button>
+            <button class="buttonGlyph" title="Edit product-material assignment">
                 <img src="/images/main/glyph_update.png" />
             </button>
         </div>

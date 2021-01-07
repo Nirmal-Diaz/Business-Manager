@@ -1,0 +1,22 @@
+[
+    {
+        "productId": {
+            "inputQuery": null,
+            "inputClass": null,
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "materialId": {
+            "inputQuery": null,
+            "inputClass": null,
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "materialAmount": {
+            "inputQuery": null,
+            "inputClass": null,
+            "pattern": "^\\d{1,}[.]\\d{1,}$",
+            "value": null
+        }
+    }
+]

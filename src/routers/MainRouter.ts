@@ -362,15 +362,15 @@ mainRouter.route("/materials/@all/suppliers")
             });
     });
 
-mainRouter.route("/derivedMaterials/:materialId")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "materials", req.method)
-            .then(() => MaterialController.getDerivedOne(parseInt(req.params.materialId))).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
+// mainRouter.route("/derivedMaterials/:materialId")
+//     .get((req, res, next) => {
+//         PermissionController.checkPermission(req.session.userId, "materials", req.method)
+//             .then(() => MaterialController.getDerivedOne(parseInt(req.params.materialId))).then(data => {
+//                 res.locals.data = data; next();
+//             }).catch(error => {
+//                 res.locals.error = error; next();
+//             });
+//     })
 
 //MATERIAL BATCHES
 mainRouter.route("/materialBatches")
@@ -468,7 +468,35 @@ mainRouter.route("/products/:productId")
             });
     });
 
-//MATERIA IMPORT REQUESTS
+mainRouter.route("/products/:productId/materials")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.getMaterialsByProduct(parseInt(req.params.productId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/products/@all/materials")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.setProductMaterialRelations(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.getProductMaterialRelations()).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//MATERIAL IMPORT REQUESTS
 mainRouter.route("/materialImportRequests")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
