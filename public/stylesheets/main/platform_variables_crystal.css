@@ -49,6 +49,8 @@
     --buttonTextLinkColor: var(--color0-1);
     --buttonTextLinkColor-hover: var(--color2-4);
 
+    --buttonSeparatorBorderColor: var(--color0-1);
+
     --cellPointBackgroundColor: var(--color0-1);
     --cellPointBackgroundColor-active: var(--color1-1);
     --cellPointBorderColor-active: var(--color0-1);

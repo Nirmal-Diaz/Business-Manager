@@ -381,33 +381,23 @@ export class WorkspaceScreenController extends ScreenController {
         }
 
         function addQuickAccessControls() {
+            const separator = document.createElement("hr");
+            this.quickAccessArea.appendChild(separator.cloneNode(false));
             //Add createControls to the quickAccessArea if the user has "create" permissions
             if (this.permittedModuleOperations[moduleId][0] === "1") {
-                const createControls = presentCard2.getControls("create");
-                for (const createControl of createControls) {
-                    this.quickAccessArea.appendChild(createControl);
-                }
+                this.quickAccessArea.append(...presentCard2.getControls("create"), separator.cloneNode(false));
             }
             //Add retrieveControls to the quickAccessArea if the user has "retrieve" permissions
             if (this.permittedModuleOperations[moduleId][1] === "1") {
-                const retrieveControls = presentCard2.getControls("retrieve");
-                for (const retrieveControl of retrieveControls) {
-                    this.quickAccessArea.appendChild(retrieveControl);
-                }
+                this.quickAccessArea.append(...presentCard2.getControls("retrieve"), separator.cloneNode(false));
             }
             //Add updateControls to the quickAccessArea if the user has "update" permissions
             if (this.permittedModuleOperations[moduleId][2] === "1") {
-                const updateControls = presentCard2.getControls("update");
-                for (const updateControl of updateControls) {
-                    this.quickAccessArea.appendChild(updateControl);
-                }
+                this.quickAccessArea.append(...presentCard2.getControls("update"), separator.cloneNode(false));
             }
             //Add deleteControls to the quickAccessArea if the user has "delete" permissions
             if (this.permittedModuleOperations[moduleId][3] === "1") {
-                const deleteControls = presentCard2.getControls("delete");
-                for (const deleteControl of deleteControls) {
-                    this.quickAccessArea.appendChild(deleteControl);
-                }
+                this.quickAccessArea.append(...presentCard2.getControls("delete"), separator.cloneNode(false));
             }
         }
     }

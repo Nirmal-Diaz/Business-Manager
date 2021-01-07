@@ -192,6 +192,11 @@
     padding: 10px;
 }
 
+#quickAccessArea > hr {
+    height: 10px;
+    border: thin solid var(--buttonSeparatorBorderColor);
+}
+
 #headerArea {
     position: fixed;
     top: 3vh;
