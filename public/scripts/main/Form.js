@@ -193,7 +193,8 @@ export class Form {
                         //CASE: formField object must have a pattern to match
 
                         //NOTE: this.invalidBindingObject must contain the OR value of each field validation
-                        this.isInvalidBindingObject = this.isInvalidBindingObject || FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
+                        const isInvalidField = FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
+                        this.isInvalidBindingObject = this.isInvalidBindingObject || isInvalidField;
                     }
                 }
             }
