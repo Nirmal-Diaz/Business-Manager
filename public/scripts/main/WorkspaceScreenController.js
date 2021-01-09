@@ -54,14 +54,13 @@ export class WorkspaceScreenController extends ScreenController {
             .then(response => response.json())
             .then(response => {
                 if (response.status) {
-                    //Create actionOverlayChips for each permission if its value[1] === "1"
+                    //Create actionOverlayChips for each permitted module
                     const categories = {};
-                    const templateContainerFragment = document.getElementById("templateContainer").content;
+                    const actionOverlayChipPaneTemplate = this.view.querySelector("#templateContainer").content.querySelector(".actionOverlayChipPane");
 
-                    // const actionOverlayChipPaneFragment = 
                     for (let i = 0; i < response.data.length; i++) {
                         if (!categories.hasOwnProperty(response.data[i].moduleCategory.id)) {
-                            categories[response.data[i].moduleCategory.id] = templateContainerFragment.querySelector(".actionOverlayChipPane").cloneNode(true);
+                            categories[response.data[i].moduleCategory.id] = actionOverlayChipPaneTemplate.cloneNode(true);
                             categories[response.data[i].moduleCategory.id].firstElementChild.children[0].textContent = response.data[i].moduleCategory.name;
                             categories[response.data[i].moduleCategory.id].firstElementChild.children[1].textContent = response.data[i].moduleCategory.description;
                         }
@@ -83,19 +82,21 @@ export class WorkspaceScreenController extends ScreenController {
             .catch(error => {
                 window.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch your permitted modules list from the internal server. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
             });
+
         //Add a timer for updating time in the headerArea
         this.timeDisplay.innerText = PlatformUtil.getCurrentTime();
         setInterval(() => {
             this.timeDisplay.innerText = PlatformUtil.getCurrentTime();
         }, 60000);
+
         //Add onkeypress to body for scrolling cards
-        document.body.addEventListener("keypress", (event) => {
-            if (event.keyCode === 50) {
-                this.scrollViewport(100);
-            } else if (event.keyCode === 56) {
-                this.scrollViewport(-100);
-            }
-        });
+        // document.body.addEventListener("keypress", (event) => {
+        //     if (event.keyCode === 50) {
+        //         this.scrollViewport(100);
+        //     } else if (event.keyCode === 56) {
+        //         this.scrollViewport(-100);
+        //     }
+        // });
         //Add onwheel and onpointerdown to workspaceScreen for scrolling cards
         this.view.addEventListener("wheel", (event) => {
             this.scrollViewport(event.deltaY);
@@ -139,6 +140,7 @@ export class WorkspaceScreenController extends ScreenController {
                 window.removeEventListener("pointerup", endScrollViewport);
             }
         });
+
         //Add onpointerdown to navigationControl for start navigation
         this.navigationControl.addEventListener("pointerdown", (event) => {
             //Get a reference of "this" for inner event handlers
@@ -148,15 +150,15 @@ export class WorkspaceScreenController extends ScreenController {
             for (let i = 0; i < iFrames.length; i++) {
                 iFrames[i].style.pointerEvents = "none";
             }
-            const navigatorControlOptionDisplay = workspaceScreenController.view.querySelector("#navigatorControlOptionDisplay");
+            const navigatorControlOptionDisplay = this.view.querySelector("#navigatorControlOptionDisplay");
             //Cache the inner text of navigatorControlOptionDisplay
             const navigatorControlOptionDisplayInnerText = navigatorControlOptionDisplay.innerText;
             //Get the initial pointer position
             const originalMousePositionX = event.screenX || event.touches[0].screenX;
             const originalMousePositionY = event.screenY || event.touches[0].screenY;
 
-            window.addEventListener("pointermove", determineOption);
-            window.addEventListener("pointerup", executeOption);
+            this.view.addEventListener("pointermove", determineOption);
+            this.view.addEventListener("pointerup", executeOption);
 
             let differenceX = 0;
             let differenceY = 0;
@@ -222,10 +224,11 @@ export class WorkspaceScreenController extends ScreenController {
                 //Restore navigatorControlOptionDisplay's inner text
                 navigatorControlOptionDisplay.innerText = navigatorControlOptionDisplayInnerText;
                 //Remove all previously added eventListeners
-                window.removeEventListener("pointermove", determineOption);
-                window.removeEventListener("pointerup", executeOption);
+                workspaceScreenController.view.removeEventListener("pointermove", determineOption);
+                workspaceScreenController.view.removeEventListener("pointerup", executeOption);
             }
         });
+
         //Add onclick to the close button in actionOverlay for closing actionOverlay
         this.actionOverlayView.lastElementChild.addEventListener("click", () => {
             this.actionOverlayBackground.classList.replace("popIn", "popOut");
