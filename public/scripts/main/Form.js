@@ -4,7 +4,7 @@ import { FormUtil, FormComponent } from "./Utility.js";
 export class Form {
     bindingObject = null;
     referenceBindingObject = null;
-    invalidBindingObject = false;
+    isInvalidBindingObject = false;
     submissionMethod = "";
     submissionURL = "";
 
@@ -193,7 +193,7 @@ export class Form {
                         //CASE: formField object must have a pattern to match
 
                         //NOTE: this.invalidBindingObject must contain the OR value of each field validation
-                        this.invalidBindingObject = this.invalidBindingObject || FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
+                        this.isInvalidBindingObject = this.isInvalidBindingObject || FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
                     }
                 }
             }
@@ -204,10 +204,10 @@ export class Form {
         this.updateBindingObject(this.bindingObject);
 
         //Reset invalidBindingObject flag
-        this.invalidBindingObject = false;
+        this.isInvalidBindingObject = false;
         this.validateBindingObject(this.referenceBindingObject, this.bindingObject);
 
-        if (this.invalidBindingObject) {
+        if (this.isInvalidBindingObject) {
             return {
                 status: false,
                 error: {
