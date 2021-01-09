@@ -78,17 +78,17 @@ export class ProductController {
 
         if (items.length > 0) {
             const productId2MaterialData = {};
+            //NOTE: productId2MaterialData has the following structure
+            // const productId2MaterialData = {
+            //     1: { 1: 200, 2: 340.5 }
+            // }
 
             for (const productMaterial of items) {
                 if (!productId2MaterialData.hasOwnProperty(productMaterial.productId)) {
-                    productId2MaterialData[productMaterial.productId] = [];
+                    productId2MaterialData[productMaterial.productId] = {};
                 }
 
-                productId2MaterialData[productMaterial.productId].push({
-                    productId: productMaterial.productId,
-                    materialId: productMaterial.materialId,
-                    materialAmount: productMaterial.materialAmount
-                });
+                productId2MaterialData[productMaterial.productId][productMaterial.materialId] = productMaterial.materialAmount;
             }
 
             return productId2MaterialData;
@@ -116,14 +116,20 @@ export class ProductController {
         }
     }
 
-    static async setProductMaterialRelations(clientBindingObject) {
+    static async setProductMaterialRelations(clientBindingObject) {        
         //Clear the whole table product_material
         await getRepository(ProductMaterial).clear();
 
         const productMaterials = [];
 
-        for (const id of Object.keys(clientBindingObject)) {
-            productMaterials.push(...clientBindingObject[id]);
+        for (const productId of Object.keys(clientBindingObject)) {
+            for (const materialId of Object.keys(clientBindingObject[productId])) {
+                productMaterials.push({
+                    productId: parseInt(productId),
+                    materialId: parseInt(materialId),
+                    materialAmount: clientBindingObject[productId][materialId]
+                });
+            }
         }
         
         return getRepository(ProductMaterial).save(productMaterials as ProductMaterial[]);
