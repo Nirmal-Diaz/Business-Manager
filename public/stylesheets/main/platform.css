@@ -222,7 +222,7 @@ body {
     border-radius: 50%;
 }
 
-.inputContainer.text>input::placeholder {
+.inputContainer.text>input::placeholder, .inputContainer.textarea>textarea::placeholder {
     color: var(--textInputPlaceholderColor);
 }
 
