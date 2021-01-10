@@ -40,6 +40,7 @@
 
     --buttonGlyphBackgroundColor: var(--color2-3);
     --buttonGlyphBackgroundColor-hover: var(--color2-4);
+    --buttonGlyphBackgroundColor-disabled: var(--color2-3);
     --buttonGlyphBoxShadowColor: var(--color2-2);
 
     --buttonTextBackgroundColor: var(--color1-1);

@@ -303,6 +303,10 @@ body {
     transform: scale(1.1);
 }
 
+.buttonGlyph.disabled {
+    background-color: var(--buttonGlyphBackgroundColor-disabled);
+}
+
 .buttonGlyph.revealed {
     width: 45vh;
 }
