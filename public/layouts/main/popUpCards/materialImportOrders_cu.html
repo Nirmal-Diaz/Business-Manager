@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create/Update Material Import Quotation</title>
+    <title>Create/Update Material Import Orders</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
@@ -30,9 +30,9 @@
                         if (submission.status) {
                             //Refresh (not reload) the parentCardInterface
                             if (this.form.getSubmissionMethod() === "PUT") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new quotation", "Double tap to view and update");
+                                this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
                             } else if (this.form.getSubmissionMethod() === "POST") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a quotation recently", "Double tap to view");
+                                this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
                             }
 
                             this.popUpCardObject.close();
@@ -51,36 +51,47 @@
                 });
             }
 
-            async initInputs() {
-                //Set the current date as value for "addedDate"
-                const validFromInput = this.form.getView().querySelector("#validFrom");
-                const addedDateInput = this.form.getView().querySelector("#addedDate");
-
-                addedDateInput.value = new Date().toISOString().slice(0, 10);
-                validFromInput.min = addedDateInput.value;
-                this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
-                    event.target.min = validFromInput.value;
-                });
-
+            async initInputs(submissionMethod) {
                 //Fill dropDownInputs
                 const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select, .inputContainer.text > datalist");
                 for (const dropDownInput of dropDownInputs) {
                     await FormComponent.refreshDropDownInput(dropDownInput);
+                }
+                
+                if (submissionMethod === "PUT") {
+                    //Set the current date as value for "addedDate"
+                    const addedDateInput = this.form.getView().querySelector("#addedDate");
+    
+                    addedDateInput.value = new Date().toISOString().slice(0, 10);
+                    this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
+                        event.target.min = addedDateInput.value;
+                    });
+
+                } else if (submissionMethod === "POST") {
+                    //Remove the save and reset buttons
+                    document.getElementById("saveButton").style.display = "none";
+                    document.getElementById("resetButton").style.display = "none";
+
+                    //Make all form fields disabled
+                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
+                    for (const formFieldContainer of formFieldContainers) {
+                        formFieldContainer.classList.add("disabled");
+                    }
                 }
 
                 return true;
             }
 
             initCreateForm() {
-                this.form.init("/registries/materialImportQuotation.json", "/materialImportQuotations", "PUT");
+                this.form.init("/registries/materialImportOrder.json", "/materialImportOrders", "PUT");
             }
 
             initUpdateForm(selectedCardDivisionSectorItem) {
                 document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
                 const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
 
-                this.form.init("/registries/materialImportQuotation.json", `/materialImportQuotations/${selectedItemId}`, "POST").then((form) => {
-                    fetch(`/materialImportQuotations/${selectedItemId}`)
+                this.form.init("/registries/materialImportOrder.json", `/materialImportOrders/${selectedItemId}`, "POST").then((form) => {
+                    fetch(`/materialImportOrders/${selectedItemId}`)
                         .then(response => response.json())
                         .then(response => {
                             if (response.status) {
@@ -92,7 +103,7 @@
                             }
                         })
                         .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required quotation from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required order from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
                         });
                 });
             }
@@ -106,7 +117,7 @@
         <div class="formTitleContainer">
             <div class="titleContainer">
                 <div class="titleDescription">Add</div>
-                <div class="title">Material Import Quotation</div>
+                <div class="title">Material Import Order</div>
             </div>
         </div>
 
@@ -115,41 +126,32 @@
             <form>
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="title">Quotation code</h1>
+                        <h1 class="title">Order code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: MIQ2020019" value="MIQ0000000"/>
+                        <input id="code" type="text" placeholder="eg: MIO2020019" value="MIO0000000"/>
                     </div>
                 </div>
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Import request code</h1>
+                        <h1 class="title">Import quotation code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="requestCode" list="importRequestCodeList" type="text" placeholder="eg: MIR2020019"/>
-                        <datalist id="importRequestCodeList"  data-request-url="/materialImportRequests/@valid" data-text-content-field="code"
+                        <input id="quotationCode" list="importQuotationCodeList" type="text" placeholder="eg: MIQ2020019"/>
+                        <datalist id="importQuotationCodeList"  data-request-url="/materialImportQuotations/@valid" data-text-content-field="code"
                         data-value-field="code">
-                            <option value="1">No pending requests</option>
+    
                         </datalist>
                     </div>
                 </div>
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Valid from</h1>
+                        <h1 class="title">Requested amount</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="validFrom" type="date" min="2020-04-28" placeholder="eg: 2020-04-30">
-                    </div>
-                </div>
-
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
-                        <h1 class="title">Valid till</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="validTill" type="date" placeholder="eg: 2020-05-10">
+                        <input id="requestedAmount" type="text" placeholder="eg: 1.5">
                     </div>
                 </div>
 
@@ -168,27 +170,19 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Available amount</h1>
+                        <h1 class="title">Valid till</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="availableAmount" type="text" placeholder="eg: 1.5">
-                    </div>
-                </div>
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
-                        <h1 class="title">Unit price</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="unitPrice" type="text" placeholder="eg: 1234.59">
+                        <input id="validTill" type="date" placeholder="eg: 2020-05-10">
                     </div>
                 </div>
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="title">Quotation status</h1>
+                        <h1 class="title">Order status</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="quotationStatusId" data-request-url="/tables/quotationStatus" data-text-content-field="name"
+                        <select id="orderStatusId" data-request-url="/tables/orderStatus" data-text-content-field="name"
                             data-value-field="id">
 
                         </select>

@@ -10,6 +10,7 @@ import {
 import { MaterialImportInvoice } from "./MaterialImportInvoice";
 import { MaterialImportQuotation } from "./MaterialImportQuotation";
 import { OrderStatus } from "./OrderStatus";
+import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index(
@@ -18,6 +19,7 @@ import { OrderStatus } from "./OrderStatus";
   {}
 )
 @Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
+@Index("fk_material_import_order_unit_type1_idx", ["unitTypeId"], {})
 @Entity("material_import_order", { schema: "business_manager" })
 export class MaterialImportOrder {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -32,17 +34,20 @@ export class MaterialImportOrder {
   @Column("decimal", { name: "requested_amount", precision: 10, scale: 0 })
   requestedAmount: string;
 
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
+
   @Column("date", { name: "valid_till" })
   validTill: string;
+
+  @Column("int", { name: "order_status_id" })
+  orderStatusId: number;
 
   @Column("text", { name: "description", nullable: true })
   description: string | null;
 
   @Column("date", { name: "added_date" })
   addedDate: string;
-
-  @Column("int", { name: "order_status_id" })
-  orderStatusId: number;
 
   @OneToOne(
     () => MaterialImportInvoice,
@@ -65,4 +70,11 @@ export class MaterialImportOrder {
   )
   @JoinColumn([{ name: "order_status_id", referencedColumnName: "id" }])
   orderStatus: OrderStatus;
+
+  @ManyToOne(() => UnitType, (unitType) => unitType.materialImportOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 }

@@ -67,27 +67,25 @@
                     await FormComponent.refreshDropDownInput(dropDownInput);
                 }
 
-                if (submissionMethod === "PUT") {
-                    //Disable the quotation request status field
-                    this.form.getView().querySelectorAll(".formFieldContainer")[4].classList.add("disabled");
+                const supplierDropDown = this.form.getView().querySelector("#supplierId");
 
+                if (submissionMethod === "PUT") {
                     //Set the current date as value for "addedDate"
                     const addedDateInput = this.form.getView().querySelector("#addedDate");
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
                     this.form.getView().querySelector("#wantedBy").min = addedDateInput.value;
 
                     //Hide the supplier dropdown
-                    document.getElementById("supplierId").parentElement.style.display = "none";
+                    supplierDropDown.parentElement.style.display = "none";
 
                     //Add onchange to material dropDown for loading the suppliers
-                    const materialDropDownInput = document.getElementById("materialId");
+                    const materialDropDownInput = this.form.getView().querySelector("#materialId");
                     materialDropDownInput.addEventListener("change", () => {
                         fetch(`/materials/${materialDropDownInput.value}/suppliers`)
                             .then(response => response.json())
                             .then(response => {
                                 if (response.status) {
                                     //Create a check input for each supplier
-                                    const supplierDropDown = this.form.getView().querySelector("#supplierId");
                                     const formFieldContainer = this.form.getView().querySelector(".inputGroup");
                                     formFieldContainer.innerHTML = "";
                                     const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
@@ -127,7 +125,7 @@
                     }
 
                     //Hide the multi supplier selection
-                    document.getElementById("supplierId").parentElement.nextElementSibling.style.display = "none";
+                    supplierDropDown.parentElement.nextElementSibling.style.display = "none";
                 }
 
                 return true;
@@ -231,7 +229,7 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="title">Request status</h1>
                     </div>

@@ -22,6 +22,7 @@ import { ProductController } from "../controllers/main/ProductController";
 import { MaterialImportRequestController } from "../controllers/main/MaterialImportRequestController";
 import { MaterialImportQuotationController } from "../controllers/main/MaterialImportQuotationController";
 import { MaterialBatchController } from "../controllers/main/MaterialBatchController";
+import { MaterialImportOrderController } from "../controllers/main/MaterialImportOrderController";
 
 export const mainRouter = express.Router();
 /*
@@ -590,15 +591,71 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
             });
     });
 
-// mainRouter.route("/materialImportRequests/@valid")
-//     .get((req, res, next) => {
-//         PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
-//             .then(() => MaterialImportRequestController.getValidMany(req.query.keyword)).then(data => {
-//                 res.locals.data = data; next();
-//             }).catch(error => {
-//                 res.locals.error = error; next();
-//             });
-//     });
+mainRouter.route("/materialImportQuotations/@valid")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportQuotationController.getManyByStatus(2)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//MATERIAL IMPORT ORDERS
+mainRouter.route("/materialImportOrders")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/materialImportOrders/:materialImportOrderId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.getOne(parseInt(req.params.materialImportOrderId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.deleteOne(parseInt(req.params.materialImportOrderId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/materialImportOrders/@valid")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.getManyByStatus(2)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
 
 //USERS
 mainRouter.route("/users")

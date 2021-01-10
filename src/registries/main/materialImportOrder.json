@@ -1,0 +1,50 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^MIO[0-9]{7}$",
+        "value": null
+    },
+    "quotationCode": {
+        "inputQuery": "#quotationCode",
+        "inputClass": "text",
+        "pattern": "^MIQ[0-9]{7}$",
+        "value": null
+    },
+    "requestedAmount": {
+        "inputQuery": "#requestedAmount",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{1,}$",
+        "value": null
+    },
+    "validTill": {
+        "inputQuery": "#validTill",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "orderStatusId": {
+        "inputQuery": "#orderStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    }
+}
