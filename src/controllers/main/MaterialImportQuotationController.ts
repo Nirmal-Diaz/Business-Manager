@@ -7,7 +7,7 @@ import { MaterialImportQuotationRepository as EntityRepository } from "../../rep
 import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
 
 export class MaterialImportQuotationController {
-    private static entityName: string = "material import quotation";
+    private static entityName: string = "Material Import Quotation";
     private static entityJSONName: string = "materialImportQuotation";
 
     static async createOne(clientBindingObject) {
@@ -58,6 +58,20 @@ export class MaterialImportQuotationController {
             return items;
         } else {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
+        }
+    }
+
+    static async getManyByStatus(statusId: number) {
+        const items = await getRepository(Entity).find({
+            where: {
+                quotationStatusId: statusId
+            }
+        });
+
+        if (items.length > 0) {
+            return items;
+        } else {
+            throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName.toLowerCase()}s for the status you specified`, technicalMessage: `No ${this.entityName.toLowerCase()}s with given status` };
         }
     }
 
