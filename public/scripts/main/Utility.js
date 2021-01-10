@@ -212,8 +212,8 @@ export class FormComponent {
         return fetch(requestURL)
             .then(response => response.json())
             .then(response => {
+                const dropDownInputFragment = new DocumentFragment();
                 if (response.status) {
-                    const dropDownInputFragment = new DocumentFragment();
                     //Create a dropDownInputOption for every item
                     for (const item of response.data) {
                         const dropDownInputOption = document.createElement("option");
@@ -222,11 +222,15 @@ export class FormComponent {
 
                         dropDownInputFragment.appendChild(dropDownInputOption);
                     }
-                    return dropDownInputFragment;
                 } else {
-                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                    return null;
+                    //Create an empty dropDownInputOption
+                    const dropDownInputOption = document.createElement("option");
+                    dropDownInputOption.textContent = "No suitable items";
+                    dropDownInputOption.value = "(Nothing selected)";
+
+                    dropDownInputFragment.appendChild(dropDownInputOption);
                 }
+                return dropDownInputFragment;
             })
             .catch(error => {
                 window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch roles list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
