@@ -69,7 +69,7 @@ export class MaterialImportRequestController {
         if (items.length > 0) {
             return items;
         } else {
-            throw { title: "No Import Requests", titleDescription: "Try another request status", message: `There are no ${this.entityName}s with for the status you specified`, technicalMessage: `No ${this.entityName}s for given status` };
+            throw { title: "No Import Requests", titleDescription: "Try another request status", message: `There are no ${this.entityName}s for the status you specified`, technicalMessage: `No ${this.entityName}s with given status` };
         }
     }
 
