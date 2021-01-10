@@ -19,7 +19,7 @@ export class MaterialImportQuotationRepository {
             UPDATE material_import_quotation miq
             SET miq.quotation_status_id =
             CASE
-                WHEN 4 THEN 4
+                WHEN miq.quotation_status_id = 4 THEN 4
                 WHEN DATEDIFF(miq.valid_from, NOW()) > 0 THEN 1
                 WHEN DATEDIFF(miq.valid_till, NOW()) > 0 THEN 2
                 ELSE 3
