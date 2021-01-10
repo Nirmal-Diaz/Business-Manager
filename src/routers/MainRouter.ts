@@ -534,6 +534,16 @@ mainRouter.route("/materialImportRequests/:materialImportRequestId")
             });
     });
 
+mainRouter.route("/materialImportRequests/@valid")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.getManyByStatus(1)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //MATERIAL IMPORT QUOTATIONS
 mainRouter.route("/materialImportQuotations")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -579,6 +589,16 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
                 res.locals.error = error; next();
             });
     });
+
+// mainRouter.route("/materialImportRequests/@valid")
+//     .get((req, res, next) => {
+//         PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+//             .then(() => MaterialImportRequestController.getValidMany(req.query.keyword)).then(data => {
+//                 res.locals.data = data; next();
+//             }).catch(error => {
+//                 res.locals.error = error; next();
+//             });
+//     });
 
 //USERS
 mainRouter.route("/users")

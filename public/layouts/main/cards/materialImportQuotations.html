@@ -22,16 +22,28 @@
         class CardInterface extends BaseCardInterface {
             constructor() {
                 super();
-                this.createControls[0].addEventListener("click", () => {
-                    //Add onload to iframe for initializing update form
-                    const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/materialImportQuotations_cu.html");
-                    popUpCard.getView().style.width = "800px";
-                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
-                            popUpCard.popUpCardInterface.initCreateForm();
-                        });
-                    });
-                });
+
+                //Check if there are pending material requests before create material quotation bu
+                fetch(`/materialImportRequests/@valid`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            this.createControls[0].addEventListener("click", () => {
+                                //Add onload to iframe for initializing update form
+                                const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/materialImportQuotations_cu.html");
+                                popUpCard.getView().style.width = "800px";
+                                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                                    popUpCard.popUpCardInterface.initInputs().then(() => {
+                                        popUpCard.popUpCardInterface.initCreateForm();
+                                    });
+                                });
+                            });
+                        } else {
+                            this.createControls[0].classList.add("disabled");
+                            this.createControls[0].title = "No pending material import requests";
+                        }
+                    })
+                    .catch(error => { });
 
                 this.retrieveControls[0].addEventListener("click", () => {
                     ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
@@ -152,12 +164,12 @@
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_search.png" title="Search import quotation"/>
+                <img src="/images/main/glyph_search.png" title="Search import quotation" />
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_refresh.png" title="Refresh"/>
+                <img src="/images/main/glyph_refresh.png" title="Refresh" />
             </button>
         </div>
         <div id="updateControlsContainer">
