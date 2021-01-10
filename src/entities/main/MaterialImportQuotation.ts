@@ -4,10 +4,11 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialImportInvoice } from "./MaterialImportInvoice";
+import { MaterialImportOrder } from "./MaterialImportOrder";
 import { MaterialImportRequest } from "./MaterialImportRequest";
 import { QuotationStatus } from "./QuotationStatus";
 import { UnitType } from "./UnitType";
@@ -52,11 +53,11 @@ export class MaterialImportQuotation {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToOne(
-    () => MaterialImportInvoice,
-    (materialImportInvoice) => materialImportInvoice.quotationCode2
+  @OneToMany(
+    () => MaterialImportOrder,
+    (materialImportOrder) => materialImportOrder.quotationCode2
   )
-  materialImportInvoice: MaterialImportInvoice;
+  materialImportOrders: MaterialImportOrder[];
 
   @OneToOne(
     () => MaterialImportRequest,

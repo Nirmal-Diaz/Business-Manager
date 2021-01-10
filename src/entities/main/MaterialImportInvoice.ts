@@ -3,16 +3,20 @@ import {
   Entity,
   Index,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialImportQuotation } from "./MaterialImportQuotation";
+import { InboundPayment } from "./InboundPayment";
+import { InvoiceStatus } from "./InvoiceStatus";
+import { MaterialImportOrder } from "./MaterialImportOrder";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
+@Index("quotation_code_UNIQUE", ["orderCode"], { unique: true })
 @Index(
-  "fk_material_import_invoice_product_export_quotation1_idx",
-  ["quotationCode"],
+  "fk_material_import_invoice_invoice_status1_idx",
+  ["invoiceStatusId"],
   {}
 )
 @Entity("material_import_invoice", { schema: "business_manager" })
@@ -23,29 +27,45 @@ export class MaterialImportInvoice {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("char", { name: "quotation_code", unique: true, length: 10 })
-  quotationCode: string;
+  @Column("char", { name: "order_code", unique: true, length: 10 })
+  orderCode: string;
 
   @Column("decimal", { name: "imported_amount", precision: 10, scale: 0 })
   importedAmount: string;
 
-  @Column("decimal", { name: "dicount_ratio", precision: 10, scale: 0 })
-  dicountRatio: string;
+  @Column("decimal", { name: "price", precision: 7, scale: 2 })
+  price: string;
 
-  @Column("decimal", { name: "grand_total", precision: 7, scale: 2 })
-  grandTotal: string;
+  @Column("decimal", { name: "discount_ratio", precision: 10, scale: 0 })
+  discountRatio: string;
 
-  @Column("decimal", { name: "payed_amount", precision: 7, scale: 2 })
-  payedAmount: string;
+  @Column("decimal", {
+    name: "final_price",
+    nullable: true,
+    precision: 10,
+    scale: 0,
+  })
+  finalPrice: string | null;
 
-  @Column("decimal", { name: "balance", precision: 7, scale: 2 })
-  balance: string;
+  @Column("int", { name: "invoice_status_id" })
+  invoiceStatusId: number;
 
-  @OneToOne(
-    () => MaterialImportQuotation,
-    (materialImportQuotation) => materialImportQuotation.materialImportInvoice,
+  @OneToMany(() => InboundPayment, (inboundPayment) => inboundPayment.invoice)
+  inboundPayments: InboundPayment[];
+
+  @ManyToOne(
+    () => InvoiceStatus,
+    (invoiceStatus) => invoiceStatus.materialImportInvoices,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "quotation_code", referencedColumnName: "code" }])
-  quotationCode2: MaterialImportQuotation;
+  @JoinColumn([{ name: "invoice_status_id", referencedColumnName: "id" }])
+  invoiceStatus: InvoiceStatus;
+
+  @OneToOne(
+    () => MaterialImportOrder,
+    (materialImportOrder) => materialImportOrder.materialImportInvoice,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
+  orderCode2: MaterialImportOrder;
 }
