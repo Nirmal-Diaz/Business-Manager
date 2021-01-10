@@ -6,6 +6,7 @@ export class MaterialImportQuotationRepository {
     static search(keyword) {
         return getRepository(MaterialImportQuotation)
         .createQueryBuilder("miq")
+        .leftJoinAndSelect("miq.quotationStatus", "qs")
         .leftJoinAndSelect("miq.unitType", "ut")
         .where("miq.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
