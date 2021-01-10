@@ -28,8 +28,8 @@ export class MaterialImportRequest {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("date", { name: "valid_till" })
-  validTill: string;
+  @Column("date", { name: "wanted_by" })
+  wantedBy: string;
 
   @Column("int", { name: "request_status_id" })
   requestStatusId: number;

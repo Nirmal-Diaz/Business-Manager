@@ -14,9 +14,6 @@ export class MaterialImportRequestController {
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //NOTE: Every quotation request must initially be at "Pending" state
-        serverObject.quotationRequestStatusId = "1";
-
         //Clone the serverObject and change the code and supplierId fields for each selectedSupplierId
         const clonedServerObjects = [];
 
@@ -53,7 +50,6 @@ export class MaterialImportRequestController {
     }
 
     static async getMany(keyword: string) {
-        await EntityRepository.updateTable();
 
         const items = await EntityRepository.search(keyword);
 

@@ -119,7 +119,7 @@
                                 }
 
                                 const iconURL = `../../../images/main/icon_user_default.png`;
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, [item.supplier.businessName, item.material.name, item.validTill]);
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, [item.supplier.businessName, item.material.name, item.wantedBy]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 states[item.requestStatus.id].appendChild(cardDivisionSectorItem);
                             }

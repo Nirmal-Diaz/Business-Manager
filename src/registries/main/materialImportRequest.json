@@ -5,8 +5,8 @@
         "pattern": "^MIR[0-9]{7}$",
         "value": null
     },
-    "validTill": {
-        "inputQuery": "#validTill",
+    "wantedBy": {
+        "inputQuery": "#wantedBy",
         "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
