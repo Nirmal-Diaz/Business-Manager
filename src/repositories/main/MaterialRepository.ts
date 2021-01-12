@@ -46,7 +46,7 @@ export class MaterialRepository {
         return getRepository(Material).query(`
             UPDATE material m
             LEFT JOIN
-                (SELECT mb.material_id, SUM(mb.amount) viable_amount
+                (SELECT mb.material_id, SUM(mb.imported_amount) viable_amount
                 FROM material_batch mb
                 WHERE mb.batch_status_id = 1
                 GROUP BY mb.material_id) viable
