@@ -123,7 +123,7 @@
                                 }
                                 
                                 const tableBody = states[item.batchStatus.id].querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.amount, item.viablePeriod]);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.importedAmount, item.viablePeriod]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }

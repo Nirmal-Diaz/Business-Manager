@@ -9,13 +9,10 @@ export class MaterialBatchController {
     private static entityName: string = "material batch";
     private static entityJSONName: string = "materialBatch";
 
-    static async createOne(clientBindingObject) {
+    private static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
-
-        //Update the code field with next possible value
-        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
         return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
