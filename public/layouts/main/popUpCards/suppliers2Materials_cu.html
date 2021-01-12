@@ -37,7 +37,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            bindingObject: this.form.getBindingObject()
+                            bindingObject: this.form.customBindingObject
                         })
                     })
                         .then(response => response.json())
@@ -74,8 +74,8 @@
             updateCheckInputs(materialId) {
                 const checkInputContainers = this.form.getView().querySelectorAll(".inputContainer.check");
                 for (const checkInputContainer of checkInputContainers) {
-                    if (this.form.getBindingObject().hasOwnProperty(materialId)) {
-                        if (this.form.getBindingObject()[materialId].includes(parseInt(checkInputContainer.dataset.supplierId))) {
+                    if (this.form.customBindingObject.hasOwnProperty(materialId)) {
+                        if (this.form.customBindingObject[materialId].includes(parseInt(checkInputContainer.dataset.supplierId))) {
                             checkInputContainer.firstElementChild.checked = true;
                         } else {
                             checkInputContainer.firstElementChild.checked = false;
@@ -95,8 +95,8 @@
                         .then(response => {
                             if (response.status) {
                                 //Replace the binding object with a customized structure
-                                this.form.referenceBindingObject = response.data;
-                                this.form.bindingObject = response.data;
+                                this.form.customReferenceBindingObject = response.data;
+                                this.form.customBindingObject = response.data;
                             } else {
                                 window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                             }
@@ -120,14 +120,14 @@
 
                                     checkInputContainer.children[0].addEventListener("change", () => {
                                         //Add the materialId key if not exists in bindingObject
-                                        if (!this.form.getBindingObject().hasOwnProperty(this.selectedMaterialId)) {
-                                            this.form.getBindingObject()[this.selectedMaterialId] = [];
+                                        if (!this.form.customBindingObject.hasOwnProperty(this.selectedMaterialId)) {
+                                            this.form.customBindingObject[this.selectedMaterialId] = [];
                                         }
 
                                         if (checkInputContainer.children[0].checked) {
-                                            this.form.getBindingObject()[this.selectedMaterialId].push(supplier.id);
+                                            this.form.customBindingObject[this.selectedMaterialId].push(supplier.id);
                                         } else {
-                                            this.form.getBindingObject()[this.selectedMaterialId].splice(this.form.getBindingObject()[this.selectedMaterialId].indexOf(supplier.id), 1);
+                                            this.form.customBindingObject[this.selectedMaterialId].splice(this.form.customBindingObject[this.selectedMaterialId].indexOf(supplier.id), 1);
                                         }
                                     });
                                 }

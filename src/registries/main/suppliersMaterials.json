@@ -1,16 +1,14 @@
-[
-    {
-        "materialId": {
-            "inputQuery": null,
-            "inputClass": null,
-            "pattern": "^[1-9]{1,}$",
-            "value": null
-        },
-        "supplierId": {
-            "inputQuery": null,
-            "inputClass": null,
-            "pattern": "^[1-9]{1,}$",
-            "value": null
-        }
+{
+    "materialId": {
+        "inputQuery": null,
+        "inputClass": null,
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "supplierId": {
+        "inputQuery": null,
+        "inputClass": null,
+        "pattern": "^[1-9]{1,}$",
+        "value": null
     }
-]
+}
