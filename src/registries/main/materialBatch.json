@@ -5,6 +5,12 @@
         "pattern": "^MBT[0-9]{7}$",
         "value": null
     },
+    "invoiceCode": {
+        "inputQuery": "#invoiceCode",
+        "inputClass": "text",
+        "pattern": "^MII[0-9]{7}$",
+        "value": null
+    },
     "materialId": {
         "inputQuery": "#materialId",
         "inputClass": "dropDown",
