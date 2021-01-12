@@ -19,7 +19,9 @@ export class ValidationController {
                     //CASE: clientBindingObject has the same key as serverBindingObject
                     if (serverObject[key]?.childFormObject === true) {
                         //CASE: Key holds an entire new formObject
-                        ValidationController.validateBindingObject(serverObject[key], clientBindingObject[key]);
+                        ValidationController.validateBindingObject(serverObject[key].value, clientBindingObject[key].value);
+                        //WARNING: serverObject's structure will be altered here
+                        serverObject[key] = serverObject[key].value;
                     } else {
                         //CASE: Key holds a formField object
                         //Check if the clientFormField has its value property present
