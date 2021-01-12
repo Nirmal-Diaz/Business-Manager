@@ -1,0 +1,103 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^MII[0-9]{7}$",
+        "value": null
+    },
+    "orderCode": {
+        "inputQuery": "#orderCode",
+        "inputClass": "text",
+        "pattern": "^MIO[0-9]{7}$",
+        "value": null
+    },
+    "price": {
+        "inputQuery": "#price",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "discountRatio": {
+        "inputQuery": "#discountRatio",
+        "inputClass": "dropDown",
+        "pattern": "^0[.][0-9]{1,}$",
+        "value": null
+    },
+    "finalPrice": {
+        "inputQuery": "#finalPrice",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "invoiceStatusId": {
+        "inputQuery": "#invoiceStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "materialBatch": {
+        "childFormObject": true,
+        "value": {
+            "code": {
+                "inputQuery": null,
+                "inputClass": null,
+                "pattern": null,
+                "value": null
+            },
+            "invoiceCode": {
+                "inputQuery": "#code",
+                "inputClass": "text",
+                "pattern": "^MII[0-9]{7}$",
+                "value": null
+            },
+            "materialId": {
+                "inputQuery": null,
+                "inputClass": null,
+                "pattern": null,
+                "value": null
+            },
+            "importedAmount": {
+                "inputQuery": "#importedAmount",
+                "inputClass": "text",
+                "pattern": "^\\d{1,}[.]\\d{1,}$",
+                "value": null
+            },
+            "viablePeriod": {
+                "inputQuery": "#viablePeriod",
+                "inputClass": "text",
+                "pattern": "^\\d{1,}$",
+                "value": null
+            },
+            "batchStatusId": {
+                "inputQuery": "#batchStatusId",
+                "inputClass": "dropDown",
+                "pattern": "^[1-9]{1,}$",
+                "value": null
+            },
+            "description": {
+                "inputQuery": "#description",
+                "inputClass": "textarea",
+                "pattern": null,
+                "value": ""
+            },
+            "addedDate": {
+                "inputQuery": "#addedDate",
+                "inputClass": "text",
+                "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+                "value": null
+            }
+        }
+    }
+}
