@@ -20,6 +20,7 @@ import { UnitType } from "./UnitType";
 )
 @Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
 @Index("fk_material_import_order_unit_type1_idx", ["unitTypeId"], {})
+@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
 @Entity("material_import_order", { schema: "business_manager" })
 export class MaterialImportOrder {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -28,7 +29,7 @@ export class MaterialImportOrder {
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("char", { name: "quotation_code", length: 10 })
+  @Column("char", { name: "quotation_code", unique: true, length: 10 })
   quotationCode: string;
 
   @Column("decimal", { name: "requested_amount", precision: 10, scale: 0 })
@@ -55,9 +56,9 @@ export class MaterialImportOrder {
   )
   materialImportInvoice: MaterialImportInvoice;
 
-  @ManyToOne(
+  @OneToOne(
     () => MaterialImportQuotation,
-    (materialImportQuotation) => materialImportQuotation.materialImportOrders,
+    (materialImportQuotation) => materialImportQuotation.materialImportOrder,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "quotation_code", referencedColumnName: "code" }])

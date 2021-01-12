@@ -13,13 +13,13 @@ import { RequestStatus } from "./RequestStatus";
 import { Customer } from "./Customer";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
+@Index("fk_quotation_request_material10_idx", ["productId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
   ["requestStatusId"],
   {}
 )
 @Index("fk_quotation_request_supplier10_idx", ["customerId"], {})
-@Index("fk_quotation_request_material10_idx", ["productId"], {})
 @Entity("product_export_request", { schema: "business_manager" })
 export class ProductExportRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })

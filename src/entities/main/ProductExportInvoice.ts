@@ -9,12 +9,12 @@ import {
 import { ProductExportQuotation } from "./ProductExportQuotation";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
 @Index(
   "fk_material_import_invoice_product_export_quotation1_idx",
   ["quotationCode"],
   {}
 )
+@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
 @Entity("product_export_invoice", { schema: "business_manager" })
 export class ProductExportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })

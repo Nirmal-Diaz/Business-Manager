@@ -13,9 +13,9 @@ import { QuotationStatus } from "./QuotationStatus";
 import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
 @Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
 @Index("fk_quotation_unit_type1_idx", ["unitTypeId"], {})
+@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
 @Entity("product_export_quotation", { schema: "business_manager" })
 export class ProductExportQuotation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })

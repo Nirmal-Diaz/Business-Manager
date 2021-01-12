@@ -4,20 +4,19 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { MaterialImportOrder } from "./MaterialImportOrder";
+import { UnitType } from "./UnitType";
 import { MaterialImportRequest } from "./MaterialImportRequest";
 import { QuotationStatus } from "./QuotationStatus";
-import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
-@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
-@Index("fk_quotation_unit_type1_idx", ["unitTypeId"], {})
+@Index("fk_material_import_quotation_unit_type1_idx", ["unitTypeId"], {})
 @Index("fk_quotation_quotation_request1_idx", ["requestCode"], {})
+@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
+@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
 @Entity("material_import_quotation", { schema: "business_manager" })
 export class MaterialImportQuotation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -35,11 +34,11 @@ export class MaterialImportQuotation {
   @Column("date", { name: "valid_till" })
   validTill: string;
 
-  @Column("int", { name: "unit_type_id" })
-  unitTypeId: number;
-
   @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
   availableAmount: string;
+
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
   unitPrice: string;
@@ -53,11 +52,18 @@ export class MaterialImportQuotation {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToMany(
+  @OneToOne(
     () => MaterialImportOrder,
     (materialImportOrder) => materialImportOrder.quotationCode2
   )
-  materialImportOrders: MaterialImportOrder[];
+  materialImportOrder: MaterialImportOrder;
+
+  @ManyToOne(() => UnitType, (unitType) => unitType.materialImportQuotations, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 
   @OneToOne(
     () => MaterialImportRequest,
@@ -74,11 +80,4 @@ export class MaterialImportQuotation {
   )
   @JoinColumn([{ name: "quotation_status_id", referencedColumnName: "id" }])
   quotationStatus: QuotationStatus;
-
-  @ManyToOne(() => UnitType, (unitType) => unitType.materialImportQuotations, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
-  unitType: UnitType;
 }
