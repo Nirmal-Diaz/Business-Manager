@@ -23,6 +23,7 @@ import { MaterialImportRequestController } from "../controllers/main/MaterialImp
 import { MaterialImportQuotationController } from "../controllers/main/MaterialImportQuotationController";
 import { MaterialBatchController } from "../controllers/main/MaterialBatchController";
 import { MaterialImportOrderController } from "../controllers/main/MaterialImportOrderController";
+import { MaterialImportInvoiceController } from "../controllers/main/MaterialImportInvoiceController";
 
 export const mainRouter = express.Router();
 /*
@@ -375,14 +376,6 @@ mainRouter.route("/materials/@all/suppliers")
 
 //MATERIAL BATCHES
 mainRouter.route("/materialBatches")
-    .put(express.json(), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
-            .then(() => MaterialBatchController.createOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material batches", req.method)
             .then(() => MaterialBatchController.getMany(req.query.keyword)).then(data => {
@@ -629,14 +622,6 @@ mainRouter.route("/materialImportOrders/:materialImportOrderId")
                 res.locals.error = error; next();
             });
     })
-    .post(express.json({ limit: "500kB" }), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
-            .then(() => MaterialImportOrderController.updateOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
             .then(() => MaterialImportOrderController.deleteOne(parseInt(req.params.materialImportOrderId)))
@@ -650,7 +635,53 @@ mainRouter.route("/materialImportOrders/:materialImportOrderId")
 mainRouter.route("/materialImportOrders/@valid")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
-            .then(() => MaterialImportOrderController.getManyByStatus(2)).then(data => {
+            .then(() => MaterialImportOrderController.getManyByStatus(1)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//MATERIAL IMPORT INVOICES
+mainRouter.route("/materialImportInvoices")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/materialImportInvoices/:materialImportInvoiceId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.getOne(parseInt(req.params.materialImportInvoiceId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.deleteOne(parseInt(req.params.materialImportInvoiceId)))
+            .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
