@@ -13,6 +13,10 @@ export class PlatformUtil {
         //Output time
         return (hours + " : " + minutes);
     }
+
+    static capitalizedToPascal(capitalizedSentence) {
+        return capitalizedSentence[0].toLowerCase() + capitalizedSentence.replace(/\s/g, "").slice(1);
+    }
 }
 
 export class ShellComponent {

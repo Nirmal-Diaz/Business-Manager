@@ -1,4 +1,5 @@
 import { BaseCardInterface } from "./BaseCardInterface.js";
+import { PlatformUtil } from "./Utility.js";
 
 //@ts-check
 export class EntityManagerCardInterface extends BaseCardInterface {
@@ -10,19 +11,19 @@ export class EntityManagerCardInterface extends BaseCardInterface {
         this.entityNameSingular = entityNameSingular;
         this.entityNamePlural = entityNamePlural;
 
-        this.createControls[0].addEventListener("click", () => {
+        this.createControls[0]?.addEventListener("click", () => {
             //Add onload to iframe for initializing create form
-            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityNamePlural.replace(/\s/g, "")}_cu.html`);
+            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}_cu.html`);
             popUpCard.getView().style.width = "800px";
             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityNameSingular.replace(/\s/g, "")}.json`, `/${this.entityNamePlural.replace(/\s/g, "")}`, "PUT");
+                popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizeToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}`, "PUT");
             });
         });
 
-        this.retrieveControls[0].addEventListener("click", () => {
+        this.retrieveControls[0]?.addEventListener("click", () => {
             ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
         });
-        this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
+        this.retrieveControls[0]?.children[1].addEventListener("keypress", (event) => {
             if (event.key === 'Enter') {
                 if (event.currentTarget.value === "") {
                     this.searchItems("", "Showing all items");
@@ -31,26 +32,26 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 }
             }
         });
-        this.retrieveControls[1].addEventListener("click", () => {
+        this.retrieveControls[1]?.addEventListener("click", () => {
             this.searchItems("", "Showing all items");
         });
 
-        this.updateControls[0].addEventListener("click", () => {
+        this.updateControls[0]?.addEventListener("click", () => {
             if (this.selectedCardDivisionSectorItems.length === 0) {
                 window.parent.shellInterface.throwAlert("Update what?", "Select an item to update", null, null, "OK", null);
             } else if (this.selectedCardDivisionSectorItems.length > 1) {
                 window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
             } else {
                 //Add onload to iframe for initializing update form
-                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityNamePlural.replace(/\s/g, "")}_cu.html`);
+                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}_cu.html`);
                 popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityNameSingular.replace(/\s/g, "")}.json`, `/${this.entityNamePlural.replace(/\s/g, "")}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
+                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizeToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
                 });
             }
         });
 
-        this.deleteControls[0].addEventListener("click", () => {
+        this.deleteControls[0]?.addEventListener("click", () => {
             if (this.selectedCardDivisionSectorItems.length === 0) {
                 window.parent.shellInterface.throwAlert("Delete what?", "Select an item to delete", null, null, "OK", null);
             } else if (this.selectedCardDivisionSectorItems.length > 1) {
@@ -59,7 +60,7 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", "The action of deleting an item isn't reversible. Think carefully and proceed", null, "YES", "NO")
                     .then((value) => {
                         if (value) {
-                            fetch(`/${this.entityNamePlural}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
+                            fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
                                 method: "DELETE"
                             })
                                 .then(response => response.json())

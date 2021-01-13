@@ -11,7 +11,7 @@
 
     <script type="module">
         //@ts-check
-        import { ShellComponent, ShellUtil, CardComponent } from "/scripts/main/Utility.js";
+        import { PlatformUtil, CardComponent } from "/scripts/main/Utility.js";
         import { EntityManagerCardInterface } from "/scripts/main/EntityManagerCardInterface.js";
 
         //Add onload to window for initializing cardInterface
@@ -25,7 +25,7 @@
             }
 
             searchItems(keyword, titleDescriptionText) {
-                fetch(`/${this.entityNamePlural.replace(/\s/g, "")}?keyword=${keyword}`)
+                fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
@@ -72,9 +72,7 @@
     <!-- quickAccessArea -->
     <div id="quickAccessArea" style="display: none;">
         <div id="createControlsContainer">
-            <button class="buttonGlyph" title="Add material batch">
-                <img src="/images/main/glyph_create.png" />
-            </button>
+            
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">

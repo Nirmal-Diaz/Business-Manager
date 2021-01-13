@@ -21,11 +21,11 @@
 
         class CardInterface extends EntityManagerCardInterface {
             constructor() {
-                super("role", "roles");
+                super("Role", "Roles");
             }
 
             searchItems(keyword, titleDescriptionText) {
-                fetch(`/${this.entityNamePlural.replace(/\s/g, "")}?keyword=${keyword}`)
+                fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {

@@ -11,7 +11,7 @@
 
     <script type="module">
         //@ts-check
-        import { CardComponent } from "/scripts/main/Utility.js";
+        import { CardComponent, PlatformUtil } from "/scripts/main/Utility.js";
         import { EntityManagerCardInterface } from "/scripts/main/EntityManagerCardInterface.js";
 
         //Add onload to window for initializing cardInterface
@@ -21,11 +21,11 @@
 
         class CardInterface extends EntityManagerCardInterface {
             constructor() {
-                super("customer", "customers");
+                super("Customer", "Customers");
             }
 
             searchItems(keyword, titleDescriptionText) {
-                fetch(`/${this.entityNamePlural.replace(/\s/g, "")}?keyword=${keyword}`)
+                fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
