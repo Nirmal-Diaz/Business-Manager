@@ -11,67 +11,24 @@
 
     <script type="module">
         //@ts-check
-        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
-        import { Form } from "/scripts/main/Form.js";
-        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
+        import { EntityPopUpCardInterface } from "/scripts/main/EntityPopUpCardInterface.js";
 
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface extends BasePopUpCardInterface {
-            form = new Form(document.querySelector("form"));
-            selectedSupplierIds = new Set();
-
-            templateContainerFragment = document.getElementById("templateContainer").content;
-
+        class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super();
-
-                document.getElementById("saveButton").addEventListener("click", () => {
-                    let additionalData = {};
-                    if (this.form.getSubmissionMethod() === "PUT") {
-                        //Add additionalData to send selectedSupplierIds
-                        additionalData.selectedSupplierIds = Array.from(this.selectedSupplierIds);
-                    }
-
-                    this.form.submit(additionalData).then(submission => {
-                        if (submission.status) {
-                            //Refresh (not reload) the parentCardInterface
-                            if (this.form.getSubmissionMethod() === "PUT") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got new quotation requests", "Double tap to view and update");
-                            } else if (this.form.getSubmissionMethod() === "POST") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a quotation request recently", "Double tap to view");
-                            }
-
-                            this.popUpCardObject.close();
-                        } else {
-                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
-                        }
-                    });
-                });
-
-                document.getElementById("resetButton").addEventListener("click", () => {
-                    this.form.bindingObject = this.form.referenceBindingObject;
-                });
-
-                document.getElementById("printButton").addEventListener("click", () => {
-                    print();
-                });
+                super("Material Import Request", "Material Import Requests");
             }
 
-            async initInputs(submissionMethod) {
-                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
-                for (const dropDownInput of dropDownInputs) {
-                    await FormComponent.refreshDropDownInput(dropDownInput);
-                }
-
+            extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
                 const supplierDropDown = this.form.getView().querySelector("#supplierId");
+                const addedDateInput = this.form.getView().querySelector("#addedDate");
 
                 if (submissionMethod === "PUT") {
                     //Set the current date as value for "addedDate"
-                    const addedDateInput = this.form.getView().querySelector("#addedDate");
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
                     this.form.getView().querySelector("#wantedBy").min = addedDateInput.value;
 
@@ -88,7 +45,7 @@
                                     //Create a check input for each supplier
                                     const formFieldContainer = this.form.getView().querySelector(".inputGroup");
                                     formFieldContainer.innerHTML = "";
-                                    const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
+                                    const checkInputContainerTemplate = this.form.getView().querySelector("#templateContainer").content.querySelector(".inputContainer.check");
                                     for (const supplier of response.data) {
                                         const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
                                         checkInputContainer.children[1].textContent = supplier.businessName;
@@ -98,9 +55,11 @@
                                         checkInputContainer.children[0].addEventListener("change", () => {
                                             //Add or remove the supplier id from the selectedSupplierIds according to the selection
                                             if (checkInputContainer.children[0].checked) {
-                                                this.selectedSupplierIds.add(checkInputContainer.dataset.supplierId);
+                                                this.form.getAdditionalData().selectedSupplierIdsSet.add(checkInputContainer.dataset.supplierId);
+                                                this.form.getAdditionalData().selectedSupplierIds = Array.from(this.form.getAdditionalData().selectedSupplierIdsSet);
                                             } else {
-                                                this.selectedSupplierIds.delete(checkInputContainer.dataset.supplierId);
+                                                this.form.getAdditionalData().selectedSupplierIdsSet.delete(checkInputContainer.dataset.supplierId);
+                                                this.form.getAdditionalData().selectedSupplierIds = Array.from(this.form.getAdditionalData().selectedSupplierIdsSet);
                                             }
                                         });
                                     }
@@ -110,56 +69,43 @@
                             });
                     });
 
-                    //Dispatch the change event on the materialDropDownInput for selecting the first material
-                    const onChangeEvent = new Event("change");
-                    materialDropDownInput.dispatchEvent(onChangeEvent);
+                    this.form.getAdditionalData().selectedSupplierIdsSet = new Set();
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
+
                 } else if (submissionMethod === "POST") {
-                    //Remove the save and reset buttons
-                    document.getElementById("saveButton").style.display = "none";
+                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
 
-                    //Make all form fields disabled
+                    //Hide the multi supplier selection
+                    supplierDropDown.parentElement.nextElementSibling.style.display = "none";
+
+                    //Make all form fields disabled except the description
                     const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
                     for (const formFieldContainer of formFieldContainers) {
                         formFieldContainer.classList.add("disabled");
                     }
+                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
 
-                    //Hide the multi supplier selection
-                    supplierDropDown.parentElement.nextElementSibling.style.display = "none";
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
+                        fetch(submissionURL)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                                    //Update the inputs according to the binding object
+                                    this.form.updateInputs(this.form.getBindingObject());
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            });
+                    });
                 }
 
-                return true;
-            }
-
-            initCreateForm() {
-                this.form.init("/registries/materialImportRequest.json", "/materialImportRequests", "PUT");
-
-                //Remove print button
-                document.getElementById("printButton").remove();
-            }
-
-            initUpdateForm(selectedCardDivisionSectorItem) {
-                const titleContainer = document.querySelector(".formTitleContainer>.titleContainer");
-                titleContainer.children[0].textContent = "View";
-                titleContainer.children[1].textContent = "Material Import Request";
-
-                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
-                this.form.init("/registries/materialImportRequest.json", `/materialImportRequests/${selectedItemId}`, "POST").then((form) => {
-                    fetch(`/materialImportRequests/${selectedItemId}`)
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
-                                //Update the inputs according to the binding object
-                                this.form.updateInputs(this.form.getBindingObject());
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required quotation request from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
-                });
             }
         }
     </script>
@@ -260,6 +206,13 @@
                     </div>
                 </div>
 
+                <template id="templateContainer">
+                    <!-- checkInputContainer template -->
+                    <div class="inputContainer check" data-supplier-id="0">
+                        <input type="checkbox" />
+                        <label>Supplier</label>
+                    </div>
+                </template>
             </form>
         </div>
 
@@ -271,14 +224,6 @@
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
     </div>
-
-    <!-- checkInputContainer template -->
-    <template id="templateContainer">
-        <div class="inputContainer check" data-supplier-id="0">
-            <input type="checkbox" />
-            <label>Supplier</label>
-        </div>
-    </template>
 </body>
 
 </html>

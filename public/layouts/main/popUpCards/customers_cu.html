@@ -11,83 +11,44 @@
 
     <script type="module">
         //@ts-check
-        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
-        import { Form } from "/scripts/main/Form.js";
-        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
+        import { EntityPopUpCardInterface } from "/scripts/main/EntityPopUpCardInterface.js";
 
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface extends BasePopUpCardInterface {
-            form = new Form(document.querySelector("form"));
-
+        class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super();
-                document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit().then(submission => {
-                        if (submission.status) {
-                            //Refresh (not reload) the parentCardInterface
-                            if (this.form.getSubmissionMethod() === "PUT") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new customer", "Double tap to view and update");
-                            } else if (this.form.getSubmissionMethod() === "POST") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a customer recently", "Double tap to view");
-                            }
+                super("Customer", "Customers");
+            }
 
-                            this.popUpCardObject.close();
-                        } else {
-                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
-                        }
+            extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
+                if (submissionMethod === "PUT") {
+                    //Set the current date as value for "addedDate"
+                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
+
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
+                } else if (submissionMethod === "POST") {
+                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
+                        fetch(submissionURL)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                                    //Update the inputs according to the binding object
+                                    this.form.updateInputs(this.form.getBindingObject());
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            });
                     });
-                });
-
-                document.getElementById("resetButton").addEventListener("click", () => {
-                    this.form.resetInputs();
-                });
-
-                document.getElementById("printButton").addEventListener("click", () => {
-                    print();
-                });
-            }
-
-            async initInputs() {
-                //Set the current date as value for "addedDate"
-                this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
-
-                //Fill dropDownInputs
-                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
-                for (const dropDownInput of dropDownInputs) {
-                    await FormComponent.refreshDropDownInput(dropDownInput);
                 }
-
-                return true;
-            }
-
-            initCreateForm() {
-                this.form.init("/registries/customer.json", "/customers", "PUT");
-            }
-
-            initUpdateForm(selectedCardDivisionSectorItem) {
-                document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
-                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
-
-                this.form.init("/registries/customer.json", `/customers/${selectedItemId}`, "POST").then((form) => {
-                    fetch(`/customers/${selectedItemId}`)
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
-                                //Update the inputs according to the binding object
-                                this.form.updateInputs(this.form.getBindingObject());
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required customer from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
-                });
             }
         }
     </script>
@@ -125,7 +86,7 @@
                         <h1 class="title">Customer code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: CUS2020019" value="CUS0000000"/>
+                        <input id="code" type="text" placeholder="eg: CUS2020019" value="CUS0000000" />
                     </div>
                 </div>
 
@@ -200,7 +161,7 @@
                         <textarea id="address" placeholder="eg: Broadway New York, NY 10012"></textarea>
                     </div>
                 </div>
-                
+
                 <div class="formFieldContainer">
                     <div class="titleContainer">
                         <h1 class="title">Arrears</h1>
@@ -224,8 +185,8 @@
                         <h1 class="title">Customer status</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="customerStatusId" data-request-url="/tables/customerStatus" data-text-content-field="name"
-                            data-value-field="id">
+                        <select id="customerStatusId" data-request-url="/tables/customerStatus"
+                            data-text-content-field="name" data-value-field="id">
 
                         </select>
                         <button title="Reload values">&#x1F5D8;</button>

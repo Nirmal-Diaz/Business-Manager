@@ -11,46 +11,20 @@
 
     <script type="module">
         //@ts-check
-        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
-        import { Form } from "/scripts/main/Form.js";
-        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
+        import { EntityPopUpCardInterface } from "/scripts/main/EntityPopUpCardInterface.js";
 
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface extends BasePopUpCardInterface {
-            form = new Form(document.querySelector("form"));
-
+        class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super();
-                document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit().then(submission => {
-                        if (submission.status) {
-                            //Refresh (not reload) the parentCardInterface
-                            if (this.form.getSubmissionMethod() === "PUT") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new employee", "Double tap to view and update");
-                            } else if (this.form.getSubmissionMethod() === "POST") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "You've updated an employee recently", "Double tap to view");
-                            }
+                super("Employee", "Employees");
+            }
 
-                            this.popUpCardObject.close();
-                        } else {
-                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
-                        }
-                    });
-                });
-
-                document.getElementById("resetButton").addEventListener("click", () => {
-                    this.form.resetInputs();
-                });
-
-                document.getElementById("printButton").addEventListener("click", () => {
-                    print();
-                });
-
-                document.getElementById("nicNumber").addEventListener("keyup", (event) => {
+            extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
+                this.form.getView().querySelector("#nicNumber").addEventListener("keyup", (event) => {
                     let nicNumber = event.target.value;
                     if (/^\d{9}([VX]|\d{3})$/.test(nicNumber)) {
                         //Create a new date for ThisYear-January-Today
@@ -69,10 +43,10 @@
                         //Update gender dropDownInput and subtract additional noOfDays if female
                         let noOfDays = parseInt(nicNumber.substring(4, 7));
                         if (noOfDays > 500) {
-                            document.getElementById("genderId").value = "2";
+                            this.form.getView().querySelector("#genderId").value = "2";
                             noOfDays -= 500;
                         } else {
-                            document.getElementById("genderId").value = "1";
+                            this.form.getView().querySelector("#genderId").value = "1";
                         }
 
                         //Set number of days for birthDate
@@ -84,48 +58,35 @@
                         }
 
                         //Update birthDate textInput
-                        document.getElementById("birthDate").value = birthDate.toISOString().slice(0, 10);
+                        this.form.getView().querySelector("#birthDate").value = birthDate.toISOString().slice(0, 10);
                     }
                 });
-            }
 
-            async initInputs() {
-                //Set the current date as value for "addedDate"
-                this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
+                if (submissionMethod === "PUT") {
+                    //Set the current date as value for "addedDate"
+                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
 
-                //Fill dropDownInputs
-                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select");
-                for (const dropDownInput of dropDownInputs) {
-                    await FormComponent.refreshDropDownInput(dropDownInput);
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
+                } else if (submissionMethod === "POST") {
+                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
+                        fetch(submissionURL)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                                    //Update the inputs according to the binding object
+                                    this.form.updateInputs(this.form.getBindingObject());
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            });
+                    });
                 }
-
-                return true;
-            }
-
-            initCreateForm() {
-                this.form.init("/registries/employee.json", "/employees", "PUT");
-            }
-
-            initUpdateForm(selectedCardDivisionSectorItem) {
-                document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
-                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
-
-                this.form.init("/registries/employee.json", `/employees/${selectedItemId}`, "POST").then((form) => {
-                    fetch(`/employees/${selectedItemId}`)
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
-                                //Update the inputs according to the binding object
-                                this.form.updateInputs(this.form.getBindingObject());
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required employee from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
-                });
             }
         }
     </script>
@@ -163,7 +124,7 @@
                         <h1 class="title">Employee code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: EMP2020019" value="EMP0000000"/>
+                        <input id="code" type="text" placeholder="eg: EMP2020019" value="EMP0000000" />
                     </div>
                 </div>
 

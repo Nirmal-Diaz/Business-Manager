@@ -11,101 +11,59 @@
 
     <script type="module">
         //@ts-check
-        import { BasePopUpCardInterface } from "/scripts/main/BasePopUpCardInterface.js";
-        import { Form } from "/scripts/main/Form.js";
-        import { FormUtil, FormComponent } from "/scripts/main/Utility.js";
+        import { EntityPopUpCardInterface } from "/scripts/main/EntityPopUpCardInterface.js";
 
         //Add onload to window for initializing popUpCardInterface
         window.addEventListener("DOMContentLoaded", () => {
             window.popUpCardInterface = new PopUpCardInterface();
         });
 
-        class PopUpCardInterface extends BasePopUpCardInterface {
-            form = new Form(document.querySelector("form"));
-
+        class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super();
-                document.getElementById("saveButton").addEventListener("click", () => {
-                    this.form.submit().then(submission => {
-                        if (submission.status) {
-                            //Refresh (not reload) the parentCardInterface
-                            if (this.form.getSubmissionMethod() === "PUT") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
-                            } else if (this.form.getSubmissionMethod() === "POST") {
-                                this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
-                            }
-
-                            this.popUpCardObject.close();
-                        } else {
-                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
-                        }
-                    });
-                });
-
-                document.getElementById("resetButton").addEventListener("click", () => {
-                    this.form.resetInputs();
-                });
-
-                document.getElementById("printButton").addEventListener("click", () => {
-                    print();
-                });
+                super("Material Import Order", "Material Import Orders");
             }
 
-            async initInputs(submissionMethod) {
-                //Fill dropDownInputs
-                const dropDownInputs = this.form.getView().querySelectorAll(".inputContainer.dropDown > select, .inputContainer.text > datalist");
-                for (const dropDownInput of dropDownInputs) {
-                    await FormComponent.refreshDropDownInput(dropDownInput);
-                }
-                
-                if (submissionMethod === "PUT") {
-                    //Set the current date as value for "addedDate"
-                    const addedDateInput = this.form.getView().querySelector("#addedDate");
-    
-                    addedDateInput.value = new Date().toISOString().slice(0, 10);
-                    this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
-                        event.target.min = addedDateInput.value;
-                    });
+            extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
+                //Set the current date as value for "addedDate"
+                const addedDateInput = this.form.getView().querySelector("#addedDate");
+                this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
+                    event.target.min = addedDateInput.value;
+                });
 
+                if (submissionMethod === "PUT") {
+                    addedDateInput.value = new Date().toISOString().slice(0, 10);
+
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
-                    //Remove the save and reset buttons
-                    document.getElementById("saveButton").style.display = "none";
+                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
 
-                    //Make all form fields disabled
+                    //Make all form fields disabled except the description
                     const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
                     for (const formFieldContainer of formFieldContainers) {
                         formFieldContainer.classList.add("disabled");
                     }
+                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
+
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
+                        fetch(submissionURL)
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
+                                    //Update the inputs according to the binding object
+                                    this.form.updateInputs(this.form.getBindingObject());
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            });
+                    });
                 }
-
-                return true;
-            }
-
-            initCreateForm() {
-                this.form.init("/registries/materialImportOrder.json", "/materialImportOrders", "PUT");
-            }
-
-            initUpdateForm(selectedCardDivisionSectorItem) {
-                document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
-                const selectedItemId = selectedCardDivisionSectorItem.dataset.bindingObjectId;
-
-                this.form.init("/registries/materialImportOrder.json", `/materialImportOrders/${selectedItemId}`, "POST").then((form) => {
-                    fetch(`/materialImportOrders/${selectedItemId}`)
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
-                                //Update the inputs according to the binding object
-                                this.form.updateInputs(this.form.getBindingObject());
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the required order from the internal registry. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
-                });
             }
         }
     </script>
