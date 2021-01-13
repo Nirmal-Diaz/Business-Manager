@@ -119,6 +119,7 @@ export class Form {
     }
 
     //NOTE: This method will be invoked right after initiating a form
+    //NOTE: THis method is separated for recursive use
     initGeneralInputs(bindingObject = this.bindingObject) {
         //Fill dataLists
         const dataLists = this.view.querySelectorAll(".inputContainer.text > datalist");
@@ -138,11 +139,12 @@ export class Form {
                 });
             } else if (bindingObject[key].inputClass === "dropDown") {
                 const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
+                FormComponent.refreshDropDownInput(dropDownInput);
                 //Add onclick to dropDownInput's reload button for updating values in realtime
                 dropDownInput.nextElementSibling.addEventListener("click", (event) => {
                     //NOTE: A button inside a form just inherently submits the form. It should be prevented
                     event.preventDefault();
-                    FormComponent.refreshDropDownInput(reloadButton.previousElementSibling);
+                    FormComponent.refreshDropDownInput(dropDownInput);
                 });
             } else if (bindingObject[key].inputClass === "image") {
                 const imageInput = this.view.querySelector(bindingObject[key].inputQuery);
@@ -160,10 +162,11 @@ export class Form {
                     //Update the sibling img
                     imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
 
-                    //Add onclick to sibling img tag for triggering the click event on the imageInput
-                    imageInput.previousElementSibling.addEventListener("click", () => {
-                        imageInput.click();
-                    });
+                });
+                
+                //Add onclick to sibling img tag for triggering the click event on the imageInput
+                imageInput.previousElementSibling.addEventListener("click", () => {
+                    imageInput.click();
                 });
             }
         }
