@@ -25,7 +25,7 @@
             }
 
             searchItems(keyword, titleDescriptionText) {
-                fetch(`/${this.entityName}s?keyword=${keyword}`)
+                fetch(`/${this.entityName}es?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
