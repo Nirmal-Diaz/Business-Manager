@@ -4,6 +4,7 @@ import { FormUtil, FormComponent } from "./Utility.js";
 export class Form {
     bindingObject = null;
     referenceBindingObject = null;
+    additionalData = {};
     isInvalidBindingObject = false;
     submissionMethod = "";
     submissionURL = "";
@@ -54,6 +55,10 @@ export class Form {
 
     getBindingObject() {
         return this.bindingObject;
+    }
+
+    getAdditionalData() {
+        return this.additionalData;
     }
 
     //NOTE: Use this before updating inputs of an "update" form
@@ -221,7 +226,7 @@ export class Form {
         }
     }
 
-    async submit(additionalData = {}) {
+    async submit() {
         this.updateBindingObject(this.bindingObject);
 
         //Reset invalidBindingObject flag
@@ -243,7 +248,7 @@ export class Form {
                 },
                 body: JSON.stringify({
                     bindingObject: this.bindingObject,
-                    additionalData: additionalData
+                    additionalData: this.additionalData
                 })
             })
                 .then(response => response.json())
