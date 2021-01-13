@@ -27,53 +27,8 @@ export class Form {
                 if (response.status) {
                     this.bindingObject = response.data;
                     this.referenceBindingObject = response.data;
-                    //Add onclick to each dropDownInput's reload button for updating values in realtime
-                    const reloadButtons = this.view.querySelectorAll(".inputContainer.dropDown>button");
-                    for (const reloadButton of reloadButtons) {
-                        reloadButton.addEventListener("click", (event) => {
-                            //NOTE: A button inside a form just inherently submits the form. It should be prevented
-                            event.preventDefault();
-                            FormComponent.refreshDropDownInput(reloadButton.previousElementSibling);
-                        });
-                    }
-                    
-                    //Add onkeyup to each textInput for validate itself in realtime
-                    const enableRealTimeValidation = (bindingObject = this.bindingObject) => {
-                        for (const key of Object.keys(bindingObject)) {
-                            if (bindingObject[key]?.childFormObject === true) {
-                                //CASE: Key holds an entire new formObject
-                                enableRealTimeValidation(bindingObject[key].value);
-                            } else if (bindingObject[key].inputClass === "text") {
-                                this.view.querySelector(bindingObject[key]?.inputQuery)?.addEventListener("input", () => {
-                                    FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
-                                });
-                            }
-                        }
-                    }
-                    enableRealTimeValidation();
 
-                    //Add onchange to each imageInput to update dataset values
-                    const imageInputs = this.view.querySelectorAll(".inputContainer.image>input");
-                    for (const imageInput of imageInputs) {
-                        imageInput.addEventListener("change", () => {
-                            const imageBlob = imageInput.files[0];
-
-                            //NOTE: To improve performance, blobs representations must be strings rather than arrays
-                            imageBlob.arrayBuffer().then((blobArrayBuffer) => {
-                                imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
-                            });
-                            imageInput.dataset.size = imageBlob.size;
-                            imageInput.dataset.type = imageBlob.type;
-
-                            //Update the sibling img
-                            imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
-                        });
-                        //Add onclick to sibling img tag for triggering the click event on the imageInput
-                        imageInput.previousElementSibling.addEventListener("click", () => {
-                            imageInput.click();
-                        });
-                    }
-
+                    this.initGeneralInputs(this.bindingObject);
 
                     return this;
                 } else {
@@ -159,6 +114,57 @@ export class Form {
                     //CASE: Field of the formObject have a binding input
                     FormUtil.updateInputFromValue(this.view, bindingObject[key], null);
                 }
+            }
+        }
+    }
+
+    //NOTE: This method will be invoked right after initiating a form
+    initGeneralInputs(bindingObject = this.bindingObject) {
+        //Fill dataLists
+        const dataLists = this.view.querySelectorAll(".inputContainer.text > datalist");
+        for (const dataList of dataLists) {
+            FormComponent.refreshDropDownInput(dataList);
+        }
+
+        for (const key of Object.keys(bindingObject)) {
+            if (bindingObject[key]?.childFormObject === true) {
+                //CASE: Key holds an entire new formObject
+                this.initGeneralInputs(bindingObject[key].value);
+            } else if (bindingObject[key].inputClass === "text") {
+                const textInput = this.view.querySelector(bindingObject[key].inputQuery);
+                //Add onkeyup to textInput for validate itself in realtime
+                textInput.addEventListener("input", () => {
+                    FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
+                });
+            } else if (bindingObject[key].inputClass === "dropDown") {
+                const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
+                //Add onclick to dropDownInput's reload button for updating values in realtime
+                dropDownInput.nextElementSibling.addEventListener("click", (event) => {
+                    //NOTE: A button inside a form just inherently submits the form. It should be prevented
+                    event.preventDefault();
+                    FormComponent.refreshDropDownInput(reloadButton.previousElementSibling);
+                });
+            } else if (bindingObject[key].inputClass === "image") {
+                const imageInput = this.view.querySelector(bindingObject[key].inputQuery);
+                //Add onchange to imageInput for updating its dataset
+                imageInput.addEventListener("change", () => {
+                    const imageBlob = imageInput.files[0];
+
+                    //NOTE: To improve performance, blobs representations must be strings rather than arrays
+                    imageBlob.arrayBuffer().then((blobArrayBuffer) => {
+                        imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
+                    });
+                    imageInput.dataset.size = imageBlob.size;
+                    imageInput.dataset.type = imageBlob.type;
+
+                    //Update the sibling img
+                    imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
+
+                    //Add onclick to sibling img tag for triggering the click event on the imageInput
+                    imageInput.previousElementSibling.addEventListener("click", () => {
+                        imageInput.click();
+                    });
+                });
             }
         }
     }

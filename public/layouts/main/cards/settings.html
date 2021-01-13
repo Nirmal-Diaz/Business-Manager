@@ -37,11 +37,6 @@
                 this.updateControls[1].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/userPreferences_u.html");
-                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
-                            popUpCard.popUpCardInterface.initUpdateForm();
-                        });
-                    });
                 });
             }
         }
