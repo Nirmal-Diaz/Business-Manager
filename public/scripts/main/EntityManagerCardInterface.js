@@ -13,10 +13,10 @@ export class EntityManagerCardInterface extends BaseCardInterface {
 
         this.createControls[0]?.addEventListener("click", () => {
             //Add onload to iframe for initializing create form
-            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}_cu.html`);
+            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}_cu.html`);
             popUpCard.getView().style.width = "800px";
             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizeToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}`, "PUT");
+                popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizedToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}`, "PUT");
             });
         });
 
@@ -43,10 +43,10 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
             } else {
                 //Add onload to iframe for initializing update form
-                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}_cu.html`);
+                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}_cu.html`);
                 popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizeToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
+                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizedToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
                 });
             }
         });
@@ -60,7 +60,7 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", "The action of deleting an item isn't reversible. Think carefully and proceed", null, "YES", "NO")
                     .then((value) => {
                         if (value) {
-                            fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
+                            fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
                                 method: "DELETE"
                             })
                                 .then(response => response.json())

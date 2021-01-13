@@ -25,7 +25,7 @@
             }
 
             searchItems(keyword, titleDescriptionText) {
-                fetch(`/${PlatformUtil.capitalizeToPascal(this.entityNamePlural)}?keyword=${keyword}`)
+                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
