@@ -11,7 +11,7 @@ export class EntityManagerCardInterface extends BaseCardInterface {
 
         this.createControls[0].addEventListener("click", () => {
             //Add onload to iframe for initializing create form
-            const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/customers_cu.html");
+            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityName}s_cu.html`);
             popUpCard.getView().style.width = "800px";
             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                 popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityName}.json`, `/${this.entityName}s`, "PUT");
@@ -41,10 +41,10 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
             } else {
                 //Add onload to iframe for initializing update form
-                const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/customers_cu.html");
+                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityName}s_cu.html`);
                 popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                    popUpCard.popUpCardInterface.extendInitForm("/registries/customer.json", `/customers/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
+                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityName}.json`, `/${this.entityName}s/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
                 });
             }
         });
