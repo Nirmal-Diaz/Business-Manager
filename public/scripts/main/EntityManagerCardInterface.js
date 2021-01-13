@@ -2,19 +2,20 @@ import { BaseCardInterface } from "./BaseCardInterface.js";
 
 //@ts-check
 export class EntityManagerCardInterface extends BaseCardInterface {
-    entityName = null;
+    entityNameSingular = null;
 
-    constructor(entityName) {
+    constructor(entityNameSingular, entityNamePlural) {
         super();
 
-        this.entityName = entityName;
+        this.entityNameSingular = entityNameSingular;
+        this.entityNamePlural = entityNamePlural;
 
         this.createControls[0].addEventListener("click", () => {
             //Add onload to iframe for initializing create form
-            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityName}s_cu.html`);
+            const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityNamePlural.replace(/\s/g, "")}_cu.html`);
             popUpCard.getView().style.width = "800px";
             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityName}.json`, `/${this.entityName}s`, "PUT");
+                popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityNameSingular.replace(/\s/g, "")}.json`, `/${this.entityNamePlural.replace(/\s/g, "")}`, "PUT");
             });
         });
 
@@ -41,10 +42,10 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Too many items", "Select only a single item", "You cannot update multiple items at the same time. Please select a single item and try again", null, "OK", null);
             } else {
                 //Add onload to iframe for initializing update form
-                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityName}s_cu.html`);
+                const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${this.entityNamePlural.replace(/\s/g, "")}_cu.html`);
                 popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityName}.json`, `/${this.entityName}s/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
+                    popUpCard.popUpCardInterface.extendInitForm(`/registries/${this.entityNameSingular.replace(/\s/g, "")}.json`, `/${this.entityNamePlural.replace(/\s/g, "")}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
                 });
             }
         });
@@ -58,7 +59,7 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                 window.parent.shellInterface.throwAlert("Are you sure?", "Proceed with caution", "The action of deleting an item isn't reversible. Think carefully and proceed", null, "YES", "NO")
                     .then((value) => {
                         if (value) {
-                            fetch(`/${this.entityName}s/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
+                            fetch(`/${this.entityNamePlural}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, {
                                 method: "DELETE"
                             })
                                 .then(response => response.json())
@@ -70,7 +71,7 @@ export class EntityManagerCardInterface extends BaseCardInterface {
                                     }
                                 })
                                 .catch(error => {
-                                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't delete the specified ${this.entityName} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't delete the specified ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
                                 })
                         }
                     });
