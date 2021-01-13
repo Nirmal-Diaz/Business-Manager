@@ -73,6 +73,24 @@ export class MaterialImportOrderController {
         }
     }
 
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(Entity).findOne({
+            id: clientBindingObject.id.value
+        });
+
+        if (originalObject) {
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            return getRepository(Entity).save(originalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
+        }
+    }
+
     static async deleteOne(id: number) {
         return getRepository(Entity).delete(id).catch((error) => {
             //WARNING: This error is thrown based on a possible error and not on the actual error

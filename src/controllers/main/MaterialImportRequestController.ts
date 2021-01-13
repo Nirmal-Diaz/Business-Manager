@@ -10,6 +10,9 @@ export class MaterialImportRequestController {
     private static entityJSONName: string = "materialImportRequest";
 
     static async createMany(clientBindingObject, selectedSupplierIds) {
+        console.log(selectedSupplierIds);
+        
+
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
@@ -70,6 +73,24 @@ export class MaterialImportRequestController {
             return items;
         } else {
             throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName.toLowerCase()}s for the status you specified`, technicalMessage: `No ${this.entityName.toLowerCase()}s with given status` };
+        }
+    }
+
+    static async updateOne(clientBindingObject) {
+        const originalObject = await getRepository(Entity).findOne({
+            id: clientBindingObject.id.value
+        });
+
+        if (originalObject) {
+            const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
+            ValidationController.validateBindingObject(serverObject, clientBindingObject);
+            ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            return getRepository(Entity).save(originalObject).catch((error) => {
+                throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+            });
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
     }
 
