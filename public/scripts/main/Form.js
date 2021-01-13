@@ -139,7 +139,11 @@ export class Form {
                 });
             } else if (bindingObject[key].inputClass === "dropDown") {
                 const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
-                FormComponent.refreshDropDownInput(dropDownInput);
+                FormComponent.refreshDropDownInput(dropDownInput).then(() => {
+                    //Dispatch the change event on the dropDownInput for selecting the first item
+                    const onChangeEvent = new Event("change");
+                    dropDownInput.dispatchEvent(onChangeEvent);
+                });
                 //Add onclick to dropDownInput's reload button for updating values in realtime
                 dropDownInput.nextElementSibling.addEventListener("click", (event) => {
                     //NOTE: A button inside a form just inherently submits the form. It should be prevented
