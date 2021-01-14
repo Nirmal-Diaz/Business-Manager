@@ -37,7 +37,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            bindingObject: this.form.customBindingObject
+                            bindingObject: this.form.getBindingObject()
                         })
                     })
                         .then(response => response.json())
@@ -72,74 +72,76 @@
             }
 
             updateCheckInputs(materialId) {
-                const checkInputContainers = this.form.getView().querySelectorAll(".inputContainer.check");
-                for (const checkInputContainer of checkInputContainers) {
-                    if (this.form.customBindingObject.hasOwnProperty(materialId)) {
-                        if (this.form.customBindingObject[materialId].includes(parseInt(checkInputContainer.dataset.supplierId))) {
-                            checkInputContainer.firstElementChild.checked = true;
+                const checkInputs = this.form.getView().querySelectorAll(".inputContainer.check");
+                for (const checkInput of checkInputs) {
+                    if (this.form.getBindingObject().hasOwnProperty(materialId)) {
+                        if (this.form.getBindingObject()[materialId].includes(parseInt(checkInput.dataset.supplierId))) {
+                            checkInput.firstElementChild.checked = true;
                         } else {
-                            checkInputContainer.firstElementChild.checked = false;
+                            checkInput.firstElementChild.checked = false;
                         }
                     } else {
-                        checkInputContainer.firstElementChild.checked = false;
+                        checkInput.firstElementChild.checked = false;
                     }
                 }
             }
 
             initUpdateForm() {
                 //Initialize form
-                this.form.init("/registries/suppliersMaterials.json", "/materials/@all/suppliers", "PUT").then(async (form) => {
+                this.form.init("/registries/suppliersMaterials.json", "/materials/@all/suppliers", "PUT").then((form) => {
                     //Load plainObject
-                    await fetch("/materials/@all/suppliers")
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                //Replace the binding object with a customized structure
-                                this.form.customReferenceBindingObject = response.data;
-                                this.form.customBindingObject = response.data;
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the material-supplier associations from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
-
-                    return fetch("/suppliers?keyword=")
-                        .then(response => response.json())
-                        .then(response => {
-                            if (response.status) {
-                                //Create a checkbox for each supplier
-                                const formFieldContainer = this.form.getView().querySelector(".inputGroup");
-                                const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
-                                for (const supplier of response.data) {
-                                    const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
-                                    checkInputContainer.children[1].textContent = supplier.businessName;
-                                    checkInputContainer.dataset.supplierId = supplier.id;
-                                    formFieldContainer.appendChild(checkInputContainer);
-
-                                    checkInputContainer.children[0].addEventListener("change", () => {
-                                        //Add the materialId key if not exists in bindingObject
-                                        if (!this.form.customBindingObject.hasOwnProperty(this.selectedMaterialId)) {
-                                            this.form.customBindingObject[this.selectedMaterialId] = [];
-                                        }
-
-                                        if (checkInputContainer.children[0].checked) {
-                                            this.form.customBindingObject[this.selectedMaterialId].push(supplier.id);
-                                        } else {
-                                            this.form.customBindingObject[this.selectedMaterialId].splice(this.form.customBindingObject[this.selectedMaterialId].indexOf(supplier.id), 1);
-                                        }
-                                    });
+                    return Promise.all([
+                        fetch("/materials/@all/suppliers")
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    //Replace the binding object with a customized structure
+                                    this.form.referenceBindingObject = response.data;
+                                    this.form.bindingObject = response.data;
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                                 }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the material-supplier associations from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                            }),
 
-                                this.selectedMaterialId = parseInt(this.form.getView().querySelector("#materialId").value);
-                            } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                            }
-                        })
-                        .catch(error => {
-                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the suppliers list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
-                        });
+                        fetch("/suppliers?keyword=")
+                            .then(response => response.json())
+                            .then(response => {
+                                if (response.status) {
+                                    //Create a checkbox for each supplier
+                                    const formFieldContainer = this.form.getView().querySelector(".inputGroup");
+                                    const checkInputContainerTemplate = this.templateContainerFragment.querySelector(".inputContainer.check");
+                                    for (const supplier of response.data) {
+                                        const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
+                                        checkInputContainer.children[1].textContent = supplier.businessName;
+                                        checkInputContainer.dataset.supplierId = supplier.id;
+                                        formFieldContainer.appendChild(checkInputContainer);
+
+                                        checkInputContainer.children[0].addEventListener("change", () => {
+                                            //Add the materialId key if not exists in bindingObject
+                                            if (!this.form.getBindingObject().hasOwnProperty(this.selectedMaterialId)) {
+                                                this.form.getBindingObject()[this.selectedMaterialId] = [];
+                                            }
+
+                                            if (checkInputContainer.children[0].checked) {
+                                                this.form.getBindingObject()[this.selectedMaterialId].push(supplier.id);
+                                            } else {
+                                                this.form.getBindingObject()[this.selectedMaterialId].splice(this.form.getBindingObject()[this.selectedMaterialId].indexOf(supplier.id), 1);
+                                            }
+                                        });
+                                    }
+
+                                    this.selectedMaterialId = parseInt(this.form.getView().querySelector("#materialId").value);
+                                } else {
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                }
+                            })
+                            .catch(error => {
+                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", "We couldn't fetch the suppliers list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n" + error, null, "OK", null);
+                            })
+                    ]);
                 })
                     .then(() => {
                         this.updateCheckInputs(this.selectedMaterialId);
