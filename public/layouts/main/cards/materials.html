@@ -26,7 +26,6 @@
                 this.updateControls[1].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/suppliers2Materials_cu.html");
-                    // popUpCard.getView().style.width = "800px";
                     popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                         popUpCard.getView().style.width = "800px";
                         popUpCard.popUpCardInterface.initInputs().then(() => {
