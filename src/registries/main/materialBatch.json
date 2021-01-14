@@ -17,8 +17,8 @@
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
-    "amount": {
-        "inputQuery": "#amount",
+    "importedAmount": {
+        "inputQuery": "#importedAmount",
         "inputClass": "text",
         "pattern": "^\\d{1,}[.]\\d{1,}$",
         "value": null
