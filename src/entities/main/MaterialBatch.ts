@@ -10,12 +10,14 @@ import {
 import { BatchStatus } from "./BatchStatus";
 import { Material } from "./Material";
 import { MaterialImportInvoice } from "./MaterialImportInvoice";
+import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
-@Index("fk_material_batch_material1_idx", ["materialId"], {})
-@Index("fk_material_batch_material_import_invoice1_idx", ["invoiceCode"], {})
 @Index("invoice_code_UNIQUE", ["invoiceCode"], { unique: true })
+@Index("fk_material_batch_material1_idx", ["materialId"], {})
+@Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
+@Index("fk_material_batch_material_import_invoice1_idx", ["invoiceCode"], {})
+@Index("fk_material_batch_unit_type1_idx", ["unitTypeId"], {})
 @Entity("material_batch", { schema: "business_manager" })
 export class MaterialBatch {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -32,6 +34,9 @@ export class MaterialBatch {
 
   @Column("decimal", { name: "imported_amount", precision: 10, scale: 0 })
   importedAmount: string;
+
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("int", { name: "viable_period" })
   viablePeriod: number;
@@ -66,4 +71,11 @@ export class MaterialBatch {
   )
   @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
   invoiceCode2: MaterialImportInvoice;
+
+  @ManyToOne(() => UnitType, (unitType) => unitType.materialBatches, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 }

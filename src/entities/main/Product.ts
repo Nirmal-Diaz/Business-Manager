@@ -23,8 +23,8 @@ export class Product {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("blob", { name: "photo" })
-  photo: Buffer;
+  @Column("blob", { name: "photo", nullable: true })
+  photo: Buffer | null;
 
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
@@ -32,14 +32,11 @@ export class Product {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
-  unitPrice: string;
-
-  @Column("int", { name: "viable_period" })
-  viablePeriod: number;
-
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
+
+  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  unitPrice: string;
 
   @Column("int", { name: "product_status_id" })
   productStatusId: number;

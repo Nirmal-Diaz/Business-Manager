@@ -14,6 +14,7 @@ import { InvoiceStatus } from "./InvoiceStatus";
 import { MaterialImportOrder } from "./MaterialImportOrder";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
+@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Index(
   "fk_material_import_invoice_invoice_status1_idx",
   ["invoiceStatusId"],
@@ -24,7 +25,6 @@ import { MaterialImportOrder } from "./MaterialImportOrder";
   ["orderCode"],
   {}
 )
-@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Entity("material_import_invoice", { schema: "business_manager" })
 export class MaterialImportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
