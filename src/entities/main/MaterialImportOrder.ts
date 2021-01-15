@@ -13,14 +13,14 @@ import { OrderStatus } from "./OrderStatus";
 import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
-@Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
-@Index("fk_material_import_order_unit_type1_idx", ["unitTypeId"], {})
 @Index(
   "fk_material_import_order_material_import_quotation1_idx",
   ["quotationCode"],
   {}
 )
+@Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
+@Index("fk_material_import_order_unit_type1_idx", ["unitTypeId"], {})
+@Index("quotation_code_UNIQUE", ["quotationCode"], { unique: true })
 @Entity("material_import_order", { schema: "business_manager" })
 export class MaterialImportOrder {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -32,7 +32,7 @@ export class MaterialImportOrder {
   @Column("char", { name: "quotation_code", unique: true, length: 10 })
   quotationCode: string;
 
-  @Column("decimal", { name: "requested_amount", precision: 10, scale: 0 })
+  @Column("decimal", { name: "requested_amount", precision: 7, scale: 2 })
   requestedAmount: string;
 
   @Column("int", { name: "unit_type_id" })

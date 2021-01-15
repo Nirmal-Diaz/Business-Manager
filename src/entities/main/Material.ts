@@ -18,8 +18,8 @@ import { ProductMaterial } from "./ProductMaterial";
 import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_material_material_status1_idx", ["materialStatusId"], {})
+@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_material_user1_idx", ["userId"], {})
 @Entity("material", { schema: "business_manager" })
 export class Material {
@@ -32,7 +32,7 @@ export class Material {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "reorder_amount", precision: 10, scale: 0 })
+  @Column("decimal", { name: "reorder_amount", precision: 7, scale: 2 })
   reorderAmount: string;
 
   @Column("int", { name: "unit_type_id" })

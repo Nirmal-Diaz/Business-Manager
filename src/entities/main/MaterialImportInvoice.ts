@@ -14,7 +14,6 @@ import { InvoiceStatus } from "./InvoiceStatus";
 import { MaterialImportOrder } from "./MaterialImportOrder";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Index(
   "fk_material_import_invoice_invoice_status1_idx",
   ["invoiceStatusId"],
@@ -25,6 +24,7 @@ import { MaterialImportOrder } from "./MaterialImportOrder";
   ["orderCode"],
   {}
 )
+@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Entity("material_import_invoice", { schema: "business_manager" })
 export class MaterialImportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -39,8 +39,8 @@ export class MaterialImportInvoice {
   @Column("decimal", { name: "price", precision: 7, scale: 2 })
   price: string;
 
-  @Column("decimal", { name: "discount_ratio", precision: 10, scale: 0 })
-  discountRatio: string;
+  @Column("int", { name: "discount_percentage" })
+  discountPercentage: number;
 
   @Column("decimal", { name: "final_price", precision: 10, scale: 0 })
   finalPrice: string;

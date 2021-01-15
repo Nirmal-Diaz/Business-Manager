@@ -17,10 +17,10 @@
         "pattern": "^\\d{1,}[.]\\d{2}$",
         "value": null
     },
-    "discountRatio": {
-        "inputQuery": "#discountRatio",
+    "discountPercentage": {
+        "inputQuery": "#discountPercentage",
         "inputClass": "text",
-        "pattern": "^0[.][0-9]{1,}$",
+        "pattern": "^[0-9]{1,2}$",
         "value": null
     },
     "finalPrice": {

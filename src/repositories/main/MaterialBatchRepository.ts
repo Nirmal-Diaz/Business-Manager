@@ -15,10 +15,13 @@ export class MaterialBatchRepository {
 
     static updateTable() {
         return getRepository(MaterialBatch)
-        .createQueryBuilder()
-        .update(MaterialBatch)
-        .set({batchStatusId: 2})
-        .where("DATEDIFF(NOW(), material_batch.added_date) >= material_batch.viable_period")
-        .execute();
+        .query(`
+            UPDATE material_batch mb
+            SET mb.batch_status_id =
+            CASE
+                WHEN DATEDIFF(NOW(), mb.added_date) >= mb.viable_period THEN 2
+                ELSE 1
+            END
+        `);
     }
 }

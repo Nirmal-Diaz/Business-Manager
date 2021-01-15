@@ -79,8 +79,8 @@ export class MaterialImportController {
                 enhancedObjects.enhancedInvoice = {
                     supplierDelivered: `${importInvoice.materialBatch.importedAmount} ${importInvoice.materialBatch.unitType.name}`,
                     price: `Rs. ${parseFloat(importQuotation.unitPrice)*parseFloat(importInvoice.materialBatch.importedAmount)}`,
-                    supplierDiscount: `${parseFloat(importInvoice.discountRatio)*100}%`,
-                    discountedPrice: `Rs. ${parseFloat(importQuotation.unitPrice)*parseFloat(importInvoice.materialBatch.importedAmount)*(1-parseFloat(importInvoice.discountRatio))}`,
+                    supplierDiscount: `${importInvoice.discountPercentage}%`,
+                    discountedPrice: `Rs. ${parseFloat(importQuotation.unitPrice)*parseFloat(importInvoice.materialBatch.importedAmount)*(100-importInvoice.discountPercentage)/100}`,
                     status: importInvoice.invoiceStatus.name,
                     description: importInvoice.description,
                     addedDate: importInvoice.addedDate
