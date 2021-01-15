@@ -24,6 +24,7 @@ import { MaterialImportQuotationController } from "../controllers/main/MaterialI
 import { MaterialBatchController } from "../controllers/main/MaterialBatchController";
 import { MaterialImportOrderController } from "../controllers/main/MaterialImportOrderController";
 import { MaterialImportInvoiceController } from "../controllers/main/MaterialImportInvoiceController";
+import { MaterialImportController } from "../controllers/main/MaterialImportController";
 
 export const mainRouter = express.Router();
 /*
@@ -698,6 +699,17 @@ mainRouter.route("/materialImportInvoices/:materialImportInvoiceId")
         PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
             .then(() => MaterialImportInvoiceController.deleteOne(parseInt(req.params.materialImportInvoiceId)))
             .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//MATERIAL IMPORTS
+mainRouter.route("/materialImports/:numericCode")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material imports", req.method)
+            .then(() => MaterialImportController.getSummary(req.params.numericCode)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
