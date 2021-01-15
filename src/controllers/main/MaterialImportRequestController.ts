@@ -10,9 +10,6 @@ export class MaterialImportRequestController {
     private static entityJSONName: string = "materialImportRequest";
 
     static async createMany(clientBindingObject, selectedSupplierIds) {
-        console.log(selectedSupplierIds);
-        
-
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
