@@ -384,23 +384,21 @@ export class WorkspaceScreenController extends ScreenController {
         }
 
         function addQuickAccessControls() {
-            const separator = document.createElement("hr");
-            this.quickAccessArea.appendChild(separator.cloneNode(false));
             //Add createControls to the quickAccessArea if the user has "create" permissions
             if (this.permittedModuleOperations[moduleId][0] === "1") {
-                this.quickAccessArea.append(...presentCard2.getControls("create"), separator.cloneNode(false));
+                this.quickAccessArea.append(...presentCard2.getControls("create"),);
             }
             //Add retrieveControls to the quickAccessArea if the user has "retrieve" permissions
             if (this.permittedModuleOperations[moduleId][1] === "1") {
-                this.quickAccessArea.append(...presentCard2.getControls("retrieve"), separator.cloneNode(false));
+                this.quickAccessArea.append(...presentCard2.getControls("retrieve"));
             }
             //Add updateControls to the quickAccessArea if the user has "update" permissions
             if (this.permittedModuleOperations[moduleId][2] === "1") {
-                this.quickAccessArea.append(...presentCard2.getControls("update"), separator.cloneNode(false));
+                this.quickAccessArea.append(...presentCard2.getControls("update"));
             }
             //Add deleteControls to the quickAccessArea if the user has "delete" permissions
             if (this.permittedModuleOperations[moduleId][3] === "1") {
-                this.quickAccessArea.append(...presentCard2.getControls("delete"), separator.cloneNode(false));
+                this.quickAccessArea.append(...presentCard2.getControls("delete"));
             }
         }
     }
