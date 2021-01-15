@@ -23,6 +23,12 @@
         "pattern": "^\\d{1,}[.]\\d{1,}$",
         "value": null
     },
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
     "viablePeriod": {
         "inputQuery": "#viablePeriod",
         "inputClass": "text",

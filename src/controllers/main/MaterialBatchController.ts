@@ -9,22 +9,12 @@ export class MaterialBatchController {
     private static entityName: string = "material batch";
     private static entityJSONName: string = "materialBatch";
 
-    private static async createOne(clientBindingObject) {
-        //Validate clientBindingObject
-        const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
-        ValidationController.validateBindingObject(serverObject, clientBindingObject);
-
-        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
-            throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
-        });
-    }
-
     static async getOne(id: number) {
         const item = await getRepository(Entity).findOne({
             where: {
                 id: id
             },
-            relations: ["batchStatus"]
+            relations: ["batchStatus", "unitType"]
         });
 
         if (item) {
