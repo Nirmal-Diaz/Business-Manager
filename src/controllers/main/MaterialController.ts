@@ -5,6 +5,7 @@ import { RegistryController } from "./RegistryController";
 import { Material as Entity } from "../../entities/main/Material";
 import { MaterialRepository as EntityRepository } from "../../repositories/main/MaterialRepository";
 import { Supplier } from "../../entities/main/Supplier";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialController {
     private static entityName: string = "material";
@@ -17,6 +18,11 @@ export class MaterialController {
 
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
+
+        //Change the unit type to the default
+        const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
+        serverObject.reorderAmount = parseFloat(serverObject.reorderAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.unitTypeId = unitType.defaultUnitId;
 
         return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
@@ -63,6 +69,11 @@ export class MaterialController {
             const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            //Change the unit type to the default
+            const unitType = await getRepository(UnitType).findOne(originalObject.unitTypeId);
+            originalObject.reorderAmount = (parseFloat(originalObject.reorderAmount) * parseFloat(unitType.convertToDefaultFactor)).toString();
+            originalObject.unitTypeId = unitType.defaultUnitId;
 
             return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }

@@ -35,6 +35,9 @@ export class UnitType {
   @Column("int", { name: "unit_category_id" })
   unitCategoryId: number;
 
+  @Column("int", { name: "default_unit_id" })
+  defaultUnitId: number;
+
   @OneToMany(() => Material, (material) => material.unitType)
   materials: Material[];
 
