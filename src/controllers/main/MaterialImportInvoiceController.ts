@@ -7,6 +7,7 @@ import { MaterialImportInvoiceRepository as EntityRepository } from "../../repos
 import { MaterialImportOrder } from "../../entities/main/MaterialImportOrder";
 import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
 import { MaterialBatch } from "../../entities/main/MaterialBatch";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialImportInvoiceController {
     private static entityName: string = "Material Import Invoice";
@@ -21,6 +22,11 @@ export class MaterialImportInvoiceController {
         serverObject.code = serverObject.orderCode.replace("MIO", "MII");
         serverObject.materialBatch.code = serverObject.orderCode.replace("MIO", "MBT");
         serverObject.materialBatch.invoiceCode = serverObject.code;
+
+        //Change the unit type to the default
+        const unitType = await getRepository(UnitType).findOne(serverObject.materialBatch.unitTypeId);
+        serverObject.materialBatch.importedAmount = parseFloat(serverObject.materialBatch.importedAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.materialBatch.unitTypeId = unitType.defaultUnitId;
         
         const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
             where: {

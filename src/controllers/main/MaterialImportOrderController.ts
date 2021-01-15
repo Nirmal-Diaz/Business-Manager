@@ -5,6 +5,7 @@ import { RegistryController } from "./RegistryController";
 import { MaterialImportOrder as Entity } from "../../entities/main/MaterialImportOrder";
 import { MaterialImportOrderRepository as EntityRepository } from "../../repositories/main/MaterialImportOrderRepository";
 import { MaterialImportQuotation } from "../../entities/main/MaterialImportQuotation";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialImportOrderController {
     private static entityName: string = "Material Import Order";
@@ -17,6 +18,11 @@ export class MaterialImportOrderController {
 
         //NOTE: Order code must be equal to the referring quotation code except the letter code
         serverObject.code = serverObject.quotationCode.replace("MIQ", "MIO");
+
+        //Change the unit type to the default
+        const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
+        serverObject.requestedAmount = parseFloat(serverObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.unitTypeId = unitType.defaultUnitId;
 
         return getRepository(Entity).save(serverObject as Entity).then(async item => {
             //Update the relevant quotation request to "Accepted" state
@@ -82,6 +88,11 @@ export class MaterialImportOrderController {
             const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
+
+            //Change the unit type to the default
+            const unitType = await getRepository(UnitType).findOne(originalObject.unitTypeId);
+            originalObject.requestedAmount = (parseFloat(originalObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor)).toString();
+            originalObject.unitTypeId = unitType.defaultUnitId;
 
             return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
