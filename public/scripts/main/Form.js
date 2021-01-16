@@ -139,9 +139,11 @@ export class Form {
             } else if (bindingObject[key].inputClass === "text") {
                 const textInput = this.view.querySelector(bindingObject[key].inputQuery);
                 //Add onkeyup to textInput for validate itself in realtime
-                textInput.addEventListener("input", () => {
-                    FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
-                });
+                if (bindingObject[key].pattern) {
+                    textInput.addEventListener("input", () => {
+                        FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
+                    });
+                }
             } else if (bindingObject[key].inputClass === "dropDown") {
                 const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
                 FormComponent.refreshDropDownInput(dropDownInput).then(() => {
