@@ -8,7 +8,7 @@ import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest
 import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialImportQuotationController {
-    private static entityName: string = "Material Import Quotation";
+    private static entityName: string = "material import quotation";
     private static entityJSONName: string = "materialImportQuotation";
 
     static async createOne(clientBindingObject) {

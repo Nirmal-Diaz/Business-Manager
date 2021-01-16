@@ -6,7 +6,7 @@ import { MaterialImportRequest as Entity } from "../../entities/main/MaterialImp
 import { MaterialImportRequestRepository as EntityRepository } from "../../repositories/main/MaterialImportRequestRepository";
 
 export class MaterialImportRequestController {
-    private static entityName: string = "Material Import Request";
+    private static entityName: string = "material import request";
     private static entityJSONName: string = "materialImportRequest";
 
     static async createMany(clientBindingObject, selectedSupplierIds) {

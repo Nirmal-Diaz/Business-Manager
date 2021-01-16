@@ -6,7 +6,7 @@ import { OutboundPayment as Entity } from "../../entities/main/OutboundPayment";
 import { OutboundPaymentRepository as EntityRepository } from "../../repositories/main/OutboundPaymentRepository";
 
 export class OutboundPaymentController {
-    private static entityName: string = "Outbound Payment";
+    private static entityName: string = "outbound payment";
     private static entityJSONName: string = "outboundPayment";
 
     static async createOne(clientBindingObject) {

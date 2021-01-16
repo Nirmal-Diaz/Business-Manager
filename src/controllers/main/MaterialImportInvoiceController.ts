@@ -10,7 +10,7 @@ import { MaterialBatch } from "../../entities/main/MaterialBatch";
 import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialImportInvoiceController {
-    private static entityName: string = "Material Import Invoice";
+    private static entityName: string = "material import invoice";
     private static entityJSONName: string = "materialImportInvoice";
 
     static async createOne(clientBindingObject) {
