@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Product Export Quotations</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/card.css" />
+
+    <script type="module">
+        //@ts-check
+        import { PlatformUtil, CardComponent } from "/scripts/main/Utility.js";
+        import { EntityCardInterface } from "/scripts/main/EntityCardInterface.js";
+
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface extends EntityCardInterface {
+            constructor() {
+                super("Product Export Quotation", "Product Export Quotations");
+            }
+
+            searchItems(keyword, titleDescriptionText) {
+                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            this.selectedCardDivisionSectorItems.length = 0;
+                            const cardDivision = document.getElementById("mainCardDivision");
+                            cardDivision.innerHTML = "";
+
+                            const states = {};
+
+                            for (const item of response.data) {
+                                if (!states.hasOwnProperty(item.quotationStatus.id)) {
+                                    states[item.quotationStatus.id] = CardComponent.createCardDivisionSector(item.quotationStatus.name + " " + document.title, titleDescriptionText);
+                                }
+
+                                const iconURL = "/images/main/glyph_search.png";
+                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, [item.availableAmount, item.unitType.name, item.unitPrice]);
+                                cardDivisionSectorItem.dataset.bindingObjectId = item.id;
+                                states[item.quotationStatus.id].appendChild(cardDivisionSectorItem);
+                            }
+
+                            for (const state of Object.keys(states)) {
+                                cardDivision.appendChild(states[state]);
+                            }
+                        } else {
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                        }
+                    })
+                    .catch(error => {
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the ${this.entityNamePlural} list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                    });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="mainCardDivision" class="cardDivision">
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+        <div id="createControlsContainer">
+            <button class="buttonGlyph" title="Add export quotation">
+                <img src="/images/main/glyph_create.png" />
+            </button>
+        </div>
+        <div id="retrieveControlsContainer">
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_search.png" title="Search export quotations" />
+                <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
+                    style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <button class="buttonGlyph" title="Refresh">
+                <img src="/images/main/glyph_refresh.png" />
+            </button>
+        </div>
+        <div id="updateControlsContainer">
+            <button class="buttonGlyph" title="Edit export quotation">
+                <img src="/images/main/glyph_update.png" />
+            </button>
+        </div>
+        <div id="deleteControlsContainer">
+            
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Product Exports</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/card.css" />
+
+    <style>
+        .cardDivision {
+            position: static;
+            width: 25%;
+        }
+
+        .cardDivision:nth-child(odd) {
+            background-color: darkcyan;
+        }
+
+        .titleContainer.entry>.title {
+            color: rgb(200, 200, 200);
+        }
+
+        .titleContainer.entry>.titleDescription {
+            color: white;
+        }
+
+        .cardDivisionSector>img {
+            width: 60%;
+        }
+    </style>
+
+    <script type="module">
+        //@ts-check
+        import { CardComponent, PlatformUtil, ShellUtil } from "/scripts/main/Utility.js";
+        import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
+
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface extends BaseCardInterface {
+            currentCode = "";
+
+            requestCardDivision = document.getElementById("requestCardDivision");
+            quotationCardDivision = document.getElementById("quotationCardDivision");
+            orderCardDivision = document.getElementById("orderCardDivision");
+            invoiceCardDivision = document.getElementById("invoiceCardDivision");
+
+            constructor() {
+                super();
+
+                this.retrieveControls[0]?.addEventListener("click", () => {
+                    ShellUtil.toggleButtonGlyph(this.retrieveControls[0]);
+                });
+                this.retrieveControls[0]?.children[1].addEventListener("keypress", (event) => {
+                    if (event.key === 'Enter') {
+                        if (event.currentTarget.value !== "") {
+                            this.currentCode = event.currentTarget.value;
+                            this.searchItems();
+                        }
+                    }
+                });
+                this.retrieveControls[1]?.addEventListener("click", () => {
+                    this.searchItems();
+                });
+
+                //Add onclick to images for showing create popUpCards
+                const popUpCardUrls = [
+                    "/layouts/main/popUpCards/productExportRequests_cu.html",
+                    "/layouts/main/popUpCards/productExportQuotations_cu.html",
+                    "/layouts/main/popUpCards/productExportOrders_cu.html",
+                    "/layouts/main/popUpCards/productExportInvoices_cu.html",
+                ];
+                const images = document.querySelectorAll(".cardDivisionSector>img");
+                for (let i = 0; i < images.length; i++) {
+                    images[i].addEventListener("mouseenter", () => {
+                        images[i].src = "/images/main/addCircle-hover.png";
+                    });
+                    images[i].addEventListener("mouseleave", () => {
+                        images[i].src = "/images/main/addCircle.png";
+                    });
+
+                    images[i].addEventListener("click", () => {
+                        //Add onload to iframe for initializing create form
+                        const popUpCard = this.cardObject.createPopUpCard(popUpCardUrls[i]);
+                        popUpCard.getView().style.width = "800px";
+                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                            popUpCard.popUpCardInterface.extendInitForm(`/registries${popUpCardUrls[i].slice(popUpCardUrls[i].lastIndexOf("/"), -9)}.json`, `${popUpCardUrls[i].slice(popUpCardUrls[i].lastIndexOf("/"), -8)}`, "PUT");
+                        });
+                    });
+                }
+            }
+
+            searchItems() {
+                if (this.currentCode !== "") {
+                    fetch(`/productExports/${this.currentCode}`)
+                        .then(response => response.json())
+                        .then(response => {
+                            if (response.status) {
+                                //NOTE: When response.status is true, there must be a import request
+
+                                if (!response.data.enhancedQuotation) {
+                                    //CASE: There is no quotation
+
+                                    //Enable add button
+                                    this.quotationCardDivision.children[1].style.display = "none";
+                                    this.quotationCardDivision.children[2].style.display = "flex";
+
+                                    //Reset titles
+                                    this.quotationCardDivision.children[0].children[0].children[0].textContent = "Quotation";
+                                    this.orderCardDivision.children[0].children[0].children[0].textContent = "Order";
+                                    this.invoiceCardDivision.children[0].children[0].children[0].textContent = "Invoice";
+
+                                    //Empty all following divisions
+                                    this.orderCardDivision.children[1].style.display = "none";
+                                    this.orderCardDivision.children[2].style.display = "none";
+
+                                    this.invoiceCardDivision.children[1].style.display = "none";
+                                    this.invoiceCardDivision.children[2].style.display = "none";
+
+                                } else if (!response.data.enhancedOrder) {
+                                    //CASE: There is no order
+
+                                    //Enable add button
+                                    this.orderCardDivision.children[1].style.display = "none";
+                                    this.orderCardDivision.children[2].style.display = "flex";
+
+                                    //Reset titles
+                                    this.orderCardDivision.children[0].children[0].children[0].textContent = "Order";
+                                    this.invoiceCardDivision.children[0].children[0].children[0].textContent = "Invoice";
+
+                                    //Empty all following divisions
+                                    this.invoiceCardDivision.children[1].style.display = "none";
+                                    this.invoiceCardDivision.children[2].style.display = "none";
+
+                                } else if (!response.data.enhancedInvoice) {
+                                    //CASE: There is no invoice
+
+                                    //Enable add button
+                                    this.invoiceCardDivision.children[1].style.display = "none";
+                                    this.invoiceCardDivision.children[2].style.display = "flex";
+
+                                    //Reset titles
+                                    this.invoiceCardDivision.children[0].children[0].children[0].textContent = "Invoice";
+                                }
+
+                                //Update view to display enhancedRequest
+                                if (response.data.enhancedRequest) {
+                                    this.requestCardDivision.children[0].children[0].children[0].textContent = "Request PER" + this.currentCode;
+                                    //Show entries division
+                                    this.requestCardDivision.children[1].style.display = "flex";
+                                    this.requestCardDivision.children[2].style.display = "none";
+
+                                    //Update entries
+                                    const cardDivisionEntries = this.requestCardDivision.querySelectorAll(".titleContainer.entry");
+                                    for (const cardDivisionEntry of cardDivisionEntries) {
+                                        cardDivisionEntry.children[1].textContent = response.data.enhancedRequest[cardDivisionEntry.dataset.mappingField];
+                                    }
+                                }
+
+                                //Update view to display enhancedQuotation
+                                if (response.data.enhancedQuotation) {
+                                    this.quotationCardDivision.children[0].children[0].children[0].textContent = "Quotation PEQ" + this.currentCode;
+                                    //Show entries division
+                                    this.quotationCardDivision.children[1].style.display = "flex";
+                                    this.quotationCardDivision.children[2].style.display = "none";
+
+                                    const cardDivisionEntries = this.quotationCardDivision.querySelectorAll(".titleContainer.entry");
+                                    for (const cardDivisionEntry of cardDivisionEntries) {
+                                        cardDivisionEntry.children[1].textContent = response.data.enhancedQuotation[cardDivisionEntry.dataset.mappingField];
+                                    }
+                                }
+
+                                //Update view to display enhancedOrder
+                                if (response.data.enhancedOrder) {
+                                    this.orderCardDivision.children[0].children[0].children[0].textContent = "Order PEO" + this.currentCode;
+                                    //Show entries division
+                                    this.orderCardDivision.children[1].style.display = "flex";
+                                    this.orderCardDivision.children[2].style.display = "none";
+
+                                    const cardDivisionEntries = this.orderCardDivision.querySelectorAll(".titleContainer.entry");
+                                    for (const cardDivisionEntry of cardDivisionEntries) {
+                                        cardDivisionEntry.children[1].textContent = response.data.enhancedOrder[cardDivisionEntry.dataset.mappingField];
+                                    }
+                                }
+
+                                if (response.data.enhancedInvoice) {
+                                    this.invoiceCardDivision.children[0].children[0].children[0].textContent = "Invoice PEI" + this.currentCode;
+                                    //Show entries division
+                                    this.invoiceCardDivision.children[1].style.display = "flex";
+                                    this.invoiceCardDivision.children[2].style.display = "none";
+
+                                    const cardDivisionEntries = this.invoiceCardDivision.querySelectorAll(".titleContainer.entry");
+                                    for (const cardDivisionEntry of cardDivisionEntries) {
+                                        cardDivisionEntry.children[1].textContent = response.data.enhancedInvoice[cardDivisionEntry.dataset.mappingField];
+                                    }
+                                }
+                            } else {
+                                //CASE: There is no request
+                                //Enable add button
+                                this.requestCardDivision.children[1].style.display = "none";
+                                this.requestCardDivision.children[2].style.display = "flex";
+
+                                //Empty all following divisions
+                                this.quotationCardDivision.children[1].style.display = "none";
+                                this.quotationCardDivision.children[2].style.display = "none";
+
+                                this.orderCardDivision.children[1].style.display = "none";
+                                this.orderCardDivision.children[2].style.display = "none";
+
+                                this.invoiceCardDivision.children[1].style.display = "none";
+                                this.invoiceCardDivision.children[2].style.display = "none";
+
+                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                            }
+                        })
+                        .catch(error => {
+                            window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the ${this.entityNamePlural} list from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                        });
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="requestCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Request</h1>
+                <h1 class="titleDescription">Sent by the customer to you</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="display: none;">
+            <div class="titleContainer entry" data-mapping-field="customer">
+                <h1 class="title">Customer</h1>
+                <h1 class="titleDescription">Abstergo Inc</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="product">
+                <h1 class="title">Product</h1>
+                <h1 class="titleDescription">Titanium O</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="wantedBy">
+                <h1 class="title">Wanted by</h1>
+                <h1 class="titleDescription">2020-04-28</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="status">
+                <h1 class="title">Status</h1>
+                <h1 class="titleDescription">Completed</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="description">
+                <h1 class="title">Description</h1>
+                <h1 class="titleDescription">Hello world</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="addedDate">
+                <h1 class="title">Added date</h1>
+                <h1 class="titleDescription">2020-04-28</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="justify-content: center;">
+            <img src="/images/main/addCircle.png" alt="">
+        </div>
+    </div>
+    <div id="quotationCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Quotation</h1>
+                <h1 class="titleDescription">Sent you to the customer</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="display: none;">
+            <div class="titleContainer entry" data-mapping-field="validityPeriod">
+                <h1 class="title">Validity period</h1>
+                <h1 class="titleDescription">From 2020-04-28 to 2020-05-10</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="weHad">
+                <h1 class="title">We had</h1>
+                <h1 class="titleDescription">2.039 liters</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="unitPrice">
+                <h1 class="title">Unit price</h1>
+                <h1 class="titleDescription">12.5</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="status">
+                <h1 class="title">Status</h1>
+                <h1 class="titleDescription">Completed</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="description">
+                <h1 class="title">Description</h1>
+                <h1 class="titleDescription">Hello world</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="addedDate">
+                <h1 class="title">Added date</h1>
+                <h1 class="titleDescription">2020-04-28</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="justify-content: center; display: none;">
+            <img src="/images/main/addCircle.png" alt="">
+        </div>
+    </div>
+    <div id="orderCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Order</h1>
+                <h1 class="titleDescription">Sent by the customer to you</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="display: none;">
+            <div class="titleContainer entry" data-mapping-field="wantedBy">
+                <h1 class="title">Wanted by</h1>
+                <h1 class="titleDescription">F2020-05-10</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="customerRequested">
+                <h1 class="title">Customer requested</h1>
+                <h1 class="titleDescription">2.039 liters</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="totalPrice">
+                <h1 class="title">Total price</h1>
+                <h1 class="titleDescription">100.345</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="status">
+                <h1 class="title">Status</h1>
+                <h1 class="titleDescription">Completed</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="description">
+                <h1 class="title">Description</h1>
+                <h1 class="titleDescription">Hello world</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="addedDate">
+                <h1 class="title">Added date</h1>
+                <h1 class="titleDescription">2020-04-28</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="justify-content: center; display: none;">
+            <img src="/images/main/addCircle.png" alt="">
+        </div>
+    </div>
+    <div id="invoiceCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Invoice</h1>
+                <h1 class="titleDescription">Generated by you</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="display: none;">
+            <div class="titleContainer entry" data-mapping-field="supplierDelivered">
+                <h1 class="title">Supplier delivered</h1>
+                <h1 class="titleDescription">2.5 liters</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="price">
+                <h1 class="title">Price</h1>
+                <h1 class="titleDescription">F2020-05-10</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="ourDiscount">
+                <h1 class="title">Our discount</h1>
+                <h1 class="titleDescription">2.039 liters</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="discountedPrice">
+                <h1 class="title">Discounted price</h1>
+                <h1 class="titleDescription">100.345</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="status">
+                <h1 class="title">Status</h1>
+                <h1 class="titleDescription">Completed</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="description">
+                <h1 class="title">Description</h1>
+                <h1 class="titleDescription">Hello world</h1>
+            </div>
+            <div class="titleContainer entry" data-mapping-field="addedDate">
+                <h1 class="title">Added date</h1>
+                <h1 class="titleDescription">2020-04-28</h1>
+            </div>
+        </div>
+        <div class="cardDivisionSector" style="justify-content: center; display: none;">
+            <img src="/images/main/addCircle.png" alt="">
+        </div>
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+        <div id="createControlsContainer">
+
+        </div>
+        <div id="retrieveControlsContainer">
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_search.png" title="Search export chain" />
+                <input type="text" placeholder="TYPE THE NUMERIC CODE"
+                    style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <button class="buttonGlyph" title="Refresh">
+                <img src="/images/main/glyph_refresh.png" />
+            </button>
+        </div>
+        <div id="updateControlsContainer">
+
+        </div>
+        <div id="deleteControlsContainer">
+
+        </div>
+    </div>
+</body>
+
+</html>
