@@ -8,7 +8,7 @@ import { MaterialImportQuotation } from "../../entities/main/MaterialImportQuota
 import { UnitType } from "../../entities/main/UnitType";
 
 export class MaterialImportOrderController {
-    private static entityName: string = "Material Import Order";
+    private static entityName: string = "material import order";
     private static entityJSONName: string = "materialImportOrder";
 
     static async createOne(clientBindingObject) {
