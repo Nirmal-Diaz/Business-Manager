@@ -89,7 +89,7 @@ export class MaterialImportInvoiceController {
         if (items.length > 0) {
             return items;
         } else {
-            throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName.toLowerCase()}s for the status you specified`, technicalMessage: `No ${this.entityName.toLowerCase()}s with given status` };
+            throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName}s for the status you specified`, technicalMessage: `No ${this.entityName}s with given status` };
         }
     }
 
