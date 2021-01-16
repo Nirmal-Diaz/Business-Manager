@@ -16,7 +16,6 @@ import { UnitType } from "./UnitType";
 @Index("invoice_code_UNIQUE", ["invoiceCode"], { unique: true })
 @Index("fk_material_batch_material1_idx", ["materialId"], {})
 @Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
-@Index("fk_material_batch_material_import_invoice1_idx", ["invoiceCode"], {})
 @Index("fk_material_batch_unit_type1_idx", ["unitTypeId"], {})
 @Entity("material_batch", { schema: "business_manager" })
 export class MaterialBatch {

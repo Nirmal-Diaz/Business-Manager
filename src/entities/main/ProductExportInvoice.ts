@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { InboundPayment } from "./InboundPayment";
+import { ProductBatch } from "./ProductBatch";
 import { ProductExportOrder } from "./ProductExportOrder";
 import { InvoiceStatus } from "./InvoiceStatus";
 
@@ -49,6 +50,9 @@ export class ProductExportInvoice {
     (inboundPayment) => inboundPayment.invoiceCode2
   )
   inboundPayments: InboundPayment[];
+
+  @OneToOne(() => ProductBatch, (productBatch) => productBatch.invoiceCode2)
+  productBatch: ProductBatch;
 
   @OneToOne(
     () => ProductExportOrder,
