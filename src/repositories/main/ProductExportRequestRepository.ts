@@ -19,7 +19,7 @@ export class ProductExportRequestRepository {
     static generateNextCode() {
         return getRepository(ProductExportRequest)
         .createQueryBuilder("per")
-        .select("CONCAT('PER', SUBSTRING(MAX(per.code),4)+1)", "value")
+        .select("CONCAT('PER', LPAD(SUBSTRING(MAX(per.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

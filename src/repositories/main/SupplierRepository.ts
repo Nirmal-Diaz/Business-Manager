@@ -22,7 +22,7 @@ export class SupplierRepository {
     static generateNextCode() {
         return getRepository(Supplier)
         .createQueryBuilder("s")
-        .select("CONCAT('SUP', SUBSTRING(MAX(s.code),4)+1)", "value")
+        .select("CONCAT('SUP', LPAD(SUBSTRING(MAX(s.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

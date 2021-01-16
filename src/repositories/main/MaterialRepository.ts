@@ -38,7 +38,7 @@ export class MaterialRepository {
     static generateNextCode() {
         return getRepository(Material)
             .createQueryBuilder("m")
-            .select("CONCAT('MAT', SUBSTRING(MAX(m.code),4)+1)", "value")
+            .select("CONCAT('MAT', LPAD(SUBSTRING(MAX(m.code),4)+1, 7, '0'))", "value")
             .getRawOne();
     }
 

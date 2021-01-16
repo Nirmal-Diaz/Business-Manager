@@ -27,7 +27,7 @@ export class EmployeeRepository {
     static generateNextCode() {
         return getRepository(Employee)
         .createQueryBuilder("e")
-        .select("CONCAT('EMP', SUBSTRING(MAX(e.code),4)+1)", "value")
+        .select("CONCAT('EMP', LPAD(SUBSTRING(MAX(e.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

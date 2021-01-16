@@ -13,7 +13,7 @@ export class InboundPaymentRepository {
     static generateNextCode() {
         return getRepository(InboundPayment)
         .createQueryBuilder("ip")
-        .select("CONCAT('INP', SUBSTRING(MAX(ip.code),4)+1)", "value")
+        .select("CONCAT('INP', LPAD(SUBSTRING(MAX(ip.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

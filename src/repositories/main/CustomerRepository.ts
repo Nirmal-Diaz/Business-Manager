@@ -22,7 +22,7 @@ export class CustomerRepository {
     static generateNextCode() {
         return getRepository(Customer)
         .createQueryBuilder("c")
-        .select("CONCAT('CUS', SUBSTRING(MAX(c.code),4)+1)", "value")
+        .select("CONCAT('CUS', LPAD(SUBSTRING(MAX(c.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

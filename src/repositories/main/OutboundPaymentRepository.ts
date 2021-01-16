@@ -13,7 +13,7 @@ export class OutboundPaymentRepository {
     static generateNextCode() {
         return getRepository(OutboundPayment)
         .createQueryBuilder("op")
-        .select("CONCAT('OUP', SUBSTRING(MAX(op.code),4)+1)", "value")
+        .select("CONCAT('OUP', LPAD(SUBSTRING(MAX(op.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }

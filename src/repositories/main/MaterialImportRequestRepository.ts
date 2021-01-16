@@ -19,7 +19,7 @@ export class MaterialImportRequestRepository {
     static generateNextCode() {
         return getRepository(MaterialImportRequest)
         .createQueryBuilder("mir")
-        .select("CONCAT('MIR', SUBSTRING(MAX(mir.code),4)+1)", "value")
+        .select("CONCAT('MIR', LPAD(SUBSTRING(MAX(mir.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
 }
