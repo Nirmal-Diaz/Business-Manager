@@ -7,7 +7,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductExportInvoice } from "./ProductExportInvoice";
+import { ProductExportOrder } from "./ProductExportOrder";
 import { ProductExportRequest } from "./ProductExportRequest";
 import { QuotationStatus } from "./QuotationStatus";
 import { UnitType } from "./UnitType";
@@ -33,11 +33,11 @@ export class ProductExportQuotation {
   @Column("date", { name: "valid_till" })
   validTill: string;
 
-  @Column("int", { name: "unit_type_id" })
-  unitTypeId: number;
-
   @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
   availableAmount: string;
+
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
   unitPrice: string;
@@ -52,10 +52,10 @@ export class ProductExportQuotation {
   addedDate: string;
 
   @OneToOne(
-    () => ProductExportInvoice,
-    (productExportInvoice) => productExportInvoice.quotationCode2
+    () => ProductExportOrder,
+    (productExportOrder) => productExportOrder.quotationCode2
   )
-  productExportInvoice: ProductExportInvoice;
+  productExportOrder: ProductExportOrder;
 
   @OneToOne(
     () => ProductExportRequest,

@@ -13,6 +13,7 @@ import { MaterialImportOrder } from "./MaterialImportOrder";
 import { MaterialImportQuotation } from "./MaterialImportQuotation";
 import { Product } from "./Product";
 import { ProductBatch } from "./ProductBatch";
+import { ProductExportOrder } from "./ProductExportOrder";
 import { ProductExportQuotation } from "./ProductExportQuotation";
 import { UnitCategory } from "./UnitCategory";
 
@@ -61,6 +62,12 @@ export class UnitType {
 
   @OneToMany(() => ProductBatch, (productBatch) => productBatch.unitType)
   productBatches: ProductBatch[];
+
+  @OneToMany(
+    () => ProductExportOrder,
+    (productExportOrder) => productExportOrder.unitType
+  )
+  productExportOrders: ProductExportOrder[];
 
   @OneToMany(
     () => ProductExportQuotation,

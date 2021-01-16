@@ -25,8 +25,11 @@ export class ProductBatch {
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("decimal", { name: "amount", precision: 7, scale: 2 })
-  amount: string;
+  @Column("decimal", { name: "exported_amount", precision: 7, scale: 2 })
+  exportedAmount: string;
+
+  @Column("int", { name: "unit_type_id" })
+  unitTypeId: number;
 
   @Column("int", { name: "viable_period" })
   viablePeriod: number;
@@ -39,9 +42,6 @@ export class ProductBatch {
 
   @Column("int", { name: "batch_status_id" })
   batchStatusId: number;
-
-  @Column("int", { name: "unit_type_id" })
-  unitTypeId: number;
 
   @ManyToOne(() => BatchStatus, (batchStatus) => batchStatus.productBatches, {
     onDelete: "NO ACTION",

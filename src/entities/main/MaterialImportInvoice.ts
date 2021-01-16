@@ -48,7 +48,7 @@ export class MaterialImportInvoice {
   @Column("int", { name: "invoice_status_id" })
   invoiceStatusId: number;
 
-  @Column("varchar", { name: "description", nullable: true, length: 45 })
+  @Column("text", { name: "description", nullable: true })
   description: string | null;
 
   @Column("date", { name: "added_date" })

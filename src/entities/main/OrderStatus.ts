@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { MaterialImportOrder } from "./MaterialImportOrder";
+import { ProductExportOrder } from "./ProductExportOrder";
 
 @Entity("order_status", { schema: "business_manager" })
 export class OrderStatus {
@@ -14,4 +15,10 @@ export class OrderStatus {
     (materialImportOrder) => materialImportOrder.orderStatus
   )
   materialImportOrders: MaterialImportOrder[];
+
+  @OneToMany(
+    () => ProductExportOrder,
+    (productExportOrder) => productExportOrder.orderStatus
+  )
+  productExportOrders: ProductExportOrder[];
 }
