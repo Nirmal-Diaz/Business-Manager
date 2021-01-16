@@ -29,8 +29,8 @@ export class ProductExportInvoice {
   @Column("decimal", { name: "price", precision: 7, scale: 2 })
   price: string;
 
-  @Column("int", { name: "dicount_percentage" })
-  dicountPercentage: number;
+  @Column("int", { name: "discount_percentage" })
+  discountPercentage: number;
 
   @Column("decimal", { name: "final_price", precision: 7, scale: 2 })
   finalPrice: string;
