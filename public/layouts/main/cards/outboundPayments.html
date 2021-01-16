@@ -37,7 +37,7 @@
 
                             for (const item of response.data) {
                                 if (!states.hasOwnProperty(item.invoiceCode)) {
-                                    states[item.invoiceCode] = CardComponent.createCardDivisionSector(document.title + "of" + item.invoiceCode, titleDescriptionText);
+                                    states[item.invoiceCode] = CardComponent.createCardDivisionSector(document.title + " of " + item.invoiceCode, titleDescriptionText);
                                 }
 
                                 const iconURL = `../../../images/main/glyph_search.png`;
