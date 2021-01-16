@@ -11,10 +11,16 @@
         "pattern": "^[\\w\\s]{3,150}$",
         "value": null
     },
+    "unitPrice": {
+        "inputQuery": "#unitPrice",
+        "inputClass": "text",
+        "pattern": "^\\d{1,5}[.]\\d{2}$",
+        "value": null
+    },
     "reorderAmount": {
         "inputQuery": "#reorderAmount",
         "inputClass": "text",
-        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "pattern": "^\\d{1,5}[.]\\d{2}$",
         "value": null
     },
     "unitTypeId": {
