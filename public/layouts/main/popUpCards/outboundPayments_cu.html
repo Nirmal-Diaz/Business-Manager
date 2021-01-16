@@ -78,12 +78,12 @@
                     <div class="titleContainer">
                         <h1 class="title">Import invoice code</h1>
                     </div>
-                    <div class="inputContainer dropDown">
-                        <select id="invoiceCode" data-request-url="/materialImportInvoices/@valid"
-                            data-text-content-field="code" data-value-field="code">
-
-                        </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                    <div class="inputContainer text">
+                        <input id="invoiceCode" list="importInvoiceCodeList" type="text" placeholder="eg: MII2020019"/>
+                        <datalist id="importInvoiceCodeList" data-request-url="/materialImportInvoices/@valid" data-text-content-field="code"
+                        data-value-field="code">
+    
+                        </datalist>
                     </div>
                 </div>
 

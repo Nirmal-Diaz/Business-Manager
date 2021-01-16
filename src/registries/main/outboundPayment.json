@@ -7,7 +7,7 @@
     },
     "invoiceCode": {
         "inputQuery": "#invoiceCode",
-        "inputClass": "dropDown",
+        "inputClass": "text",
         "pattern": "^MII[0-9]{7}$",
         "value": null
     },
