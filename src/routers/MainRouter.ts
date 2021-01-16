@@ -821,7 +821,7 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
 mainRouter.route("/productExportRequests/@valid")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => MaterialImportRequestController.getManyByStatus(1)).then(data => {
+            .then(() => ProductExportRequestController.getManyByStatus(1)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
