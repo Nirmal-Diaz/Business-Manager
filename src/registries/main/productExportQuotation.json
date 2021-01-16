@@ -1,0 +1,62 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^PEQ[0-9]{7}$",
+        "value": null
+    },
+    "requestCode": {
+        "inputQuery": "#requestCode",
+        "inputClass": "text",
+        "pattern": "^PER[0-9]{7}$",
+        "value": null
+    },
+    "validFrom": {
+        "inputQuery": "#validFrom",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "validTill": {
+        "inputQuery": "#validTill",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "availableAmount": {
+        "inputQuery": "#availableAmount",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "unitPrice": {
+        "inputQuery": "#unitPrice",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "quotationStatusId": {
+        "inputQuery": "#quotationStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    }
+}

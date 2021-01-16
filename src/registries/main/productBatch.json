@@ -1,0 +1,56 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^PBT[0-9]{7}$",
+        "value": null
+    },
+    "invoiceCode": {
+        "inputQuery": "#invoiceCode",
+        "inputClass": "text",
+        "pattern": "^PEI[0-9]{7}$",
+        "value": null
+    },
+    "productId": {
+        "inputQuery": "#productId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "exportedAmount": {
+        "inputQuery": "#exportedAmount",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "viablePeriod": {
+        "inputQuery": "#viablePeriod",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}$",
+        "value": null
+    },
+    "batchStatusId": {
+        "inputQuery": "#batchStatusId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    }
+}

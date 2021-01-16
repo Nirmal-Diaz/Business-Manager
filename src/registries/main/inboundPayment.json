@@ -1,0 +1,50 @@
+{
+    "code": {
+        "inputQuery": "#code",
+        "inputClass": "text",
+        "pattern": "^INP[0-9]{7}$",
+        "value": null
+    },
+    "invoiceCode": {
+        "inputQuery": "#invoiceCode",
+        "inputClass": "text",
+        "pattern": "^PEI[0-9]{7}$",
+        "value": null
+    },
+    "price": {
+        "inputQuery": "#price",
+        "inputClass": "text",
+        "pattern": "^\\d{1,}[.]\\d{2}$",
+        "value": null
+    },
+    "chequeNumber": {
+        "inputQuery": "#chequeNumber",
+        "inputClass": "text",
+        "pattern": null,
+        "value": null
+    },
+    "chequeDate": {
+        "inputQuery": "#chequeDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    },
+    "bankAccountNumber": {
+        "inputQuery": "#bankAccountNumber",
+        "inputClass": "text",
+        "pattern": null,
+        "value": null
+    },
+    "description": {
+        "inputQuery": "#description",
+        "inputClass": "textarea",
+        "pattern": null,
+        "value": ""
+    },
+    "addedDate": {
+        "inputQuery": "#addedDate",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+        "value": null
+    }
+}
