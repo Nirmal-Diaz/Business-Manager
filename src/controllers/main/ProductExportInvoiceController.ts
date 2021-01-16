@@ -6,9 +6,8 @@ import { ProductExportInvoice as Entity } from "../../entities/main/ProductExpor
 import { ProductExportInvoiceRepository as EntityRepository } from "../../repositories/main/ProductExportInvoiceRepository";
 import { ProductExportOrder } from "../../entities/main/ProductExportOrder";
 import { ProductExportRequest } from "../../entities/main/ProductExportRequest";
-import { productBatch } from "../../entities/main/productBatch";
-import { UnitType } from "../../entities/main/UnitType";
 import { ProductBatch } from "../../entities/main/ProductBatch";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class ProductExportInvoiceController {
     private static entityName: string = "product export invoice";
@@ -47,7 +46,7 @@ export class ProductExportInvoiceController {
 
             productExportOrder.orderStatusId = 2;
 
-            return Promise.all([getRepository(ProductExportOrder).save(productExportOrder), getRepository(ProductBatch).save(serverObject.productBatch as productBatch)]);
+            return Promise.all([getRepository(ProductExportOrder).save(productExportOrder), getRepository(ProductBatch).save(serverObject.productBatch as ProductBatch)]);
         }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });

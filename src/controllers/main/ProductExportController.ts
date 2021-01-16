@@ -29,7 +29,7 @@ export class ProductExportController {
             where: {
                 code: "PEI" + numericCode
             },
-            relations: ["invoiceStatus", "materialBatch", "materialBatch.unitType"]
+            relations: ["invoiceStatus", "productBatch", "productBatch.unitType"]
         });
 
         
@@ -56,7 +56,7 @@ export class ProductExportController {
             if (exportQuotation) {
                 enhancedObjects.enhancedQuotation = {
                     validityPeriod: `From ${exportQuotation.validFrom} to ${exportQuotation.validTill}`,
-                    supplierHas: `${exportQuotation.availableAmount} ${exportQuotation.unitType.name}`,
+                    weHad: `${exportQuotation.availableAmount} ${exportQuotation.unitType.name}`,
                     unitPrice: `Rs. ${exportQuotation.unitPrice}`,
                     status: exportQuotation.quotationStatus.name,
                     description: exportQuotation.description,
@@ -67,7 +67,7 @@ export class ProductExportController {
             if (exportOrder) {
                 enhancedObjects.enhancedOrder = {
                     wantedBy: exportOrder.validTill,
-                    youRequested: `${exportOrder.requestedAmount} ${exportOrder.unitType.name}`,
+                    customerRequested: `${exportOrder.requestedAmount} ${exportOrder.unitType.name}`,
                     totalPrice: `Rs. ${parseFloat(exportQuotation.unitPrice)*parseFloat(exportOrder.requestedAmount)}`,
                     status: exportOrder.orderStatus.name,
                     description: exportOrder.description,
@@ -79,7 +79,7 @@ export class ProductExportController {
                 enhancedObjects.enhancedInvoice = {
                     supplierDelivered: `${exportInvoice.productBatch.exportedAmount} ${exportInvoice.productBatch.unitType.name}`,
                     price: `Rs. ${parseFloat(exportQuotation.unitPrice)*parseFloat(exportInvoice.productBatch.exportedAmount)}`,
-                    supplierDiscount: `${exportInvoice.discountPercentage}%`,
+                    ourDiscount: `${exportInvoice.discountPercentage}%`,
                     discountedPrice: `Rs. ${parseFloat(exportQuotation.unitPrice)*parseFloat(exportInvoice.productBatch.exportedAmount)*(100-exportInvoice.discountPercentage)/100}`,
                     status: exportInvoice.invoiceStatus.name,
                     description: exportInvoice.description,
