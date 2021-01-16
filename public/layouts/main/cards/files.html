@@ -20,17 +20,17 @@
         import { CardComponent } from "/scripts/main/Utility.js";
         import { PopUpCard } from "/scripts/main/PopUpCard.js";
         import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
-        
+
         //Add onload to window for initializing cardInterface
         window.addEventListener("DOMContentLoaded", () => {
             window.cardInterface = new CardInterface();
         });
 
-        class CardInterface extends BaseCardInterface{
+        class CardInterface extends BaseCardInterface {
             presentWorkingDirectoryPath = "/";
             fileMetadata = null;
             selectedCardDivisionSectorItems = [];
-            
+
             mainCardDivision = document.getElementById("mainCardDivision");
 
             constructor() {
@@ -225,8 +225,8 @@
             <button class="buttonGlyph">
                 <span>NV</span>
             </button>
-            <button class="buttonGlyph">
-                <img src="/images/main/glyph_refresh.png" title="Refresh"/>
+            <button class="buttonGlyph" title="Refresh">
+                <img src="/images/main/glyph_refresh.png" />
             </button>
         </div>
         <div id="updateControlsContainer">
