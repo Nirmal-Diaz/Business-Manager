@@ -2,52 +2,22 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { MaterialImportInvoice as Entity } from "../../entities/main/MaterialImportInvoice";
-import { MaterialImportInvoiceRepository as EntityRepository } from "../../repositories/main/MaterialImportInvoiceRepository";
-import { MaterialImportOrder } from "../../entities/main/MaterialImportOrder";
-import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
-import { MaterialBatch } from "../../entities/main/MaterialBatch";
-import { UnitType } from "../../entities/main/UnitType";
+import { OutboundPayment as Entity } from "../../entities/main/OutboundPayment";
+import { OutboundPaymentRepository as EntityRepository } from "../../repositories/main/OutboundPaymentRepository";
 
-export class MaterialImportInvoiceController {
-    private static entityName: string = "Material Import Invoice";
-    private static entityJSONName: string = "materialImportInvoice";
+export class OutboundPaymentController {
+    private static entityName: string = "Outbound Payment";
+    private static entityJSONName: string = "outboundPayment";
 
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //NOTE: Invoice code must be equal to the referring quotation code except the letter code
-        serverObject.code = serverObject.orderCode.replace("MIO", "MII");
-        serverObject.materialBatch.code = serverObject.orderCode.replace("MIO", "MBT");
-        serverObject.materialBatch.invoiceCode = serverObject.code;
+        //Update the code field with next possible value
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        //Change the unit type to the default
-        const unitType = await getRepository(UnitType).findOne(serverObject.materialBatch.unitTypeId);
-        serverObject.materialBatch.importedAmount = parseFloat(serverObject.materialBatch.importedAmount) * parseFloat(unitType.convertToDefaultFactor);
-        serverObject.materialBatch.unitTypeId = unitType.defaultUnitId;
-        
-        const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
-            where: {
-                code: serverObject.orderCode.replace("MIO", "MIR")
-            }
-        });
-
-        serverObject.materialBatch.materialId = materialImportRequest.materialId;
-
-        return getRepository(Entity).save(serverObject as Entity).then(async item => {
-            //Update the relevant import order to "Completed" state
-            const materialImportOrder = await getRepository(MaterialImportOrder).findOne({
-                where: {
-                    code: item.orderCode
-                }
-            });
-
-            materialImportOrder.orderStatusId = 2;
-
-            return Promise.all([getRepository(MaterialImportOrder).save(materialImportOrder), getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)]);
-        }).catch((error) => {
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
@@ -56,8 +26,7 @@ export class MaterialImportInvoiceController {
         const item = await getRepository(Entity).findOne({
             where: {
                 id: id
-            },
-            relations: ["invoiceStatus", "materialBatch", "materialBatch.batchStatus"]
+            }
         });
 
         if (item) {
@@ -68,28 +37,12 @@ export class MaterialImportInvoiceController {
     }
 
     static async getMany(keyword: string) {
-        await EntityRepository.updateTable();
-
         const items = await EntityRepository.search(keyword);
 
         if (items.length > 0) {
             return items;
         } else {
             throw { title: "Couldn't find anything", titleDescription: "Try single words instead of phrases", message: `There are no ${this.entityName}s matching the keyword you provided`, technicalMessage: `No ${this.entityName}s for given keyword` };
-        }
-    }
-
-    static async getManyByStatus(statusId: number) {
-        const items = await getRepository(Entity).find({
-            where: {
-                invoiceStatusId: statusId
-            }
-        });
-
-        if (items.length > 0) {
-            return items;
-        } else {
-            throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName.toLowerCase()}s for the status you specified`, technicalMessage: `No ${this.entityName.toLowerCase()}s with given status` };
         }
     }
 

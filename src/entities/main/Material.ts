@@ -18,8 +18,8 @@ import { ProductMaterial } from "./ProductMaterial";
 import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_material_status1_idx", ["materialStatusId"], {})
 @Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
+@Index("fk_material_material_status1_idx", ["materialStatusId"], {})
 @Index("fk_material_user1_idx", ["userId"], {})
 @Entity("material", { schema: "business_manager" })
 export class Material {
@@ -37,9 +37,6 @@ export class Material {
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
-
-  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
-  unitPrice: string;
 
   @Column("int", { name: "material_status_id" })
   materialStatusId: number;

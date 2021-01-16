@@ -2,7 +2,7 @@ import { BaseCardInterface } from "./BaseCardInterface.js";
 import { PlatformUtil } from "./Utility.js";
 
 //@ts-check
-export class EntityManagerCardInterface extends BaseCardInterface {
+export class EntityCardInterface extends BaseCardInterface {
     entityNameSingular = null;
 
     constructor(entityNameSingular, entityNamePlural) {

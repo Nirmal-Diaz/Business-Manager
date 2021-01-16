@@ -28,7 +28,7 @@ export class UnitType {
   @Column("decimal", {
     name: "convert_to_default_factor",
     precision: 10,
-    scale: 0,
+    scale: 6,
   })
   convertToDefaultFactor: string;
 

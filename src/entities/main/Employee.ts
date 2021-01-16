@@ -13,15 +13,15 @@ import { EmployeeStatus } from "./EmployeeStatus";
 import { Gender } from "./Gender";
 import { User } from "./User";
 
-@Index("email_UNIQUE", ["email"], { unique: true })
-@Index("fk_employee_civil_status1_idx", ["civilStatusId"], {})
-@Index("fk_employee_designation1_idx", ["designationId"], {})
-@Index("fk_employee_employee_status1_idx", ["employeeStatusId"], {})
-@Index("fk_employee_gender1_idx", ["genderId"], {})
-@Index("land_UNIQUE", ["land"], { unique: true })
-@Index("mobile_UNIQUE", ["mobile"], { unique: true })
 @Index("nic_no_UNIQUE", ["nicNumber"], { unique: true })
 @Index("number_UNIQUE", ["code"], { unique: true })
+@Index("email_UNIQUE", ["email"], { unique: true })
+@Index("mobile_UNIQUE", ["mobile"], { unique: true })
+@Index("land_UNIQUE", ["land"], { unique: true })
+@Index("fk_employee_gender1_idx", ["genderId"], {})
+@Index("fk_employee_civil_status1_idx", ["civilStatusId"], {})
+@Index("fk_employee_employee_status1_idx", ["employeeStatusId"], {})
+@Index("fk_employee_designation1_idx", ["designationId"], {})
 @Entity("employee", { schema: "business_manager" })
 export class Employee {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })

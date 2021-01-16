@@ -25,6 +25,7 @@ import { MaterialBatchController } from "../controllers/main/MaterialBatchContro
 import { MaterialImportOrderController } from "../controllers/main/MaterialImportOrderController";
 import { MaterialImportInvoiceController } from "../controllers/main/MaterialImportInvoiceController";
 import { MaterialImportController } from "../controllers/main/MaterialImportController";
+import { OutboundPaymentController } from "../controllers/main/OutboundPaymentController";
 
 export const mainRouter = express.Router();
 /*
@@ -705,11 +706,67 @@ mainRouter.route("/materialImportInvoices/:materialImportInvoiceId")
             });
     });
 
+mainRouter.route("/materialImportInvoices/@valid")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.getManyByStatus(1)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //MATERIAL IMPORTS
 mainRouter.route("/materialImports/:numericCode")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material imports", req.method)
             .then(() => MaterialImportController.getSummary(req.params.numericCode)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//OUTBOUND PAYMENTS
+mainRouter.route("/outboundPayments")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/outboundPayments/:outboundPaymentId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.getOne(parseInt(req.params.outboundPaymentId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.deleteOne(parseInt(req.params.outboundPaymentId)))
+            .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

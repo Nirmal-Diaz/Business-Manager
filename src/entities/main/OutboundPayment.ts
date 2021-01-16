@@ -8,17 +8,17 @@ import {
 } from "typeorm";
 import { MaterialImportInvoice } from "./MaterialImportInvoice";
 
-@Index("fk_inbound_payment_material_import_invoice1_idx", ["invoiceId"], {})
-@Entity("inbound_payment", { schema: "business_manager" })
-export class InboundPayment {
+@Index("fk_inbound_payment_material_import_invoice1", ["invoiceCode"], {})
+@Entity("outbound_payment", { schema: "business_manager" })
+export class OutboundPayment {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("varchar", { name: "code", length: 45 })
   code: string;
 
-  @Column("int", { name: "invoice_id" })
-  invoiceId: number;
+  @Column("char", { name: "invoice_code", length: 10 })
+  invoiceCode: string;
 
   @Column("decimal", { name: "price", precision: 7, scale: 2 })
   price: string;
@@ -44,9 +44,9 @@ export class InboundPayment {
 
   @ManyToOne(
     () => MaterialImportInvoice,
-    (materialImportInvoice) => materialImportInvoice.inboundPayments,
+    (materialImportInvoice) => materialImportInvoice.outboundPayments,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "invoice_id", referencedColumnName: "id" }])
-  invoice: MaterialImportInvoice;
+  @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
+  invoiceCode2: MaterialImportInvoice;
 }

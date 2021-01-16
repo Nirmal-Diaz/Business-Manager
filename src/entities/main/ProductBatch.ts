@@ -11,8 +11,8 @@ import { Product } from "./Product";
 import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_product_batch_batch_status1_idx", ["batchStatusId"], {})
 @Index("fk_product_batch_product1_idx", ["productId"], {})
+@Index("fk_product_batch_batch_status1_idx", ["batchStatusId"], {})
 @Index("fk_product_batch_unit_type1_idx", ["unitTypeId"], {})
 @Entity("product_batch", { schema: "business_manager" })
 export class ProductBatch {
