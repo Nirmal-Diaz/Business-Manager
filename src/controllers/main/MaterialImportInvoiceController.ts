@@ -8,6 +8,7 @@ import { MaterialImportOrder } from "../../entities/main/MaterialImportOrder";
 import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
 import { MaterialBatch } from "../../entities/main/MaterialBatch";
 import { UnitType } from "../../entities/main/UnitType";
+import { Supplier } from "../../entities/main/Supplier";
 
 export class MaterialImportInvoiceController {
     private static entityName: string = "material import invoice";
@@ -31,23 +32,22 @@ export class MaterialImportInvoiceController {
         const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
             where: {
                 code: serverObject.orderCode.replace("MIO", "MIR")
-            }
+            },
+            relations: ["supplier", "materialImportQuotation", "materialImportQuotation.materialImportOrder"]
         });
 
+        //Increase supplier's arrears
+        materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) + parseFloat(serverObject.finalPrice)).toString();
+    
+        //Update relevant order status
+        materialImportRequest.materialImportQuotation.materialImportOrder.orderStatusId = 2;
         serverObject.materialBatch.materialId = materialImportRequest.materialId;
 
-        return getRepository(Entity).save(serverObject as Entity).then(async item => {
-            //Update the relevant import order to "Completed" state
-            const materialImportOrder = await getRepository(MaterialImportOrder).findOne({
-                where: {
-                    code: item.orderCode
-                }
-            });
-
-            materialImportOrder.orderStatusId = 2;
-
-            return Promise.all([getRepository(MaterialImportOrder).save(materialImportOrder), getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)]);
-        }).catch((error) => {
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Supplier).save(materialImportRequest.supplier), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
+        .then(() => {
+            return getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)
+        })
+        .catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
