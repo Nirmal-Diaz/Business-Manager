@@ -42,7 +42,7 @@ export class MaterialImportInvoice {
   @Column("int", { name: "discount_percentage" })
   discountPercentage: number;
 
-  @Column("decimal", { name: "final_price", precision: 10, scale: 0 })
+  @Column("decimal", { name: "final_price", precision: 7, scale: 2 })
   finalPrice: string;
 
   @Column("int", { name: "invoice_status_id" })

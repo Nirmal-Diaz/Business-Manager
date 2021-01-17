@@ -51,21 +51,21 @@
         "childFormObject": true,
         "value": {
             "code": {
-                "inputQuery": "#code",
-                "inputClass": "text",
-                "pattern": "^PBT[0-9]{7}$",
+                "inputQuery": null,
+                "inputClass": null,
+                "pattern": null,
                 "value": null
             },
             "invoiceCode": {
-                "inputQuery": "#invoiceCode",
+                "inputQuery": "#code",
                 "inputClass": "text",
                 "pattern": "^PMI[0-9]{7}$",
                 "value": null
             },
             "productId": {
-                "inputQuery": "#productId",
-                "inputClass": "dropDown",
-                "pattern": "^[1-9]{1,}$",
+                "inputQuery": null,
+                "inputClass": null,
+                "pattern": null,
                 "value": null
             },
             "availableAmount": {

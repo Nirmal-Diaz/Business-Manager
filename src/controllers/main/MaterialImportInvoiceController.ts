@@ -95,7 +95,10 @@ export class MaterialImportInvoiceController {
 
     static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
-            id: clientBindingObject.id.value
+            where: {
+                id: clientBindingObject.id.value
+            },
+            relations: ["materialBatch"]
         });
 
         if (originalObject) {
@@ -103,7 +106,7 @@ export class MaterialImportInvoiceController {
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
-            return getRepository(Entity).save(originalObject).catch((error) => {
+            return Promise.all([getRepository(Entity).save(originalObject), getRepository(MaterialBatch).save(originalObject.materialBatch)]).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {

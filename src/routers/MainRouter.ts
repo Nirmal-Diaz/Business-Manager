@@ -854,7 +854,7 @@ mainRouter.route("/productManufacturingOrders/:productManufacturingOrderId")
                 res.locals.error = error; next();
             });
     })
-    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
             .then(() => ProductManufacturingOrderController.updateOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();

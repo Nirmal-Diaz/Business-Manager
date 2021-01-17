@@ -77,6 +77,11 @@ export class ProductExportRequestController {
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
 
+            //Change the unit type to the default
+            const unitType = await getRepository(UnitType).findOne(originalObject.unitTypeId);
+            originalObject.requestedAmount = (parseFloat(originalObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor)).toString();
+            originalObject.unitTypeId = unitType.defaultUnitId;
+            
             return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });

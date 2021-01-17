@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create/Update Product Export Invoices</title>
+    <title>Create/Update Product Manufacturing Invoices</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -20,7 +21,7 @@
 
         class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super("Product Export Invoice", "Product Export Invoices");
+                super("Product Manufacturing Invoice", "Product Manufacturing Invoices");
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
@@ -75,7 +76,7 @@
                         <h1 class="title">Invoice code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: PMI2020019" value="PMI0000000"/>
+                        <input id="code" type="text" placeholder="eg: PEI2020019" value="PEI0000000"/>
                     </div>
                 </div>
 
@@ -84,8 +85,8 @@
                         <h1 class="title">Order code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="orderCode" list="exportOrderCodeList" type="text" placeholder="eg: MIO2020019"/>
-                        <datalist id="exportOrderCodeList" data-request-url="/productExportOrders/@valid" data-text-content-field="code"
+                        <input id="orderCode" list="manufacturingOrderCodeList" type="text" placeholder="eg: PMO2020019"/>
+                        <datalist id="manufacturingOrderCodeList" data-request-url="/productManufacturingOrders/@valid" data-text-content-field="code"
                         data-value-field="code">
     
                         </datalist>
@@ -94,10 +95,10 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Exported amount</h1>
+                        <h1 class="title">Manufactured amount</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="exportedAmount" type="text" placeholder="eg: 10000.50">
+                        <input id="availableAmount" type="text" placeholder="eg: 10000.50">
                     </div>
                 </div>
 
@@ -118,7 +119,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Viable period</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text suffixed days">
                         <input id="viablePeriod" type="text" placeholder="eg: 365">
                     </div>
                 </div>
@@ -127,7 +128,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="price" type="text" placeholder="eg: 10000.00">
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Discount percentage</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text suffixed percentage">
                         <input id="discountPercentage" type="text" placeholder="eg: 10">
                     </div>
                 </div>
@@ -145,7 +146,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Final price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="finalPrice" type="text" placeholder="eg: 9000.00">
                     </div>
                 </div>
