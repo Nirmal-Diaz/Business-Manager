@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -30,6 +31,9 @@
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -57,7 +61,7 @@
         <!-- formTitleContainer -->
         <div class="formTitleContainer">
             <div class="titleContainer">
-                <div class="titleDescription">Edit</div>
+                <div class="titleDescription">Add</div>
                 <div class="title">Inbound Payments</div>
             </div>
         </div>
@@ -91,7 +95,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="price" type="text" placeholder="eg: 10000.00">
                     </div>
                 </div>

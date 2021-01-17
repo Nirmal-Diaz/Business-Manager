@@ -81,13 +81,6 @@
                     //Hide the multi supplier selection
                     supplierDropDown.parentElement.nextElementSibling.style.display = "none";
 
-                    //Make all form fields disabled except the description
-                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (const formFieldContainer of formFieldContainers) {
-                        formFieldContainer.classList.add("disabled");
-                    }
-                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
-
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -151,7 +144,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -166,7 +159,7 @@
                             data-text-content-field="businessName" data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
 
                     <!-- NOTE: This element is needed only for the create from -->
@@ -184,7 +177,7 @@
                             data-text-content-field="name" data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

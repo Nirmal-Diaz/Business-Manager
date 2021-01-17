@@ -38,12 +38,18 @@
                             for (const item of response.data) {
                                 if (!states.hasOwnProperty(item.invoiceStatus.id)) {
                                     states[item.invoiceStatus.id] = CardComponent.createCardDivisionSector(item.invoiceStatus.name + " " + document.title, titleDescriptionText);
+
+                                    const table = CardComponent.createTable(["Code", "Original price", "Discount percentage", "Discounted price", "Added date"]);
+
+                                    states[item.invoiceStatus.id].appendChild(table);
                                 }
 
-                                const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, [item.finalPrice]);
+                                const tableBody = states[item.invoiceStatus.id].querySelector("tbody");
+                                const expiryDate = new Date(item.addedDate);
+                                expiryDate.setDate(item.viablePeriod);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `Rs. ${item.price}`, `${item.discountPercentage} %`, `Rs. ${item.finalPrice}`, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                states[item.invoiceStatus.id].appendChild(cardDivisionSectorItem);
+                                tableBody.appendChild(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {

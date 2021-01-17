@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -39,6 +40,9 @@
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -120,7 +124,7 @@
                         <h1 class="title">Available amount</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="availableAmount" type="text" placeholder="eg: 1.5">
+                        <input id="availableAmount" type="text" placeholder="eg: 1000.00">
                     </div>
                 </div>
 
@@ -133,7 +137,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -141,7 +145,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Unit price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="unitPrice" type="text" placeholder="eg: 1234.59">
                     </div>
                 </div>
@@ -155,7 +159,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

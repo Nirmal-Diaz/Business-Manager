@@ -32,6 +32,9 @@
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -173,15 +176,6 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Discount factor</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="discountFactor" type="text" placeholder="eg: 0.234">
-                    </div>
-                </div>
-
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
                         <h1 class="title">Customer status</h1>
                     </div>
                     <div class="inputContainer dropDown">
@@ -189,7 +183,7 @@
                             data-text-content-field="name" data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

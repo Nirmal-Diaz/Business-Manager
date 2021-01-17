@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -32,13 +33,8 @@
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
-                    //Make all form fields disabled except the description
-                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (const formFieldContainer of formFieldContainers) {
-                        formFieldContainer.classList.add("disabled");
-                    }
-                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
-                    this.form.getView().querySelector("#viablePeriod").parentElement.parentElement.classList.remove("disabled");
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -102,7 +98,16 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
+                    </div>
+                </div>
+
+                <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Viable period</h1>
+                    </div>
+                    <div class="inputContainer text suffixed days">
+                        <input id="viablePeriod" type="text" placeholder="eg: 365">
                     </div>
                 </div>
 
@@ -111,7 +116,7 @@
                         <h1 class="title">Imported amount</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="importedAmount" type="text" placeholder="eg: 10000.0">
+                        <input id="importedAmount" type="text" placeholder="eg: 1000.00">
                     </div>
                 </div>
 
@@ -124,16 +129,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
-                    </div>
-                </div>
-
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
-                        <h1 class="title">Viable period</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="viablePeriod" type="text" placeholder="eg: 365">
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -146,7 +142,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

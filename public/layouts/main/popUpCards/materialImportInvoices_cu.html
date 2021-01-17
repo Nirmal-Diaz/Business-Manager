@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -34,14 +35,6 @@
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
-
-                    //Make all form fields disabled
-                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (const formFieldContainer of formFieldContainers) {
-                        formFieldContainer.classList.add("disabled");
-                    }
-                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
-                    this.form.getView().querySelector("#viablePeriod").parentElement.parentElement.classList.remove("disabled");
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -118,7 +111,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -126,7 +119,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Viable period</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text suffixed days">
                         <input id="viablePeriod" type="text" placeholder="eg: 365">
                     </div>
                 </div>
@@ -135,7 +128,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="price" type="text" placeholder="eg: 10000.00">
                     </div>
                 </div>
@@ -144,7 +137,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Discount percentage</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text suffixed percentage">
                         <input id="discountPercentage" type="text" placeholder="eg: 10">
                     </div>
                 </div>
@@ -153,7 +146,7 @@
                     <div class="titleContainer">
                         <h1 class="title">Final price</h1>
                     </div>
-                    <div class="inputContainer text">
+                    <div class="inputContainer text prefixed price">
                         <input id="finalPrice" type="text" placeholder="eg: 9000.00">
                     </div>
                 </div>
@@ -167,7 +160,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -180,7 +173,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

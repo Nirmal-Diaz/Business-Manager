@@ -40,13 +40,6 @@
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
 
-                    //Make all form fields disabled except the description
-                    const formFieldContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (const formFieldContainer of formFieldContainers) {
-                        formFieldContainer.classList.add("disabled");
-                    }
-                    this.form.getView().querySelector("#description").parentElement.parentElement.classList.remove("disabled");
-
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -122,7 +115,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -144,7 +137,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

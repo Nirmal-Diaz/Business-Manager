@@ -70,6 +70,9 @@
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -155,6 +158,34 @@
                     </div>
                 </div>
 
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
+                        <h1 class="title">Birth date</h1>
+                    </div>
+                    <ul>
+                        <li>This field is calculated automatically</li>
+                    </ul>
+                    <div class="inputContainer text">
+                        <input id="birthDate" type="text" placeholder="eg: 1970-01-01">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
+                        <h1 class="title">Gender</h1>
+                    </div>
+                    <ul>
+                        <li>This field is calculated automatically</li>
+                    </ul>
+                    <div class="inputContainer dropDown">
+                        <select id="genderId" data-request-url="/tables/gender" data-text-content-field="name"
+                            data-value-field="id">
+
+                        </select>
+                        <button title="Reload values">&olarr;</button>
+                    </div>
+                </div>
+
                 <div class="formFieldContainer">
                     <div class="titleContainer">
                         <h1 class="title">E-mail</h1>
@@ -164,34 +195,12 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
-                        <h1 class="title">Birth date</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="birthDate" type="text" placeholder="eg: 1970-01-01">
-                    </div>
-                </div>
-
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="addedDate" type="date" placeholder="eg: 2020-01-01">
-                    </div>
-                </div>
-
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
-                        <h1 class="title">Gender</h1>
-                    </div>
-                    <div class="inputContainer dropDown">
-                        <select id="genderId" data-request-url="/tables/gender" data-text-content-field="name"
-                            data-value-field="id">
-
-                        </select>
-                        <button title="Reload values">&#x1F5D8;</button>
                     </div>
                 </div>
 
@@ -231,7 +240,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -244,7 +253,7 @@
                             data-text-content-field="name" data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -257,7 +266,7 @@
                             data-value-field="id">
 
                         </select>
-                        <button title="Reload values">&#x1F5D8;</button>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 

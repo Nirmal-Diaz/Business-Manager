@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css">
     <link rel="stylesheet" href="/stylesheets/main/card.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -39,13 +40,13 @@
                                 if (!states.hasOwnProperty(item.invoiceCode)) {
                                     states[item.invoiceCode] = CardComponent.createCardDivisionSector(document.title + " of " + item.invoiceCode, titleDescriptionText);
 
-                                    const table = CardComponent.createTable(["Code", "Payed amount", "Added date"]);
+                                    const table = CardComponent.createTable(["Code", "Payed amount", "Cheque number", "Cheque date", "Bank account number", "Added date"]);
 
                                     states[item.invoiceCode].appendChild(table);
                                 }
 
                                 const tableBody = states[item.invoiceCode].querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.price, item.addedDate]);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `Rs. ${item.price}`, item.chequeNumber, item.chequeDate, item.bankAccountNumber, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }
