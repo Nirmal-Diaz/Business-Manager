@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { BatchStatus } from "./BatchStatus";
 import { Product } from "./Product";
-import { ProductExportInvoice } from "./ProductExportInvoice";
+import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
 import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -31,8 +31,8 @@ export class ProductBatch {
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("decimal", { name: "exported_amount", precision: 7, scale: 2 })
-  exportedAmount: string;
+  @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
+  availableAmount: string;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
@@ -64,12 +64,12 @@ export class ProductBatch {
   product: Product;
 
   @OneToOne(
-    () => ProductExportInvoice,
-    (productExportInvoice) => productExportInvoice.productBatch,
+    () => ProductManufacturingInvoice,
+    (productManufacturingInvoice) => productManufacturingInvoice.productBatch,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
-  invoiceCode2: ProductExportInvoice;
+  invoiceCode2: ProductManufacturingInvoice;
 
   @ManyToOne(() => UnitType, (unitType) => unitType.productBatches, {
     onDelete: "NO ACTION",

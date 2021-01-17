@@ -2,13 +2,13 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^PEO[0-9]{7}$",
+        "pattern": "^PMO[0-9]{7}$",
         "value": null
     },
-    "quotationCode": {
-        "inputQuery": "#quotationCode",
-        "inputClass": "text",
-        "pattern": "^PEQ[0-9]{7}$",
+    "productId": {
+        "inputQuery": "#productId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
         "value": null
     },
     "requestedAmount": {
@@ -17,20 +17,20 @@
         "pattern": "^\\d{1,5}[.]\\d{2}$",
         "value": null
     },
-    "validTill": {
-        "inputQuery": "#validTill",
+    "unitTypeId": {
+        "inputQuery": "#unitTypeId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
+        "value": null
+    },
+    "wantedBy": {
+        "inputQuery": "#wantedBy",
         "inputClass": "text",
         "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
     },
     "orderStatusId": {
         "inputQuery": "#orderStatusId",
-        "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
-        "value": null
-    },
-    "unitTypeId": {
-        "inputQuery": "#unitTypeId",
         "inputClass": "dropDown",
         "pattern": "^[1-9]{1,}$",
         "value": null

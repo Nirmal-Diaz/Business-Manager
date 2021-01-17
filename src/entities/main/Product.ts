@@ -12,6 +12,7 @@ import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
 import { ProductBatch } from "./ProductBatch";
 import { ProductExportRequest } from "./ProductExportRequest";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
 import { ProductMaterial } from "./ProductMaterial";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -31,6 +32,9 @@ export class Product {
 
   @Column("varchar", { name: "name", length: 45 })
   name: string;
+
+  @Column("decimal", { name: "reorder_amount", precision: 7, scale: 2 })
+  reorderAmount: string;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
@@ -79,6 +83,12 @@ export class Product {
     (productExportRequest) => productExportRequest.product
   )
   productExportRequests: ProductExportRequest[];
+
+  @OneToMany(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.product
+  )
+  productManufacturingOrders: ProductManufacturingOrder[];
 
   @OneToMany(
     () => ProductMaterial,

@@ -13,8 +13,8 @@ import { MaterialImportOrder } from "./MaterialImportOrder";
 import { MaterialImportQuotation } from "./MaterialImportQuotation";
 import { Product } from "./Product";
 import { ProductBatch } from "./ProductBatch";
-import { ProductExportOrder } from "./ProductExportOrder";
-import { ProductExportQuotation } from "./ProductExportQuotation";
+import { ProductExportRequest } from "./ProductExportRequest";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
 import { UnitCategory } from "./UnitCategory";
 
 @Index("fk_unit_type_unit_category1_idx", ["unitCategoryId"], {})
@@ -64,16 +64,16 @@ export class UnitType {
   productBatches: ProductBatch[];
 
   @OneToMany(
-    () => ProductExportOrder,
-    (productExportOrder) => productExportOrder.unitType
+    () => ProductExportRequest,
+    (productExportRequest) => productExportRequest.unitType
   )
-  productExportOrders: ProductExportOrder[];
+  productExportRequests: ProductExportRequest[];
 
   @OneToMany(
-    () => ProductExportQuotation,
-    (productExportQuotation) => productExportQuotation.unitType
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.unitType
   )
-  productExportQuotations: ProductExportQuotation[];
+  productManufacturingOrders: ProductManufacturingOrder[];
 
   @ManyToOne(() => UnitCategory, (unitCategory) => unitCategory.unitTypes, {
     onDelete: "NO ACTION",

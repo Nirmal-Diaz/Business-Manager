@@ -31,8 +31,8 @@ export class MaterialBatch {
   @Column("int", { name: "material_id" })
   materialId: number;
 
-  @Column("decimal", { name: "imported_amount", precision: 7, scale: 2 })
-  importedAmount: string;
+  @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
+  availableAmount: string;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;

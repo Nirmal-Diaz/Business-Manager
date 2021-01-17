@@ -8,7 +8,7 @@
     "invoiceCode": {
         "inputQuery": "#invoiceCode",
         "inputClass": "text",
-        "pattern": "^PEI[0-9]{7}$",
+        "pattern": "^PMI[0-9]{7}$",
         "value": null
     },
     "productId": {

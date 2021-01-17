@@ -2,13 +2,13 @@
     "code": {
         "inputQuery": "#code",
         "inputClass": "text",
-        "pattern": "^PEI[0-9]{7}$",
+        "pattern": "^PMI[0-9]{7}$",
         "value": null
     },
     "orderCode": {
         "inputQuery": "#orderCode",
         "inputClass": "text",
-        "pattern": "^PEO[0-9]{7}$",
+        "pattern": "^PMO[0-9]{7}$",
         "value": null
     },
     "price": {
@@ -59,7 +59,7 @@
             "invoiceCode": {
                 "inputQuery": "#invoiceCode",
                 "inputClass": "text",
-                "pattern": "^PEI[0-9]{7}$",
+                "pattern": "^PMI[0-9]{7}$",
                 "value": null
             },
             "productId": {
@@ -68,8 +68,8 @@
                 "pattern": "^[1-9]{1,}$",
                 "value": null
             },
-            "exportedAmount": {
-                "inputQuery": "#exportedAmount",
+            "availableAmount": {
+                "inputQuery": "#availableAmount",
                 "inputClass": "text",
                 "pattern": "^\\d{1,5}[.]\\d{2}$",
                 "value": null

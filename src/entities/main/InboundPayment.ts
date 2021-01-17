@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductExportInvoice } from "./ProductExportInvoice";
+import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
 
 @Index("fk_inbound_payment_material_import_invoice10_idx", ["invoiceCode"], {})
 @Entity("inbound_payment", { schema: "business_manager" })
@@ -43,10 +43,11 @@ export class InboundPayment {
   addedDate: string;
 
   @ManyToOne(
-    () => ProductExportInvoice,
-    (productExportInvoice) => productExportInvoice.inboundPayments,
+    () => ProductManufacturingInvoice,
+    (productManufacturingInvoice) =>
+      productManufacturingInvoice.inboundPayments,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
-  invoiceCode2: ProductExportInvoice;
+  invoiceCode2: ProductManufacturingInvoice;
 }
