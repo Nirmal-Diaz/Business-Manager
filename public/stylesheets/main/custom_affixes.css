@@ -29,3 +29,7 @@
 .inputContainer.text.days::after {
     content: "Days";
 }
+
+.inputContainer.text.percentage::after {
+    content: "%";
+}
