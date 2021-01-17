@@ -39,7 +39,7 @@
                                 if (!states.hasOwnProperty(item.orderStatus.id)) {
                                     states[item.orderStatus.id] = CardComponent.createCardDivisionSector(item.orderStatus.name + " " + document.title, titleDescriptionText);
 
-                                    const table = CardComponent.createTable(["Code", "Ordered amount", "Estimated cost", "We wanted before","Added date"]);
+                                    const table = CardComponent.createTable(["Code", "Ordered amount", "Estimated cost", "Wanted by","Added date"]);
 
                                     states[item.orderStatus.id].appendChild(table);
                                 }

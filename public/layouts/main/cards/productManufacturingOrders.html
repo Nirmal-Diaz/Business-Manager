@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Product Export Orders</title>
+    <title>Product Manufacturing Orders</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css">
@@ -21,7 +21,7 @@
 
         class CardInterface extends EntityCardInterface {
             constructor() {
-                super("Product Export Order", "Product Export Orders");
+                super("Product Manufacturing Order", "Product Manufacturing Orders");
             }
 
             searchItems(keyword, titleDescriptionText) {
@@ -38,12 +38,16 @@
                             for (const item of response.data) {
                                 if (!states.hasOwnProperty(item.orderStatus.id)) {
                                     states[item.orderStatus.id] = CardComponent.createCardDivisionSector(item.orderStatus.name + " " + document.title, titleDescriptionText);
+
+                                    const table = CardComponent.createTable(["Code", "Requested product", "Requested amount", "Wanted by", "Added date"]);
+
+                                    states[item.orderStatus.id].appendChild(table);
                                 }
 
-                                const iconURL = "/images/main/glyph_search.png";
-                                const cardDivisionSectorItem = CardComponent.createCardDivisionSectorItem(this.selectedCardDivisionSectorItems, iconURL, item.code, [item.requestedAmount, item.unitType.name]);
+                                const tableBody = states[item.orderStatus.id].querySelector("tbody");
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.product.name, `${item.requestedAmount} ${item.unitType.name}`, item.wantedBy, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                states[item.orderStatus.id].appendChild(cardDivisionSectorItem);
+                                tableBody.appendChild(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {
@@ -68,13 +72,13 @@
     <!-- quickAccessArea -->
     <div id="quickAccessArea" style="display: none;">
         <div id="createControlsContainer">
-            <button class="buttonGlyph" title="Add export order">
+            <button class="buttonGlyph" title="Add manufacturing order">
                 <img src="/images/main/glyph_create.png" />
             </button>
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph">
-                <img src="/images/main/glyph_search.png" title="Search export orders" />
+                <img src="/images/main/glyph_search.png" title="Search manufacturing orders" />
                 <input type="text" placeholder="TYPE A KEYWORD AND HIT ENTER"
                     style="display:none; height: 100%; width: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>

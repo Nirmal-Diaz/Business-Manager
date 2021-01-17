@@ -49,13 +49,13 @@
                                 if (!states.hasOwnProperty(item.productStatus.id)) {
                                     states[item.productStatus.id] = CardComponent.createCardDivisionSector(item.productStatus.name + " " + document.title, titleDescriptionText);
 
-                                    const table = CardComponent.createTable(["Name", "Code", "Unit Price", "Measured by"]);
+                                    const table = CardComponent.createTable(["Code", "Name", "Reorder amount", "Unit price"]);
 
                                     states[item.productStatus.id].appendChild(table);
                                 }
 
                                 const tableBody = states[item.productStatus.id].querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.name, item.code, item.unitPrice, item.unitType.name]);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.name, `${item.reorderAmount} ${item.unitType.name}`, `Rs. ${item.unitPrice}`]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }

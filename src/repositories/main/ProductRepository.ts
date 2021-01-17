@@ -41,7 +41,7 @@ export class ProductRepository {
                     FROM product_batch pb
                     WHERE pb.batch_status_id = 1
                     GROUP BY pb.product_id) viable
-                ON m.id = viable.product_id
+                ON p.id = viable.product_id
                 SET p.product_status_id =
                 CASE
                     WHEN p.reorder_amount < viable.viable_amount THEN 1

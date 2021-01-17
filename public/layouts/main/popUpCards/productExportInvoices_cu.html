@@ -32,6 +32,9 @@
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -72,13 +75,13 @@
                         <h1 class="title">Invoice code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: MII2020019" value="MII0000000"/>
+                        <input id="code" type="text" placeholder="eg: PMI2020019" value="PMI0000000"/>
                     </div>
                 </div>
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Export order code</h1>
+                        <h1 class="title">Order code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="orderCode" list="exportOrderCodeList" type="text" placeholder="eg: MIO2020019"/>

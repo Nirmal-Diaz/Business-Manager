@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create/Update Product Export Orders</title>
+    <title>Create/Update Product Manufacturing Orders</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
@@ -20,13 +20,13 @@
 
         class PopUpCardInterface extends EntityPopUpCardInterface {
             constructor() {
-                super("Product Export Order", "Product Export Orders");
+                super("Product Manufacturing Order", "Product Manufacturing Orders");
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
                 //Set the current date as value for "addedDate"
                 const addedDateInput = this.form.getView().querySelector("#addedDate");
-                this.form.getView().querySelector("#validTill").addEventListener("focus", (event) => {
+                this.form.getView().querySelector("#wantedBy").addEventListener("focus", (event) => {
                     event.target.min = addedDateInput.value;
                 });
 
@@ -36,6 +36,9 @@
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+
+                    //Remove the reset button
+                    document.getElementById("resetButton").style.display = "none";
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -65,7 +68,7 @@
         <div class="formTitleContainer">
             <div class="titleContainer">
                 <div class="titleDescription">Add</div>
-                <div class="title">Product Export Order</div>
+                <div class="title">Product Manufacturing Order</div>
             </div>
         </div>
 
@@ -77,20 +80,20 @@
                         <h1 class="title">Order code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: PEO2020019" value="PEO0000000"/>
+                        <input id="code" type="text" placeholder="eg: PMO2020019" value="PMO0000000"/>
                     </div>
                 </div>
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Import quotation code</h1>
+                        <h1 class="title">Product</h1>
                     </div>
-                    <div class="inputContainer text">
-                        <input id="quotationCode" list="exportQuotationCodeList" type="text" placeholder="eg: PEQ2020019"/>
-                        <datalist id="exportQuotationCodeList"  data-request-url="/productExportQuotations/@valid" data-text-content-field="code"
-                        data-value-field="code">
-    
-                        </datalist>
+                    <div class="inputContainer dropDown">
+                        <select id="productId" data-request-url="/products?keyword=" data-text-content-field="name"
+                            data-value-field="id">
+
+                        </select>
+                        <button title="Reload values">&olarr;</button>
                     </div>
                 </div>
 
@@ -118,10 +121,10 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Valid till</h1>
+                        <h1 class="title">Wanted by</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="validTill" type="date" placeholder="eg: 2020-05-10">
+                        <input id="wantedBy" type="date" placeholder="eg: 2020-05-10">
                     </div>
                 </div>
 

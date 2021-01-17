@@ -11,12 +11,16 @@
 }
 
 .inputContainer.text.prefixed::before {
+    font-weight: bolder;
+    
     position: absolute;
     top: 21px;
     left: 5%;
 }
 
 .inputContainer.text.suffixed::after {
+    font-weight: bolder;
+    
     position: absolute;
     top: 21px;
     right: 5%;

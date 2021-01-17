@@ -39,13 +39,13 @@
                                 if (!states.hasOwnProperty(item.requestStatus.id)) {
                                     states[item.requestStatus.id] = CardComponent.createCardDivisionSector(item.requestStatus.name + " " + document.title, titleDescriptionText);
 
-                                    const table = CardComponent.createTable(["Code", "Requested from", "Requested material", "Added date"]);
+                                    const table = CardComponent.createTable(["Code", "Requested from", "Requested material", "Wanted by", "Added date"]);
 
                                     states[item.requestStatus.id].appendChild(table);
                                 }
 
                                 const tableBody = states[item.requestStatus.id].querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.supplier.businessName, item.material.name, item.addedDate]);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.supplier.businessName, item.material.name, item.wantedBy, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }

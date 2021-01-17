@@ -79,7 +79,7 @@ export class MaterialImportOrderController {
         }
     }
 
-    static async updateOne(clientBindingObject) {
+    static async updateOne(clientBindingObject) {        
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });

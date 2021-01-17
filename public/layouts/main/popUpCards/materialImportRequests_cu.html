@@ -26,11 +26,13 @@
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
                 const supplierDropDown = this.form.getView().querySelector("#supplierId");
                 const addedDateInput = this.form.getView().querySelector("#addedDate");
+                this.form.getView().querySelector("#wantedBy").addEventListener("focus", (event) => {
+                    event.target.min = addedDateInput.value;
+                });
 
                 if (submissionMethod === "PUT") {
                     //Set the current date as value for "addedDate"
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
-                    this.form.getView().querySelector("#wantedBy").min = addedDateInput.value;
 
                     //Hide the supplier dropdown
                     supplierDropDown.parentElement.style.display = "none";

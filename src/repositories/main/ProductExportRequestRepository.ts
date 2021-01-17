@@ -9,9 +9,11 @@ export class ProductExportRequestRepository {
         .leftJoinAndSelect("per.requestStatus", "rs")
         .leftJoinAndSelect("per.customer", "c")
         .leftJoinAndSelect("per.product", "p")
+        .leftJoinAndSelect("per.unitType", "ut")
         .where("per.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("c.personName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("c.businessName LIKE :keyword", { keyword: `%${keyword}%` })
+        .orWhere("p.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("p.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }

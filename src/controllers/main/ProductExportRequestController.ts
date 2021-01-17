@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { ProductExportRequest as Entity } from "../../entities/main/ProductExportRequest";
 import { ProductExportRequestRepository as EntityRepository } from "../../repositories/main/ProductExportRequestRepository";
+import { UnitType } from "../../entities/main/UnitType";
 
 export class ProductExportRequestController {
     private static entityName: string = "product export request";
@@ -17,6 +18,11 @@ export class ProductExportRequestController {
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
 
+        //Change the unit type to the default
+        const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
+        serverObject.requestedAmount = parseFloat(serverObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.unitTypeId = unitType.defaultUnitId;
+
         return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
@@ -27,7 +33,7 @@ export class ProductExportRequestController {
             where: {
                 id: id
             },
-            relations: ["requestStatus", "customer", "product"]
+            relations: ["requestStatus", "customer", "product", "unitType"]
         });
 
         if (item) {

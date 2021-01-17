@@ -1,5 +1,5 @@
 import { BaseCardInterface } from "./BaseCardInterface.js";
-import { PlatformUtil } from "./Utility.js";
+import { PlatformUtil, ShellUtil } from "./Utility.js";
 
 //@ts-check
 export class EntityCardInterface extends BaseCardInterface {

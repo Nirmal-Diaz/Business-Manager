@@ -2,40 +2,28 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { ProductExportOrder as Entity } from "../../entities/main/ProductExportOrder";
-import { ProductExportOrderRepository as EntityRepository } from "../../repositories/main/ProductExportOrderRepository";
-import { ProductExportQuotation } from "../../entities/main/ProductExportQuotation";
+import { ProductManufacturingOrder as Entity } from "../../entities/main/ProductManufacturingOrder";
+import { ProductManufacturingOrderRepository as EntityRepository } from "../../repositories/main/ProductManufacturingOrderRepository";
 import { UnitType } from "../../entities/main/UnitType";
 
-export class ProductExportOrderController {
-    private static entityName: string = "product export order";
-    private static entityJSONName: string = "productExportOrder";
+export class ProductManufacturingOrderController {
+    private static entityName: string = "product manufacturing order";
+    private static entityJSONName: string = "productManufacturingOrder";
 
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //NOTE: Order code must be equal to the referring quotation code except the letter code
-        serverObject.code = serverObject.quotationCode.replace("PEQ", "PEO");
+        //Update the code field with next possible value
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
         //Change the unit type to the default
         const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
         serverObject.requestedAmount = parseFloat(serverObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor);
         serverObject.unitTypeId = unitType.defaultUnitId;
 
-        return getRepository(Entity).save(serverObject as Entity).then(async item => {
-            //Update the relevant quotation request to "Accepted" state
-            const productExportQuotation = await getRepository(ProductExportQuotation).findOne({
-                where: {
-                    code: item.quotationCode
-                }
-            });
-
-            productExportQuotation.quotationStatusId = 4;
-
-            return getRepository(ProductExportQuotation).save(productExportQuotation);
-        }).catch((error) => {
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
