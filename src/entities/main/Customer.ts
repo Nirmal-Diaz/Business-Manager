@@ -49,9 +49,6 @@ export class Customer {
   @Column("text", { name: "address" })
   address: string;
 
-  @Column("decimal", { name: "discount_factor", precision: 10, scale: 0 })
-  discountFactor: string;
-
   @Column("decimal", { name: "arrears", precision: 8, scale: 2 })
   arrears: string;
 

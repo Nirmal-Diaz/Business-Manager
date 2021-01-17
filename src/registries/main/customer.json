@@ -61,12 +61,6 @@
         "pattern": null,
         "value": ""
     },
-    "discountFactor": {
-        "inputQuery": "#discountFactor",
-        "inputClass": "text",
-        "pattern": "[01][.]\\d{1,}$",
-        "value": null
-    },
     "arrears": {
         "inputQuery": "#arrears",
         "inputClass": "text",
