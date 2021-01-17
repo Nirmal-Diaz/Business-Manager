@@ -125,13 +125,7 @@ export class Form {
 
     //NOTE: This method will be invoked right after initiating a form
     //NOTE: THis method is separated for recursive use
-    initGeneralInputs(bindingObject = this.bindingObject) {
-        //Fill dataLists
-        const dataLists = this.view.querySelectorAll(".inputContainer.text > datalist");
-        for (const dataList of dataLists) {
-            FormComponent.refreshDropDownInput(dataList);
-        }
-
+    initGeneralInputs(bindingObject = this.bindingObject) {        
         for (const key of Object.keys(bindingObject)) {
             if (bindingObject[key]?.childFormObject === true) {
                 //CASE: Key holds an entire new formObject
@@ -143,6 +137,10 @@ export class Form {
                     textInput.addEventListener("input", () => {
                         FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
                     });
+                }
+                if (textInput.nextElementSibling) {
+                    //CASE: textInput has an associated datalist
+                    FormComponent.refreshDropDownInput(textInput.nextElementSibling);
                 }
             } else if (bindingObject[key].inputClass === "dropDown") {
                 const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
