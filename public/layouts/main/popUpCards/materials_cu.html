@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css" />
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
+    <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
     <script type="module">
         //@ts-check
@@ -87,15 +88,6 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="title">Unit price</h1>
-                    </div>
-                    <div class="inputContainer text">
-                        <input id="unitPrice" type="text" placeholder="eg: 1.2">
-                    </div>
-                </div>
-
-                <div class="formFieldContainer">
-                    <div class="titleContainer">
                         <h1 class="title">Reorder amount</h1>
                     </div>
                     <div class="inputContainer text">
@@ -118,8 +110,23 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
+                        <h1 class="title">Unit price</h1>
+                    </div>
+                    <ul>
+                        <li>This field is adjusted automatically</li>
+                    </ul>
+                    <div class="inputContainer text prefixed price">
+                        <input id="unitPrice" type="text" placeholder="eg: 123.20" value="0.00">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled">
+                    <div class="titleContainer">
                         <h1 class="title">Material status</h1>
                     </div>
+                    <ul>
+                        <li>This field is adjusted automatically</li>
+                    </ul>
                     <div class="inputContainer dropDown">
                         <select id="materialStatusId" data-request-url="/tables/materialStatus" data-text-content-field="name"
                             data-value-field="id">

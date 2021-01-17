@@ -29,10 +29,14 @@ export class MaterialImportQuotationController {
             const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
                 where: {
                     code: item.requestCode
-                }
+                },
+                relations: ["material"]
             });
-
+            
             materialImportRequest.requestStatusId = 2;
+
+            //Update the unit price of the material
+            materialImportRequest.material.unitPrice = item.unitPrice;
 
             return getRepository(MaterialImportRequest).save(materialImportRequest);
         }).catch((error) => {

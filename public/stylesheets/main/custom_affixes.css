@@ -1,0 +1,31 @@
+.inputContainer.text.suffixed, .inputContainer.text.prefixed {
+    position: relative;
+}
+
+.inputContainer.text.prefixed>input {
+    padding-left: 10%;
+}
+
+.inputContainer.text.suffixed>input {
+    padding-right: 10%;
+}
+
+.inputContainer.text.prefixed::before {
+    position: absolute;
+    top: 21px;
+    left: 5%;
+}
+
+.inputContainer.text.suffixed::after {
+    position: absolute;
+    top: 21px;
+    right: 5%;
+}
+
+.inputContainer.text.price::before {
+    content: "Rs.";
+}
+
+.inputContainer.text.days::after {
+    content: "Days";
+}
