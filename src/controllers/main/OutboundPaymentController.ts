@@ -4,6 +4,8 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { OutboundPayment as Entity } from "../../entities/main/OutboundPayment";
 import { OutboundPaymentRepository as EntityRepository } from "../../repositories/main/OutboundPaymentRepository";
+import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
+import { Supplier } from "../../entities/main/Supplier";
 
 export class OutboundPaymentController {
     private static entityName: string = "outbound payment";
@@ -17,7 +19,17 @@ export class OutboundPaymentController {
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+        const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
+            where: {
+                code: serverObject.invoiceCode.replace("MII", "MIR")
+            },
+            relations: ["supplier"]
+        });
+        
+        //Lower the supplier arrears
+        materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) - parseFloat(serverObject.price)).toString();
+
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Supplier).save(materialImportRequest.supplier)]).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
