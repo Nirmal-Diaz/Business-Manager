@@ -44,10 +44,6 @@ export class MaterialController {
         }
     }
 
-    static async getDerivedOne(id: number) {
-        return (await EntityRepository.getDerivedOne(id))[0];
-    }
-
     static async getMany(keyword: string) {
         await EntityRepository.updateTable();
 

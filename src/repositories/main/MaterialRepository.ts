@@ -15,26 +15,6 @@ export class MaterialRepository {
             .getMany();
     }
 
-    static getDerivedOne(materialId: number) {
-        return getRepository(Material).query(`
-            SELECT  m.*, viable.viable_amount, expired.expired_amount
-            FROM material m
-            LEFT JOIN
-                (SELECT mb.material_id, SUM(mb.amount) viable_amount
-                FROM material_batch mb
-                WHERE mb.batch_status_id = 1
-                GROUP BY mb.material_id) viable
-            ON m.id = viable.material_id
-            LEFT JOIN
-                (SELECT mb.material_id, SUM(mb.amount) expired_amount
-                FROM material_batch mb
-                WHERE mb.batch_status_id = 2
-                GROUP BY mb.material_id) expired
-            ON m.id = expired.material_id
-            WHERE m.id = ${materialId};
-        `);
-    }
-
     static generateNextCode() {
         return getRepository(Material)
             .createQueryBuilder("m")
