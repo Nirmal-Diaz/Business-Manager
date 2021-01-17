@@ -32,6 +32,9 @@ export class Material {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
+  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  unitPrice: string;
+
   @Column("decimal", { name: "reorder_amount", precision: 7, scale: 2 })
   reorderAmount: string;
 

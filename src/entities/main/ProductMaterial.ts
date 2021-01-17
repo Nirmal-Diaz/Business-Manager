@@ -15,6 +15,9 @@ export class ProductMaterial {
   @Column("decimal", { name: "material_amount", precision: 7, scale: 2 })
   materialAmount: string;
 
+  @Column("decimal", { name: "unit_price_factor", precision: 2, scale: 1 })
+  unitPriceFactor: string;
+
   @ManyToOne(() => Material, (material) => material.productMaterials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
