@@ -5,10 +5,10 @@
         "pattern": "^PER[0-9]{7}$",
         "value": null
     },
-    "wantedBy": {
-        "inputQuery": "#wantedBy",
-        "inputClass": "text",
-        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
+    "customerId": {
+        "inputQuery": "#customerId",
+        "inputClass": "dropDown",
+        "pattern": "^[1-9]{1,}$",
         "value": null
     },
     "productId": {
@@ -17,10 +17,16 @@
         "pattern": "^[1-9]{1,}$",
         "value": null
     },
-    "customerId": {
-        "inputQuery": "#customerId",
-        "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+    "requestedAmount": {
+        "inputQuery": "#requestedAmount",
+        "inputClass": "text",
+        "pattern": "^\\d{1,5}[.]\\d{2}$",
+        "value": null
+    },
+    "wantedBy": {
+        "inputQuery": "#wantedBy",
+        "inputClass": "text",
+        "pattern": "\\d{4}[-]\\d{2}[-]\\d{2}$",
         "value": null
     },
     "requestStatusId": {
