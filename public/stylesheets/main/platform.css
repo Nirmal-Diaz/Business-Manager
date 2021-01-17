@@ -142,7 +142,7 @@ body {
 .inputContainer.dropDown::after {
     position: absolute;
     top: 23px;
-    right: 75px;
+    right: 20%;
 
     font-size: xx-small;
     content: "\25BC";
