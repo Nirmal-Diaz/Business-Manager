@@ -45,8 +45,6 @@
                                 }
 
                                 const tableBody = states[item.orderStatus.id].querySelector("tbody");
-                                const expiryDate = new Date(item.addedDate);
-                                expiryDate.setDate(item.viablePeriod);
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `${item.requestedAmount} ${item.unitType.name}`, `Rs. ${item.requestedAmount*item.quotationCode2.unitPrice}`,item.validTill, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
