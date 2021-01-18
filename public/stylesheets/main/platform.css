@@ -172,7 +172,7 @@ body {
     padding: 20px;
 }
 
-.inputContainer>input:hover, .inputContainer>select:hover, .inputContainer>textarea:hover, .inputContainer.dropDown>button:hover, .inputContainer.check>input:checked:hover, .inputContainer.radio>input:checked:hover {
+.inputContainer>input:hover, .inputContainer>select:hover, .inputContainer>textarea:hover, .inputContainer.dropDown>button:hover, .inputContainer.check>input:checked:hover, .inputContainer.radio>input:checked:hover, .inputContainer.image>img:hover {
     background-color: var(--inputBackgroundColor-hover);
 }
 
