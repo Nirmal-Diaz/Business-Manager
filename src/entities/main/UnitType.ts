@@ -15,6 +15,7 @@ import { Product } from "./Product";
 import { ProductBatch } from "./ProductBatch";
 import { ProductExportRequest } from "./ProductExportRequest";
 import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductMaterial } from "./ProductMaterial";
 import { UnitCategory } from "./UnitCategory";
 
 @Index("fk_unit_type_unit_category1_idx", ["unitCategoryId"], {})
@@ -74,6 +75,12 @@ export class UnitType {
     (productManufacturingOrder) => productManufacturingOrder.unitType
   )
   productManufacturingOrders: ProductManufacturingOrder[];
+
+  @OneToMany(
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.unitType
+  )
+  productMaterials: ProductMaterial[];
 
   @ManyToOne(() => UnitCategory, (unitCategory) => unitCategory.unitTypes, {
     onDelete: "NO ACTION",

@@ -26,10 +26,9 @@
                 this.updateControls[1].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("/layouts/main/popUpCards/materials2Products_cu.html");
+                    popUpCard.getView().style.width = "800px";
                     popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                        popUpCard.popUpCardInterface.initInputs().then(() => {
-                            popUpCard.popUpCardInterface.initUpdateForm();
-                        });
+                        popUpCard.popUpCardInterface.extendInitForm(`/registries/materialsProducts.json`, `/products/@all/materials`, "PUT");
                     });
                 });
             }

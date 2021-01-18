@@ -125,58 +125,65 @@ export class Form {
 
     //NOTE: This method will be invoked right after initiating a form
     //NOTE: THis method is separated for recursive use
-    initGeneralInputs(bindingObject = this.bindingObject) {        
-        for (const key of Object.keys(bindingObject)) {
-            if (bindingObject[key]?.childFormObject === true) {
-                //CASE: Key holds an entire new formObject
-                this.initGeneralInputs(bindingObject[key].value);
-            } else if (bindingObject[key].inputClass === "text") {
-                const textInput = this.view.querySelector(bindingObject[key].inputQuery);
-                //Add onkeyup to textInput for validate itself in realtime
-                if (bindingObject[key].pattern) {
-                    textInput.addEventListener("input", () => {
-                        FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
+    initGeneralInputs(bindingObject = this.bindingObject) {
+        if (Array.isArray(bindingObject)) {
+            //CASE: binding object is an array
+            //Init inputs using the first element of the array
+            this.initGeneralInputs(bindingObject[0]);
+        } else {
+            //CASE: binding object is a single object
+            for (const key of Object.keys(bindingObject)) {
+                if (bindingObject[key]?.childFormObject === true) {
+                    //CASE: Key holds an entire new formObject
+                    this.initGeneralInputs(bindingObject[key].value);
+                } else if (bindingObject[key].inputClass === "text") {
+                    const textInput = this.view.querySelector(bindingObject[key].inputQuery);
+                    //Add onkeyup to textInput for validate itself in realtime
+                    if (bindingObject[key].pattern) {
+                        textInput.addEventListener("input", () => {
+                            FormUtil.validateAndVisualizeField(this.view, bindingObject[key], true);
+                        });
+                    }
+                    if (textInput.nextElementSibling) {
+                        //CASE: textInput has an associated datalist
+                        FormComponent.refreshDropDownInput(textInput.nextElementSibling);
+                    }
+                } else if (bindingObject[key].inputClass === "dropDown") {
+                    const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
+                    FormComponent.refreshDropDownInput(dropDownInput).then(() => {
+                        //Dispatch the change event on the dropDownInput for selecting the first item
+                        const onChangeEvent = new Event("change");
+                        dropDownInput.dispatchEvent(onChangeEvent);
+                    });
+                    //Add onclick to dropDownInput's reload button for updating values in realtime
+                    dropDownInput.nextElementSibling.addEventListener("click", (event) => {
+                        //NOTE: A button inside a form just inherently submits the form. It should be prevented
+                        event.preventDefault();
+                        FormComponent.refreshDropDownInput(dropDownInput);
+                    });
+                } else if (bindingObject[key].inputClass === "image") {
+                    const imageInput = this.view.querySelector(bindingObject[key].inputQuery);
+                    //Add onchange to imageInput for updating its dataset
+                    imageInput.addEventListener("change", () => {
+                        const imageBlob = imageInput.files[0];
+    
+                        //NOTE: To improve performance, blobs representations must be strings rather than arrays
+                        imageBlob.arrayBuffer().then((blobArrayBuffer) => {
+                            imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
+                        });
+                        imageInput.dataset.size = imageBlob.size;
+                        imageInput.dataset.type = imageBlob.type;
+    
+                        //Update the sibling img
+                        imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
+    
+                    });
+                    
+                    //Add onclick to sibling img tag for triggering the click event on the imageInput
+                    imageInput.previousElementSibling.addEventListener("click", () => {
+                        imageInput.click();
                     });
                 }
-                if (textInput.nextElementSibling) {
-                    //CASE: textInput has an associated datalist
-                    FormComponent.refreshDropDownInput(textInput.nextElementSibling);
-                }
-            } else if (bindingObject[key].inputClass === "dropDown") {
-                const dropDownInput = this.view.querySelector(bindingObject[key].inputQuery);
-                FormComponent.refreshDropDownInput(dropDownInput).then(() => {
-                    //Dispatch the change event on the dropDownInput for selecting the first item
-                    const onChangeEvent = new Event("change");
-                    dropDownInput.dispatchEvent(onChangeEvent);
-                });
-                //Add onclick to dropDownInput's reload button for updating values in realtime
-                dropDownInput.nextElementSibling.addEventListener("click", (event) => {
-                    //NOTE: A button inside a form just inherently submits the form. It should be prevented
-                    event.preventDefault();
-                    FormComponent.refreshDropDownInput(dropDownInput);
-                });
-            } else if (bindingObject[key].inputClass === "image") {
-                const imageInput = this.view.querySelector(bindingObject[key].inputQuery);
-                //Add onchange to imageInput for updating its dataset
-                imageInput.addEventListener("change", () => {
-                    const imageBlob = imageInput.files[0];
-
-                    //NOTE: To improve performance, blobs representations must be strings rather than arrays
-                    imageBlob.arrayBuffer().then((blobArrayBuffer) => {
-                        imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
-                    });
-                    imageInput.dataset.size = imageBlob.size;
-                    imageInput.dataset.type = imageBlob.type;
-
-                    //Update the sibling img
-                    imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
-
-                });
-                
-                //Add onclick to sibling img tag for triggering the click event on the imageInput
-                imageInput.previousElementSibling.addEventListener("click", () => {
-                    imageInput.click();
-                });
             }
         }
     }

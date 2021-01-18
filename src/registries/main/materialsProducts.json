@@ -1,20 +1,34 @@
-{
-    "productId": {
-        "inputQuery": "#productId",
-        "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
-        "value": null
-    },
-    "materialId": {
-        "inputQuery": "#materialId",
-        "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
-        "value": null
-    },
-    "materialAmount": {
-        "inputQuery": "#materialAmount",
-        "inputClass": "text",
-        "pattern": "^\\d{1,}[.]\\d{1,}$",
-        "value": null
+[
+    {
+        "productId": {
+            "inputQuery": "#productId",
+            "inputClass": "dropDown",
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "materialId": {
+            "inputQuery": "#materialId",
+            "inputClass": "dropDown",
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "materialAmount": {
+            "inputQuery": "#materialAmount",
+            "inputClass": "text",
+            "pattern": "^\\d{1,}[.]\\d{1,}$",
+            "value": null
+        },
+        "unitTypeId": {
+            "inputQuery": "#unitTypeId",
+            "inputClass": "dropDown",
+            "pattern": "^[1-9]{1,}$",
+            "value": null
+        },
+        "unitPriceFactor": {
+            "inputQuery": "#unitPriceFactor",
+            "inputClass": "text",
+            "pattern": "^\\d{1}[.]\\d{1}$",
+            "value": null
+        }
     }
-}
+]

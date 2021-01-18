@@ -48,6 +48,27 @@ form {
     background-color: var(--inputBackgroundColor-disabled);
 }
 
+.formFieldContainer>table {
+    min-width: 100%;
+
+    border-collapse: collapse;
+}
+
+.formFieldContainer>table tr {
+    border-bottom: thin solid var(--tableBorderColor);
+}
+
+.formFieldContainer>table th {
+    color: var(--titleDescriptionColor);
+}
+
+.formFieldContainer>table th,
+.formFieldContainer>table td {
+    padding: 20px 10px 20px 10px;
+
+    text-align: left;
+}
+
 .formControlsContainer {
     position: absolute;
     bottom: 0;

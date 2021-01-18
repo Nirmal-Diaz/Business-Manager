@@ -87,24 +87,12 @@ export class ProductController {
     }
 
     static async getProductMaterialRelations() {
-        const items = await getRepository(ProductMaterial).find();
+        const items = await getRepository(ProductMaterial).find({
+            relations: ["product", "material", "unitType"]
+        });
 
         if (items.length > 0) {
-            const productId2MaterialData = {};
-            //NOTE: productId2MaterialData has the following structure
-            // const productId2MaterialData = {
-            //     1: { 1: 200, 2: 340.5 }
-            // }
-
-            for (const productMaterial of items) {
-                if (!productId2MaterialData.hasOwnProperty(productMaterial.productId)) {
-                    productId2MaterialData[productMaterial.productId] = {};
-                }
-
-                productId2MaterialData[productMaterial.productId][productMaterial.materialId] = productMaterial.materialAmount;
-            }
-
-            return productId2MaterialData;
+            return items;
         } else {
             throw { title: "Oops!", titleDescription: "Add some items first", message: `We found no associations in the ${this.entityName}-material database`, technicalMessage: `No associations in the product-material database` };
         }
@@ -129,22 +117,14 @@ export class ProductController {
         }
     }
 
-    static async setProductMaterialRelations(clientBindingObject) {        
+    static async setProductMaterialRelations(clientBindingObject) {
+        //Validate clientBindingObject
+        const serverObject = await RegistryController.getParsedRegistry("materialsProducts.json");
+        ValidationController.validateBindingObject(serverObject, clientBindingObject);
+
         //Clear the whole table product_material
         await getRepository(ProductMaterial).clear();
-
-        const productMaterials = [];
-
-        for (const productId of Object.keys(clientBindingObject)) {
-            for (const materialId of Object.keys(clientBindingObject[productId])) {
-                productMaterials.push({
-                    productId: parseInt(productId),
-                    materialId: parseInt(materialId),
-                    materialAmount: clientBindingObject[productId][materialId]
-                });
-            }
-        }
         
-        return getRepository(ProductMaterial).save(productMaterials as ProductMaterial[]);
+        return getRepository(ProductMaterial).save(serverObject as ProductMaterial[]);
     }
 }
