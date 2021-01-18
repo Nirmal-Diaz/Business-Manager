@@ -24,6 +24,9 @@
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
+                //Reset popUpCard open widened
+                this.popUpCardObject.getView().style.width = "400px";
+
                 if (submissionMethod === "PUT") {
                     //Set the current date as value for "addedDate"
                     this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
@@ -75,10 +78,7 @@
                         <h1 class="title">Username</h1>
                     </div>
                     <ul>
-                        <li>Must be unique</li>
-                        <li>Must consist only of letters and numbers</li>
-                        <li>Both uppercase and lowercase letters are allowed</li>
-                        <li>No spaces are allowed</li>
+                        <li>Must be unique among existing users</li>
                     </ul>
                     <div class="inputContainer text">
                         <input id="username" type="text" placeholder="eg: johnDoe123" />
@@ -105,10 +105,6 @@
                     <div class="titleContainer">
                         <h1 class="title">Role</h1>
                     </div>
-                    <ul>
-                        <li>The role determines a user's permissions on each module</li>
-                        <li>If the role you want isn't listed below, go and add it in before proceeding</li>
-                    </ul>
                     <div class="inputContainer dropDown">
                         <select id="roleId"  data-request-url="/roles?keyword=" data-text-content-field="name"
                         data-value-field="id">

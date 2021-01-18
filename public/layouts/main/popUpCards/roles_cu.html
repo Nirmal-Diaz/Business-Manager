@@ -61,9 +61,9 @@
                             if (submission.status) {
                                 //Refresh (not reload) the parentCardInterface
                                 if (this.permissionForm.getSubmissionMethod() === "PUT") {
-                                    this.popUpCardObject.parentCardInterface.searchItems("", "We've got a new role", "Double tap to view and update");
+                                    this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
                                 } else if (this.permissionForm.getSubmissionMethod() === "POST") {
-                                    this.popUpCardObject.parentCardInterface.searchItems("", "You've updated a role recently", "Double tap to view");
+                                    this.popUpCardObject.parentCardInterface.searchItems("", "Showing all items");
                                 }
                                 
                                 if (this.overallSubmissionStatus) {
@@ -238,11 +238,6 @@
                     <div class="titleContainer">
                         <h1 class="title">Role name</h1>
                     </div>
-                    <ul>
-                        <li>Must consist only of letters and numbers</li>
-                        <li>Both uppercase and lowercase letters are allowed</li>
-                        <li>No spaces are allowed</li>
-                    </ul>
                     <div class="inputContainer text">
                         <input id="name" type="text" placeholder="eg: myRole1" />
                     </div>
@@ -253,8 +248,6 @@
                     <div class="titleContainer">
                         <h1 class="title">Module permissions</h1>
                     </div>
-                    <p>The role determines a user's permissions on each module</p>
-                    <p>If the role you want isn't listed below, go and add it in before proceeding</p>
                     <div class="inputContainer dropDown">
                         <select id="moduleId"  data-request-url="/tables/module" data-text-content-field="name"
                         data-value-field="id">
