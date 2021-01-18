@@ -1,0 +1,107 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url("/fonts/SourceSansPro-Regular.ttf")
+}
+
+:root {
+    --color0-1: transparent;
+    --color0-2: black;
+    --color0-3: white;
+    --color0-4: crimson;
+    --color0-5: rgba(0, 0, 0, 0.9);
+    --color0-6: rgb(128, 145, 151);
+    
+    --color1-0: rgb(213, 240, 255);
+    --color1-1: rgb(186, 231, 255);
+    --color1-2: rgb(139, 180, 255);
+    --color1-3: rgb(89, 143, 191);
+    --color1-4: rgb(60, 100, 255);
+    --color1-5: rgba(0, 60, 255, 1);
+    --color1-6: rgba(0, 40, 255, 1);
+    --color1-7: rgb(0, 0, 50);
+
+    /* platformStyleVariables */
+    --defaultFontFamily: "OpenSans";
+    --defaultColor: var(--color0-2);
+
+    --titleColor: var(--color1-5);
+    --titleDescriptionColor: var(--color1-5);
+
+    --inputContainerBorderColor-invalid: var(--color0-4);
+
+    --inputBackgroundColor: var(--color0-1);
+    --inputBackgroundColor-active: var(--color1-4);
+    --inputBackgroundColor-disabled: var(--color0-6);
+    --inputBackgroundColor-hover: var(--color1-2);
+    --inputBorderColor: var(--color0-2);
+
+    --textInputPlaceholderColor: var(--color1-4);
+
+    --buttonGlyphBackgroundColor: var(--color1-3);
+    --buttonGlyphBackgroundColor-hover: var(--color1-2);
+    --buttonGlyphBackgroundColor-disabled: var(--color0-6);
+    --buttonGlyphBoxShadowColor: var(--color0-2);
+
+    --buttonTextColor: var(--color0-3);
+    --buttonTextBackgroundColor: var(--color1-5);
+    --buttonTextBackgroundColor-hover: var(--color1-4);
+    --buttonTextBoxShadowColor: var(--color0-1);
+
+    --buttonTextLinkColor: var(--color0-3);
+    --buttonTextLinkColor-hover: var(--color1-5);
+
+    --buttonSeparatorBorderColor: var(--color0-2);
+
+    --cellPointBackgroundColor: var(--color0-3);
+    --cellPointBackgroundColor-active: var(--color1-4);
+    --cellPointBorderColor-active: var(--color0-3);
+
+    /* shellStyleVariables */
+    --logInScreenBackgroundColor: var(--color1-7);
+
+    --logInBoxBackgroundBackgroundColor: var(--color1-1);
+    --logInBoxBackgroundBoxShadowColor: var(--color0-2);
+
+    --logInBoxInputBackgroundColor: var(--color0-1);
+
+    --workspaceScreenBackgroundImage: url("/images/main/image_background_workspaceScreen_snow.png");
+
+    --cardBackgroundColor: var(--color1-3);
+    --cardBackdropFilter: none;
+    --cardBoxShadowColor: var(--color0-2);
+
+    --headerAreaColor: var(--color0-3);
+    --HeaderAreaTextShadowColor: var(--color0-2);
+
+    --popUpCardBackgroundColor: var(--color1-3);
+    --popUpCardBackdropFilter: none;
+    --popUpCardBoxShadowColor: var(--color0-2);
+
+    --actionOverlayBackgroundColor: var(--color0-5);
+
+    --actionOverlayChipBackgroundColor: var(--color1-2);
+    --actionOverlayChipBackgroundColor-hover: var(--color1-3);
+
+    --alertOverlayBackgroundColor: var(--color0-5);
+
+    --alertBoxBackgroundBackgroundColor: var(--color1-1);
+    --alertBoxBackgroundBoxShadowColor: var(--color0-2);
+
+    /* cardStyleVariables */
+    --cardDivisionBackgroundColor: var(--color1-0);
+
+    --tableBorderColor: var(--color1-5);
+
+    --cardDivisionSectorItemBackgroundColor-hover: var(--color1-2);
+    --cardDivisionSectorItemBoxShadowColor-active: var(--color0-6);
+
+    --sidePanelBoxShadowColor: var(--color2-2);
+
+    /* popUpCardStyleVariables */
+    --formTitleContainerBoxShadow: var(--color0-2);
+    --formTitleContainerColor_child: var(--color0-3);
+
+    --formFieldsContainerBackgroundColor: var(--color1-0);
+
+    --formControlsContainerBoxShadow: var(--color2-2);
+}

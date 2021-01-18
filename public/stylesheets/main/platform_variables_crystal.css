@@ -43,6 +43,7 @@
     --buttonGlyphBackgroundColor-disabled: var(--color2-3);
     --buttonGlyphBoxShadowColor: var(--color2-2);
 
+    --buttonTextColor: var(--color0-1);
     --buttonTextBackgroundColor: var(--color1-1);
     --buttonTextBackgroundColor-hover: var(--color1-2);
     --buttonTextBoxShadowColor: var(--color2-2);

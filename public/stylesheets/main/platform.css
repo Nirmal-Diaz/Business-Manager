@@ -330,6 +330,7 @@ body {
     padding: 0 20px 0 20px;
 
     font-weight: bolder;
+    color: var(--buttonTextColor);
 
     background-color: var(--buttonTextBackgroundColor);
     border: none;
