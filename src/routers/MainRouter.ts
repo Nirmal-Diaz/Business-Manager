@@ -880,17 +880,6 @@ mainRouter.route("/productManufacturingInvoices/:productManufacturingInvoiceId")
             });
     });
 
-//PRODUCT EXPORTS
-// mainRouter.route("/productExports/:numericCode")
-//     .get((req, res, next) => {
-//         PermissionController.checkPermission(req.session.userId, "product exports", req.method)
-//             .then(() => ProductExportController.getSummary(req.params.numericCode)).then(data => {
-//                 res.locals.data = data; next();
-//             }).catch(error => {
-//                 res.locals.error = error; next();
-//             });
-//     });
-
 //OUTBOUND PAYMENTS
 mainRouter.route("/outboundPayments")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
