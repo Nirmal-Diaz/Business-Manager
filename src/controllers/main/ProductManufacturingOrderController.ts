@@ -43,6 +43,17 @@ export class ProductManufacturingOrderController {
         }
     }
 
+    static async getMaterialAnalysis(id: number) {
+        const items = await EntityRepository.getMaterialAnalysis(id);
+        
+        if (items.length > 0) {
+            return items;
+        } else {
+            throw { title: "Oops! Couldn't analyze", titleDescription: "Contact your system administrator", message: `Looks like something's up with the database. Material analysis cannot be performed for this ${this.entityName}`, technicalMessage: `Couldn't perform material analysis for an ${this.entityName}` };
+        }
+
+    }
+
     static async getMany(keyword: string) {
         const items = await EntityRepository.search(keyword);
 
