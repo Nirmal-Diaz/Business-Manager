@@ -33,13 +33,13 @@ export class Product {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @Column("decimal", { name: "reorder_amount", precision: 7, scale: 2 })
+  @Column("decimal", { name: "reorder_amount", precision: 10, scale: 2 })
   reorderAmount: string;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
 
-  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  @Column("decimal", { name: "unit_price", precision: 10, scale: 2 })
   unitPrice: string;
 
   @Column("int", { name: "product_status_id" })
@@ -53,6 +53,14 @@ export class Product {
 
   @Column("int", { name: "user_id" })
   userId: number;
+
+  @Column("decimal", {
+    name: "viable_amount",
+    nullable: true,
+    precision: 10,
+    scale: 2,
+  })
+  viableAmount: string | null;
 
   @ManyToOne(() => UnitType, (unitType) => unitType.products, {
     onDelete: "NO ACTION",

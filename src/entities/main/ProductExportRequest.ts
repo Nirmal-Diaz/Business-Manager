@@ -12,14 +12,14 @@ import { UnitType } from "./UnitType";
 import { RequestStatus } from "./RequestStatus";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_product_export_request_customer1_idx", ["customerId"], {})
-@Index("fk_product_export_request_product1_idx", ["productId"], {})
-@Index("fk_product_export_request_unit_type1_idx", ["unitTypeId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
   ["requestStatusId"],
   {}
 )
+@Index("fk_product_export_request_product1_idx", ["productId"], {})
+@Index("fk_product_export_request_unit_type1_idx", ["unitTypeId"], {})
+@Index("fk_product_export_request_customer1_idx", ["customerId"], {})
 @Entity("product_export_request", { schema: "business_manager" })
 export class ProductExportRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -34,7 +34,7 @@ export class ProductExportRequest {
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("decimal", { name: "requestedAmount", precision: 7, scale: 2 })
+  @Column("decimal", { name: "requestedAmount", precision: 10, scale: 2 })
   requestedAmount: string;
 
   @Column("int", { name: "unit_type_id" })

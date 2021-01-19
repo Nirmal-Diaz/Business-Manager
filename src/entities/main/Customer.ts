@@ -49,7 +49,7 @@ export class Customer {
   @Column("text", { name: "address" })
   address: string;
 
-  @Column("decimal", { name: "arrears", precision: 8, scale: 2 })
+  @Column("decimal", { name: "arrears", precision: 10, scale: 2 })
   arrears: string;
 
   @Column("int", { name: "customer_status_id" })

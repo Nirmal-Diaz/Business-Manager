@@ -24,6 +24,7 @@
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
+                const productDropDown = this.form.getView().querySelector("#productId");
                 const addedDateInput = this.form.getView().querySelector("#addedDate");
                 this.form.getView().querySelector("#wantedBy").addEventListener("focus", (event) => {
                     event.target.min = addedDateInput.value;
@@ -33,12 +34,50 @@
                     //Set the current date as value for "addedDate"
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
 
+                    //Hide the product dropdown
+                    productDropDown.parentElement.style.display = "none";
+
+                    //Load and create check inputs for each product
+                    fetch(`/products?keyword=`)
+                        .then(response => response.json())
+                        .then(response => {
+                            if (response.status) {
+                                //Create a check input for each product
+                                const formFieldContainer = this.form.getView().querySelector(".inputGroup");
+                                formFieldContainer.innerHTML = "";
+                                const checkInputContainerTemplate = this.form.getView().querySelector("#templateContainer").content.querySelector(".inputContainer.check");
+                                for (const product of response.data) {
+                                    const checkInputContainer = checkInputContainerTemplate.cloneNode(true);
+                                    checkInputContainer.children[1].textContent = product.name;
+                                    checkInputContainer.dataset.productId = product.id;
+                                    formFieldContainer.appendChild(checkInputContainer);
+
+                                    checkInputContainer.children[0].addEventListener("change", () => {
+                                        //Add or remove the product id from the selectedProductIds according to the selection
+                                        if (checkInputContainer.children[0].checked) {
+                                            this.form.getAdditionalData().selectedProductIdsSet.add(checkInputContainer.dataset.productId);
+                                            this.form.getAdditionalData().selectedProductIdsSet = Array.from(this.form.getAdditionalData().selectedProductIdsSet);
+                                        } else {
+                                            this.form.getAdditionalData().selectedProductIdsSet.delete(checkInputContainer.dataset.productId);
+                                            this.form.getAdditionalData().selectedProductIdsSet = Array.from(this.form.getAdditionalData().selectedSupplierIdsSet);
+                                        }
+                                    });
+                                }
+                            } else {
+                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                            }
+                        });
+
+                    this.form.getAdditionalData().selectedProductIdsSet = new Set();
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
+
+                    //Hide the multi product selection
+                    productDropDown.parentElement.nextElementSibling.style.display = "none";
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -98,16 +137,23 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer wide">
                     <div class="titleContainer">
                         <h1 class="titleDescription">Product</h1>
                     </div>
+
+                    <!-- NOTE: This element is needed only for the update from -->
                     <div class="inputContainer dropDown">
                         <select id="productId" data-request-url="/products?keyword=" data-text-content-field="name"
                             data-value-field="id">
 
                         </select>
                         <button title="Reload values">&olarr;</button>
+                    </div>
+
+                    <!-- NOTE: This element is needed only for the create from -->
+                    <div class="inputGroup">
+
                     </div>
                 </div>
 
@@ -172,6 +218,14 @@
                         <textarea id="description"></textarea>
                     </div>
                 </div>
+
+                <template id="templateContainer">
+                    <!-- checkInputContainer template -->
+                    <div class="inputContainer check" data-product-id="0">
+                        <input type="checkbox" />
+                        <label>Product</label>
+                    </div>
+                </template>
             </form>
         </div>
 

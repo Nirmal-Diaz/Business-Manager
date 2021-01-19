@@ -13,10 +13,10 @@ import { MaterialImportRequest } from "./MaterialImportRequest";
 import { QuotationStatus } from "./QuotationStatus";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_import_quotation_unit_type1_idx", ["unitTypeId"], {})
-@Index("fk_quotation_quotation_request1_idx", ["requestCode"], {})
-@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
 @Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
+@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
+@Index("fk_quotation_quotation_request1_idx", ["requestCode"], {})
+@Index("fk_material_import_quotation_unit_type1_idx", ["unitTypeId"], {})
 @Entity("material_import_quotation", { schema: "business_manager" })
 export class MaterialImportQuotation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -34,13 +34,13 @@ export class MaterialImportQuotation {
   @Column("date", { name: "valid_till" })
   validTill: string;
 
-  @Column("decimal", { name: "available_amount", precision: 7, scale: 2 })
+  @Column("decimal", { name: "available_amount", precision: 10, scale: 2 })
   availableAmount: string;
 
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
 
-  @Column("decimal", { name: "unit_price", precision: 7, scale: 2 })
+  @Column("decimal", { name: "unit_price", precision: 10, scale: 2 })
   unitPrice: string;
 
   @Column("int", { name: "quotation_status_id" })

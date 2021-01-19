@@ -20,7 +20,7 @@ export class InboundPayment {
   @Column("char", { name: "invoice_code", length: 10 })
   invoiceCode: string;
 
-  @Column("decimal", { name: "price", precision: 7, scale: 2 })
+  @Column("decimal", { name: "price", precision: 10, scale: 2 })
   price: string;
 
   @Column("varchar", { name: "cheque_nubmer", nullable: true, length: 45 })
