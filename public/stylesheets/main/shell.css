@@ -226,6 +226,10 @@
     width: 8vh;
 
     background-color: transparent;
+    background-image: url("../../images/main/glyph_touch.png");
+    background-size: auto;
+    background-position: center center;
+    background-repeat: no-repeat;
     border: thin solid var(--headerAreaColor);
     border-radius: 50%;
     outline: none;
