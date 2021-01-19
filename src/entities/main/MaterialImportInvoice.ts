@@ -8,13 +8,12 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialBatch } from "./MaterialBatch";
-import { InvoiceStatus } from "./InvoiceStatus";
 import { MaterialImportOrder } from "./MaterialImportOrder";
+import { InvoiceStatus } from "./InvoiceStatus";
+import { MaterialBatch } from "./MaterialBatch";
 import { OutboundPayment } from "./OutboundPayment";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Index(
   "fk_material_import_invoice_invoice_status1_idx",
   ["invoiceStatusId"],
@@ -25,6 +24,7 @@ import { OutboundPayment } from "./OutboundPayment";
   ["orderCode"],
   {}
 )
+@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Entity("material_import_invoice", { schema: "business_manager" })
 export class MaterialImportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -54,8 +54,13 @@ export class MaterialImportInvoice {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToOne(() => MaterialBatch, (materialBatch) => materialBatch.invoiceCode2)
-  materialBatch: MaterialBatch;
+  @OneToOne(
+    () => MaterialImportOrder,
+    (materialImportOrder) => materialImportOrder.materialImportInvoice,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
+  orderCode2: MaterialImportOrder;
 
   @ManyToOne(
     () => InvoiceStatus,
@@ -65,13 +70,8 @@ export class MaterialImportInvoice {
   @JoinColumn([{ name: "invoice_status_id", referencedColumnName: "id" }])
   invoiceStatus: InvoiceStatus;
 
-  @OneToOne(
-    () => MaterialImportOrder,
-    (materialImportOrder) => materialImportOrder.materialImportInvoice,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
-  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
-  orderCode2: MaterialImportOrder;
+  @OneToOne(() => MaterialBatch, (materialBatch) => materialBatch.invoiceCode2)
+  materialBatch: MaterialBatch;
 
   @OneToMany(
     () => OutboundPayment,

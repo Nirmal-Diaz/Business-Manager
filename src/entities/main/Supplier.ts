@@ -3,15 +3,16 @@ import {
   Entity,
   Index,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialImportRequest } from "./MaterialImportRequest";
-import { SupplierStatus } from "./SupplierStatus";
 import { User } from "./User";
+import { SupplierStatus } from "./SupplierStatus";
 import { Material } from "./Material";
+import { MaterialImportRequest } from "./MaterialImportRequest";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_customer_customer_status1_idx", ["supplierStatusId"], {})
@@ -66,11 +67,12 @@ export class Supplier {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToMany(
-    () => MaterialImportRequest,
-    (materialImportRequest) => materialImportRequest.supplier
-  )
-  materialImportRequests: MaterialImportRequest[];
+  @ManyToOne(() => User, (user) => user.suppliers, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 
   @ManyToOne(
     () => SupplierStatus,
@@ -80,13 +82,18 @@ export class Supplier {
   @JoinColumn([{ name: "supplier_status_id", referencedColumnName: "id" }])
   supplierStatus: SupplierStatus;
 
-  @ManyToOne(() => User, (user) => user.suppliers, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
-
   @ManyToMany(() => Material, (material) => material.suppliers)
+  @JoinTable({
+    name: "supplier_material",
+    joinColumns: [{ name: "supplier_id", referencedColumnName: "id" }],
+    inverseJoinColumns: [{ name: "material_id", referencedColumnName: "id" }],
+    schema: "business_manager",
+  })
   materials: Material[];
+
+  @OneToMany(
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.supplier
+  )
+  materialImportRequests: MaterialImportRequest[];
 }

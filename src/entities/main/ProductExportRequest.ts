@@ -6,20 +6,20 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Customer } from "./Customer";
-import { Product } from "./Product";
-import { UnitType } from "./UnitType";
 import { RequestStatus } from "./RequestStatus";
+import { UnitType } from "./UnitType";
+import { Product } from "./Product";
+import { Customer } from "./Customer";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
+@Index("fk_product_export_request_customer1_idx", ["customerId"], {})
+@Index("fk_product_export_request_product1_idx", ["productId"], {})
+@Index("fk_product_export_request_unit_type1_idx", ["unitTypeId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
   ["requestStatusId"],
   {}
 )
-@Index("fk_product_export_request_product1_idx", ["productId"], {})
-@Index("fk_product_export_request_unit_type1_idx", ["unitTypeId"], {})
-@Index("fk_product_export_request_customer1_idx", ["customerId"], {})
 @Entity("product_export_request", { schema: "business_manager" })
 export class ProductExportRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -52,19 +52,13 @@ export class ProductExportRequest {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @ManyToOne(() => Customer, (customer) => customer.productExportRequests, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "customer_id", referencedColumnName: "id" }])
-  customer: Customer;
-
-  @ManyToOne(() => Product, (product) => product.productExportRequests, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
-  product: Product;
+  @ManyToOne(
+    () => RequestStatus,
+    (requestStatus) => requestStatus.productExportRequests,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "request_status_id", referencedColumnName: "id" }])
+  requestStatus: RequestStatus;
 
   @ManyToOne(() => UnitType, (unitType) => unitType.productExportRequests, {
     onDelete: "NO ACTION",
@@ -73,11 +67,17 @@ export class ProductExportRequest {
   @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
   unitType: UnitType;
 
-  @ManyToOne(
-    () => RequestStatus,
-    (requestStatus) => requestStatus.productExportRequests,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
-  @JoinColumn([{ name: "request_status_id", referencedColumnName: "id" }])
-  requestStatus: RequestStatus;
+  @ManyToOne(() => Product, (product) => product.productExportRequests, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
+  product: Product;
+
+  @ManyToOne(() => Customer, (customer) => customer.productExportRequests, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "customer_id", referencedColumnName: "id" }])
+  customer: Customer;
 }

@@ -23,31 +23,14 @@ export class ProductRepository {
     }
 
     static updateTable() {
-        return Promise.all([
-            getRepository(Product).query(`
-                UPDATE product p
-                LEFT JOIN
-                    (SELECT pm.product_id, SUM(pm.material_amount * pm.unit_price_factor) unit_price
-                    FROM business_manager.product_material pm
-                    GROUP BY pm.product_id) product_unit_price
-                ON p.id = product_unit_price.product_id
-                SET p.unit_price = product_unit_price.unit_price
-            `),
-
-            getRepository(Product).query(`
-                UPDATE product p
-                LEFT JOIN
-                    (SELECT pb.product_id, SUM(pb.available_amount) viable_amount
-                    FROM product_batch pb
-                    WHERE pb.batch_status_id = 1
-                    GROUP BY pb.product_id) viable
-                ON p.id = viable.product_id
-                SET p.product_status_id =
-                CASE
-                    WHEN p.reorder_amount < viable.viable_amount THEN 1
-                    ELSE 2
-                END
-            `)
-        ]);
+        return getRepository(Product).query(`
+            UPDATE product p
+            LEFT JOIN
+                (SELECT pm.product_id, SUM(pm.material_amount * pm.unit_price_factor) unit_price
+                FROM business_manager.product_material pm
+                GROUP BY pm.product_id) product_unit_price
+            ON p.id = product_unit_price.product_id
+            SET p.unit_price = product_unit_price.unit_price
+        `);
     }
 }

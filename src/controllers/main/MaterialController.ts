@@ -45,8 +45,6 @@ export class MaterialController {
     }
 
     static async getMany(keyword: string) {
-        await EntityRepository.updateTable();
-
         const items = await EntityRepository.search(keyword);
 
         if (items.length > 0) {

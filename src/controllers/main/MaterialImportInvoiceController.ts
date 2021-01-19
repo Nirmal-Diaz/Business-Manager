@@ -9,6 +9,7 @@ import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest
 import { MaterialBatch } from "../../entities/main/MaterialBatch";
 import { UnitType } from "../../entities/main/UnitType";
 import { Supplier } from "../../entities/main/Supplier";
+import { Material } from "../../entities/main/Material";
 
 export class MaterialImportInvoiceController {
     private static entityName: string = "material import invoice";
@@ -33,8 +34,16 @@ export class MaterialImportInvoiceController {
             where: {
                 code: serverObject.orderCode.replace("MIO", "MIR")
             },
-            relations: ["supplier", "materialImportQuotation", "materialImportQuotation.materialImportOrder"]
+            relations: ["material", "supplier", "materialImportQuotation", "materialImportQuotation.materialImportOrder"]
         });
+
+        //Increase material inventory
+        materialImportRequest.material.viableAmount = (parseFloat(materialImportRequest.material.viableAmount) + serverObject.materialBatch.importedAmount);
+
+        //Change material status
+        if (materialImportRequest.material.viableAmount <= materialImportRequest.material.reorderAmount) {
+            materialImportRequest.material.materialStatusId = 2;
+        }
 
         //Increase supplier's arrears
         materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) + parseFloat(serverObject.finalPrice)).toString();
@@ -43,7 +52,7 @@ export class MaterialImportInvoiceController {
         materialImportRequest.materialImportQuotation.materialImportOrder.orderStatusId = 2;
         serverObject.materialBatch.materialId = materialImportRequest.materialId;
 
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Supplier).save(materialImportRequest.supplier), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Material).save(materialImportRequest.material), getRepository(Supplier).save(materialImportRequest.supplier), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
         .then(() => {
             return getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)
         })

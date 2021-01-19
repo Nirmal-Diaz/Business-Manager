@@ -68,8 +68,8 @@
                 "pattern": null,
                 "value": null
             },
-            "availableAmount": {
-                "inputQuery": "#availableAmount",
+            "importedAmount": {
+                "inputQuery": "#importedAmount",
                 "inputClass": "text",
                 "pattern": "^\\d{1,7}[.]\\d{2}$",
                 "value": null

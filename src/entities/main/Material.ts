@@ -3,23 +3,22 @@ import {
   Entity,
   Index,
   JoinColumn,
-  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialStatus } from "./MaterialStatus";
-import { UnitType } from "./UnitType";
 import { User } from "./User";
-import { MaterialBatch } from "./MaterialBatch";
-import { MaterialImportRequest } from "./MaterialImportRequest";
+import { UnitType } from "./UnitType";
+import { MaterialStatus } from "./MaterialStatus";
 import { ProductMaterial } from "./ProductMaterial";
 import { Supplier } from "./Supplier";
+import { MaterialImportRequest } from "./MaterialImportRequest";
+import { MaterialBatch } from "./MaterialBatch";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_material_material_status1_idx", ["materialStatusId"], {})
+@Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
 @Index("fk_material_user1_idx", ["userId"], {})
 @Entity("material", { schema: "business_manager" })
 export class Material {
@@ -61,13 +60,12 @@ export class Material {
   })
   viableAmount: string | null;
 
-  @ManyToOne(
-    () => MaterialStatus,
-    (materialStatus) => materialStatus.materials,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
-  @JoinColumn([{ name: "material_status_id", referencedColumnName: "id" }])
-  materialStatus: MaterialStatus;
+  @ManyToOne(() => User, (user) => user.materials, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 
   @ManyToOne(() => UnitType, (unitType) => unitType.materials, {
     onDelete: "NO ACTION",
@@ -76,21 +74,13 @@ export class Material {
   @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
   unitType: UnitType;
 
-  @ManyToOne(() => User, (user) => user.materials, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
-
-  @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.material)
-  materialBatches: MaterialBatch[];
-
-  @OneToMany(
-    () => MaterialImportRequest,
-    (materialImportRequest) => materialImportRequest.material
+  @ManyToOne(
+    () => MaterialStatus,
+    (materialStatus) => materialStatus.materials,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  materialImportRequests: MaterialImportRequest[];
+  @JoinColumn([{ name: "material_status_id", referencedColumnName: "id" }])
+  materialStatus: MaterialStatus;
 
   @OneToMany(
     () => ProductMaterial,
@@ -99,11 +89,14 @@ export class Material {
   productMaterials: ProductMaterial[];
 
   @ManyToMany(() => Supplier, (supplier) => supplier.materials)
-  @JoinTable({
-    name: "supplier_material",
-    joinColumns: [{ name: "material_id", referencedColumnName: "id" }],
-    inverseJoinColumns: [{ name: "supplier_id", referencedColumnName: "id" }],
-    schema: "business_manager",
-  })
   suppliers: Supplier[];
+
+  @OneToMany(
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.material
+  )
+  materialImportRequests: MaterialImportRequest[];
+
+  @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.material)
+  materialBatches: MaterialBatch[];
 }

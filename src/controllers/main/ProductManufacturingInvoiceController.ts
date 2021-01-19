@@ -7,6 +7,7 @@ import { ProductManufacturingInvoiceRepository as EntityRepository } from "../..
 import { ProductBatch } from "../../entities/main/ProductBatch";
 import { UnitType } from "../../entities/main/UnitType";
 import { ProductManufacturingOrder } from "../../entities/main/ProductManufacturingOrder";
+import { Product } from "../../entities/main/Product";
 
 export class ProductManufacturingInvoiceController {
     private static entityName: string = "product manufacturing invoice";
@@ -24,20 +25,29 @@ export class ProductManufacturingInvoiceController {
 
         //Change the unit type to the default
         const unitType = await getRepository(UnitType).findOne(serverObject.productBatch.unitTypeId);
-        serverObject.productBatch.importedAmount = parseFloat(serverObject.productBatch.importedAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.productBatch.producedAmount = parseFloat(serverObject.productBatch.producedAmount) * parseFloat(unitType.convertToDefaultFactor);
         serverObject.productBatch.unitTypeId = unitType.defaultUnitId;
         
         const productManufacturingOrder = await getRepository(ProductManufacturingOrder).findOne({
             where: {
                 code: serverObject.orderCode
             },
+            relations: ["product"]
         });
+
+        //Increase product inventory
+        productManufacturingOrder.product.viableAmount = (parseFloat(productManufacturingOrder.product.viableAmount) + serverObject.productBatch.producedAmount);
+
+        //Change product status
+        if (productManufacturingOrder.product.viableAmount <= productManufacturingOrder.product.reorderAmount) {
+            productManufacturingOrder.product.productStatusId = 2;
+        }
     
         //Update relevant order status
         productManufacturingOrder.orderStatusId = 2;
         serverObject.productBatch.productId = productManufacturingOrder.productId;
 
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(ProductManufacturingOrder).save(productManufacturingOrder)])
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Product).save(productManufacturingOrder.product), getRepository(ProductManufacturingOrder).save(productManufacturingOrder)])
         .then(() => {
             return getRepository(ProductBatch).save(serverObject.productBatch as ProductBatch)
         })

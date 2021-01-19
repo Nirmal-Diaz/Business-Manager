@@ -7,10 +7,10 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
-import { OrderStatus } from "./OrderStatus";
-import { UnitType } from "./UnitType";
 import { Product } from "./Product";
+import { UnitType } from "./UnitType";
+import { OrderStatus } from "./OrderStatus";
+import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
@@ -45,19 +45,12 @@ export class ProductManufacturingOrder {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToOne(
-    () => ProductManufacturingInvoice,
-    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
-  )
-  productManufacturingInvoice: ProductManufacturingInvoice;
-
-  @ManyToOne(
-    () => OrderStatus,
-    (orderStatus) => orderStatus.productManufacturingOrders,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
-  @JoinColumn([{ name: "order_status_id", referencedColumnName: "id" }])
-  orderStatus: OrderStatus;
+  @ManyToOne(() => Product, (product) => product.productManufacturingOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
+  product: Product;
 
   @ManyToOne(
     () => UnitType,
@@ -67,10 +60,17 @@ export class ProductManufacturingOrder {
   @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
   unitType: UnitType;
 
-  @ManyToOne(() => Product, (product) => product.productManufacturingOrders, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
-  product: Product;
+  @ManyToOne(
+    () => OrderStatus,
+    (orderStatus) => orderStatus.productManufacturingOrders,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "order_status_id", referencedColumnName: "id" }])
+  orderStatus: OrderStatus;
+
+  @OneToOne(
+    () => ProductManufacturingInvoice,
+    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
+  )
+  productManufacturingInvoice: ProductManufacturingInvoice;
 }

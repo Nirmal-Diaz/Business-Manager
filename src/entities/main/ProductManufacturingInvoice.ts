@@ -8,14 +8,14 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { InboundPayment } from "./InboundPayment";
-import { ProductBatch } from "./ProductBatch";
-import { InvoiceStatus } from "./InvoiceStatus";
 import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { InvoiceStatus } from "./InvoiceStatus";
+import { ProductBatch } from "./ProductBatch";
+import { InboundPayment } from "./InboundPayment";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("manufacturing_order_code_UNIQUE", ["orderCode"], { unique: true })
 @Index("fk_product_export_invoice_invoice_status1_idx", ["invoiceStatusId"], {})
+@Index("manufacturing_order_code_UNIQUE", ["orderCode"], { unique: true })
 @Entity("product_manufacturing_invoice", { schema: "business_manager" })
 export class ProductManufacturingInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -45,14 +45,14 @@ export class ProductManufacturingInvoice {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToMany(
-    () => InboundPayment,
-    (inboundPayment) => inboundPayment.invoiceCode2
+  @OneToOne(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) =>
+      productManufacturingOrder.productManufacturingInvoice,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  inboundPayments: InboundPayment[];
-
-  @OneToOne(() => ProductBatch, (productBatch) => productBatch.invoiceCode2)
-  productBatch: ProductBatch;
+  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
+  orderCode2: ProductManufacturingOrder;
 
   @ManyToOne(
     () => InvoiceStatus,
@@ -62,12 +62,12 @@ export class ProductManufacturingInvoice {
   @JoinColumn([{ name: "invoice_status_id", referencedColumnName: "id" }])
   invoiceStatus: InvoiceStatus;
 
-  @OneToOne(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) =>
-      productManufacturingOrder.productManufacturingInvoice,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  @OneToOne(() => ProductBatch, (productBatch) => productBatch.invoiceCode2)
+  productBatch: ProductBatch;
+
+  @OneToMany(
+    () => InboundPayment,
+    (inboundPayment) => inboundPayment.invoiceCode2
   )
-  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
-  orderCode2: ProductManufacturingOrder;
+  inboundPayments: InboundPayment[];
 }
