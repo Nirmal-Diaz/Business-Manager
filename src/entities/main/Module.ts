@@ -25,6 +25,9 @@ export class Module {
   @Column("int", { name: "module_category_id" })
   moduleCategoryId: number;
 
+  @Column("varchar", { name: "glance_request_url", nullable: true, length: 45 })
+  glanceRequestUrl: string | null;
+
   @ManyToOne(() => ModuleCategory, (moduleCategory) => moduleCategory.modules, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",

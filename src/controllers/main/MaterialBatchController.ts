@@ -36,6 +36,21 @@ export class MaterialBatchController {
         }
     }
 
+    static async getManyByStatus(statusId: number) {
+        const items = await getRepository(Entity).find({
+            where: {
+                batchStatusId: statusId
+            },
+            relations: ["batchStatus"]
+        });
+
+        if (items.length > 0) {
+            return items;
+        } else {
+            throw { title: `No ${this.entityName}`, titleDescription: "Try another status", message: `There are no ${this.entityName}s for the status you specified`, technicalMessage: `No ${this.entityName}s with given status` };
+        }
+    }
+
     static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value

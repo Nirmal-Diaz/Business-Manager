@@ -57,7 +57,8 @@ export class ProductManufacturingOrderController {
         const items = await getRepository(Entity).find({
             where: {
                 orderStatusId: statusId
-            }
+            },
+            relations: ["orderStatus"]
         });
 
         if (items.length > 0) {

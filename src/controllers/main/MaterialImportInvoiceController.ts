@@ -83,7 +83,8 @@ export class MaterialImportInvoiceController {
         const items = await getRepository(Entity).find({
             where: {
                 invoiceStatusId: statusId
-            }
+            },
+            relations: ["invoiceStatus"]
         });
 
         if (items.length > 0) {

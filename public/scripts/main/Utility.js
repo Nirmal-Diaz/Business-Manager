@@ -44,10 +44,18 @@ export class ShellComponent {
             workspaceScreenController.actionOverlayBackground.classList.replace("popIn", "popOut");
         });
 
-        const title = document.createElement("div");
+        const title = document.createElement("h1");
         title.setAttribute("class", "title");
         title.textContent = module.name;
         actionOverlayChip.appendChild(title);
+
+        if (module.glanceRequestUrl) {
+            actionOverlayChip.dataset.glanceRequestUrl = module.glanceRequestUrl;
+            const titleDescription = document.createElement("h1");
+            titleDescription.setAttribute("class", "titleDescription");
+            actionOverlayChip.appendChild(titleDescription);
+        }
+
         return actionOverlayChip;
     }
 }

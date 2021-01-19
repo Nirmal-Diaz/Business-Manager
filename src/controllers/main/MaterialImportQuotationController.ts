@@ -75,7 +75,8 @@ export class MaterialImportQuotationController {
         const items = await getRepository(Entity).find({
             where: {
                 quotationStatusId: statusId
-            }
+            },
+            relations: ["quotationStatus"]
         });
 
         if (items.length > 0) {

@@ -72,6 +72,8 @@ export class WorkspaceScreenController extends ScreenController {
                         this.actionOverlayView.firstElementChild.appendChild(categories[category]);
                     }
 
+                    this.updateActionOverlay();
+
                     //Present Action Overlay
                     this.actionOverlayView.classList.replace("popOut", "popIn");
                     this.actionOverlayBackground.classList.replace("popOut", "popIn");
@@ -190,6 +192,7 @@ export class WorkspaceScreenController extends ScreenController {
                         workspaceScreenController.navigationControl.style.borderColor = "transparent transparent transparent var(--headerAreaColor)";
                         navigatorControlOptionDisplay.innerText = "View action overlay";
                         procedureToExecute = () => {
+                            workspaceScreenController.updateActionOverlay();
                             workspaceScreenController.actionOverlayView.classList.replace("popOut", "popIn");
                             workspaceScreenController.actionOverlayBackground.classList.replace("popOut", "popIn");
                         }
@@ -458,6 +461,29 @@ export class WorkspaceScreenController extends ScreenController {
             }
         }
         return scroll;
+    }
+
+    updateActionOverlay() {
+        const actionOverlayChips = this.actionOverlayView.querySelectorAll(".actionOverlayChip");
+
+        for (const actionOverlayChip of actionOverlayChips) {
+            if (actionOverlayChip.dataset.glanceRequestUrl) {
+                fetch(actionOverlayChip.dataset.glanceRequestUrl)
+                .then((response) => response.json())
+                .then(response => {
+                    if (response.status) {
+                        //Find the status field name by looping through keys of the first element
+                        //NOTE: status field name changes as orderStatus, employeeStatus etc.
+                        for (const key of Object.keys(response.data[0])) {
+                            if (key.endsWith("Status")) {
+                                actionOverlayChip.children[1].textContent = `${response.data.length} ${response.data[0][key].name.toLowerCase()}`;
+                                break;
+                            }
+                        }
+                    }
+                })
+            }
+        }
     }
 
     logoutSession() {

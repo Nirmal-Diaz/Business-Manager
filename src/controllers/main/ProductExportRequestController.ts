@@ -10,20 +10,27 @@ export class ProductExportRequestController {
     private static entityName: string = "product export request";
     private static entityJSONName: string = "productExportRequest";
 
-    static async createOne(clientBindingObject) {
+    static async createMany(clientBindingObject, selectedProductIds) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //Update the code field with next possible value
-        serverObject.code = (await EntityRepository.generateNextCode()).value;
+        //Clone the serverObject and change the code and productId fields for each selectedProductIds
+        const clonedServerObjects = [];
 
-        //Change the unit type to the default
-        const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
-        serverObject.requestedAmount = parseFloat(serverObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor);
-        serverObject.unitTypeId = unitType.defaultUnitId;
+        const stringifiedServerObject = JSON.stringify(serverObject);
+        let nextCode: string = (await EntityRepository.generateNextCode()).value;
+        for (let i = 0; i < selectedProductIds.length; i++) {
+            clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
+            clonedServerObjects[i].productId = selectedProductIds[i];
 
-        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
+            //Update the code field with next possible value
+            clonedServerObjects[i].code = nextCode;
+
+            nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
+        }
+
+        return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
@@ -57,7 +64,8 @@ export class ProductExportRequestController {
         const items = await getRepository(Entity).find({
             where: {
                 requestStatusId: statusId
-            }
+            },
+            relations: ["requestStatus"]
         });
 
         if (items.length > 0) {

@@ -369,6 +369,10 @@
     background-color: var(--actionOverlayChipBackgroundColor-hover);
 }
 
+.actionOverlayChip>h1 {
+    text-align: center;
+}
+
 /* alertOverlayStyles */
 #alertOverlay {
     background-color: var(--alertOverlayBackgroundColor);

@@ -465,16 +465,6 @@ mainRouter.route("/materialImportRequests/:materialImportRequestId")
             });
     });
 
-mainRouter.route("/materialImportRequests/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
-            .then(() => MaterialImportRequestController.getManyByStatus(1)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
 //MATERIAL IMPORT QUOTATIONS
 mainRouter.route("/materialImportQuotations")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -521,15 +511,7 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
             });
     });
 
-mainRouter.route("/materialImportQuotations/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
-            .then(() => MaterialImportQuotationController.getManyByStatus(2)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
+
 
 //MATERIAL IMPORT ORDERS
 mainRouter.route("/materialImportOrders")
@@ -577,16 +559,6 @@ mainRouter.route("/materialImportOrders/:materialImportOrderId")
             });
     });
 
-mainRouter.route("/materialImportOrders/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
-            .then(() => MaterialImportOrderController.getManyByStatus(1)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
 //MATERIAL IMPORT INVOICES
 mainRouter.route("/materialImportInvoices")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -627,16 +599,6 @@ mainRouter.route("/materialImportInvoices/:materialImportInvoiceId")
         PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
             .then(() => MaterialImportInvoiceController.deleteOne(parseInt(req.params.materialImportInvoiceId)))
             .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/materialImportInvoices/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
-            .then(() => MaterialImportInvoiceController.getManyByStatus(1)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -774,7 +736,7 @@ mainRouter.route("/productBatches/:productBatchId")
 mainRouter.route("/productExportRequests")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => ProductExportRequestController.createOne(req.body.bindingObject)).then(data => {
+            .then(() => ProductExportRequestController.createMany(req.body.bindingObject, req.body.additionalData.selectedProductIds)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -810,16 +772,6 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
             .then(() => ProductExportRequestController.deleteOne(parseInt(req.params.productExportRequestId)))
             .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/productExportRequests/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => ProductExportRequestController.getManyByStatus(1)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -872,15 +824,7 @@ mainRouter.route("/productManufacturingOrders/:productManufacturingOrderId")
             });
     });
 
-mainRouter.route("/productManufacturingOrders/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
-            .then(() => ProductManufacturingOrderController.getManyByStatus(1)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
+
 
 //PRODUCT MANUFACTURING INVOICES
 mainRouter.route("/productManufacturingInvoices")
@@ -922,16 +866,6 @@ mainRouter.route("/productManufacturingInvoices/:productManufacturingInvoiceId")
         PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
             .then(() => ProductManufacturingInvoiceController.deleteOne(parseInt(req.params.productManufacturingInvoiceId)))
             .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/productManufacturingInvoices/@valid")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
-            .then(() => ProductManufacturingInvoiceController.getManyByStatus(1)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -1302,6 +1236,147 @@ mainRouter.route("/directories/:subDirectoryPath/files/:fileName")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "files", req.method)
             .then(() => FileController.deleteFile(path.normalize(`${req.session.userId}/${req.params.subDirectoryPath + req.params.fileName}`))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//STATES
+mainRouter.route("/states/:statusId/employees")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "employees", req.method)
+            .then(() => EmployeeController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/suppliers")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "suppliers", req.method)
+            .then(() => SupplierController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/customers")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "customers", req.method)
+            .then(() => CustomerController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materials")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "materials", req.method)
+            .then(() => MaterialController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materialBatches")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material batches", req.method)
+            .then(() => MaterialBatchController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materialImportRequests")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
+            .then(() => MaterialImportRequestController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materialImportQuotations")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
+            .then(() => MaterialImportQuotationController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materialImportOrders")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/materialImportInvoices")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
+            .then(() => MaterialImportInvoiceController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/products")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "products", req.method)
+            .then(() => ProductController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/productBatches")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product batches", req.method)
+            .then(() => ProductBatchController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/productExportRequests")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
+            .then(() => ProductExportRequestController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/productManufacturingOrders")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
+            .then(() => ProductManufacturingOrderController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/states/:statusId/productManufacturingInvoices")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
+            .then(() => ProductManufacturingInvoiceController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

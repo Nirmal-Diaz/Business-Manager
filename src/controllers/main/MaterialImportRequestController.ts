@@ -63,7 +63,8 @@ export class MaterialImportRequestController {
         const items = await getRepository(Entity).find({
             where: {
                 requestStatusId: statusId
-            }
+            },
+            relations: ["requestStatus"]
         });
 
         if (items.length > 0) {
