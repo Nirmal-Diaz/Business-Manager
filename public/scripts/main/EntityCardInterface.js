@@ -14,7 +14,6 @@ export class EntityCardInterface extends BaseCardInterface {
         this.createControls[0]?.addEventListener("click", () => {
             //Add onload to iframe for initializing create form
             const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}_cu.html`);
-            popUpCard.getView().style.width = "800px";
             popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                 popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizedToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}`, "PUT");
             });
@@ -44,7 +43,6 @@ export class EntityCardInterface extends BaseCardInterface {
             } else {
                 //Add onload to iframe for initializing update form
                 const popUpCard = this.cardObject.createPopUpCard(`/layouts/main/popUpCards/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}_cu.html`);
-                popUpCard.getView().style.width = "800px";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                     popUpCard.popUpCardInterface.extendInitForm(`/registries/${PlatformUtil.capitalizedToPascal(this.entityNameSingular)}.json`, `/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}/${this.selectedCardDivisionSectorItems[0].dataset.bindingObjectId}`, "POST");
                 });

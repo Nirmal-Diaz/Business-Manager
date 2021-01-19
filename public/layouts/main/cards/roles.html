@@ -25,6 +25,7 @@
                 this.createControls[0].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/roles_cu.html");
+                    popUpCard.getView().style.width = "30vw";
                     popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                         popUpCard.popUpCardInterface.initInputs().then(() => {
                             popUpCard.popUpCardInterface.initCreateForm();
@@ -92,6 +93,7 @@
             updateItem(selectedCardDivisionSectorItem) {
                 //Add onload to iframe for initializing update form
                 const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/roles_cu.html");
+                popUpCard.getView().style.width = "30vw";
                 popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
                     popUpCard.popUpCardInterface.initInputs().then(() => {
                         popUpCard.popUpCardInterface.initUpdateForm(selectedCardDivisionSectorItem);
