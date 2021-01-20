@@ -7,13 +7,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
-import { ProductStatus } from "./ProductStatus";
 import { UnitType } from "./UnitType";
-import { ProductMaterial } from "./ProductMaterial";
-import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductStatus } from "./ProductStatus";
+import { User } from "./User";
 import { ProductBatch } from "./ProductBatch";
 import { ProductExportRequest } from "./ProductExportRequest";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductMaterial } from "./ProductMaterial";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
@@ -62,12 +62,12 @@ export class Product {
   })
   viableAmount: string | null;
 
-  @ManyToOne(() => User, (user) => user.products, {
+  @ManyToOne(() => UnitType, (unitType) => unitType.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.products, {
     onDelete: "NO ACTION",
@@ -76,24 +76,12 @@ export class Product {
   @JoinColumn([{ name: "product_status_id", referencedColumnName: "id" }])
   productStatus: ProductStatus;
 
-  @ManyToOne(() => UnitType, (unitType) => unitType.products, {
+  @ManyToOne(() => User, (user) => user.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
-  unitType: UnitType;
-
-  @OneToMany(
-    () => ProductMaterial,
-    (productMaterial) => productMaterial.product
-  )
-  productMaterials: ProductMaterial[];
-
-  @OneToMany(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) => productManufacturingOrder.product
-  )
-  productManufacturingOrders: ProductManufacturingOrder[];
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 
   @OneToMany(() => ProductBatch, (productBatch) => productBatch.product)
   productBatches: ProductBatch[];
@@ -103,4 +91,16 @@ export class Product {
     (productExportRequest) => productExportRequest.product
   )
   productExportRequests: ProductExportRequest[];
+
+  @OneToMany(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.product
+  )
+  productManufacturingOrders: ProductManufacturingOrder[];
+
+  @OneToMany(
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.product
+  )
+  productMaterials: ProductMaterial[];
 }

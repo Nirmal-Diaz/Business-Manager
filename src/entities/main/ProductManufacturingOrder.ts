@@ -7,10 +7,10 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Product } from "./Product";
-import { UnitType } from "./UnitType";
-import { OrderStatus } from "./OrderStatus";
 import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
+import { OrderStatus } from "./OrderStatus";
+import { UnitType } from "./UnitType";
+import { Product } from "./Product";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
@@ -45,20 +45,11 @@ export class ProductManufacturingOrder {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @ManyToOne(() => Product, (product) => product.productManufacturingOrders, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
-  product: Product;
-
-  @ManyToOne(
-    () => UnitType,
-    (unitType) => unitType.productManufacturingOrders,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  @OneToOne(
+    () => ProductManufacturingInvoice,
+    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
   )
-  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
-  unitType: UnitType;
+  productManufacturingInvoice: ProductManufacturingInvoice;
 
   @ManyToOne(
     () => OrderStatus,
@@ -68,9 +59,18 @@ export class ProductManufacturingOrder {
   @JoinColumn([{ name: "order_status_id", referencedColumnName: "id" }])
   orderStatus: OrderStatus;
 
-  @OneToOne(
-    () => ProductManufacturingInvoice,
-    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
+  @ManyToOne(
+    () => UnitType,
+    (unitType) => unitType.productManufacturingOrders,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  productManufacturingInvoice: ProductManufacturingInvoice;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
+
+  @ManyToOne(() => Product, (product) => product.productManufacturingOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
+  product: Product;
 }

@@ -3,16 +3,15 @@ import {
   Entity,
   Index,
   JoinColumn,
-  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
-import { SupplierStatus } from "./SupplierStatus";
-import { Material } from "./Material";
 import { MaterialImportRequest } from "./MaterialImportRequest";
+import { SupplierStatus } from "./SupplierStatus";
+import { User } from "./User";
+import { Material } from "./Material";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_customer_customer_status1_idx", ["supplierStatusId"], {})
@@ -67,12 +66,11 @@ export class Supplier {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @ManyToOne(() => User, (user) => user.suppliers, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
+  @OneToMany(
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.supplier
+  )
+  materialImportRequests: MaterialImportRequest[];
 
   @ManyToOne(
     () => SupplierStatus,
@@ -82,18 +80,13 @@ export class Supplier {
   @JoinColumn([{ name: "supplier_status_id", referencedColumnName: "id" }])
   supplierStatus: SupplierStatus;
 
-  @ManyToMany(() => Material, (material) => material.suppliers)
-  @JoinTable({
-    name: "supplier_material",
-    joinColumns: [{ name: "supplier_id", referencedColumnName: "id" }],
-    inverseJoinColumns: [{ name: "material_id", referencedColumnName: "id" }],
-    schema: "business_manager",
+  @ManyToOne(() => User, (user) => user.suppliers, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
   })
-  materials: Material[];
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 
-  @OneToMany(
-    () => MaterialImportRequest,
-    (materialImportRequest) => materialImportRequest.supplier
-  )
-  materialImportRequests: MaterialImportRequest[];
+  @ManyToMany(() => Material, (material) => material.suppliers)
+  materials: Material[];
 }

@@ -2,18 +2,16 @@ import { getRepository } from "typeorm";
 
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
-import { MaterialImportInvoice as Entity } from "../../entities/main/MaterialImportInvoice";
-import { MaterialImportInvoiceRepository as EntityRepository } from "../../repositories/main/MaterialImportInvoiceRepository";
-import { MaterialImportOrder } from "../../entities/main/MaterialImportOrder";
-import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
-import { MaterialBatch } from "../../entities/main/MaterialBatch";
+import { ProductExportInvoice as Entity } from "../../entities/main/ProductExportInvoice";
+import { ProductExportInvoiceRepository as EntityRepository } from "../../repositories/main/ProductExportInvoiceRepository";
 import { UnitType } from "../../entities/main/UnitType";
-import { Supplier } from "../../entities/main/Supplier";
-import { Material } from "../../entities/main/Material";
+import { ProductExportRequest } from "../../entities/main/ProductExportRequest";
+import { Product } from "../../entities/main/Product";
+import { Customer } from "../../entities/main/Customer";
 
-export class MaterialImportInvoiceController {
-    private static entityName: string = "material import invoice";
-    private static entityJSONName: string = "materialImportInvoice";
+export class ProductExportInvoiceController {
+    private static entityName: string = "product export invoice";
+    private static entityJSONName: string = "productExportInvoice";
 
     static async createOne(clientBindingObject) {
         //Validate clientBindingObject
@@ -21,41 +19,30 @@ export class MaterialImportInvoiceController {
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
         //NOTE: Invoice code must be equal to the referring quotation code except the letter code
-        serverObject.code = serverObject.orderCode.replace("MIO", "MII");
-        serverObject.materialBatch.code = serverObject.orderCode.replace("MIO", "MBT");
-        serverObject.materialBatch.invoiceCode = serverObject.code;
-
-        //Change the unit type to the default
-        const unitType = await getRepository(UnitType).findOne(serverObject.materialBatch.unitTypeId);
-        serverObject.materialBatch.importedAmount = parseFloat(serverObject.materialBatch.importedAmount) * parseFloat(unitType.convertToDefaultFactor);
-        serverObject.materialBatch.unitTypeId = unitType.defaultUnitId;
+        serverObject.code = serverObject.requestCode.replace("PER", "PEI");
         
-        const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
+        const productExportRequest = await getRepository(ProductExportRequest).findOne({
             where: {
-                code: serverObject.orderCode.replace("MIO", "MIR")
+                code: serverObject.requestCode.replace("PER", "PEI")
             },
-            relations: ["material", "supplier", "materialImportQuotation", "materialImportQuotation.materialImportOrder"]
+            relations: ["product", "customer"]
         });
 
-        //Increase material inventory
-        materialImportRequest.material.viableAmount = (parseFloat(materialImportRequest.material.viableAmount) + parseFloat(serverObject.materialBatch.importedAmount)).toString();
+        //Decrease product inventory
+        productExportRequest.product.viableAmount = (parseFloat(productExportRequest.product.viableAmount) - parseFloat(productExportRequest.requestedAmount)).toString();
 
-        //Change material status
-        if (materialImportRequest.material.viableAmount <= materialImportRequest.material.reorderAmount) {
-            materialImportRequest.material.materialStatusId = 2;
+        //Change product status
+        if (productExportRequest.product.viableAmount <= productExportRequest.product.reorderAmount) {
+            productExportRequest.product.productStatusId = 2;
         }
 
-        //Increase supplier's arrears
-        materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) + parseFloat(serverObject.finalPrice)).toString();
+        //Increase customer's arrears
+        productExportRequest.customer.arrears = (parseFloat(productExportRequest.customer.arrears ) + parseFloat(serverObject.finalPrice)).toString();
     
-        //Update relevant order status
-        materialImportRequest.materialImportQuotation.materialImportOrder.orderStatusId = 2;
-        serverObject.materialBatch.materialId = materialImportRequest.materialId;
+        //Update request status
+        productExportRequest.requestStatusId = 2;
 
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Material).save(materialImportRequest.material), getRepository(Supplier).save(materialImportRequest.supplier), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
-        .then(() => {
-            return getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)
-        })
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Product).save(productExportRequest.product), getRepository(Customer).save(productExportRequest.customer), getRepository(ProductExportRequest).save(productExportRequest)])
         .catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
@@ -66,7 +53,7 @@ export class MaterialImportInvoiceController {
             where: {
                 id: id
             },
-            relations: ["invoiceStatus", "materialBatch", "materialBatch.batchStatus"]
+            relations: ["invoiceStatus"]
         });
 
         if (item) {
@@ -77,8 +64,6 @@ export class MaterialImportInvoiceController {
     }
 
     static async getMany(keyword: string) {
-        await EntityRepository.updateTable();
-
         const items = await EntityRepository.search(keyword);
 
         if (items.length > 0) {
@@ -91,7 +76,7 @@ export class MaterialImportInvoiceController {
     static async getManyByStatus(statusId: number) {
         const items = await getRepository(Entity).find({
             where: {
-                invoiceStatusId: statusId
+                requestStatusId: statusId
             },
             relations: ["invoiceStatus"]
         });
@@ -105,18 +90,15 @@ export class MaterialImportInvoiceController {
 
     static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
-            where: {
-                id: clientBindingObject.id.value
-            },
-            relations: ["materialBatch"]
+            id: clientBindingObject.id.value
         });
 
         if (originalObject) {
             const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
             ValidationController.validateBindingObject(serverObject, clientBindingObject);
             ValidationController.updateOriginalObject(originalObject, serverObject);
-
-            return Promise.all([getRepository(Entity).save(originalObject), getRepository(MaterialBatch).save(originalObject.materialBatch)]).catch((error) => {
+            
+            return getRepository(Entity).save(originalObject).catch((error) => {
                 throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
             });
         } else {

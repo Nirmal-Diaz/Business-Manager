@@ -7,21 +7,21 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Gender } from "./Gender";
-import { EmployeeStatus } from "./EmployeeStatus";
-import { Designation } from "./Designation";
 import { CivilStatus } from "./CivilStatus";
+import { Designation } from "./Designation";
+import { EmployeeStatus } from "./EmployeeStatus";
+import { Gender } from "./Gender";
 import { User } from "./User";
 
-@Index("email_UNIQUE", ["email"], { unique: true })
-@Index("fk_employee_civil_status1_idx", ["civilStatusId"], {})
-@Index("fk_employee_designation1_idx", ["designationId"], {})
-@Index("fk_employee_employee_status1_idx", ["employeeStatusId"], {})
-@Index("fk_employee_gender1_idx", ["genderId"], {})
-@Index("land_UNIQUE", ["land"], { unique: true })
-@Index("mobile_UNIQUE", ["mobile"], { unique: true })
 @Index("nic_no_UNIQUE", ["nicNumber"], { unique: true })
 @Index("number_UNIQUE", ["code"], { unique: true })
+@Index("email_UNIQUE", ["email"], { unique: true })
+@Index("mobile_UNIQUE", ["mobile"], { unique: true })
+@Index("land_UNIQUE", ["land"], { unique: true })
+@Index("fk_employee_gender1_idx", ["genderId"], {})
+@Index("fk_employee_civil_status1_idx", ["civilStatusId"], {})
+@Index("fk_employee_employee_status1_idx", ["employeeStatusId"], {})
+@Index("fk_employee_designation1_idx", ["designationId"], {})
 @Entity("employee", { schema: "business_manager" })
 export class Employee {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -75,12 +75,19 @@ export class Employee {
   @Column("text", { name: "description", nullable: true })
   description: string | null;
 
-  @ManyToOne(() => Gender, (gender) => gender.employees, {
+  @ManyToOne(() => CivilStatus, (civilStatus) => civilStatus.employees, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "gender_id", referencedColumnName: "id" }])
-  gender: Gender;
+  @JoinColumn([{ name: "civil_status_id", referencedColumnName: "id" }])
+  civilStatus: CivilStatus;
+
+  @ManyToOne(() => Designation, (designation) => designation.employees, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "designation_id", referencedColumnName: "id" }])
+  designation: Designation;
 
   @ManyToOne(
     () => EmployeeStatus,
@@ -90,19 +97,12 @@ export class Employee {
   @JoinColumn([{ name: "employee_status_id", referencedColumnName: "id" }])
   employeeStatus: EmployeeStatus;
 
-  @ManyToOne(() => Designation, (designation) => designation.employees, {
+  @ManyToOne(() => Gender, (gender) => gender.employees, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "designation_id", referencedColumnName: "id" }])
-  designation: Designation;
-
-  @ManyToOne(() => CivilStatus, (civilStatus) => civilStatus.employees, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "civil_status_id", referencedColumnName: "id" }])
-  civilStatus: CivilStatus;
+  @JoinColumn([{ name: "gender_id", referencedColumnName: "id" }])
+  gender: Gender;
 
   @OneToMany(() => User, (user) => user.employeeCode2)
   users: User[];

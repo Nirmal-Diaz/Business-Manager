@@ -7,19 +7,19 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Supplier } from "./Supplier";
-import { RequestStatus } from "./RequestStatus";
-import { Material } from "./Material";
 import { MaterialImportQuotation } from "./MaterialImportQuotation";
+import { Material } from "./Material";
+import { RequestStatus } from "./RequestStatus";
+import { Supplier } from "./Supplier";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
+@Index("fk_quotation_request_supplier1_idx", ["supplierId"], {})
 @Index("fk_quotation_request_material1_idx", ["materialId"], {})
 @Index(
   "fk_quotation_request_quotation_request_status1_idx",
   ["requestStatusId"],
   {}
 )
-@Index("fk_quotation_request_supplier1_idx", ["supplierId"], {})
 @Entity("material_import_request", { schema: "business_manager" })
 export class MaterialImportRequest {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -46,12 +46,18 @@ export class MaterialImportRequest {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @ManyToOne(() => Supplier, (supplier) => supplier.materialImportRequests, {
+  @OneToOne(
+    () => MaterialImportQuotation,
+    (materialImportQuotation) => materialImportQuotation.requestCode2
+  )
+  materialImportQuotation: MaterialImportQuotation;
+
+  @ManyToOne(() => Material, (material) => material.materialImportRequests, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "supplier_id", referencedColumnName: "id" }])
-  supplier: Supplier;
+  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
+  material: Material;
 
   @ManyToOne(
     () => RequestStatus,
@@ -61,16 +67,10 @@ export class MaterialImportRequest {
   @JoinColumn([{ name: "request_status_id", referencedColumnName: "id" }])
   requestStatus: RequestStatus;
 
-  @ManyToOne(() => Material, (material) => material.materialImportRequests, {
+  @ManyToOne(() => Supplier, (supplier) => supplier.materialImportRequests, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
-  material: Material;
-
-  @OneToOne(
-    () => MaterialImportQuotation,
-    (materialImportQuotation) => materialImportQuotation.requestCode2
-  )
-  materialImportQuotation: MaterialImportQuotation;
+  @JoinColumn([{ name: "supplier_id", referencedColumnName: "id" }])
+  supplier: Supplier;
 }

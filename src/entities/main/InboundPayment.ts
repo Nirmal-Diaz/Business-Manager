@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
+import { ProductExportInvoice } from "./ProductExportInvoice";
 
 @Index("fk_inbound_payment_material_import_invoice10_idx", ["invoiceCode"], {})
 @Entity("inbound_payment", { schema: "business_manager" })
@@ -23,8 +23,8 @@ export class InboundPayment {
   @Column("decimal", { name: "price", precision: 10, scale: 2 })
   price: string;
 
-  @Column("varchar", { name: "cheque_nubmer", nullable: true, length: 45 })
-  chequeNubmer: string | null;
+  @Column("varchar", { name: "cheque_number", nullable: true, length: 45 })
+  chequeNumber: string | null;
 
   @Column("date", { name: "cheque_date", nullable: true })
   chequeDate: string | null;
@@ -43,11 +43,10 @@ export class InboundPayment {
   addedDate: string;
 
   @ManyToOne(
-    () => ProductManufacturingInvoice,
-    (productManufacturingInvoice) =>
-      productManufacturingInvoice.inboundPayments,
+    () => ProductExportInvoice,
+    (productExportInvoice) => productExportInvoice.inboundPayments,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
-  invoiceCode2: ProductManufacturingInvoice;
+  invoiceCode2: ProductExportInvoice;
 }

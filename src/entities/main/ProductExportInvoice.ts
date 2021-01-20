@@ -4,26 +4,27 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductBatch } from "./ProductBatch";
+import { InboundPayment } from "./InboundPayment";
 import { InvoiceStatus } from "./InvoiceStatus";
-import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductExportRequest } from "./ProductExportRequest";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("manufacturing_order_code_UNIQUE", ["orderCode"], { unique: true })
+@Index("manufacturing_order_code_UNIQUE", ["requestCode"], { unique: true })
 @Index("fk_product_export_invoice_invoice_status1_idx", ["invoiceStatusId"], {})
-@Entity("product_manufacturing_invoice", { schema: "business_manager" })
-export class ProductManufacturingInvoice {
+@Entity("product_export_invoice", { schema: "business_manager" })
+export class ProductExportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
   @Column("char", { name: "code", unique: true, length: 10 })
   code: string;
 
-  @Column("char", { name: "order_code", unique: true, length: 10 })
-  orderCode: string;
+  @Column("char", { name: "request_code", unique: true, length: 10 })
+  requestCode: string;
 
   @Column("decimal", { name: "price", precision: 10, scale: 2 })
   price: string;
@@ -43,23 +44,25 @@ export class ProductManufacturingInvoice {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToOne(() => ProductBatch, (productBatch) => productBatch.invoiceCode2)
-  productBatch: ProductBatch;
+  @OneToMany(
+    () => InboundPayment,
+    (inboundPayment) => inboundPayment.invoiceCode2
+  )
+  inboundPayments: InboundPayment[];
 
   @ManyToOne(
     () => InvoiceStatus,
-    (invoiceStatus) => invoiceStatus.productManufacturingInvoices,
+    (invoiceStatus) => invoiceStatus.productExportInvoices,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "invoice_status_id", referencedColumnName: "id" }])
   invoiceStatus: InvoiceStatus;
 
   @OneToOne(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) =>
-      productManufacturingOrder.productManufacturingInvoice,
+    () => ProductExportRequest,
+    (productExportRequest) => productExportRequest.productExportInvoice,
     { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
-  @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
-  orderCode2: ProductManufacturingOrder;
+  @JoinColumn([{ name: "request_code", referencedColumnName: "code" }])
+  requestCode2: ProductExportRequest;
 }

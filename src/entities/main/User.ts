@@ -8,17 +8,17 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Role } from "./Role";
-import { Employee } from "./Employee";
-import { UserPreference } from "./UserPreference";
 import { Customer } from "./Customer";
 import { Material } from "./Material";
 import { Product } from "./Product";
 import { Supplier } from "./Supplier";
+import { Employee } from "./Employee";
+import { Role } from "./Role";
+import { UserPreference } from "./UserPreference";
 
-@Index("fk_user_employee1_idx", ["employeeCode"], {})
-@Index("fk_user_occupation1_idx", ["roleId"], {})
 @Index("username_UNIQUE", ["username"], { unique: true })
+@Index("fk_user_occupation1_idx", ["roleId"], {})
+@Index("fk_user_employee1_idx", ["employeeCode"], {})
 @Entity("user", { schema: "business_manager" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -39,23 +39,6 @@ export class User {
   @Column("char", { name: "employee_code", length: 10 })
   employeeCode: string;
 
-  @ManyToOne(() => Role, (role) => role.users, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
-  role: Role;
-
-  @ManyToOne(() => Employee, (employee) => employee.users, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "employee_code", referencedColumnName: "code" }])
-  employeeCode2: Employee;
-
-  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
-  userPreference: UserPreference;
-
   @OneToMany(() => Customer, (customer) => customer.user)
   customers: Customer[];
 
@@ -67,4 +50,21 @@ export class User {
 
   @OneToMany(() => Supplier, (supplier) => supplier.user)
   suppliers: Supplier[];
+
+  @ManyToOne(() => Employee, (employee) => employee.users, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "employee_code", referencedColumnName: "code" }])
+  employeeCode2: Employee;
+
+  @ManyToOne(() => Role, (role) => role.users, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
+  role: Role;
+
+  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
+  userPreference: UserPreference;
 }

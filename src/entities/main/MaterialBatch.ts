@@ -7,16 +7,16 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { UnitType } from "./UnitType";
-import { MaterialImportInvoice } from "./MaterialImportInvoice";
-import { Material } from "./Material";
 import { BatchStatus } from "./BatchStatus";
+import { Material } from "./Material";
+import { MaterialImportInvoice } from "./MaterialImportInvoice";
+import { UnitType } from "./UnitType";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
-@Index("fk_material_batch_material1_idx", ["materialId"], {})
-@Index("fk_material_batch_unit_type1_idx", ["unitTypeId"], {})
 @Index("invoice_code_UNIQUE", ["invoiceCode"], { unique: true })
+@Index("fk_material_batch_material1_idx", ["materialId"], {})
+@Index("fk_material_batch_batch_status1_idx", ["batchStatusId"], {})
+@Index("fk_material_batch_unit_type1_idx", ["unitTypeId"], {})
 @Entity("material_batch", { schema: "business_manager" })
 export class MaterialBatch {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -49,12 +49,19 @@ export class MaterialBatch {
   @Column("int", { name: "batch_status_id" })
   batchStatusId: number;
 
-  @ManyToOne(() => UnitType, (unitType) => unitType.materialBatches, {
+  @ManyToOne(() => BatchStatus, (batchStatus) => batchStatus.materialBatches, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
-  unitType: UnitType;
+  @JoinColumn([{ name: "batch_status_id", referencedColumnName: "id" }])
+  batchStatus: BatchStatus;
+
+  @ManyToOne(() => Material, (material) => material.materialBatches, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
+  material: Material;
 
   @OneToOne(
     () => MaterialImportInvoice,
@@ -64,17 +71,10 @@ export class MaterialBatch {
   @JoinColumn([{ name: "invoice_code", referencedColumnName: "code" }])
   invoiceCode2: MaterialImportInvoice;
 
-  @ManyToOne(() => Material, (material) => material.materialBatches, {
+  @ManyToOne(() => UnitType, (unitType) => unitType.materialBatches, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
-  material: Material;
-
-  @ManyToOne(() => BatchStatus, (batchStatus) => batchStatus.materialBatches, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "batch_status_id", referencedColumnName: "id" }])
-  batchStatus: BatchStatus;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 }

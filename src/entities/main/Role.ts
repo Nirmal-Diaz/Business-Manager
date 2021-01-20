@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./User";
 import { Permission } from "./Permission";
+import { User } from "./User";
 
 @Entity("role", { schema: "business_manager" })
 export class Role {
@@ -10,9 +10,9 @@ export class Role {
   @Column("varchar", { name: "name", length: 45 })
   name: string;
 
-  @OneToMany(() => User, (user) => user.role)
-  users: User[];
-
   @OneToMany(() => Permission, (permission) => permission.role)
   permissions: Permission[];
+
+  @OneToMany(() => User, (user) => user.role)
+  users: User[];
 }

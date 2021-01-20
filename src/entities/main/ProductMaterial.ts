@@ -1,10 +1,10 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { UnitType } from "./UnitType";
-import { Product } from "./Product";
 import { Material } from "./Material";
+import { Product } from "./Product";
+import { UnitType } from "./UnitType";
 
-@Index("fk_material_has_product_material1_idx", ["materialId"], {})
 @Index("fk_material_has_product_product1_idx", ["productId"], {})
+@Index("fk_material_has_product_material1_idx", ["materialId"], {})
 @Index("fk_product_material_unit_type1_idx", ["unitTypeId"], {})
 @Entity("product_material", { schema: "business_manager" })
 export class ProductMaterial {
@@ -23,12 +23,12 @@ export class ProductMaterial {
   @Column("decimal", { name: "unit_price_factor", precision: 2, scale: 1 })
   unitPriceFactor: string;
 
-  @ManyToOne(() => UnitType, (unitType) => unitType.productMaterials, {
+  @ManyToOne(() => Material, (material) => material.productMaterials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
-  unitType: UnitType;
+  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
+  material: Material;
 
   @ManyToOne(() => Product, (product) => product.productMaterials, {
     onDelete: "NO ACTION",
@@ -37,10 +37,10 @@ export class ProductMaterial {
   @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
   product: Product;
 
-  @ManyToOne(() => Material, (material) => material.productMaterials, {
+  @ManyToOne(() => UnitType, (unitType) => unitType.productMaterials, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "material_id", referencedColumnName: "id" }])
-  material: Material;
+  @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
+  unitType: UnitType;
 }

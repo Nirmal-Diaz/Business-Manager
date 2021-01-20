@@ -7,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
 import { CustomerStatus } from "./CustomerStatus";
+import { User } from "./User";
 import { ProductExportRequest } from "./ProductExportRequest";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -64,13 +64,6 @@ export class Customer {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @ManyToOne(() => User, (user) => user.customers, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
-  user: User;
-
   @ManyToOne(
     () => CustomerStatus,
     (customerStatus) => customerStatus.customers,
@@ -78,6 +71,13 @@ export class Customer {
   )
   @JoinColumn([{ name: "customer_status_id", referencedColumnName: "id" }])
   customerStatus: CustomerStatus;
+
+  @ManyToOne(() => User, (user) => user.customers, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
+  user: User;
 
   @OneToMany(
     () => ProductExportRequest,

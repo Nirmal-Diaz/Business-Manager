@@ -6,8 +6,8 @@ import {
   ManyToOne,
   OneToOne,
 } from "typeorm";
-import { Theme } from "./Theme";
 import { User } from "./User";
+import { Theme } from "./Theme";
 
 @Index("fk_userPreference_theme1_idx", ["themeId"], {})
 @Entity("user_preference", { schema: "business_manager" })
@@ -27,17 +27,17 @@ export class UserPreference {
   @Column("blob", { name: "avatar", nullable: true })
   avatar: Buffer | null;
 
-  @ManyToOne(() => Theme, (theme) => theme.userPreferences, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "theme_id", referencedColumnName: "id" }])
-  theme: Theme;
-
   @OneToOne(() => User, (user) => user.userPreference, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @ManyToOne(() => Theme, (theme) => theme.userPreferences, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "theme_id", referencedColumnName: "id" }])
+  theme: Theme;
 }

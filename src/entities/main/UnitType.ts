@@ -7,16 +7,16 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { UnitCategory } from "./UnitCategory";
 import { Material } from "./Material";
-import { Product } from "./Product";
-import { ProductMaterial } from "./ProductMaterial";
-import { MaterialImportQuotation } from "./MaterialImportQuotation";
-import { MaterialImportOrder } from "./MaterialImportOrder";
 import { MaterialBatch } from "./MaterialBatch";
-import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { MaterialImportOrder } from "./MaterialImportOrder";
+import { MaterialImportQuotation } from "./MaterialImportQuotation";
+import { Product } from "./Product";
 import { ProductBatch } from "./ProductBatch";
 import { ProductExportRequest } from "./ProductExportRequest";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductMaterial } from "./ProductMaterial";
+import { UnitCategory } from "./UnitCategory";
 
 @Index("fk_unit_type_unit_category1_idx", ["unitCategoryId"], {})
 @Entity("unit_type", { schema: "business_manager" })
@@ -40,30 +40,11 @@ export class UnitType {
   @Column("int", { name: "default_unit_id" })
   defaultUnitId: number;
 
-  @ManyToOne(() => UnitCategory, (unitCategory) => unitCategory.unitTypes, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "unit_category_id", referencedColumnName: "id" }])
-  unitCategory: UnitCategory;
-
   @OneToMany(() => Material, (material) => material.unitType)
   materials: Material[];
 
-  @OneToMany(() => Product, (product) => product.unitType)
-  products: Product[];
-
-  @OneToMany(
-    () => ProductMaterial,
-    (productMaterial) => productMaterial.unitType
-  )
-  productMaterials: ProductMaterial[];
-
-  @OneToMany(
-    () => MaterialImportQuotation,
-    (materialImportQuotation) => materialImportQuotation.unitType
-  )
-  materialImportQuotations: MaterialImportQuotation[];
+  @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.unitType)
+  materialBatches: MaterialBatch[];
 
   @OneToMany(
     () => MaterialImportOrder,
@@ -71,14 +52,14 @@ export class UnitType {
   )
   materialImportOrders: MaterialImportOrder[];
 
-  @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.unitType)
-  materialBatches: MaterialBatch[];
-
   @OneToMany(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) => productManufacturingOrder.unitType
+    () => MaterialImportQuotation,
+    (materialImportQuotation) => materialImportQuotation.unitType
   )
-  productManufacturingOrders: ProductManufacturingOrder[];
+  materialImportQuotations: MaterialImportQuotation[];
+
+  @OneToMany(() => Product, (product) => product.unitType)
+  products: Product[];
 
   @OneToMany(() => ProductBatch, (productBatch) => productBatch.unitType)
   productBatches: ProductBatch[];
@@ -88,4 +69,23 @@ export class UnitType {
     (productExportRequest) => productExportRequest.unitType
   )
   productExportRequests: ProductExportRequest[];
+
+  @OneToMany(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.unitType
+  )
+  productManufacturingOrders: ProductManufacturingOrder[];
+
+  @OneToMany(
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.unitType
+  )
+  productMaterials: ProductMaterial[];
+
+  @ManyToOne(() => UnitCategory, (unitCategory) => unitCategory.unitTypes, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "unit_category_id", referencedColumnName: "id" }])
+  unitCategory: UnitCategory;
 }
