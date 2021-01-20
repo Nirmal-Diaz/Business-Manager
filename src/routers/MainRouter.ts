@@ -548,6 +548,16 @@ mainRouter.route("/materialImportOrders/:materialImportOrderId")
             });
     });
 
+mainRouter.route("/materialImportOrders/:materialImportOrderCode/quotation")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
+            .then(() => MaterialImportOrderController.getQuotation(req.params.materialImportOrderCode)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //MATERIAL IMPORT INVOICES
 mainRouter.route("/materialImportInvoices")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -813,6 +823,16 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
             });
     });
 
+mainRouter.route("/productExportRequests/:productExportRequestCode/product")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
+            .then(() => ProductExportRequestController.getProduct(req.params.productExportRequestCode)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //PRODUCT EXPORT INVOICES
 mainRouter.route("/productExportInvoices")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -909,6 +929,16 @@ mainRouter.route("/productManufacturingOrders/:productManufacturingOrderId/analy
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
             .then(() => ProductManufacturingOrderController.getMaterialAnalysis(parseInt(req.params.productManufacturingOrderId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/productManufacturingOrders/:productManufacturingOrderCode/product")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
+            .then(() => ProductManufacturingOrderController.getProduct(req.params.productManufacturingOrderCode)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

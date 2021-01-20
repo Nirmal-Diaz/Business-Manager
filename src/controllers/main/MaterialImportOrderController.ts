@@ -45,11 +45,26 @@ export class MaterialImportOrderController {
             where: {
                 id: id
             },
-            relations: ["orderStatus"]
+            relations: ["orderStatus", "quotationCode2"]
         });
 
         if (item) {
             return item;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
+        }
+    }
+
+    static async getQuotation(code: string) {
+        const item = await getRepository(Entity).findOne({
+            where: {
+                code: code
+            },
+            relations: ["quotationCode2"]
+        });
+
+        if (item) {
+            return item.quotationCode2;
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
@@ -80,7 +95,7 @@ export class MaterialImportOrderController {
         }
     }
 
-    static async updateOne(clientBindingObject) {        
+    static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
         });

@@ -4,10 +4,9 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { ProductExportInvoice as Entity } from "../../entities/main/ProductExportInvoice";
 import { ProductExportInvoiceRepository as EntityRepository } from "../../repositories/main/ProductExportInvoiceRepository";
-import { UnitType } from "../../entities/main/UnitType";
-import { ProductExportRequest } from "../../entities/main/ProductExportRequest";
 import { Product } from "../../entities/main/Product";
 import { Customer } from "../../entities/main/Customer";
+import { ProductExportRequest } from "../../entities/main/ProductExportRequest";
 
 export class ProductExportInvoiceController {
     private static entityName: string = "product export invoice";
@@ -23,7 +22,7 @@ export class ProductExportInvoiceController {
         
         const productExportRequest = await getRepository(ProductExportRequest).findOne({
             where: {
-                code: serverObject.requestCode.replace("PER", "PEI")
+                code: serverObject.requestCode
             },
             relations: ["product", "customer"]
         });

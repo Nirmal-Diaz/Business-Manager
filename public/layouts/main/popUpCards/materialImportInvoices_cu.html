@@ -29,12 +29,61 @@
                     //Set the current date as value for "addedDate"
                     this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
 
-                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
+                    this.form.init(bindingObjectURL, submissionURL, submissionMethod).then(() => {
+                        const unitTypeDropDown = this.form.getView().querySelector("#unitTypeId");
+                        const orderCodeInput = this.form.getView().querySelector("#orderCode");
+                        const importedAmountInput = this.form.getView().querySelector("#importedAmount");
+                        const priceInput = this.form.getView().querySelector("#price");
+                        const finalPriceInput = this.form.getView().querySelector("#finalPrice");
+                        const discountPercentageInput = this.form.getView().querySelector("#discountPercentage");
+                        
+                        //Add onchange to the orderCode input for loading the unitPrice and unitType
+                        orderCodeInput.addEventListener("input", (event) => {
+                            if (!orderCodeInput.parentElement.classList.contains("invalid")) {
+                                fetch(`/materialImportOrders/${event.target.value}/quotation`)
+                                .then(response => response.json())
+                                .then(response => {
+                                    if (response.status) {
+                                        //Adjust the unit type
+                                        unitTypeDropDown.value = response.data.unitTypeId;
+
+                                        //Save the unit price in price input
+                                        priceInput.dataset.unitPrice = response.data.unitPrice;
+                                    } else {
+                                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    }
+                                })
+                                .catch(error => {
+                                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required quotation from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                                });
+                            }
+                        });
+
+                        //Add onchange to importedAmountInput for updating price input
+                        importedAmountInput.addEventListener("input", () => {
+                            if (!importedAmountInput.parentElement.classList.contains("invalid")) {
+                                priceInput.value = (parseFloat(priceInput.dataset.unitPrice) * parseFloat(importedAmountInput.value)).toFixed(2);
+                            }
+                        });
+
+                        //Add onchange to discountPercentageInput for updating final price input
+                        discountPercentageInput.addEventListener("input", () => {
+                            if (!priceInput.parentElement.classList.contains("invalid")) {
+                                finalPriceInput.value = (parseFloat(priceInput.value) * (100 - parseFloat(discountPercentageInput.value)) / 100).toFixed(2);
+                            }
+                        });
+                    });
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
+
+                    //Disable every field except description
+                    const formFiledContainers = this.form.getView().querySelectorAll(".formFieldContainer");
+                    for (let i = 0; i < formFiledContainers.length-1; i++) {
+                        formFiledContainers[i].classList.add("disabled");
+                    }
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
@@ -76,7 +125,7 @@
                         <h1 class="titleDescription">Invoice code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="code" type="text" placeholder="eg: MII2020019" value="MII0000000"/>
+                        <input id="code" type="text" placeholder="eg: MII2020019" value="MII0000000" />
                     </div>
                 </div>
 
@@ -85,10 +134,10 @@
                         <h1 class="titleDescription">Import order code</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="orderCode" list="importOrderCodeList" type="text" placeholder="eg: MIO2020019"/>
-                        <datalist id="importOrderCodeList" data-request-url="/states/1/materialImportOrders" data-text-content-field="code"
-                        data-value-field="code">
-    
+                        <input id="orderCode" list="importOrderCodeList" type="text" placeholder="eg: MIO2020019" />
+                        <datalist id="importOrderCodeList" data-request-url="/states/1/materialImportOrders"
+                            data-text-content-field="code" data-value-field="code">
+
                         </datalist>
                     </div>
                 </div>
@@ -98,11 +147,11 @@
                         <h1 class="titleDescription">Imported amount</h1>
                     </div>
                     <div class="inputContainer text">
-                        <input id="availableAmount" type="text" placeholder="eg: 10000.50">
+                        <input id="importedAmount" type="text" placeholder="eg: 10000.50">
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="titleDescription">Unit type</h1>
                     </div>
@@ -124,7 +173,7 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="titleDescription">Price</h1>
                     </div>
@@ -142,7 +191,7 @@
                     </div>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="titleDescription">Final price</h1>
                     </div>
@@ -156,8 +205,8 @@
                         <h1 class="titleDescription">Invoice status</h1>
                     </div>
                     <div class="inputContainer dropDown">
-                        <select id="invoiceStatusId" data-request-url="/tables/invoiceStatus" data-text-content-field="name"
-                            data-value-field="id">
+                        <select id="invoiceStatusId" data-request-url="/tables/invoiceStatus"
+                            data-text-content-field="name" data-value-field="id">
 
                         </select>
                         <button title="Reload values">&olarr;</button>

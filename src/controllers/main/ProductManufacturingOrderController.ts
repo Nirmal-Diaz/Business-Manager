@@ -43,6 +43,21 @@ export class ProductManufacturingOrderController {
         }
     }
 
+    static async getProduct(code: string) {
+        const item = await getRepository(Entity).findOne({
+            where: {
+                code: code
+            },
+            relations: ["product"]
+        });
+
+        if (item) {
+            return item.product;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
+        }
+    }
+
     static async getMaterialAnalysis(id: number) {
         const items = await EntityRepository.getMaterialAnalysis(id);
         

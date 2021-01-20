@@ -58,6 +58,7 @@ export class Material {
     nullable: true,
     precision: 10,
     scale: 2,
+    default: () => "'0.00'",
   })
   viableAmount: string | null;
 

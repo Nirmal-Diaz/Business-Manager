@@ -75,6 +75,21 @@ export class ProductExportRequestController {
         }
     }
 
+    static async getProduct(code: string) {
+        const item = await getRepository(Entity).findOne({
+            where: {
+                code: code
+            },
+            relations: ["product"]
+        });
+
+        if (item) {
+            return item;
+        } else {
+            throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
+        }
+    }
+
     static async updateOne(clientBindingObject) {
         const originalObject = await getRepository(Entity).findOne({
             id: clientBindingObject.id.value
