@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Sales Reports</title>
+
+    <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
+    <link rel="stylesheet" href="/stylesheets/main/platform.css">
+    <link rel="stylesheet" href="/stylesheets/main/card.css" />
+
+    <style>
+        .cardDivisionSector {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cardDivisionSector>canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script src="/utilities/chartjs"></script>
+    <script>
+        window.Chart = Chart;
+        window.latestChart = null;
+    </script>
+    <script type="module">
+        //@ts-check
+        import { PlatformUtil, CardComponent } from "/scripts/main/Utility.js";
+        import { BaseCardInterface } from "/scripts/main/BaseCardInterface.js";
+
+        //Add onload to window for initializing cardInterface
+        window.addEventListener("DOMContentLoaded", () => {
+            window.cardInterface = new CardInterface();
+        });
+
+        class CardInterface extends BaseCardInterface {
+            tableCardDivision = document.getElementById("tableCardDivision");
+            chartCardDivision = document.getElementById("chartCardDivision");
+            canvas = chartCardDivision.querySelector("canvas");
+
+            constructor() {
+                super();
+
+                this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
+                    if (event.key === 'Enter') {
+                        this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[1].children[1].value);
+                    }
+                });
+                this.retrieveControls[1].children[1].addEventListener("keypress", (event) => {
+                    if (event.key === 'Enter') {
+                        this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[1].children[1].value);
+                    }
+                });
+                this.retrieveControls[2].addEventListener("click", (event) => {
+                    if (this.tableCardDivision.style.display === "none") {
+                        this.tableCardDivision.style.display = "block";
+                        this.chartCardDivision.style.display = "none";
+                    } else {
+                        this.tableCardDivision.style.display = "none";
+                        this.chartCardDivision.style.display = "block";
+                    }
+                });
+
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            generateReport(startDate, endDate) {
+                fetch(`/reports/salesReport?startDate=${startDate}&endDate=${endDate}`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status) {
+                            this.generateChart(startDate, endDate, response.data);
+                            this.generateTable(startDate, endDate, response.data);
+                        } else {
+                            window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                        }
+                    })
+                    .catch(error => {
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the sales report from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                    });
+            }
+
+            generateChart(startDate, endDate, reportTable) {
+                window.latestChart?.destroy();
+
+                startDate = new Date(startDate);
+                endDate = new Date(endDate);
+                const monthDiff = PlatformUtil.getDifferenceInMonths(startDate, endDate);
+                const labels2Data = {};
+
+                for (let month = 0; month <= monthDiff; month++) {
+                    labels2Data[`${startDate.getFullYear()}-${startDate.getMonth() + 1}`] = 0;
+                    startDate.setMonth(startDate.getMonth() + 1)
+                }
+
+                for (const row of reportTable) {
+                    labels2Data[`${row.year}-${row.month}`] = parseInt(row.sales_count);
+                }
+
+                const ctx = this.canvas.getContext('2d');
+                window.latestChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(labels2Data),
+                        datasets: [{
+                            label: '# of Sales',
+                            data: Object.values(labels2Data),
+                            backgroundColor: "rgba(100, 100, 100, 1)"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+            generateTable(startDate, endDate, reportTable) {
+                this.selectedCardDivisionSectorItems.length = 0;
+                
+                this.tableCardDivision.innerHTML = "";
+
+                const cardDivisionSector = CardComponent.createCardDivisionSector("Sales Report", `Between ${startDate} and ${endDate}`)
+
+                const table = CardComponent.createTable(["Month", "Sales count", "Expected income", "Actual income", "Debts"]);
+
+                for (const row of reportTable) {
+                    const tableBody = table.querySelector("tbody");
+                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [`${row.year}-${row.month}`, row.sales_count, `Rs. ${row.expected_income}`, `Rs. ${row.actual_income}`, `Rs. ${row.debts}`]);
+                    cardDivisionSectorItem.dataset.bindingObjectId = row.id;
+                    tableBody.appendChild(cardDivisionSectorItem);
+                }
+
+                cardDivisionSector.appendChild(table);
+                this.tableCardDivision.appendChild(cardDivisionSector);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="chartCardDivision" class="cardDivision" style="display: none;">
+        <div class="cardDivisionSector">
+            <canvas></canvas>
+        </div>
+    </div>
+
+    <div id="tableCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <div class="title">Please set start and end dates</div>
+                <div class="titleDescription">Use the controls below to set the date range</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- quickAccessArea -->
+    <div id="quickAccessArea" style="display: none;">
+        <div id="createControlsContainer">
+
+        </div>
+        <div id="retrieveControlsContainer">
+            <button class="buttonGlyph revealed">
+                <img src="/images/main/glyph_search.png" title="Set start date" />
+                <input type="date" value="2021-01-01"
+                    style="height: 100%; width: 80%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <button class="buttonGlyph revealed">
+                <img src="/images/main/glyph_search.png" title="Set end date" />
+                <input type="date" value="2021-10-01"
+                    style="height: 100%; width: 80%; text-align: center; background-color: transparent; border: none;" />
+            </button>
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_refresh.png" title="Switch view" />
+            </button>
+        </div>
+        <div id="updateControlsContainer">
+
+        </div>
+        <div id="deleteControlsContainer">
+
+        </div>
+    </div>
+</body>
+
+</html>

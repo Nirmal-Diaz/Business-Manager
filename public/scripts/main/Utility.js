@@ -17,6 +17,10 @@ export class PlatformUtil {
     static capitalizedToPascal(capitalizedSentence) {
         return capitalizedSentence[0].toLowerCase() + capitalizedSentence.replace(/\s/g, "").slice(1);
     }
+
+    static getDifferenceInMonths(startDate, endDate) {
+        return endDate.getMonth() - startDate.getMonth() + (12 * (endDate.getFullYear() - startDate.getFullYear()))
+    }
 }
 
 export class ShellComponent {

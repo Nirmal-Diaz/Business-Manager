@@ -32,6 +32,7 @@ import { InboundPaymentController } from "../controllers/main/InboundPaymentCont
 import { ProductManufacturingInvoiceController } from "../controllers/main/ProductManufacturingInvoiceController";
 import { ProductManufacturingOrderController } from "../controllers/main/ProductManufacturingOrderController";
 import { ProductExportInvoiceController } from "../controllers/main/ProductExportInvoiceController";
+import { ReportsController } from "../controllers/main/ReportsController";
 
 export const mainRouter = express.Router();
 /*
@@ -86,6 +87,11 @@ mainRouter: Route Handlers Setup
 mainRouter.route("/")
     .all((req, res) => {
         res.sendFile(path.resolve(__dirname + "/../../public/layouts/main/index.html"));
+    });
+
+mainRouter.route("/utilities/chartjs")
+    .all((req, res) => {
+        res.sendFile(path.resolve(__dirname + "/../../node_modules/chart.js/dist/Chart.js"));
     });
 
 mainRouter.route("/sessions")
@@ -1182,6 +1188,17 @@ mainRouter.route("/states/:statusId/productManufacturingInvoices")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
             .then(() => ProductManufacturingInvoiceController.getManyByStatus(parseInt(req.params.statusId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//REPORTS
+mainRouter.route("/reports/salesReport")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "sales reports", req.method)
+            .then(() => ReportsController.getSalesReportBetween(req.query.startDate, req.query.endDate)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
