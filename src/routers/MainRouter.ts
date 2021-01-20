@@ -372,16 +372,6 @@ mainRouter.route("/materials/@all/suppliers")
             });
     });
 
-// mainRouter.route("/derivedMaterials/:materialId")
-//     .get((req, res, next) => {
-//         PermissionController.checkPermission(req.session.userId, "materials", req.method)
-//             .then(() => MaterialController.getDerivedOne(parseInt(req.params.materialId))).then(data => {
-//                 res.locals.data = data; next();
-//             }).catch(error => {
-//                 res.locals.error = error; next();
-//             });
-//     })
-
 //MATERIAL BATCHES
 mainRouter.route("/materialBatches")
     .get((req, res, next) => {
@@ -512,8 +502,6 @@ mainRouter.route("/materialImportQuotations/:materialImportQuotationId")
             });
     });
 
-
-
 //MATERIAL IMPORT ORDERS
 mainRouter.route("/materialImportOrders")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -611,6 +599,52 @@ mainRouter.route("/materialImports/:numericCode")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material imports", req.method)
             .then(() => MaterialImportController.getSummary(req.params.numericCode)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+//OUTBOUND PAYMENTS
+mainRouter.route("/outboundPayments")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/outboundPayments/:outboundPaymentId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.getOne(parseInt(req.params.outboundPaymentId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
+            .then(() => OutboundPaymentController.deleteOne(parseInt(req.params.outboundPaymentId)))
+            .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -779,6 +813,52 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
             });
     });
 
+//PRODUCT EXPORT INVOICES
+mainRouter.route("/productExportInvoices")
+    .put(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
+            .then(() => ProductExportInvoiceController.createOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
+            .then(() => ProductExportInvoiceController.getMany(req.query.keyword)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
+mainRouter.route("/productExportInvoices/:productExportInvoiceId")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
+            .then(() => ProductExportInvoiceController.getOne(parseInt(req.params.productExportInvoiceId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .post(express.json({ limit: "500kB" }), (req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
+            .then(() => ProductExportInvoiceController.updateOne(req.body.bindingObject)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    })
+    .delete((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
+            .then(() => ProductExportInvoiceController.deleteOne(parseInt(req.params.productExportInvoiceId)))
+            .then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //PRODUCT MANUFACTURING ORDERS
 mainRouter.route("/productManufacturingOrders")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
@@ -874,98 +954,6 @@ mainRouter.route("/productManufacturingInvoices/:productManufacturingInvoiceId")
     .delete((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
             .then(() => ProductManufacturingInvoiceController.deleteOne(parseInt(req.params.productManufacturingInvoiceId)))
-            .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-//MATERIAL IMPORT INVOICES
-mainRouter.route("/productExportInvoices")
-    .put(express.json({ limit: "500kB" }), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.createOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.getMany(req.query.keyword)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/productExportInvoices/:productExportInvoiceId")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.getOne(parseInt(req.params.productExportInvoiceId))).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .post(express.json({ limit: "500kB" }), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.updateOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.deleteOne(parseInt(req.params.productExportInvoiceId)))
-            .then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-//OUTBOUND PAYMENTS
-mainRouter.route("/outboundPayments")
-    .put(express.json({ limit: "500kB" }), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.createOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.getMany(req.query.keyword)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    });
-
-mainRouter.route("/outboundPayments/:outboundPaymentId")
-    .get((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.getOne(parseInt(req.params.outboundPaymentId))).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .post(express.json({ limit: "500kB" }), (req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.updateOne(req.body.bindingObject)).then(data => {
-                res.locals.data = data; next();
-            }).catch(error => {
-                res.locals.error = error; next();
-            });
-    })
-    .delete((req, res, next) => {
-        PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.deleteOne(parseInt(req.params.outboundPaymentId)))
             .then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
