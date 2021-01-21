@@ -21,6 +21,16 @@ export class PlatformUtil {
     static getDifferenceInMonths(startDate, endDate) {
         return endDate.getMonth() - startDate.getMonth() + (12 * (endDate.getFullYear() - startDate.getFullYear()))
     }
+
+    static getDifferenceInWeeks(startDate, endDate) {
+        return Math.abs(Math.round(((endDate.getTime() - startDate.getTime()) / 1000) / (60 * 60 * 24 * 7)));
+    }
+
+    static getWeek(date) {
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    }
 }
 
 export class ShellComponent {
@@ -286,7 +296,7 @@ export class FormUtil {
             input.dataset.stringifiedBlob = value;
             input.dataset.size = formField.size;
             input.dataset.type = formField.type;
-            
+
             //NOTE: There is a sibling img tag to preview images
             const imageBlob = new Blob([new Uint8Array(JSON.parse(value))]);
             input.previousElementSibling.src = URL.createObjectURL(imageBlob);
@@ -320,7 +330,7 @@ export class FormUtil {
             formView.querySelector(formField.inputQuery).value = "1";
         } else if (formField.inputClass === "image") {
             const imageInput = formView.querySelector(formField.inputQuery);
-            
+
             imageInput.value = "";
             imageInput.dataset.stringifiedBlob = "";
             imageInput.dataset.size = "0";

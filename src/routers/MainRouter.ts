@@ -1198,7 +1198,7 @@ mainRouter.route("/states/:statusId/productManufacturingInvoices")
 mainRouter.route("/reports/salesReport")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "sales reports", req.method)
-            .then(() => ReportsController.getSalesReportBetween(req.query.startDate, req.query.endDate)).then(data => {
+            .then(() => ReportsController.getSalesReportBetween(req.query.startDate, req.query.endDate, req.query.groupBy)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
