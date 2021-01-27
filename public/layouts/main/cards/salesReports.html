@@ -19,6 +19,15 @@
             width: 100%;
             height: 100%;
         }
+
+        .buttonGlyph {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buttonGlyph.revealed {
+            width: 20vh;
+        }
     </style>
 
     <script src="/utilities/chartjs"></script>
@@ -41,18 +50,23 @@
             chartCardDivision = document.getElementById("chartCardDivision");
             canvas = chartCardDivision.querySelector("canvas");
 
+            groupByValues = ["Year", "Month", "Week"];
+            groupByIndex = 0;
+
             constructor() {
                 super();
 
-                this.retrieveControls[0].children[1].addEventListener("keypress", (event) => {
+                this.retrieveControls[0].children[1].addEventListener("input", (event) => {
+                    this.retrieveControls[0].children[3].min =  this.retrieveControls[0].children[1].value;
+                });
+                this.retrieveControls[0].children[3].addEventListener("keypress", (event) => {
                     if (event.key === 'Enter') {
-                        this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[1].children[1].value, "Week");
+                        this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[0].children[3].value, this.groupByValues[this.groupByIndex]);
                     }
                 });
-                this.retrieveControls[1].children[1].addEventListener("keypress", (event) => {
-                    if (event.key === 'Enter') {
-                        this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[1].children[1].value, "Week");
-                    }
+                this.retrieveControls[1].addEventListener("click", (event) => {
+                    this.groupByIndex = (this.groupByIndex + 1)%3;
+                    this.generateReport(this.retrieveControls[0].children[1].value, this.retrieveControls[0].children[3].value, this.groupByValues[this.groupByIndex]);
                 });
                 this.retrieveControls[2].addEventListener("click", (event) => {
                     if (this.tableCardDivision.style.display === "none") {
@@ -160,7 +174,7 @@
 
                 for (const row of reportTable) {
                     const tableBody = table.querySelector("tbody");
-                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [`${groupBy === "Year" ? row.year : row.year + "-" + row.group_number}`, row.sales_count, `Rs. ${row.expected_income}`, `Rs. ${row.actual_income}`, `Rs. ${row.debts}`]);
+                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [`${groupBy === "Year" ? row.year : row.year + "-" + row.group_number}`, row.sales_count, `Rs. ${row.expected_income ? row.expected_income : 0}`, `Rs. ${row.actual_income ? row.actual_income : 0}`, `Rs. ${row.debts ? row.debts : 0}`]);
                     cardDivisionSectorItem.dataset.bindingObjectId = row.id;
                     tableBody.appendChild(cardDivisionSectorItem);
                 }
@@ -195,14 +209,15 @@
         </div>
         <div id="retrieveControlsContainer">
             <button class="buttonGlyph revealed">
-                <img src="/images/main/glyph_search.png" title="Set start date" />
+                <b>FROM</b>
                 <input type="date" value="2021-01-01"
-                    style="height: 100%; width: 80%; text-align: center; background-color: transparent; border: none;" />
+                    style="height: 100%; text-align: center; background-color: transparent; border: none;" />
+                <b>TO</b>
+                <input type="date" value="2021-10-01" min="2021-01-01"
+                    style="height: 100%; text-align: center; background-color: transparent; border: none;" />
             </button>
-            <button class="buttonGlyph revealed">
-                <img src="/images/main/glyph_search.png" title="Set end date" />
-                <input type="date" value="2021-10-01"
-                    style="height: 100%; width: 80%; text-align: center; background-color: transparent; border: none;" />
+            <button class="buttonGlyph">
+                <img src="/images/main/glyph_cycleGroup.png" title="Cycle annual, monthly, or weekly views" />
             </button>
             <button class="buttonGlyph">
                 <img src="/images/main/glyph_refresh.png" title="Switch view" />
