@@ -164,7 +164,7 @@
 
                 for (const row of reportTable) {
                     const tableBody = table.querySelector("tbody");
-                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [row.group_id, `Rs. ${row.income ? row.income : 0}`, `Rs. ${row.expenditure ? row.expenditure : 0}`, `Rs. ${row.revenue ? row.revenue : 0}`]);
+                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [row.group_id, `Rs. ${row.income}`, `Rs. ${row.expenditure}`, `Rs. ${row.revenue}`]);
                     cardDivisionSectorItem.dataset.bindingObjectId = row.id;
                     tableBody.appendChild(cardDivisionSectorItem);
                 }
