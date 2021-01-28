@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Revenue Reports</title>
+    <title>Product Demand Reports</title>
 
     <link rel="stylesheet" href="/stylesheets/main/platform_variables_turquoise.css" />
     <link rel="stylesheet" href="/stylesheets/main/platform.css">
@@ -79,7 +79,7 @@
             }
 
             generateReport(startDate, endDate, groupBy) {
-                fetch(`/reports/revenueReport?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`)
+                fetch(`/reports/productDemandReport?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
@@ -90,7 +90,7 @@
                         }
                     })
                     .catch(error => {
-                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the revenue report from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the product demand report from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
                     });
             }
 
@@ -99,8 +99,9 @@
 
                 startDate = new Date(startDate);
                 endDate = new Date(endDate);
-                const labels2Data = {};
 
+                //Create a samples labels2Data
+                const labels2Data = {};
                 if (groupBy === "Year") {
                     for (let year = startDate.getFullYear(); year <= endDate.getFullYear(); year++) {
                         labels2Data[year] = 0;
@@ -120,28 +121,37 @@
                         }
                     }
                 }
+                const stringifiedLabels2Data = JSON.stringify(labels2Data);
+
+                const labels2DataByProduct = {};
                 for (const row of reportTable) {
-                    labels2Data[row.group_id] = parseInt(row.revenue);
+                    if (!labels2DataByProduct.hasOwnProperty(row.product_id)) {
+                        labels2DataByProduct[row.product_id] = {
+                            productName: row.product_name,
+                            productCode: row.product_code,
+                            groups: JSON.parse(stringifiedLabels2Data)
+                        };
+                    }
+
+                    labels2DataByProduct[row.product_id].groups[row.group_id] = parseInt(row.sales_count);
                 }
 
                 const ctx = this.canvas.getContext('2d');
                 window.latestChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: "line",
                     data: {
                         labels: Object.keys(labels2Data),
-                        datasets: [{
-                            label: 'Revenue (Rupees)',
-                            data: Object.values(labels2Data),
-                            backgroundColor: "rgba(100, 100, 200, 1)"
-                        }]
+                        datasets: Object.values(labels2DataByProduct).map(productData => {
+                            return {
+                                label: productData.productCode,
+                                data: Object.values(productData.groups),
+                                borderColor: PlatformUtil.getRandColor(100, 150),
+                                backgroundColor: "rgba(0,0,0,0)"
+                            }
+                        })
                     },
                     options: {
                         scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
                             xAxes: [{
                                 scaleLabel: {
                                     display: true,
@@ -158,13 +168,13 @@
 
                 this.tableCardDivision.innerHTML = "";
 
-                const cardDivisionSector = CardComponent.createCardDivisionSector("Revenue Report", `Between ${startDate} and ${endDate}`)
+                const cardDivisionSector = CardComponent.createCardDivisionSector("Demand Report", `Between ${startDate} and ${endDate}`)
 
-                const table = CardComponent.createTable([groupBy, "Income", "Expenditure", "Revenue"]);
+                const table = CardComponent.createTable([groupBy, "Product code", "Product name", "No of sales"]);
 
                 for (const row of reportTable) {
                     const tableBody = table.querySelector("tbody");
-                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [row.group_id, `Rs. ${row.income}`, `Rs. ${row.expenditure}`, `Rs. ${row.revenue}`]);
+                    const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [row.group_id, row.product_code, row.product_name, row.sales_count]);
                     cardDivisionSectorItem.dataset.bindingObjectId = row.id;
                     tableBody.appendChild(cardDivisionSectorItem);
                 }

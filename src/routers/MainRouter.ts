@@ -1215,6 +1215,16 @@ mainRouter.route("/reports/revenueReport")
             });
     });
 
+mainRouter.route("/reports/productDemandReport")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product demand reports", req.method)
+            .then(() => ReportsController.getProductDemandReportBetween(req.query.startDate, req.query.endDate, req.query.groupBy)).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 //USERS
 mainRouter.route("/users")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {

@@ -13,6 +13,14 @@ export class PlatformUtil {
         //Output time
         return (hours + " : " + minutes);
     }
+    
+    static getRandInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    static getRandColor(min, max) {
+        return `rgb(${PlatformUtil.getRandInt(min, max)}, ${PlatformUtil.getRandInt(min, max)}, ${PlatformUtil.getRandInt(min, max)})`;
+    }
 
     static capitalizedToPascal(capitalizedSentence) {
         return capitalizedSentence[0].toLowerCase() + capitalizedSentence.replace(/\s/g, "").slice(1);

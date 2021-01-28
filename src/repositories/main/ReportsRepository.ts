@@ -97,4 +97,32 @@ export class ReportsRepository {
             ON income_table.group_id = expenditure_table.group_id) income_expenditure_table
         `);
     }
+
+    static getProductDemandReportByYear(startDate: string, endDate: string) {
+        return getRepository(ProductExportInvoice)
+        .query(`
+            SELECT per.product_id, YEAR(pei.added_date) group_id, p.name product_name, p.code product_code, COUNT(pei.id) sales_count
+            FROM product_export_invoice pei
+            LEFT JOIN product_export_request per
+            ON pei.request_code = per.code
+            LEFT JOIN product p
+            ON per.product_id = p.id
+            WHERE pei.added_date BETWEEN "${startDate}" AND "${endDate}"
+            GROUP BY per.product_id
+        `);
+    }
+
+    static getProductDemandReportByMonthOrWeek(startDate: string, endDate: string, groupBy: string) {
+        return getRepository(ProductExportInvoice)
+        .query(`
+            SELECT per.product_id, CONCAT(YEAR(pei.added_date), "-", ${groupBy}(pei.added_date)) group_id, p.name product_name, p.code product_code, COUNT(pei.id) sales_count
+            FROM product_export_invoice pei
+            LEFT JOIN product_export_request per
+            ON pei.request_code = per.code
+            LEFT JOIN product p
+            ON per.product_id = p.id
+            WHERE pei.added_date BETWEEN "${startDate}" AND "${endDate}"
+            GROUP BY per.product_id, group_id
+        `);
+    }
 }
