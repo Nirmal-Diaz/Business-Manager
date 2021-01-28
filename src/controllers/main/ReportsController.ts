@@ -8,4 +8,13 @@ export class ReportsController {
             case "Week": return ReportsRepository.getSalesReportByMonthOrWeek(startDate, endDate, "WEEK");
         }
     }
+
+    static async getRevenueReportBetween(startDate: string, endDate: string, groupBy: string) {
+        switch (groupBy) {
+            case "Year": return ReportsRepository.getRevenueReportByYear(startDate, endDate);
+            case "Month": return ReportsRepository.getRevenueReportByMonthOrWeek(startDate, endDate, "MONTH");
+            case "Week": return ReportsRepository.getRevenueReportByMonthOrWeek(startDate, endDate, "WEEK");
+        }
+    }
+
 }
