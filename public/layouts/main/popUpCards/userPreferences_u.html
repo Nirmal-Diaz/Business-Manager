@@ -25,9 +25,6 @@
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
                 if (submissionMethod === "PUT") {
-                    //Set the current date as value for "addedDate"
-                    this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
-
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
@@ -112,6 +109,7 @@
         <div class="formControlsContainer">
             <button id="saveButton" class="buttonText link">SAVE</button>
             <button id="resetButton" class="buttonText link">RESET</button>
+            <button id="printButton" class="buttonText link" style="display: none;">PRINT</button>
             <button class="buttonText link closeButton">CLOSE</button>
         </div>
     </div>

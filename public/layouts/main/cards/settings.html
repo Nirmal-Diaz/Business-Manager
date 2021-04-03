@@ -30,11 +30,12 @@
             constructor() {
                 super();
 
-                this.updateControls[0].addEventListener("click", () => {
+                const buttons = document.querySelectorAll("button");
+                buttons[0].addEventListener("click", () => {
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/pattern_u.html");
                 });
 
-                this.updateControls[1].addEventListener("click", () => {
+                buttons[1].addEventListener("click", () => {
                     //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/userPreferences_u.html");
                 });
@@ -45,6 +46,20 @@
 
 <body>
     <div id="mainCardDivision" class="cardDivision">
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Change Pattern Password</h1>
+                <div class="titleDescription">If you think your pattern is insecure or compromised, click on the following button to change it to a more secure one.</div>
+                <button class="buttonText">CHANGE</button>
+            </div>
+        </div>
+        <div class="cardDivisionSector">
+            <div class="titleContainer">
+                <h1 class="title">Update User Preferences</h1>
+                <div class="titleDescription">Your theme, display name and the avatar can be changed by clicking on the following button</div>
+                <button class="buttonText">UPDATE</button>
+            </div>
+        </div>
     </div>
 
     <!-- quickAccessArea -->
@@ -56,13 +71,7 @@
 
         </div>
         <div id="updateControlsContainer">
-            <button class="buttonGlyph">
-                <span>PW</span>
-            </button>
 
-            <button class="buttonGlyph">
-                <span>PR</span>
-            </button>
         </div>
         <div id="deleteControlsContainer">
 
