@@ -108,7 +108,7 @@ export class ReportsRepository {
             LEFT JOIN product p
             ON per.product_id = p.id
             WHERE pei.added_date BETWEEN "${startDate}" AND "${endDate}"
-            GROUP BY per.product_id
+            GROUP BY per.product_id, group_id
         `);
     }
 
