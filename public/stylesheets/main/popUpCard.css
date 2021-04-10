@@ -52,6 +52,8 @@ form {
     min-width: 100%;
 
     border-collapse: collapse;
+
+    margin-bottom: 20px;
 }
 
 .formFieldContainer>table tr {
@@ -64,7 +66,7 @@ form {
 
 .formFieldContainer>table th,
 .formFieldContainer>table td {
-    padding: 20px 10px 20px 10px;
+    padding: 20px 0 20px 0;
 
     text-align: left;
 }
