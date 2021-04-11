@@ -30,7 +30,7 @@
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
-                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+                    document.querySelector(".formTitleContainer .title").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
@@ -44,7 +44,7 @@
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -72,7 +72,7 @@
             <form>
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Photo</h1>
+                        <h1 class="title">Photo</h1>
                         <h1 class="titleDescription">Click to change</h1>
                     </div>
                     <ul>
@@ -86,7 +86,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Customer code</h1>
+                        <h1 class="title">Customer code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="code" type="text" placeholder="eg: CUS2020019" value="CUS0000000" />
@@ -95,7 +95,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Owner's name</h1>
+                        <h1 class="title">Owner's name</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="personName" type="text" placeholder="eg: John Adam Doe">
@@ -104,7 +104,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Owner's mobile number</h1>
+                        <h1 class="title">Owner's mobile number</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="personMobile" type="text" placeholder="eg: 0711234567">
@@ -113,7 +113,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Owner's NIC number</h1>
+                        <h1 class="title">Owner's NIC number</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="nicNumber" type="text" placeholder="eg: 952000662V">
@@ -122,7 +122,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Business's name</h1>
+                        <h1 class="title">Business's name</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="businessName" type="text" placeholder="eg: Abstergo Industries Inc.">
@@ -131,7 +131,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Landline number</h1>
+                        <h1 class="title">Landline number</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="businessLand" type="text" placeholder="eg: 0331234567">
@@ -140,7 +140,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Registration number</h1>
+                        <h1 class="title">Registration number</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="regNumber" type="text" placeholder="eg: TC-1815">
@@ -149,7 +149,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">E-mail</h1>
+                        <h1 class="title">E-mail</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="email" type="text" placeholder="eg: john@abstergo.com">
@@ -158,7 +158,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Address</h1>
+                        <h1 class="title">Address</h1>
                     </div>
                     <div class="inputContainer textarea">
                         <textarea id="address" placeholder="eg: Broadway New York, NY 10012"></textarea>
@@ -167,7 +167,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Arrears</h1>
+                        <h1 class="title">Arrears</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="arrears" type="text" placeholder="eg: 1234.59">
@@ -176,7 +176,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Customer status</h1>
+                        <h1 class="title">Customer status</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="customerStatusId" data-request-url="/tables/customerStatus"
@@ -189,7 +189,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Description</h1>
+                        <h1 class="title">Description</h1>
                     </div>
                     <div class="inputContainer textarea">
                         <textarea id="description"></textarea>
@@ -198,7 +198,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Date added</h1>
+                        <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="addedDate" type="date" placeholder="eg: 2020-01-01">

@@ -33,7 +33,7 @@
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
-                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+                    document.querySelector(".formTitleContainer .title").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
@@ -47,7 +47,7 @@
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -75,7 +75,7 @@
             <form>
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Username</h1>
+                        <h1 class="title">Username</h1>
                     </div>
                     <ul>
                         <li>Must be unique among existing users</li>
@@ -87,7 +87,7 @@
                 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Employee code</h1>
+                        <h1 class="title">Employee code</h1>
                     </div>
                     <ul>
                         <li>Every user has a corresponding employee</li>
@@ -103,7 +103,7 @@
                 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Role</h1>
+                        <h1 class="title">Role</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="roleId"  data-request-url="/roles?keyword=" data-text-content-field="name"
@@ -116,7 +116,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Date added</h1>
+                        <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="addedDate" type="text" placeholder="eg: 2020-01-01">

@@ -42,6 +42,10 @@ form {
     width: 100%;
 }
 
+.formFieldContainer>.titleContainer>.title {
+    font-size: 16px;
+}
+
 .formFieldContainer.disabled input, .formFieldContainer.disabled select, .formFieldContainer.disabled textarea, .formFieldContainer.disabled button {
     pointer-events: none;
 
@@ -143,10 +147,6 @@ form {
 
         border: thin solid black;
         border-width: 0 0 thin 0;
-    }
-
-    .formFieldContainer>.titleContainer>.title {
-        font-size: 16px;
     }
 
     .inputContainer {

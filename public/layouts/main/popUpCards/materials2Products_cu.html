@@ -52,7 +52,7 @@
                         if (submission.status) {
                             this.popUpCardObject.close();
                         } else {
-                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.titleDescription, submission.error.message, null, "OK", null);
+                            window.parent.shellInterface.throwAlert(submission.error.title, submission.error.title, submission.error.message, null, "OK", null);
                         }
                     });
                 });
@@ -150,7 +150,7 @@
                                 const onChangeEvent = new Event("change");
                                 this.productDropDown.dispatchEvent(onChangeEvent);
                             } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                             }
                         })
                         .catch(error => {
@@ -177,7 +177,7 @@
             <form style="overflow: visible;">
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Product</h1>
+                        <h1 class="title">Product</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="productId" data-request-url="/products?keyword=" data-text-content-field="name"
@@ -190,7 +190,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Material, amount and price factor</h1>
+                        <h1 class="title">Material, amount and price factor</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="materialId" data-request-url="/materials?keyword=" data-text-content-field="name"
@@ -229,7 +229,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Entries</h1>
+                        <h1 class="title">Entries</h1>
                     </div>
                     <table>
                         <thead>

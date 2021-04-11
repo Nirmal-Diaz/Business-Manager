@@ -45,7 +45,7 @@
                             if (response.status) {
                                 this.popUpCardObject.close();
                             } else {
-                                window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                             }
                         });
                 });
@@ -99,7 +99,7 @@
                                     this.form.referenceBindingObject = response.data;
                                     this.form.bindingObject = response.data;
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -135,7 +135,7 @@
 
                                     this.selectedMaterialId = parseInt(this.form.getView().querySelector("#materialId").value);
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -167,7 +167,7 @@
             <form>
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Material</h1>
+                        <h1 class="title">Material</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="materialId" data-request-url="/materials?keyword=" data-text-content-field="name"
@@ -180,7 +180,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Suppliers</h1>
+                        <h1 class="title">Suppliers</h1>
                     </div>
                     <div class="inputGroup">
 

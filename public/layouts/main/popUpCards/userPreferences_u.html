@@ -27,7 +27,7 @@
                 if (submissionMethod === "PUT") {
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
-                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+                    document.querySelector(".formTitleContainer .title").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
@@ -41,7 +41,7 @@
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -69,7 +69,7 @@
             <form>
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Avatar</h1>
+                        <h1 class="title">Avatar</h1>
                         <h1 class="titleDescription">Click to change</h1>
                     </div>
                     <ul>
@@ -83,7 +83,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Preferred name</h1>
+                        <h1 class="title">Preferred name</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="preferredName" type="text" placeholder="eg: John" />
@@ -92,7 +92,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Theme</h1>
+                        <h1 class="title">Theme</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="themeId"  data-request-url="/tables/theme" data-text-content-field="name"

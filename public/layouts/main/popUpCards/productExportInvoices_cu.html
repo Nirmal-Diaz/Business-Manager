@@ -47,7 +47,7 @@
                                         //Update price input
                                         priceInput.value = (parseFloat(response.data.product.unitPrice) * parseFloat(response.data.requestedAmount)).toFixed(2);
                                     } else {
-                                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                        window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                     }
                                 })
                                 .catch(error => {
@@ -64,7 +64,7 @@
                         });
                     });
                 } else if (submissionMethod === "POST") {
-                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+                    document.querySelector(".formTitleContainer .title").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
@@ -84,7 +84,7 @@
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
@@ -112,7 +112,7 @@
             <form>
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Invoice code</h1>
+                        <h1 class="title">Invoice code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="code" type="text" placeholder="eg: PEI2020019" value="PEI0000000"/>
@@ -121,7 +121,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Export request code</h1>
+                        <h1 class="title">Export request code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="requestCode" list="exportRequestCodeList" type="text" placeholder="eg: PER2020019"/>
@@ -134,7 +134,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Price</h1>
+                        <h1 class="title">Price</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
                         <input id="price" type="text" placeholder="eg: 10000.00">
@@ -143,7 +143,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Discount percentage</h1>
+                        <h1 class="title">Discount percentage</h1>
                     </div>
                     <div class="inputContainer text suffixed percentage">
                         <input id="discountPercentage" type="text" placeholder="eg: 10">
@@ -152,7 +152,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Final price</h1>
+                        <h1 class="title">Final price</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
                         <input id="finalPrice" type="text" placeholder="eg: 9000.00">
@@ -161,7 +161,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Invoice status</h1>
+                        <h1 class="title">Invoice status</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="invoiceStatusId" data-request-url="/tables/invoiceStatus" data-text-content-field="name"
@@ -174,7 +174,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Date added</h1>
+                        <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="addedDate" type="date" placeholder="eg: 2020-01-01">
@@ -183,7 +183,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Description</h1>
+                        <h1 class="title">Description</h1>
                     </div>
                     <div class="inputContainer textarea">
                         <textarea id="description"></textarea>
