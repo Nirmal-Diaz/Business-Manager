@@ -3,11 +3,11 @@
 }
 
 .inputContainer.text.prefixed>input {
-    padding-left: 12%;
+    padding-left: 45px;
 }
 
 .inputContainer.text.suffixed>input {
-    padding-right: 10%;
+    padding-right: 45px;
 }
 
 .inputContainer.text.prefixed::before {
@@ -15,7 +15,7 @@
     
     position: absolute;
     top: 21px;
-    left: 5%;
+    left: 20px;
 }
 
 .inputContainer.text.suffixed::after {
@@ -23,7 +23,7 @@
     
     position: absolute;
     top: 21px;
-    right: 5%;
+    right: 20px;
 }
 
 .inputContainer.text.price::before {
