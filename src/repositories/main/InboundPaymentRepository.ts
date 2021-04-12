@@ -7,6 +7,7 @@ export class InboundPaymentRepository {
         return getRepository(InboundPayment)
         .createQueryBuilder("ip")
         .where("ip.code LIKE :keyword", { keyword: `%${keyword}%` })
+        .orWhere("ip.invoiceCode LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
     }
 
