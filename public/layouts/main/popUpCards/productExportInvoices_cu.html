@@ -69,9 +69,9 @@
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
 
-                    //Disable every field except description
+                    //Disable every field except table and description
                     const formFiledContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (let i = 0; i < formFiledContainers.length-1; i++) {
+                    for (let i = 3; i < formFiledContainers.length-1; i++) {
                         formFiledContainers[i].classList.add("disabled");
                     }
 
@@ -89,6 +89,55 @@
                             })
                             .catch(error => {
                                 window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            })
+                            .then(() => {
+                                fetch(`/inboundPayments?keyword=${this.form.getBindingObject().code.value}`)
+                                    .then(response => response.json())
+                                    .then(response => {
+                                        let payedPrice = 0;
+
+                                        if (response.status) {
+                                            //Show payment history
+                                            formFiledContainers[0].style.display = "block";
+                                            formFiledContainers[1].style.display = "block";
+                                            formFiledContainers[2].style.display = "block";
+
+                                            const tbody = formFiledContainers[2].querySelector("tbody");
+                                            for (const payment of response.data) {
+                                                payedPrice += parseFloat(payment.price);
+                                                const tr = document.createElement("tr");
+
+                                                const td1 = document.createElement("td");
+                                                td1.textContent = payment.code;
+                                                tr.appendChild(td1);
+
+                                                const td2 = document.createElement("td");
+                                                td2.textContent = `Rs. ${payment.price}`;
+                                                tr.appendChild(td2);
+
+                                                const td3 = document.createElement("td");
+                                                td3.textContent = payment.addedDate;
+                                                tr.appendChild(td3);
+
+                                                tbody.appendChild(tr);
+                                            }
+
+                                            //Add onclick to addPaymentButton for opening the popUpCard
+                                            formFiledContainers[2].querySelector("#addPaymentButton").addEventListener("click", (event) => {
+                                                event.preventDefault();
+                                                //Add onload to iframe for initializing create form
+                                                const popUpCard = this.popUpCardObject.parentCardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/inboundPayments_cu.html");
+                                                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                                                    popUpCard.popUpCardInterface.extendInitForm("/registries/inboundPayment.json", "inboundPayments", "PUT");
+                                                });
+                                            });
+                                        }
+
+                                        const toBePayedPrice = (parseFloat(this.form.getBindingObject().finalPrice.value) - payedPrice);
+
+                                        this.form.getView().querySelector("#paidPrice").value = payedPrice.toFixed(2);
+                                        this.form.getView().querySelector("#toBePaidPrice").value = toBePayedPrice.toFixed(2);
+                                    })
                             });
                     });
                 }
@@ -110,6 +159,40 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
+                <div class="formFieldContainer disabled" style="display: none;">
+                    <div class="titleContainer">
+                        <h1 class="title">Currently paid</h1>
+                    </div>
+                    <div class="inputContainer text prefixed price">
+                        <input id="paidPrice" type="text" placeholder="eg: 10000.00">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled" style="display: none;">
+                    <div class="titleContainer">
+                        <h1 class="title">Debt</h1>
+                    </div>
+                    <div class="inputContainer text prefixed price">
+                        <input id="toBePaidPrice" type="text" placeholder="eg: 10000.00">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer wide" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Payment code</th>
+                                <th>Price</th>
+                                <th>Added date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <button id="addPaymentButton" class="buttonText">ADD PAYMENT</button>
+                </div>
+
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="title">Invoice code</h1>

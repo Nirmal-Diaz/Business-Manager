@@ -36,26 +36,26 @@
                         const priceInput = this.form.getView().querySelector("#price");
                         const finalPriceInput = this.form.getView().querySelector("#finalPrice");
                         const discountPercentageInput = this.form.getView().querySelector("#discountPercentage");
-                        
+
                         //Add onchange to the orderCode input for loading the unitPrice and unitType
                         orderCodeInput.addEventListener("input", (event) => {
                             if (!orderCodeInput.parentElement.classList.contains("invalid")) {
                                 fetch(`/materialImportOrders/${event.target.value}/quotation`)
-                                .then(response => response.json())
-                                .then(response => {
-                                    if (response.status) {
-                                        //Adjust the unit type
-                                        unitTypeDropDown.value = response.data.unitTypeId;
+                                    .then(response => response.json())
+                                    .then(response => {
+                                        if (response.status) {
+                                            //Adjust the unit type
+                                            unitTypeDropDown.value = response.data.unitTypeId;
 
-                                        //Save the unit price in price input
-                                        priceInput.dataset.unitPrice = response.data.unitPrice;
-                                    } else {
-                                        window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
-                                    }
-                                })
-                                .catch(error => {
-                                    window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required quotation from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
-                                });
+                                            //Save the unit price in price input
+                                            priceInput.dataset.unitPrice = response.data.unitPrice;
+                                        } else {
+                                            window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required quotation from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                                    });
                             }
                         });
 
@@ -74,14 +74,14 @@
                         });
                     });
                 } else if (submissionMethod === "POST") {
-                    document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
+                    document.querySelector(".formTitleContainer .title").textContent = "Update";
 
                     //Remove the reset button
                     document.getElementById("resetButton").style.display = "none";
 
-                    //Disable every field except description
+                    //Disable every field except table and description
                     const formFiledContainers = this.form.getView().querySelectorAll(".formFieldContainer");
-                    for (let i = 0; i < formFiledContainers.length-1; i++) {
+                    for (let i = 3; i < formFiledContainers.length - 1; i++) {
                         formFiledContainers[i].classList.add("disabled");
                     }
 
@@ -94,11 +94,60 @@
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
                                 } else {
-                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
+                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             })
                             .catch(error => {
                                 window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
+                            })
+                            .then(() => {
+                                fetch(`/outboundPayments?keyword=${this.form.getBindingObject().code.value}`)
+                                    .then(response => response.json())
+                                    .then(response => {
+                                        let payedPrice = 0;
+
+                                        if (response.status) {
+                                            //Show payment history
+                                            formFiledContainers[0].style.display = "block";
+                                            formFiledContainers[1].style.display = "block";
+                                            formFiledContainers[2].style.display = "block";
+
+                                            const tbody = formFiledContainers[2].querySelector("tbody");
+                                            for (const payment of response.data) {
+                                                payedPrice += parseFloat(payment.price);
+                                                const tr = document.createElement("tr");
+
+                                                const td1 = document.createElement("td");
+                                                td1.textContent = payment.code;
+                                                tr.appendChild(td1);
+
+                                                const td2 = document.createElement("td");
+                                                td2.textContent = `Rs. ${payment.price}`;
+                                                tr.appendChild(td2);
+
+                                                const td3 = document.createElement("td");
+                                                td3.textContent = payment.addedDate;
+                                                tr.appendChild(td3);
+
+                                                tbody.appendChild(tr);
+                                            }
+
+                                            //Add onclick to addPaymentButton for opening the popUpCard
+                                            formFiledContainers[2].querySelector("#addPaymentButton").addEventListener("click", (event) => {
+                                                event.preventDefault();
+                                                //Add onload to iframe for initializing create form
+                                                const popUpCard = this.popUpCardObject.parentCardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/outboundPayments_cu.html");
+                                                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                                                    popUpCard.popUpCardInterface.extendInitForm("/registries/outboundPayment.json", "outboundPayments", "PUT");
+                                                });
+                                            });
+                                        }
+
+                                        const toBePayedPrice = (parseFloat(this.form.getBindingObject().finalPrice.value) - payedPrice);
+
+                                        this.form.getView().querySelector("#paidPrice").value = payedPrice.toFixed(2);
+                                        this.form.getView().querySelector("#toBePaidPrice").value = toBePayedPrice.toFixed(2);
+                                    })
                             });
                     });
                 }
@@ -120,9 +169,43 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
+                <div class="formFieldContainer disabled" style="display: none;">
+                    <div class="titleContainer">
+                        <h1 class="title">Currently paid</h1>
+                    </div>
+                    <div class="inputContainer text prefixed price">
+                        <input id="paidPrice" type="text" placeholder="eg: 10000.00">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer disabled" style="display: none;">
+                    <div class="titleContainer">
+                        <h1 class="title">Debt</h1>
+                    </div>
+                    <div class="inputContainer text prefixed price">
+                        <input id="toBePaidPrice" type="text" placeholder="eg: 10000.00">
+                    </div>
+                </div>
+
+                <div class="formFieldContainer wide" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Payment code</th>
+                                <th>Price</th>
+                                <th>Added date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <button id="addPaymentButton" class="buttonText">ADD PAYMENT</button>
+                </div>
+
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Invoice code</h1>
+                        <h1 class="title">Invoice code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="code" type="text" placeholder="eg: MII2020019" value="MII0000000" />
@@ -131,7 +214,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Import order code</h1>
+                        <h1 class="title">Import order code</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="orderCode" list="importOrderCodeList" type="text" placeholder="eg: MIO2020019" />
@@ -144,7 +227,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Imported amount</h1>
+                        <h1 class="title">Imported amount</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="importedAmount" type="text" placeholder="eg: 10000.50">
@@ -153,7 +236,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Unit type</h1>
+                        <h1 class="title">Unit type</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="unitTypeId" data-request-url="/tables/unitType" data-text-content-field="name"
@@ -166,7 +249,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Viable period</h1>
+                        <h1 class="title">Viable period</h1>
                     </div>
                     <div class="inputContainer text suffixed days">
                         <input id="viablePeriod" type="text" placeholder="eg: 365">
@@ -175,7 +258,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Price</h1>
+                        <h1 class="title">Price</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
                         <input id="price" type="text" placeholder="eg: 10000.00">
@@ -184,7 +267,7 @@
 
                 <div class="formFieldContainer">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Discount percentage</h1>
+                        <h1 class="title">Discount percentage</h1>
                     </div>
                     <div class="inputContainer text suffixed percentage">
                         <input id="discountPercentage" type="text" placeholder="eg: 10">
@@ -193,7 +276,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Final price</h1>
+                        <h1 class="title">Final price</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
                         <input id="finalPrice" type="text" placeholder="eg: 9000.00">
@@ -202,7 +285,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Invoice status</h1>
+                        <h1 class="title">Invoice status</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="invoiceStatusId" data-request-url="/tables/invoiceStatus"
@@ -215,7 +298,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Batch status</h1>
+                        <h1 class="title">Batch status</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="batchStatusId" data-request-url="/tables/batchStatus" data-text-content-field="name"
@@ -228,7 +311,7 @@
 
                 <div class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Date added</h1>
+                        <h1 class="title">Date added</h1>
                     </div>
                     <div class="inputContainer text">
                         <input id="addedDate" type="date" placeholder="eg: 2020-01-01">
@@ -237,7 +320,7 @@
 
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="titleDescription">Description</h1>
+                        <h1 class="title">Description</h1>
                     </div>
                     <div class="inputContainer textarea">
                         <textarea id="description"></textarea>
