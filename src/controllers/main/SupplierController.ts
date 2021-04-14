@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { Supplier as Entity } from "../../entities/main/Supplier";
 import { SupplierRepository as EntityRepository } from "../../repositories/main/SupplierRepository";
+import { MailController } from "./MailController";
 
 export class SupplierController {
     private static entityName: string = "supplier";
@@ -16,6 +17,8 @@ export class SupplierController {
 
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
+
+        MailController.sendCustomerGreeting(serverObject.email, serverObject.personName, serverObject.businessName);
 
         return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
