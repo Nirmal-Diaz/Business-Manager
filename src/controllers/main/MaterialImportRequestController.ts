@@ -4,6 +4,7 @@ import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { MaterialImportRequest as Entity } from "../../entities/main/MaterialImportRequest";
 import { MaterialImportRequestRepository as EntityRepository } from "../../repositories/main/MaterialImportRequestRepository";
+import { MailController } from "./MailController";
 
 export class MaterialImportRequestController {
     private static entityName: string = "material import request";
@@ -28,8 +29,19 @@ export class MaterialImportRequestController {
 
             nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
         }
+        
+        return getRepository(Entity).save(clonedServerObjects as Entity[]).then(async materialImportRequests => {
+            //Send emails to each supplier
+            for (let i=0; i < materialImportRequests.length; i++) {
+                const materialImportRequest = await getRepository(Entity).findOne(materialImportRequests[i], {
+                    relations: ["supplier", "material"]
+                });
 
-        return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
+                MailController.sendMaterialImportRequest(materialImportRequest.supplier.email, materialImportRequest);
+            }
+
+            return true;
+        }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
