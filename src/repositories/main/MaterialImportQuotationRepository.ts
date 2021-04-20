@@ -10,6 +10,7 @@ export class MaterialImportQuotationRepository {
         .leftJoinAndSelect("miq.unitType", "ut")
         .where("miq.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .orderBy("miq.code", "DESC")
         .getMany();
     }
 

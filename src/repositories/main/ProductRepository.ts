@@ -12,6 +12,7 @@ export class ProductRepository {
             .orWhere("p.name LIKE :keyword", { keyword: `%${keyword}%` })
             .orWhere("ps.name LIKE :keyword", { keyword: `%${keyword}%` })
             .orWhere("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+            .orderBy("p.code", "DESC")
             .getMany();
     }
 

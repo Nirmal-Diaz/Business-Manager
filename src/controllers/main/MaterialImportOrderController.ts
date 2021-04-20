@@ -34,6 +34,8 @@ export class MaterialImportOrderController {
 
             materialImportQuotation.quotationStatusId = 4;
 
+            //Send the email for the order
+
             return getRepository(MaterialImportQuotation).save(materialImportQuotation);
         }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }

@@ -13,6 +13,7 @@ export class MaterialImportRequestRepository {
         .orWhere("s.personName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("s.businessName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("m.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .orderBy("mir.code", "DESC")
         .getMany();
     }
 

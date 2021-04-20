@@ -10,6 +10,7 @@ export class ProductBatchRepository {
         .leftJoinAndSelect("pb.unitType", "ut")
         .where("pb.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .orderBy("pb.code", "DESC")
         .getMany();
     }
 

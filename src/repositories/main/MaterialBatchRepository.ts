@@ -10,6 +10,7 @@ export class MaterialBatchRepository {
         .leftJoinAndSelect("mb.unitType", "ut")
         .where("mb.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .orderBy("mb.code", "DESC")
         .getMany();
     }
 

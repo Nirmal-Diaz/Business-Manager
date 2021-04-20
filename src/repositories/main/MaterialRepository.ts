@@ -12,6 +12,7 @@ export class MaterialRepository {
             .orWhere("m.name LIKE :keyword", { keyword: `%${keyword}%` })
             .orWhere("ms.name LIKE :keyword", { keyword: `%${keyword}%` })
             .orWhere("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+            .orderBy("m.code", "DESC")
             .getMany();
     }
 

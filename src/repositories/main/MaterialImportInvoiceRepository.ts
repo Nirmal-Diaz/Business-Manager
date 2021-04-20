@@ -8,6 +8,7 @@ export class MaterialImportInvoiceRepository {
         .createQueryBuilder("mii")
         .leftJoinAndSelect("mii.invoiceStatus", "is")
         .where("mii.code LIKE :keyword", { keyword: `%${keyword}%` })
+        .orderBy("mii.code", "DESC")
         .getMany();
     }
 
