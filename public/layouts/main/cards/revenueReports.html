@@ -73,6 +73,9 @@
                         this.chartCardDivision.style.display = "block";
                     }
                 });
+                this.retrieveControls[3].addEventListener("click", (event) => {
+                    window.print();
+                });
 
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
@@ -211,6 +214,9 @@
             </button>
             <button class="buttonGlyph">
                 <img src="/images/main/glyph_refresh.png" title="Switch view" />
+            </button>
+            <button class="buttonGlyph" title="Print">
+                <img src="/images/main/glyph_print.png" />
             </button>
         </div>
         <div id="updateControlsContainer">
