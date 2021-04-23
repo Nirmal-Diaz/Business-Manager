@@ -42,11 +42,15 @@ export class UserController {
             where: {
                 username: username
             },
-            relations: ["userPreference"]
+            relations: ["userPreference", "employeeCode2"]
         });
 
         if (user) {
-            return user;
+            if (user.employeeCode2.employeeStatusId === 1) {
+                return user;
+            } else {
+                throw { title: "Hmm... looks like you aren't an active employee", titleDescription: "Contact your system administrator", message: "The owning employee of this account is either retired or suspended. Only operational employees can access their user account.", technicalMessage: "Owner of the user account is inactive" };
+            }
         } else {
             throw { title: "Hmmm... we couldn't find you", titleDescription: "Please recheck your username", message: "There is no user matching the username you provided", technicalMessage: "No user for given username" };
         }
