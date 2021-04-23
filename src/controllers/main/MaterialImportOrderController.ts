@@ -6,6 +6,7 @@ import { MaterialImportOrder as Entity } from "../../entities/main/MaterialImpor
 import { MaterialImportOrderRepository as EntityRepository } from "../../repositories/main/MaterialImportOrderRepository";
 import { MaterialImportQuotation } from "../../entities/main/MaterialImportQuotation";
 import { UnitType } from "../../entities/main/UnitType";
+import { MailController } from "./MailController";
 
 export class MaterialImportOrderController {
     private static entityName: string = "material import order";
@@ -35,6 +36,11 @@ export class MaterialImportOrderController {
             materialImportQuotation.quotationStatusId = 4;
 
             //Send the email for the order
+            const materialImportOrder = await getRepository(Entity).findOne(item, {
+                relations: ["quotationCode2", "quotationCode2.requestCode2", "quotationCode2.requestCode2.material", "quotationCode2.requestCode2.supplier"]
+            });
+
+            MailController.sendMaterialImportOrder(materialImportOrder.quotationCode2.requestCode2.supplier.email, materialImportOrder);
 
             return getRepository(MaterialImportQuotation).save(materialImportQuotation);
         }).catch((error) => {

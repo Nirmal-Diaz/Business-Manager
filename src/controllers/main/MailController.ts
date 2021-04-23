@@ -124,4 +124,44 @@ export class MailController {
 
         return true;
     }
+
+    static async sendMaterialImportOrder(email, materialImportOrder) {
+        const mailOptions = {
+            from: 'official.cyberspacetechnologies@gmail.com',
+            to: "nirmaldiaz@gmail.com",
+            subject: 'Quotation request from Thames Coating International',
+            html: `
+            <p>Thames Coating International Pvt. Ltd, </br>Weliveriya, </br>Gampaha</p>
+        
+            <p>${materialImportOrder.supplier.personName}</br>Exports Manager</br>${materialImportOrder.supplier.businessName}</br>${materialImportOrder.supplier.address}</p>
+            
+            <h3>Your quotation is needed</h3>
+
+            <p>We've selected you for our next material purchase. Please refer the following table for the order details.</p>
+        
+            <table border="1">
+            <tbody>
+                <tr>
+                    <th>Our reference</th><td>${materialImportOrder.code}</td>
+                </tr>
+                <tr>
+                    <th>Wanted material</th><td>${materialImportOrder.quotationCode2.requestCode2.material.name}</td>
+                </tr>
+                <tr>
+                    <th>Wanted by</th><td>${materialImportOrder.wantedBy}</td>
+                </tr>
+            </tbody>
+            </table>
+                
+            <p>Yours sincerely, </br>Manager of imports and exports</p>`
+        };
+
+        MailController.transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send material import request email to ${email}`, technicalMessage: "Couldn't send mail with material import request" });
+            }
+        });
+
+        return true;
+    }
 }
