@@ -34,6 +34,9 @@ export class EntityCardInterface extends BaseCardInterface {
         this.retrieveControls[1]?.addEventListener("click", () => {
             this.searchItems("", "Showing all items");
         });
+        this.retrieveControls[2]?.addEventListener("click", () => {
+            window.print();
+        });
 
         this.updateControls[0]?.addEventListener("click", () => {
             if (this.selectedCardDivisionSectorItems.length === 0) {
