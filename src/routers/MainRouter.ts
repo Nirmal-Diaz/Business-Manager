@@ -62,7 +62,7 @@ mainRouter.use(express.static(__dirname + "/../../public"));
 
 //Initialize login validator
 mainRouter.use((req, res, next) => {
-    if (["/", "/sessions"].includes(req.path) || /^\/users\/.*\/avatar$/.test(req.path)) {
+    if (["/", "/sessions"].includes(req.path) || /^\/users\/.*\/avatar$/.test(req.path) || /^\/users\/.*\/temporaryPassword$/.test(req.path)) {
         //CASE: Path must be excluded
         next();
     } else {
@@ -121,6 +121,15 @@ mainRouter.route("/users/:username/avatar")
     .get((req, res, next) => {
         UserController.getOneByUsername(req.params.username).then(data => {
             res.locals.data = data.userPreference.avatar; next();
+        }).catch(error => {
+            res.locals.error = error; next();
+        })
+    });
+
+mainRouter.route("/users/:username/temporaryPassword")
+    .put((req, res, next) => {
+        UserController.generateTemporaryPassword(req.params.username).then(data => {
+            res.locals.data = data; next();
         }).catch(error => {
             res.locals.error = error; next();
         })

@@ -1,3 +1,5 @@
+import * as crypto from "crypto";
+
 import { getRepository } from "typeorm";
 
 import { RegistryController } from "./RegistryController";
@@ -5,6 +7,8 @@ import { ValidationController } from "./ValidationController";
 import { UserPreferenceController } from "./UserPreferenceController";
 import { UserRepository } from "../../repositories/main/UserRepository";
 import { User } from "../../entities/main/User";
+import { UserPreference } from "../../entities/main/UserPreference";
+import { MailController } from "./MailController";
 
 export class UserController {
     static async createOne(clientBindingObject) {
@@ -91,5 +95,27 @@ export class UserController {
         return getRepository(User).delete(userId).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
+    }
+
+    static async generateTemporaryPassword(username: string) {
+        const user = await getRepository(User).findOne({
+            where: {
+                username: username
+            },
+            relations: ["userPreference", "employeeCode2"]
+        });
+
+        const blocks = ["I1", "H2", "G3", "F4", "E5", "D6", "C7", "B8", "A9"]
+        let temporaryPassword = "";
+
+        for (let i = 0; i < 3; i++) {
+            temporaryPassword += blocks[Math.floor(Math.random()*(9))];
+        }
+
+        await MailController.sendTemporaryPassword(user.employeeCode2.email, temporaryPassword);
+
+        user.userPreference.temporaryHash = crypto.createHash("sha256").update(temporaryPassword).digest("hex");
+
+        return getRepository(UserPreference).save(user.userPreference);
     }
 }

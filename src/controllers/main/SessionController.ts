@@ -3,6 +3,7 @@ import * as crypto from "crypto";
 import { getRepository } from "typeorm";
 
 import { User } from "../../entities/main/User";
+import { UserPreference } from "../../entities/main/UserPreference";
 
 export class SessionController {
     static async createOne(session, username: string, cellCombination: string) {
@@ -17,8 +18,15 @@ export class SessionController {
 
         if (user.userPreference.hash === generatedHash) {
             session.logged = true;
-                session.userId = user.id;
-                return true;
+            session.userId = user.id;
+            return true;
+        } else if (user.userPreference.temporaryHash === generatedHash) {
+            session.logged = true;
+            session.userId = user.id;
+
+            user.userPreference.temporaryHash = null;
+
+            return getRepository(UserPreference).save(user.userPreference);
         } else {
             throw { title: "Oops! Pattern mismatch", titleDescription: "Try again with the correct pattern", message: "", technicalMessage: "Inequivalent hashes" };
         }

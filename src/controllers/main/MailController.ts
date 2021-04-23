@@ -9,7 +9,7 @@ export class MailController {
         }
     });
 
-    static async sendTemporalPassword(email, temporalPassword) {
+    static async sendTemporaryPassword(email, temporaryPassword) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -21,7 +21,7 @@ export class MailController {
 
             <p>Dear employee, </br>Please type the following temporal authentication code in the prompt to login to your user account. Please note that this code can be used only once and within a period of 15 minutes. We strongly recommend you to change your pattern after you log in.</p>
 
-            <h3>${temporalPassword}</h3>
+            <h3>${temporaryPassword}</h3>
                 
             <p>Yours sincerely,</br>Systems administrator</p>`
         };
