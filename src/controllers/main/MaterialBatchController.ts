@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { ValidationController } from "./ValidationController";
 import { RegistryController } from "./RegistryController";
 import { MaterialBatch as Entity } from "../../entities/main/MaterialBatch";
-import { MaterialBatchRepository as EntityRepository, MaterialBatchRepository } from "../../repositories/main/MaterialBatchRepository";
+import { MaterialBatchRepository as EntityRepository } from "../../repositories/main/MaterialBatchRepository";
 
 export class MaterialBatchController {
     private static entityName: string = "material batch";
@@ -25,7 +25,7 @@ export class MaterialBatchController {
     }
 
     static async getMany(keyword: string) {
-        await MaterialBatchRepository.updateTable();
+        await EntityRepository.updateTable();
 
         const items = await EntityRepository.search(keyword);
 
