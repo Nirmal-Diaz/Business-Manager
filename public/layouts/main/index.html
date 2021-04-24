@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/stylesheets/main/shell.css" />
 
     <style>
+        .inputContainer.other {
+            justify-content: flex-start;
+        }
+
         .inputContainer.pattern {
             position: absolute;
             right: 0;
@@ -171,7 +175,7 @@
                     <p class="titleDescription"></p>
                 </div>
                 <p id="alertBoxMessage" style="margin-top: 10px;"></p>
-                <div style="position: absolute; bottom: 0; overflow: visible;">
+                <div class="inputContainer other" style="position: absolute; bottom: 0; overflow: visible;">
                     <input type="text" placeholder="PLACEHOLDER HERE" class="textInput" />
                     <button id="alertBoxTrueButton" class="buttonText">TRUE</button>
                     <button id="alertBoxFalseButton" class="buttonText">FALSE</button>
