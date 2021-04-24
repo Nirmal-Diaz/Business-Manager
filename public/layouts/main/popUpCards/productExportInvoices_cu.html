@@ -91,6 +91,7 @@
                                 window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
                             })
                             .then(() => {
+                                formFiledContainers[2].style.display = "block";
                                 fetch(`/inboundPayments?keyword=${this.form.getBindingObject().code.value}`)
                                     .then(response => response.json())
                                     .then(response => {
@@ -100,7 +101,6 @@
                                             //Show payment history
                                             formFiledContainers[0].style.display = "block";
                                             formFiledContainers[1].style.display = "block";
-                                            formFiledContainers[2].style.display = "block";
 
                                             const tbody = formFiledContainers[2].querySelector("tbody");
                                             for (const payment of response.data) {
