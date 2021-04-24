@@ -76,10 +76,10 @@ export class MaterialImportInvoiceController {
         }
     }
 
-    static async getMany(keyword: string) {
+    static async getMany(keyword: string, offset: number) {
         await EntityRepository.updateTable();
 
-        const items = await EntityRepository.search(keyword);
+        const items = await EntityRepository.search(keyword, offset);
 
         if (items.length > 0) {
             return items;

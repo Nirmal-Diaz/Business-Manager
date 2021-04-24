@@ -3,12 +3,14 @@ import { getRepository } from "typeorm";
 import { ProductExportInvoice } from "../../entities/main/ProductExportInvoice";
 
 export class ProductExportInvoiceRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(ProductExportInvoice)
         .createQueryBuilder("pei")
         .leftJoinAndSelect("pei.invoiceStatus", "is")
         .where("pei.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orderBy("pei.code", "DESC")
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 

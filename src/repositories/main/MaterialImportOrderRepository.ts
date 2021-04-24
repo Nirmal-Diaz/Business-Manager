@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { MaterialImportOrder } from "../../entities/main/MaterialImportOrder";
 
 export class MaterialImportOrderRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(MaterialImportOrder)
         .createQueryBuilder("mio")
         .leftJoinAndSelect("mio.orderStatus", "os")
@@ -12,6 +12,8 @@ export class MaterialImportOrderRepository {
         .leftJoinAndSelect("mio.unitType", "ut")
         .where("mio.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 }

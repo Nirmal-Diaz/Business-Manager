@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { ProductManufacturingOrder } from "../../entities/main/ProductManufacturingOrder";
 
 export class ProductManufacturingOrderRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(ProductManufacturingOrder)
         .createQueryBuilder("pmo")
         .leftJoinAndSelect("pmo.orderStatus", "os")
@@ -13,6 +13,8 @@ export class ProductManufacturingOrderRepository {
         .where("p.name LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .orderBy("pmo.code", "DESC")
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 

@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { MaterialImportQuotation } from "../../entities/main/MaterialImportQuotation";
 
 export class MaterialImportQuotationRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(MaterialImportQuotation)
         .createQueryBuilder("miq")
         .leftJoinAndSelect("miq.quotationStatus", "qs")
@@ -11,6 +11,8 @@ export class MaterialImportQuotationRepository {
         .where("miq.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .orderBy("miq.code", "DESC")
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 

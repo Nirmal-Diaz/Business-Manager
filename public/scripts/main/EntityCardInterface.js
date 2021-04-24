@@ -3,10 +3,27 @@ import { PlatformUtil, ShellUtil } from "./Utility.js";
 
 //@ts-check
 export class EntityCardInterface extends BaseCardInterface {
+    keyword = "";
+    titleDescriptionText = "";
+    offset = -10;
+    intersectionObserver = null;
     entityNameSingular = null;
+    stateCardDivisionSections = {};
+
+    scrollDetector = document.createElement("p");
 
     constructor(entityNameSingular, entityNamePlural) {
         super();
+
+        this.intersectionObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                this.searchItems(this.keyword, this.titleDescriptionText, false);
+            }
+        }, {
+            root: document.getElementById("mainCardDivision"),
+            threshold: 1
+        });
+        this.intersectionObserver.observe(this.scrollDetector);
 
         this.entityNameSingular = entityNameSingular;
         this.entityNamePlural = entityNamePlural;
@@ -32,7 +49,7 @@ export class EntityCardInterface extends BaseCardInterface {
             }
         });
         this.retrieveControls[1]?.addEventListener("click", () => {
-            this.searchItems("", "Showing all items");
+            this.searchItems("", "Showing all items", true);
         });
         this.retrieveControls[2]?.addEventListener("click", () => {
             window.print();
@@ -85,6 +102,6 @@ export class EntityCardInterface extends BaseCardInterface {
 
     //WARNING: This method must be extended inside a descendant class
     searchItems(keyword, titleDescriptionText) {
-        
+
     }
 }

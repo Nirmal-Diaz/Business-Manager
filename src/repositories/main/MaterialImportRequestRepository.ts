@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { MaterialImportRequest } from "../../entities/main/MaterialImportRequest";
 
 export class MaterialImportRequestRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(MaterialImportRequest)
         .createQueryBuilder("mir")
         .leftJoinAndSelect("mir.requestStatus", "rs")
@@ -14,6 +14,8 @@ export class MaterialImportRequestRepository {
         .orWhere("s.businessName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("m.name LIKE :keyword", { keyword: `%${keyword}%` })
         .orderBy("mir.code", "DESC")
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 

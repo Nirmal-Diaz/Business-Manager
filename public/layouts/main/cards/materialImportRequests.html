@@ -24,36 +24,46 @@
                 super("Material Import Request", "Material Import Requests");
             }
 
-            searchItems(keyword, titleDescriptionText) {
-                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}`)
+            searchItems(keyword, titleDescriptionText, reload = true) {
+                this.keyword = keyword;
+                this.titleDescriptionText = titleDescriptionText;
+
+                if (reload) {
+                    this.offset = -10;
+                }
+
+                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}&offset=${this.offset = this.offset+10}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
-                            cardDivision.innerHTML = "";
 
-                            const states = {};
+                            if (reload) {
+                                this.stateCardDivisionSections = {};
+                                cardDivision.innerHTML = "";
+                            }
 
                             for (const item of response.data) {
-                                if (!states.hasOwnProperty(item.requestStatus.id)) {
-                                    states[item.requestStatus.id] = CardComponent.createCardDivisionSector(item.requestStatus.name + " " + document.title, titleDescriptionText);
+                                if (!this.stateCardDivisionSections.hasOwnProperty(item.requestStatus.id)) {
+                                    this.stateCardDivisionSections[item.requestStatus.id] = CardComponent.createCardDivisionSector(item.requestStatus.name + " " + document.title, titleDescriptionText);
 
                                     const table = CardComponent.createTable(["Code", "Requested from", "Requested material", "Wanted by", "Added date"]);
 
-                                    states[item.requestStatus.id].appendChild(table);
+                                    this.stateCardDivisionSections[item.requestStatus.id].appendChild(table);
                                 }
 
-                                const tableBody = states[item.requestStatus.id].querySelector("tbody");
+                                const tableBody = this.stateCardDivisionSections[item.requestStatus.id].querySelector("tbody");
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.supplier.businessName, item.material.name, item.wantedBy, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }
 
-                            for (const state of Object.keys(states)) {
-                                cardDivision.appendChild(states[state]);
+                            for (const state of Object.keys(this.stateCardDivisionSections)) {
+                                cardDivision.appendChild(this.stateCardDivisionSections[state]);
                             }
-                        } else {
+                            cardDivision.appendChild(this.scrollDetector);
+                        } else if (reload) {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
                     })

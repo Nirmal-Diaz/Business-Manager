@@ -61,8 +61,8 @@ export class MaterialImportRequestController {
         }
     }
 
-    static async getMany(keyword: string) {
-        const items = await EntityRepository.search(keyword);
+    static async getMany(keyword: string, offset: number) {
+        const items = await EntityRepository.search(keyword, offset);
 
         if (items.length > 0) {
             return items;

@@ -25,36 +25,46 @@
                 super("Inbound Payment", "Inbound Payments");
             }
 
-            searchItems(keyword, titleDescriptionText) {
-                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}`)
+            searchItems(keyword, titleDescriptionText, reload = true) {
+                this.keyword = keyword;
+                this.titleDescriptionText = titleDescriptionText;
+
+                if (reload) {
+                    this.offset = -10;
+                }
+
+                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}&offset=${this.offset = this.offset+10}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {
                             this.selectedCardDivisionSectorItems.length = 0;
                             const cardDivision = document.getElementById("mainCardDivision");
-                            cardDivision.innerHTML = "";
-
-                            const states = {};
+                            
+                            if (reload) {
+                                this.stateCardDivisionSections = {};
+                                cardDivision.innerHTML = "";
+                            }
 
                             for (const item of response.data) {
-                                if (!states.hasOwnProperty(item.invoiceCode)) {
-                                    states[item.invoiceCode] = CardComponent.createCardDivisionSector(document.title + " of " + item.invoiceCode, titleDescriptionText);
+                                if (!this.stateCardDivisionSections.hasOwnProperty(item.invoiceCode)) {
+                                    this.stateCardDivisionSections[item.invoiceCode] = CardComponent.createCardDivisionSector(document.title + " of " + item.invoiceCode, titleDescriptionText);
 
                                     const table = CardComponent.createTable(["Code", "Payed amount", "Cheque number", "Cheque date", "Bank account number", "Added date"]);
 
-                                    states[item.invoiceCode].appendChild(table);
+                                    this.stateCardDivisionSections[item.invoiceCode].appendChild(table);
                                 }
 
-                                const tableBody = states[item.invoiceCode].querySelector("tbody");
+                                const tableBody = this.stateCardDivisionSections[item.invoiceCode].querySelector("tbody");
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `Rs. ${item.price}`, item.chequeNumber, item.chequeDate, item.bankAccountNumber, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.appendChild(cardDivisionSectorItem);
                             }
 
-                            for (const state of Object.keys(states)) {
-                                cardDivision.appendChild(states[state]);
+                            for (const state of Object.keys(this.stateCardDivisionSections)) {
+                                cardDivision.appendChild(this.stateCardDivisionSections[state]);
                             }
-                        } else {
+                            cardDivision.appendChild(this.scrollDetector);
+                        } else if (reload) {
                             window.parent.shellInterface.throwAlert(response.error.title, response.error.titleDescription, response.error.message, null, "OK", null);
                         }
                     })
