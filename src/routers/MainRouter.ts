@@ -437,7 +437,7 @@ mainRouter.route("/materialImportRequests")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import requests", req.method)
-            .then(() => MaterialImportRequestController.getMany(req.query.keyword)).then(data => {
+            .then(() => MaterialImportRequestController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -483,7 +483,7 @@ mainRouter.route("/materialImportQuotations")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import quotations", req.method)
-            .then(() => MaterialImportQuotationController.getMany(req.query.keyword)).then(data => {
+            .then(() => MaterialImportQuotationController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -529,7 +529,7 @@ mainRouter.route("/materialImportOrders")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import orders", req.method)
-            .then(() => MaterialImportOrderController.getMany(req.query.keyword)).then(data => {
+            .then(() => MaterialImportOrderController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -585,7 +585,7 @@ mainRouter.route("/materialImportInvoices")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "material import invoices", req.method)
-            .then(() => MaterialImportInvoiceController.getMany(req.query.keyword)).then(data => {
+            .then(() => MaterialImportInvoiceController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -642,7 +642,7 @@ mainRouter.route("/outboundPayments")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "outbound payments", req.method)
-            .then(() => OutboundPaymentController.getMany(req.query.keyword)).then(data => {
+            .then(() => OutboundPaymentController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -804,7 +804,7 @@ mainRouter.route("/productExportRequests")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => ProductExportRequestController.getMany(req.query.keyword)).then(data => {
+            .then(() => ProductExportRequestController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -860,7 +860,7 @@ mainRouter.route("/productExportInvoices")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export invoices", req.method)
-            .then(() => ProductExportInvoiceController.getMany(req.query.keyword)).then(data => {
+            .then(() => ProductExportInvoiceController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -906,7 +906,7 @@ mainRouter.route("/productManufacturingOrders")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
-            .then(() => ProductManufacturingOrderController.getMany(req.query.keyword)).then(data => {
+            .then(() => ProductManufacturingOrderController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -972,7 +972,7 @@ mainRouter.route("/productManufacturingInvoices")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing invoices", req.method)
-            .then(() => ProductManufacturingInvoiceController.getMany(req.query.keyword)).then(data => {
+            .then(() => ProductManufacturingInvoiceController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();
@@ -1018,7 +1018,7 @@ mainRouter.route("/inboundPayments")
     })
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "inbound payments", req.method)
-            .then(() => InboundPaymentController.getMany(req.query.keyword)).then(data => {
+            .then(() => InboundPaymentController.getMany(req.query.keyword, parseInt(req.query.offset))).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

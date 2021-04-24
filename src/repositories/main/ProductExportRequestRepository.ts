@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { ProductExportRequest } from "../../entities/main/ProductExportRequest";
 
 export class ProductExportRequestRepository {
-    static search(keyword) {
+    static search(keyword, offset) {
         return getRepository(ProductExportRequest)
         .createQueryBuilder("per")
         .leftJoinAndSelect("per.requestStatus", "rs")
@@ -15,7 +15,9 @@ export class ProductExportRequestRepository {
         .orWhere("c.businessName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("p.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("p.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("per.code", "DESC")
+        // .orderBy("per.code", "DESC")
+        .limit(10)
+        .offset(offset)
         .getMany();
     }
 
