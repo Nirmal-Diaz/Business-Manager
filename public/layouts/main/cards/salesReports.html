@@ -169,7 +169,7 @@
                     const tableBody = table.querySelector("tbody");
                     const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [row.group_id, row.sales_count, `Rs. ${row.expected_income}`, `Rs. ${row.actual_income}`, `Rs. ${row.debts}`]);
                     cardDivisionSectorItem.dataset.bindingObjectId = row.id;
-                    tableBody.appendChild(cardDivisionSectorItem);
+                    tableBody.prepend(cardDivisionSectorItem);
                 }
 
                 cardDivisionSector.appendChild(table);

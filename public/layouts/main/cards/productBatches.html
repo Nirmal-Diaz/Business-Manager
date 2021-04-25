@@ -49,7 +49,7 @@
                                 expiryDate.setDate(item.viablePeriod);
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `${item.producedAmount} ${item.unitType.name}`, `${item.viablePeriod} days`, item.addedDate, expiryDate.toISOString().slice(0, 10)]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                tableBody.appendChild(cardDivisionSectorItem);
+                                tableBody.prepend(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {

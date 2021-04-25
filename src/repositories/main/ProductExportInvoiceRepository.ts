@@ -8,7 +8,6 @@ export class ProductExportInvoiceRepository {
         .createQueryBuilder("pei")
         .leftJoinAndSelect("pei.invoiceStatus", "is")
         .where("pei.code LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("pei.code", "DESC")
         .limit(10)
         .offset(offset)
         .getMany();

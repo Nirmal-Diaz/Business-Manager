@@ -8,7 +8,6 @@ export class InboundPaymentRepository {
         .createQueryBuilder("ip")
         .where("ip.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("ip.invoiceCode LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("ip.code", "DESC")
         .limit(10)
         .offset(offset)
         .getMany();

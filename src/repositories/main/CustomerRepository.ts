@@ -16,7 +16,6 @@ export class CustomerRepository {
         .orWhere("c.regNumber LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("c.email LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("cs.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("c.code", "DESC")
         .getMany();
     }
 

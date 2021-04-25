@@ -47,7 +47,7 @@
                                 const tableBody = states[item.employeeStatus.id].querySelector("tbody");
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.preferredName, item.nicNumber, item.mobile, item.email, item.gender.name, item.designation.name, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                tableBody.appendChild(cardDivisionSectorItem);
+                                tableBody.prepend(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {

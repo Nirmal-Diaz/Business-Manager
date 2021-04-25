@@ -21,7 +21,6 @@ export class EmployeeRepository {
         .orWhere("es.name LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("cs.name LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("d.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("e.code", "DESC")
         .getMany();
     }
 

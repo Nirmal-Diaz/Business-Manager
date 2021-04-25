@@ -12,7 +12,6 @@ export class ProductManufacturingOrderRepository {
         .where("pmo.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("p.name LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .orderBy("pmo.code", "DESC")
         .limit(10)
         .offset(offset)
         .getMany();

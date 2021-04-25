@@ -15,7 +15,6 @@ export class ProductExportRequestRepository {
         .orWhere("c.businessName LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("p.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("p.name LIKE :keyword", { keyword: `%${keyword}%` })
-        // .orderBy("per.code", "DESC")
         .limit(10)
         .offset(offset)
         .getMany();

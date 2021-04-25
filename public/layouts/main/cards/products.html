@@ -56,7 +56,7 @@
                                 const tableBody = states[item.productStatus.id].querySelector("tbody");
                                 const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.name, `${item.reorderAmount} ${item.unitType.name}`, `Rs. ${item.unitPrice}`, `${(item.viableAmount)? item.viableAmount : 0} ${item.unitType.name}`]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
-                                tableBody.appendChild(cardDivisionSectorItem);
+                                tableBody.prepend(cardDivisionSectorItem);
                             }
 
                             for (const state of Object.keys(states)) {
