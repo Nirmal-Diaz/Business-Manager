@@ -66,7 +66,6 @@ export class ProductManufacturingOrderController {
         } else {
             throw { title: "Oops! Couldn't analyze", titleDescription: "Contact your system administrator", message: `Looks like something's up with the database. Material analysis cannot be performed for this ${this.entityName}`, technicalMessage: `Couldn't perform material analysis for an ${this.entityName}` };
         }
-
     }
 
     static async getMany(keyword: string, offset: number) {

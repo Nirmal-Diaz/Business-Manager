@@ -26,4 +26,15 @@ export class ProductExportRequestRepository {
         .select("CONCAT('PER', LPAD(SUBSTRING(MAX(per.code),4)+1, 7, '0'))", "value")
         .getRawOne();
     }
+
+    static getProductAnalysis(id: number) {
+        return getRepository(ProductExportRequest).query(`
+            SELECT p.code, p.name, p.viable_amount, per.requested_amount needed_amount, p.viable_amount - per.requested_amount missing_amount, ut.name unit_name FROM product p
+            LEFT JOIN product_export_request per
+            ON per.product_id = p.id
+            LEFT JOIN unit_type ut
+            ON p.unit_type_id = ut.id
+            WHERE per.id = ${id}
+        `);
+    }
 }

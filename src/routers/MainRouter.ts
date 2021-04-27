@@ -838,6 +838,16 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
             });
     });
 
+mainRouter.route("/productExportRequests/:productExportRequestId/analysis")
+    .get((req, res, next) => {
+        PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
+            .then(() => ProductExportRequestController.getProductAnalysis(parseInt(req.params.productExportRequestId))).then(data => {
+                res.locals.data = data; next();
+            }).catch(error => {
+                res.locals.error = error; next();
+            });
+    });
+
 mainRouter.route("/productExportRequests/:productExportRequestCode/product")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
@@ -847,6 +857,7 @@ mainRouter.route("/productExportRequests/:productExportRequestCode/product")
                 res.locals.error = error; next();
             });
     });
+
 
 //PRODUCT EXPORT INVOICES
 mainRouter.route("/productExportInvoices")

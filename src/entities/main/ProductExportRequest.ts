@@ -36,7 +36,7 @@ export class ProductExportRequest {
   @Column("int", { name: "product_id" })
   productId: number;
 
-  @Column("decimal", { name: "requestedAmount", precision: 10, scale: 2 })
+  @Column("decimal", { name: "requested_amount", precision: 10, scale: 2 })
   requestedAmount: string;
 
   @Column("int", { name: "unit_type_id" })

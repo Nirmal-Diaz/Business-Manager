@@ -50,6 +50,16 @@ export class ProductExportRequestController {
         }
     }
 
+    static async getProductAnalysis(id: number) {
+        const items = await EntityRepository.getProductAnalysis(id);
+        
+        if (items.length > 0) {
+            return items;
+        } else {
+            throw { title: "Oops! Couldn't analyze", titleDescription: "Contact your system administrator", message: `Looks like something's up with the database. Product analysis cannot be performed for this ${this.entityName}`, technicalMessage: `Couldn't perform product analysis for an ${this.entityName}` };
+        }
+    }
+
     static async getMany(keyword: string, offset: number) {
         const items = await EntityRepository.search(keyword, offset);
 
