@@ -6,6 +6,7 @@ export class MaterialBatchRepository {
     static search(keyword) {
         return getRepository(MaterialBatch)
         .createQueryBuilder("mb")
+        .leftJoinAndSelect("mb.material", "m")
         .leftJoinAndSelect("mb.batchStatus", "bs")
         .leftJoinAndSelect("mb.unitType", "ut")
         .where("mb.code LIKE :keyword", { keyword: `%${keyword}%` })

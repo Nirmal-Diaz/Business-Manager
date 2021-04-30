@@ -6,6 +6,7 @@ export class ProductBatchRepository {
     static search(keyword) {
         return getRepository(ProductBatch)
         .createQueryBuilder("pb")
+        .leftJoinAndSelect("pb.product", "p")
         .leftJoinAndSelect("pb.batchStatus", "bs")
         .leftJoinAndSelect("pb.unitType", "ut")
         .where("pb.code LIKE :keyword", { keyword: `%${keyword}%` })
