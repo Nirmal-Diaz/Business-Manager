@@ -32,6 +32,7 @@ export class ProductRepository {
                     GROUP BY pm.product_id) product_unit_price
                 ON p.id = product_unit_price.product_id
                 SET p.unit_price = product_unit_price.unit_price
+                WHERE p.id = product_unit_price.product_id
             `),
             getRepository(Product).query(`
                 UPDATE 
