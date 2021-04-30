@@ -9,7 +9,7 @@ export class MailController {
         }
     });
 
-    static async sendTemporaryPassword(email, temporaryPassword) {
+    static sendTemporaryPassword(email, temporaryPassword) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -26,16 +26,18 @@ export class MailController {
             <p>Yours sincerely,</br>Systems administrator</p>`
         };
 
-        MailController.transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                throw { title: "Couldn't mail", titleDescription: "Contact your system administrator", message: `We couldn't send the temporal password to ${email}. But don't worry, your system administrator can reset the password for you.`, technicalMessage: "Couldn't send mail with temporal password" };
-            }
-
-            return true;
+        return new Promise((resolve, reject) => {
+            MailController.transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject({ title: "Couldn't mail", titleDescription: "Contact your system administrator", message: `We couldn't send the temporal password to ${email}. But don't worry, your system administrator can reset the password for you.`, technicalMessage: "Couldn't send mail with temporal password" });
+                } else {
+                    resolve(info);
+                }
+            });
         });
     }
 
-    static async sendCustomerGreeting(email, personName, businessName) {
+    static sendCustomerGreeting(email, personName, businessName) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -52,16 +54,18 @@ export class MailController {
             <p>Yours sincerely, </br>Manger of external relationships</p>`
         };
 
-        MailController.transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                throw { title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send the customer greetings email to ${email}`, technicalMessage: "Couldn't send mail with customer greetings" };
-            }
+        return new Promise((resolve, reject) => {
+            MailController.transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send the customer greetings email to ${email}`, technicalMessage: "Couldn't send mail with customer greetings" });
+                } else {
+                    resolve(info);
+                }
+            });
         });
-
-        return true;
     }
 
-    static async sendSupplierGreeting(email, personName, businessName) {
+    static sendSupplierGreeting(email, personName, businessName) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -76,16 +80,18 @@ export class MailController {
             <p>Yours sincerely, </br>Manger of external relationships</p>`
         };
 
-        MailController.transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send the supplier greetings email to ${email}`, technicalMessage: "Couldn't send mail with supplier greetings"});
-            }
+        return new Promise((resolve, reject) => {
+            MailController.transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send the supplier greetings email to ${email}`, technicalMessage: "Couldn't send mail with supplier greetings"});
+                } else {
+                    resolve(info);
+                }
+            });
         });
-
-        return true;
     }
 
-    static async sendMaterialImportRequest(email, materialImportRequest) {
+    static sendMaterialImportRequest(email, materialImportRequest) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -116,16 +122,18 @@ export class MailController {
             <p>Yours sincerely, </br>Manager of imports and exports</p>`
         };
 
-        MailController.transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send material import request email to ${email}`, technicalMessage: "Couldn't send mail with material import request" });
-            }
+        return new Promise((resolve, reject) => {
+            MailController.transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send material import request email to ${email}`, technicalMessage: "Couldn't send mail with material import request" });
+                } else {
+                    resolve(info);
+                }
+            });
         });
-
-        return true;
     }
 
-    static async sendMaterialImportOrder(email, materialImportOrder) {
+    static sendMaterialImportOrder(email, materialImportOrder) {
         const mailOptions = {
             from: 'official.cyberspacetechnologies@gmail.com',
             to: "nirmaldiaz@gmail.com",
@@ -156,12 +164,14 @@ export class MailController {
             <p>Yours sincerely, </br>Manager of imports and exports</p>`
         };
 
-        MailController.transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send material import request email to ${email}`, technicalMessage: "Couldn't send mail with material import request" });
-            }
+        return new Promise((resolve, reject) => {
+            MailController.transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject({ title: "Couldn't mail", titleDescription: "We'll try again later", message: `We couldn't send material import request email to ${email}`, technicalMessage: "Couldn't send mail with material import request" });
+                } else {
+                    resolve(info);
+                }
+            });
         });
-
-        return true;
     }
 }
