@@ -43,9 +43,9 @@
                         fetch(`/materials/${materialDropDownInput.value}/suppliers`)
                             .then(response => response.json())
                             .then(response => {
+                                const formFieldContainer = this.form.getView().querySelector(".inputGroup");
                                 if (response.status) {
                                     //Create a check input for each supplier
-                                    const formFieldContainer = this.form.getView().querySelector(".inputGroup");
                                     formFieldContainer.innerHTML = "";
                                     const checkInputContainerTemplate = this.form.getView().querySelector("#templateContainer").content.querySelector(".inputContainer.check");
                                     for (const supplier of response.data) {
@@ -66,6 +66,7 @@
                                         });
                                     }
                                 } else {
+                                    formFieldContainer.innerHTML = "";
                                     window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
                             });
