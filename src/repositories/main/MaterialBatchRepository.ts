@@ -9,6 +9,8 @@ export class MaterialBatchRepository {
         .leftJoinAndSelect("mb.material", "m")
         .leftJoinAndSelect("mb.batchStatus", "bs")
         .leftJoinAndSelect("mb.unitType", "ut")
+        .where("m.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .where("m.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("mb.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();

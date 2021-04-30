@@ -9,6 +9,8 @@ export class ProductBatchRepository {
         .leftJoinAndSelect("pb.product", "p")
         .leftJoinAndSelect("pb.batchStatus", "bs")
         .leftJoinAndSelect("pb.unitType", "ut")
+        .where("p.name LIKE :keyword", { keyword: `%${keyword}%` })
+        .where("p.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("pb.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
         .getMany();
