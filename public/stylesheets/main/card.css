@@ -118,3 +118,9 @@ div.cardDivisionSectorItem {
 .sidePanel * {
     color: black;
 }
+
+@media print {
+    .cardDivision {
+        overflow: visible;
+    }
+}
