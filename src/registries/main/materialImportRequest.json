@@ -14,19 +14,19 @@
     "materialId": {
         "inputQuery": "#materialId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "supplierId": {
         "inputQuery": "#supplierId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "requestStatusId": {
         "inputQuery": "#requestStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": "1"
     },
     "description": {

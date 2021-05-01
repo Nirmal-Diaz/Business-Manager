@@ -34,13 +34,13 @@
     "unitTypeId": {
         "inputQuery": "#unitTypeId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "productStatusId": {
         "inputQuery": "#productStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "description": {
@@ -58,7 +58,7 @@
     "userId": {
         "inputQuery": null,
         "inputClass": null,
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     }
 }

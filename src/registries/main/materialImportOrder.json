@@ -26,13 +26,13 @@
     "orderStatusId": {
         "inputQuery": "#orderStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "unitTypeId": {
         "inputQuery": "#unitTypeId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "description": {

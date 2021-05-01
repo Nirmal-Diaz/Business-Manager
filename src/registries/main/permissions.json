@@ -3,13 +3,13 @@
         "roleId": {
             "inputQuery": null,
             "inputClass": null,
-            "pattern": "^[1-9]{1,}$",
+            "pattern": "^[0-9]{1,}$",
             "value": null
         },
         "moduleId": {
             "inputQuery": "#moduleId",
             "inputClass": null,
-            "pattern": "^[1-9]{1,}$",
+            "pattern": "^[0-9]{1,}$",
             "value": null
         },
         "value": {

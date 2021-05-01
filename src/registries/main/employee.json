@@ -70,25 +70,25 @@
     "genderId": {
         "inputQuery": "#genderId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "civilStatusId": {
         "inputQuery": "#civilStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "employeeStatusId": {
         "inputQuery": "#employeeStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "designationId": {
         "inputQuery": "#designationId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "description": {

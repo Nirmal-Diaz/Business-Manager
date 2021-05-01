@@ -69,7 +69,7 @@ export class Form {
         bindingObject.id = {
             inputQuery: null,
             inputClass: null,
-            pattern: "^[1-9]{1,}$",
+            pattern: "^[0-9]{1,}$",
             value: plainObject.id
         };
 

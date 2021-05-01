@@ -14,7 +14,7 @@
     "materialId": {
         "inputQuery": "#materialId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "importedAmount": {
@@ -26,7 +26,7 @@
     "unitTypeId": {
         "inputQuery": "#unitTypeId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "viablePeriod": {
@@ -38,7 +38,7 @@
     "batchStatusId": {
         "inputQuery": "#batchStatusId",
         "inputClass": "dropDown",
-        "pattern": "^[1-9]{1,}$",
+        "pattern": "^[0-9]{1,}$",
         "value": null
     },
     "description": {

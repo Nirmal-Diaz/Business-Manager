@@ -3,13 +3,13 @@
         "productId": {
             "inputQuery": "#productId",
             "inputClass": "dropDown",
-            "pattern": "^[1-9]{1,}$",
+            "pattern": "^[0-9]{1,}$",
             "value": null
         },
         "materialId": {
             "inputQuery": "#materialId",
             "inputClass": "dropDown",
-            "pattern": "^[1-9]{1,}$",
+            "pattern": "^[0-9]{1,}$",
             "value": null
         },
         "materialAmount": {
@@ -21,7 +21,7 @@
         "unitTypeId": {
             "inputQuery": "#unitTypeId",
             "inputClass": "dropDown",
-            "pattern": "^[1-9]{1,}$",
+            "pattern": "^[0-9]{1,}$",
             "value": null
         },
         "unitPriceFactor": {
