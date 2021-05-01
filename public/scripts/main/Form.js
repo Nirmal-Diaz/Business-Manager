@@ -166,19 +166,19 @@ export class Form {
                     //Add onchange to imageInput for updating its dataset
                     imageInput.addEventListener("change", () => {
                         const imageBlob = imageInput.files[0];
-    
+
                         //NOTE: To improve performance, blobs representations must be strings rather than arrays
                         imageBlob.arrayBuffer().then((blobArrayBuffer) => {
                             imageInput.dataset.stringifiedBlob = JSON.stringify(Array.from(new Uint8Array(blobArrayBuffer)));
                         });
                         imageInput.dataset.size = imageBlob.size;
                         imageInput.dataset.type = imageBlob.type;
-    
+
                         //Update the sibling img
                         imageInput.previousElementSibling.src = URL.createObjectURL(imageBlob);
-    
+
                     });
-                    
+
                     //Add onclick to sibling img tag for triggering the click event on the imageInput
                     imageInput.previousElementSibling.addEventListener("click", () => {
                         imageInput.click();
@@ -223,10 +223,8 @@ export class Form {
                     //CASE: Key holds a formField object
                     if (referenceBindingObject[key].pattern !== null) {
                         //CASE: formField object must have a pattern to match
-
-                        //NOTE: this.invalidBindingObject must contain the OR value of each field validation
                         const isInvalidField = FormUtil.validateAndVisualizeField(this.view, alteredBindingObject[key], false);
-                        this.isInvalidBindingObject = this.isInvalidBindingObject || isInvalidField;
+                        isInvalidField ? this.isInvalidBindingObject = true : this.isInvalidBindingObject = false;
                     }
                 }
             }
