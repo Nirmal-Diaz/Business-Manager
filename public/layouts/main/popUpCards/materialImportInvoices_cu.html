@@ -40,7 +40,6 @@
                         //Add onchange to the orderCode input for loading the unitPrice and unitType
                         orderCodeInput.addEventListener("input", (event) => {
                             if (!orderCodeInput.parentElement.classList.contains("invalid")) {
-                                console.log(`/materialImportOrders/${event.target.value}/quotation`);
                                 fetch(`/materialImportOrders/${event.target.value}/quotation`)
                                     .then(response => response.json())
                                     .then(response => {
@@ -103,7 +102,7 @@
                             })
                             .then(() => {
                                 formFiledContainers[2].style.display = "block";
-                                fetch(`/outboundPayments?keyword=${this.form.getBindingObject().code.value}`)
+                                fetch(`/outboundPayments?keyword=${this.form.getBindingObject().code.value}&offset=0`)
                                     .then(response => response.json())
                                     .then(response => {
                                         let payedPrice = 0;
