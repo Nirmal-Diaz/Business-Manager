@@ -15,17 +15,13 @@ export class MaterialImportInvoiceRepository {
 
     static updateTable() {
         return getRepository(MaterialImportInvoice).query(`
-            UPDATE material_import_invoice mii
-            LEFT JOIN
-                (SELECT op.invoice_code, SUM(op.price) payed_amount
-                FROM outbound_payment op
-                GROUP BY op.invoice_code) payed
-            ON mii.code = payed.invoice_code
+            UPDATE material_import_invoice mii, (SELECT op.invoice_code, SUM(op.price) payed_amount FROM outbound_payment op GROUP BY op.invoice_code) invoice_payment
             SET mii.invoice_status_id =
             CASE
-                WHEN mii.final_price > payed.payed_amount THEN 1
+                WHEN mii.final_price > invoice_payment.payed_amount THEN 1
                 ELSE 2
             END
+            WHERE mii.code = invoice_payment.invoice_code;
         `);
     }
 }
