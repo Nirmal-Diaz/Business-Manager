@@ -25,16 +25,15 @@ export class MaterialRepository {
     static updateTable() {
         return getRepository(Material)
         .query(`
-            UPDATE
-            material m, material_batch mb, (SELECT mb.material_id, SUM(mb.imported_amount) viable_amount FROM material_batch mb WHERE mb.batch_status_id = 1 GROUP BY mb.material_id) viable_material
-            SET 
-            m.viable_amount = viable_material.viable_amount,
-            m.material_status_id =
-            CASE
-                WHEN viable_material.viable_amount <= m.reorder_amount THEN 2
+            UPDATE material m,
+            (SELECT mb.material_id, SUM(mb.imported_amount) viable_amount FROM material_batch mb WHERE mb.batch_status_id = 1 GROUP BY mb.material_id) material_inventory
+            SET
+            m.viable_amount = material_inventory.viable_amount,
+            m.material_status_id = CASE
+                WHEN m.reorder_amount < material_inventory.viable_amount THEN 2
                 ELSE 1
             END
-            WHERE m.id = viable_material.material_id
+            WHERE m.id = material_inventory.material_id
         `);
     }
 }
