@@ -188,9 +188,12 @@
                     </div>
                 </div>
 
+                <div class="titleContainer">
+                    <h1 class="title">Material, amount and price factor</h1>
+                </div>
                 <div class="formFieldContainer wide">
                     <div class="titleContainer">
-                        <h1 class="title">Material, amount and price factor</h1>
+                        <h1 class="title">Material</h1>
                     </div>
                     <div class="inputContainer dropDown">
                         <select id="materialId" data-request-url="/materials?keyword=" data-text-content-field="name"
@@ -202,12 +205,18 @@
                 </div>
 
                 <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Needed amount</h1>
+                    </div>
                     <div class="inputContainer text">
                         <input id="materialAmount" type="text" placeholder="eg: 1000.00">
                     </div>
                 </div>
 
                 <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Unit type</h1>
+                    </div>
                     <div class="inputContainer dropDown">
                         <select id="unitTypeId" data-request-url="/tables/unitType" data-text-content-field="name"
                             data-value-field="id">
@@ -218,6 +227,9 @@
                 </div>
 
                 <div class="formFieldContainer">
+                    <div class="titleContainer">
+                        <h1 class="title">Price factor</h1>
+                    </div>
                     <div class="inputContainer text">
                         <input id="unitPriceFactor" type="text" placeholder="eg: 1.2">
                     </div>
@@ -227,10 +239,10 @@
                     <button id="addEntry" class="buttonText">ADD ENTRY</button>
                 </div>
 
+                <div class="titleContainer">
+                    <h1 class="title">Entries</h1>
+                </div>
                 <div class="formFieldContainer wide">
-                    <div class="titleContainer">
-                        <h1 class="title">Entries</h1>
-                    </div>
                     <table>
                         <thead>
                             <tr>
