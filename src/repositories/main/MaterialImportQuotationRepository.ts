@@ -23,7 +23,7 @@ export class MaterialImportQuotationRepository {
             CASE
                 WHEN miq.quotation_status_id = 4 THEN 4
                 WHEN DATEDIFF(miq.valid_from, NOW()) > 0 THEN 1
-                WHEN DATEDIFF(miq.valid_till, NOW()) > 0 THEN 2
+                WHEN DATEDIFF(NOW(), miq.valid_from) > 0 AND DATEDIFF(miq.valid_till, NOW()) > 0 THEN 2
                 ELSE 3
             END
         `);
