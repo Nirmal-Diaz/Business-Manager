@@ -40,6 +40,7 @@
                     productDropDown.parentElement.style.display = "none";
 
                     //Hide product analysis container
+                    productAnalysisContainer.previousElementSibling.remove();
                     productAnalysisContainer.remove();
 
                     //Load and create check inputs for each product
@@ -122,6 +123,7 @@
                                     } else {
                                         //Hide material analysis container
                                         productAnalysisContainer.remove();
+                                        productAnalysisContainer.previousElementSibling.remove();
                                     }
                                 } else {
                                     window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);

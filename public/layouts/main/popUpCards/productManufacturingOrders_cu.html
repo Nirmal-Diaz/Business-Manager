@@ -37,6 +37,7 @@
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
 
                     //Hide material analysis container
+                    materialAnalysisContainer.previousElementSibling.remove();
                     materialAnalysisContainer.remove();
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
@@ -83,6 +84,7 @@
                                             });
                                     } else {
                                         //Hide material analysis container
+                                        materialAnalysisContainer.previousElementSibling.remove();
                                         materialAnalysisContainer.remove();
                                     }
                                 } else {
