@@ -27,8 +27,14 @@ export class MaterialRepository {
         .query(`
             UPDATE
             material m, material_batch mb, (SELECT mb.material_id, SUM(mb.imported_amount) viable_amount FROM material_batch mb WHERE mb.batch_status_id = 1 GROUP BY mb.material_id) viable_material
-            SET m.viable_amount = viable_material.viable_amount
-            WHERE m.id = viable_material.material_id;
+            SET 
+            m.viable_amount = viable_material.viable_amount,
+            m.material_status_id =
+            CASE
+                WHEN viable_material.viable_amount <= m.reorder_amount THEN 2
+                ELSE 1
+            END
+            WHERE m.id = viable_material.material_id
         `);
     }
 }
