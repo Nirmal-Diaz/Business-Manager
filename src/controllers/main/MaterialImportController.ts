@@ -44,8 +44,8 @@ export class MaterialImportController {
             
             if (importRequest) {
                 enhancedObjects.enhancedRequest = {
-                    supplier: importRequest.supplier.businessName,
-                    material: importRequest.material.name,
+                    supplier: `(${importRequest.supplier.code}) ${importRequest.supplier.businessName}`,
+                    material: `(${importRequest.material.code}) ${importRequest.material.name}`,
                     wantedBy: importRequest.wantedBy,
                     status: importRequest.requestStatus.name,
                     description: importRequest.description,

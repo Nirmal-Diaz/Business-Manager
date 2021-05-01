@@ -54,7 +54,7 @@
                                 }
 
                                 const tableBody = this.stateCardDivisionSections[item.requestStatus.id].querySelector("tbody");
-                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, item.supplier.businessName, item.material.name, item.wantedBy, item.addedDate]);
+                                const cardDivisionSectorItem = CardComponent.createTableRow(this.selectedCardDivisionSectorItems, [item.code, `(${item.supplier.code}) ${item.supplier.businessName}`, `(${item.material.code}) ${item.material.name}`, item.wantedBy, item.addedDate]);
                                 cardDivisionSectorItem.dataset.bindingObjectId = item.id;
                                 tableBody.prepend(cardDivisionSectorItem);
                             }
