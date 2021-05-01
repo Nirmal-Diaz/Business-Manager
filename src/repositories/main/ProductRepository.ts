@@ -25,20 +25,20 @@ export class ProductRepository {
     static updateTable() {
         return Promise.all([
             getRepository(Product).query(`
-                UPDATE product p
-                LEFT JOIN
-                    (SELECT pm.product_id, SUM(pm.material_amount * pm.unit_price_factor) unit_price
-                    FROM business_manager.product_material pm
-                    GROUP BY pm.product_id) product_unit_price
-                ON p.id = product_unit_price.product_id
+                UPDATE product p, (SELECT pm.product_id, SUM(pm.material_amount * pm.unit_price_factor) unit_price FROM product_material pm GROUP BY pm.product_id) product_unit_price
                 SET p.unit_price = product_unit_price.unit_price
                 WHERE p.id = product_unit_price.product_id
             `),
             getRepository(Product).query(`
-                UPDATE 
-                product p, product_batch pb, (SELECT pb.product_id, SUM(pb.produced_amount) viable_amount FROM product_batch pb WHERE pb.batch_status_id = 1 GROUP BY pb.product_id) viable_product
-                SET p.viable_amount = viable_product.viable_amount
-                WHERE p.id = viable_product.product_id;
+                UPDATE product p,
+                (SELECT pb.product_id, SUM(pb.produced_amount) viable_amount FROM product_batch pb WHERE pb.batch_status_id = 1 GROUP BY pb.product_id) product_inventory
+                SET
+                p.viable_amount = product_inventory.viable_amount,
+                p.product_status_id = CASE
+                    WHEN p.reorder_amount < product_inventory.viable_amount THEN 2
+                    ELSE 1
+                END
+                WHERE p.id = product_inventory.product_id
             `)
         ]);
     }
