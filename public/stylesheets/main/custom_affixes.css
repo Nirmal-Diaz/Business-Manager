@@ -37,3 +37,15 @@
 .inputContainer.text.percentage::after {
     content: "%";
 }
+
+@media print {
+    .inputContainer.text.prefixed::before {
+        top: 12px;
+        left: 0;
+    }
+    
+    .inputContainer.text.suffixed::after {
+        top: 12px;
+        right: 0;
+    }
+}
