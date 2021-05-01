@@ -66,12 +66,11 @@
                                                     for (const entry of response.data) {
                                                         const tr = tableRowTemplate.cloneNode(true);
 
-                                                        tr.children[0].textContent = entry.code;
-                                                        tr.children[1].textContent = entry.name;
-                                                        tr.children[2].textContent = entry.needed_amount;
-                                                        tr.children[3].textContent = entry.viable_amount;
-                                                        tr.children[4].textContent = entry.missing_amount;
-                                                        tr.children[5].textContent = entry.unit_name;
+                                                        tr.children[0].textContent = `(${entry.code}) ${entry.name}`;
+                                                        tr.children[1].textContent = entry.needed_amount;
+                                                        tr.children[2].textContent = entry.viable_amount;
+                                                        tr.children[3].textContent = entry.missing_amount;
+                                                        tr.children[4].textContent = entry.unit_name;
 
                                                         tBody.appendChild(tr);
                                                     }
@@ -207,7 +206,6 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Material code</th>
                                 <th>Material</th>
                                 <th>Viable amount</th>
                                 <th>Needed amount</th>
@@ -225,7 +223,6 @@
                         <td>Skeem Coat</td>
                         <td>Titanium O</td>
                         <td>1240.00 Kilograms</td>
-                        <td>1.2</td>
                         <td>1.2</td>
                         <td>1.2</td>
                     </tr>
