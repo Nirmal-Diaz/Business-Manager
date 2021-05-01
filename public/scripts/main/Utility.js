@@ -251,7 +251,11 @@ export class FormComponent {
                     //Create a dropDownInputOption for every item
                     for (const item of response.data) {
                         const dropDownInputOption = document.createElement("option");
-                        dropDownInputOption.textContent = item[textContentField];
+                        if (textContentField !== "code" && item.hasOwnProperty("code")) {
+                            dropDownInputOption.textContent = `(${item.code}) ${item[textContentField]}`;
+                        } else {
+                            dropDownInputOption.textContent = item[textContentField];
+                        }
                         dropDownInputOption.value = item[valueField];
 
                         dropDownInputFragment.appendChild(dropDownInputOption);
