@@ -30,18 +30,16 @@ export class MaterialImportOrderController {
             const materialImportQuotation = await getRepository(MaterialImportQuotation).findOne({
                 where: {
                     code: item.quotationCode
-                }
+                },
+                relations: ["requestCode2", "requestCode2.supplier", "requestCode2.material"]
             });
 
             materialImportQuotation.quotationStatusId = 4;
 
-            //Send the email for the order
-            const materialImportOrder = await getRepository(Entity).findOne(item, {
-                relations: ["quotationCode2", "quotationCode2.requestCode2", "quotationCode2.requestCode2.material", "quotationCode2.requestCode2.supplier"]
+            MailController.sendMaterialImportOrder(materialImportQuotation.requestCode2.supplier.email, item, materialImportQuotation.requestCode2.supplier, materialImportQuotation.requestCode2.material).catch((error) => {
+                console.log(error);
             });
-
-            MailController.sendMaterialImportOrder(materialImportOrder.quotationCode2.requestCode2.supplier.email, materialImportOrder);
-
+            
             return getRepository(MaterialImportQuotation).save(materialImportQuotation);
         }).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }

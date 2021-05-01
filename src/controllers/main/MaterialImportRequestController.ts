@@ -30,14 +30,16 @@ export class MaterialImportRequestController {
             nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
         }
         
-        return getRepository(Entity).save(clonedServerObjects as Entity[]).then(async materialImportRequests => {
+        return getRepository(Entity).save(clonedServerObjects as Entity[]).then(async items => {
             //Send emails to each supplier
-            for (let i=0; i < materialImportRequests.length; i++) {
-                const materialImportRequest = await getRepository(Entity).findOne(materialImportRequests[i], {
+            for (let i=0; i < items.length; i++) {
+                const materialImportRequest = await getRepository(Entity).findOne(items[i], {
                     relations: ["supplier", "material"]
                 });
 
-                MailController.sendMaterialImportRequest(materialImportRequest.supplier.email, materialImportRequest);
+                MailController.sendMaterialImportRequest(materialImportRequest.supplier.email, materialImportRequest).catch((error) => {
+                    console.log(error);
+                });
             }
 
             return true;

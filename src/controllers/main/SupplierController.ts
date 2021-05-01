@@ -18,7 +18,9 @@ export class SupplierController {
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        MailController.sendCustomerGreeting(serverObject.email, serverObject.personName, serverObject.businessName);
+        MailController.sendCustomerGreeting(serverObject.email, serverObject.personName, serverObject.businessName).catch((error) => {
+            console.log(error);
+        });
 
         return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
