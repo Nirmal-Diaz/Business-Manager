@@ -796,7 +796,7 @@ mainRouter.route("/productBatches/:productBatchId")
 mainRouter.route("/productExportRequests")
     .put(express.json({ limit: "500kB" }), (req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => ProductExportRequestController.createMany(req.body.bindingObject, req.body.additionalData.selectedProductIds)).then(data => {
+            .then(() => ProductExportRequestController.createOne(req.body.bindingObject)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

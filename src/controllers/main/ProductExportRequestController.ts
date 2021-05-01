@@ -10,27 +10,45 @@ export class ProductExportRequestController {
     private static entityName: string = "product export request";
     private static entityJSONName: string = "productExportRequest";
 
-    static async createMany(clientBindingObject, selectedProductIds) {
+    // static async createMany(clientBindingObject, selectedProductIds) {
+    //     //Validate clientBindingObject
+    //     const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
+    //     ValidationController.validateBindingObject(serverObject, clientBindingObject);
+
+    //     //Clone the serverObject and change the code and productId fields for each selectedProductIds
+    //     const clonedServerObjects = [];
+
+    //     const stringifiedServerObject = JSON.stringify(serverObject);
+    //     let nextCode: string = (await EntityRepository.generateNextCode()).value;
+    //     for (let i = 0; i < selectedProductIds.length; i++) {
+    //         clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
+    //         clonedServerObjects[i].productId = selectedProductIds[i];
+
+    //         //Update the code field with next possible value
+    //         clonedServerObjects[i].code = nextCode;
+
+    //         nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
+    //     }
+
+    //     return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
+    //         throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
+    //     });
+    // }
+
+    static async createOne(clientBindingObject) {
         //Validate clientBindingObject
         const serverObject = await RegistryController.getParsedRegistry(`${this.entityJSONName}.json`);
         ValidationController.validateBindingObject(serverObject, clientBindingObject);
 
-        //Clone the serverObject and change the code and productId fields for each selectedProductIds
-        const clonedServerObjects = [];
+        //Update the code field with next possible value
+        serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        const stringifiedServerObject = JSON.stringify(serverObject);
-        let nextCode: string = (await EntityRepository.generateNextCode()).value;
-        for (let i = 0; i < selectedProductIds.length; i++) {
-            clonedServerObjects[i] = JSON.parse(stringifiedServerObject);
-            clonedServerObjects[i].productId = selectedProductIds[i];
+        //Change the unit type to the default
+        const unitType = await getRepository(UnitType).findOne(serverObject.unitTypeId);
+        serverObject.requestedAmount = parseFloat(serverObject.requestedAmount) * parseFloat(unitType.convertToDefaultFactor);
+        serverObject.unitTypeId = unitType.defaultUnitId;
 
-            //Update the code field with next possible value
-            clonedServerObjects[i].code = nextCode;
-
-            nextCode = nextCode.slice(0, -3) + (parseInt(nextCode.slice(-3)) + 1);
-        }
-
-        return getRepository(Entity).save(clonedServerObjects as Entity[]).catch((error) => {
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
