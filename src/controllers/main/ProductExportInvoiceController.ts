@@ -23,25 +23,13 @@ export class ProductExportInvoiceController {
         const productExportRequest = await getRepository(ProductExportRequest).findOne({
             where: {
                 code: serverObject.requestCode
-            },
-            relations: ["product", "customer"]
+            }
         });
-
-        //Decrease product inventory
-        productExportRequest.product.viableAmount = (parseFloat(productExportRequest.product.viableAmount) - parseFloat(productExportRequest.requestedAmount)).toString();
-
-        //Change product status
-        if (productExportRequest.product.viableAmount <= productExportRequest.product.reorderAmount) {
-            productExportRequest.product.productStatusId = 2;
-        }
-
-        //Increase customer's arrears
-        productExportRequest.customer.arrears = (parseFloat(productExportRequest.customer.arrears ) + parseFloat(serverObject.finalPrice)).toString();
     
         //Update request status
         productExportRequest.requestStatusId = 2;
 
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Product).save(productExportRequest.product), getRepository(Customer).save(productExportRequest.customer), getRepository(ProductExportRequest).save(productExportRequest)])
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(ProductExportRequest).save(productExportRequest)])
         .catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });

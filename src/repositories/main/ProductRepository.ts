@@ -31,14 +31,15 @@ export class ProductRepository {
             `),
             getRepository(Product).query(`
                 UPDATE product p,
-                (SELECT pb.product_id, SUM(pb.produced_amount) viable_amount FROM product_batch pb WHERE pb.batch_status_id = 1 GROUP BY pb.product_id) product_inventory
+                (SELECT pb.product_id, SUM(pb.produced_amount) produced_amount FROM product_batch pb GROUP BY pb.product_id) production_inventory,
+                (SELECT per.product_id, SUM(per.requested_amount) used_amount FROM product_export_request per WHERE per.request_status_id = 2 GROUP BY per.product_id) product_usage
                 SET
-                p.viable_amount = product_inventory.viable_amount,
+                p.viable_amount = production_inventory.produced_amount - product_usage.used_amount,
                 p.product_status_id = CASE
-                    WHEN p.reorder_amount < product_inventory.viable_amount THEN 2
+                    WHEN p.reorder_amount < p.viable_amount THEN 2
                     ELSE 1
                 END
-                WHERE p.id = product_inventory.product_id
+                WHERE p.id = production_inventory.product_id
             `)
         ]);
     }

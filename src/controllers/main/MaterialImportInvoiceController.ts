@@ -34,25 +34,14 @@ export class MaterialImportInvoiceController {
             where: {
                 code: serverObject.orderCode.replace("MIO", "MIR")
             },
-            relations: ["material", "supplier", "materialImportQuotation", "materialImportQuotation.materialImportOrder"]
+            relations: ["materialImportQuotation", "materialImportQuotation.materialImportOrder"]
         });
-
-        //Increase material inventory
-        materialImportRequest.material.viableAmount = (parseFloat(materialImportRequest.material.viableAmount) + parseFloat(serverObject.materialBatch.importedAmount)).toString();
-
-        //Change material status
-        if (materialImportRequest.material.viableAmount <= materialImportRequest.material.reorderAmount) {
-            materialImportRequest.material.materialStatusId = 2;
-        }
-
-        //Increase supplier's arrears
-        materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) + parseFloat(serverObject.finalPrice)).toString();
     
         //Update relevant order status
         materialImportRequest.materialImportQuotation.materialImportOrder.orderStatusId = 2;
         serverObject.materialBatch.materialId = materialImportRequest.materialId;
 
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Material).save(materialImportRequest.material), getRepository(Supplier).save(materialImportRequest.supplier), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
+        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(MaterialImportOrder).save(materialImportRequest.materialImportQuotation.materialImportOrder)])
         .then(() => {
             return getRepository(MaterialBatch).save(serverObject.materialBatch as MaterialBatch)
         })

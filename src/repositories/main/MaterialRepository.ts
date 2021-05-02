@@ -22,18 +22,20 @@ export class MaterialRepository {
             .getRawOne();
     }
 
+    //WARNING: Following query doesn't care about expired batches
     static updateTable() {
         return getRepository(Material)
         .query(`
             UPDATE material m,
-            (SELECT mb.material_id, SUM(mb.imported_amount) viable_amount FROM material_batch mb WHERE mb.batch_status_id = 1 GROUP BY mb.material_id) material_inventory
+            (SELECT mb.material_id, SUM(mb.imported_amount) imported_amount FROM material_batch mb GROUP BY mb.material_id) material_import_inventory,
+            (SELECT pm.material_id, SUM(pmo.requested_amount*pm.material_amount) used_amount FROM product_manufacturing_order pmo LEFT JOIN product_material pm ON pmo.product_id=pm.product_id WHERE pmo.order_status_id = 2 GROUP BY pm.material_id) material_usage
             SET
-            m.viable_amount = material_inventory.viable_amount,
+            m.viable_amount = material_import_inventory.imported_amount - material_usage.used_amount,
             m.material_status_id = CASE
-                WHEN m.reorder_amount < material_inventory.viable_amount THEN 2
+                WHEN m.reorder_amount < m.viable_amount THEN 2
                 ELSE 1
             END
-            WHERE m.id = material_inventory.material_id
+            WHERE m.id = material_import_inventory.material_id
         `);
     }
 }

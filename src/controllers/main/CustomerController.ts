@@ -43,6 +43,8 @@ export class CustomerController {
     }
 
     static async getMany(keyword: string) {
+        await EntityRepository.updateTable();
+
         const items = await EntityRepository.search(keyword);
 
         if (items.length > 0) {

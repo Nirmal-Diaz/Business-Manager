@@ -19,17 +19,7 @@ export class OutboundPaymentController {
         //Update the code field with next possible value
         serverObject.code = (await EntityRepository.generateNextCode()).value;
 
-        const materialImportRequest = await getRepository(MaterialImportRequest).findOne({
-            where: {
-                code: serverObject.invoiceCode.replace("MII", "MIR")
-            },
-            relations: ["supplier"]
-        });
-        
-        //Lower the supplier arrears
-        materialImportRequest.supplier.arrears = (parseFloat(materialImportRequest.supplier.arrears ) - parseFloat(serverObject.price)).toString();
-
-        return Promise.all([getRepository(Entity).save(serverObject as Entity), getRepository(Supplier).save(materialImportRequest.supplier)]).catch((error) => {
+        return getRepository(Entity).save(serverObject as Entity).catch((error) => {
             throw { title: error.name, titleDescription: "Ensure you aren't violating any constraints", message: error.sqlMessage, technicalMessage: error.sql }
         });
     }
