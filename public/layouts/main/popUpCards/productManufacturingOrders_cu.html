@@ -24,9 +24,6 @@
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
-                const materialAnalysisContainer = this.form.getView().querySelector("#materialAnalysisContainer");
-                const tableRowTemplate = this.form.getView().querySelector("#templateContainer").content.querySelector("tr");
-
                 //Set the current date as value for "addedDate"
                 const addedDateInput = this.form.getView().querySelector("#addedDate");
                 this.form.getView().querySelector("#wantedBy").addEventListener("focus", (event) => {
@@ -35,10 +32,6 @@
 
                 if (submissionMethod === "PUT") {
                     addedDateInput.value = new Date().toISOString().slice(0, 10);
-
-                    //Hide material analysis container
-                    materialAnalysisContainer.previousElementSibling.remove();
-                    materialAnalysisContainer.remove();
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod);
                 } else if (submissionMethod === "POST") {
@@ -55,37 +48,6 @@
                                     this.form.mapToBindingObject(this.form.getBindingObject(), response.data);
                                     //Update the inputs according to the binding object
                                     this.form.updateInputs(this.form.getBindingObject());
-
-                                    if (response.data.orderStatusId !== 2) {
-                                        fetch(`/productManufacturingOrders${submissionURL.slice(submissionURL.lastIndexOf("/"))}/analysis`)
-                                            .then(response => response.json())
-                                            .then(response => {
-                                                if (response.status) {
-                                                    const tBody = materialAnalysisContainer.querySelector("tbody");
-                                                    //Create an entry for each material analysis report
-                                                    for (const entry of response.data) {
-                                                        const tr = tableRowTemplate.cloneNode(true);
-
-                                                        tr.children[0].textContent = `(${entry.code}) ${entry.name}`;
-                                                        tr.children[1].textContent = entry.needed_amount;
-                                                        tr.children[2].textContent = entry.viable_amount;
-                                                        tr.children[3].textContent = entry.missing_amount;
-                                                        tr.children[4].textContent = entry.unit_name;
-
-                                                        tBody.appendChild(tr);
-                                                    }
-                                                } else {
-                                                    window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
-                                                }
-                                            })
-                                            .catch(error => {
-                                                window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the material analysis report from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
-                                            });
-                                    } else {
-                                        //Hide material analysis container
-                                        materialAnalysisContainer.previousElementSibling.remove();
-                                        materialAnalysisContainer.remove();
-                                    }
                                 } else {
                                     window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
                                 }
@@ -93,8 +55,6 @@
                             .catch(error => {
                                 window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the required ${this.entityNameSingular} from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
                             });
-
-
                     });
                 }
             }
@@ -198,35 +158,6 @@
                         <textarea id="description"></textarea>
                     </div>
                 </div>
-
-                <div class="titleContainer">
-                    <h1 class="title">Material Availability Analysis</h1>
-                </div>
-                <div id="materialAnalysisContainer" class="formFieldContainer wide">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Material</th>
-                                <th>Viable amount</th>
-                                <th>Needed amount</th>
-                                <th>Missing amount</th>
-                                <th>Measured in</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-                <template id="templateContainer">
-                    <tr>
-                        <td>Skeem Coat</td>
-                        <td>Titanium O</td>
-                        <td>1240.00 Kilograms</td>
-                        <td>1.2</td>
-                        <td>1.2</td>
-                    </tr>
-                </template>
             </form>
         </div>
 
