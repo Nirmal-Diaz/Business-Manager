@@ -29,7 +29,7 @@ export class CustomerRepository {
     static updateTable() {
         return getRepository(Customer)
         .query(`
-            UPDATE customer c, (SELECT per.customer_id, SUM(pei.final_price) - SUM(invoice_payment.payed_amount) arrears FROM product_export_request per
+            UPDATE customer c, (SELECT per.customer_id, IFNULL(SUM(pei.final_price),0) - IFNULL(SUM(invoice_payment.payed_amount),0) arrears FROM product_export_request per
             LEFT JOIN product_export_invoice pei ON per.code = REPLACE(pei.code, "PEI", "PER")
             LEFT JOIN (SELECT ip.invoice_code, SUM(ip.price) payed_amount FROM inbound_payment ip GROUP BY ip.invoice_code) invoice_payment ON pei.code = invoice_payment.invoice_code
             GROUP BY per.customer_id) customer_payment
