@@ -36,7 +36,7 @@
 
                     //Remove toBePaid and paid containers
                     this.form.getView().querySelector("#paidPriceContainer").remove();
-                    this.form.getView().querySelector("#toPaidPriceContainer").remove();
+                    this.form.getView().querySelector("#toBePaidPriceContainer").remove();
 
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then(() => {
                         const priceInput = this.form.getView().querySelector("#price");

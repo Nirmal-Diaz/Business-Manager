@@ -8,7 +8,7 @@ export class OutboundPaymentRepository {
         .createQueryBuilder("op")
         .where("op.code LIKE :keyword", { keyword: `%${keyword}%` })
         .orWhere("op.invoiceCode LIKE :keyword", { keyword: `%${keyword}%` })
-        .limit(10)
+        .limit(30)
         .offset(offset)
         .getMany();
     }

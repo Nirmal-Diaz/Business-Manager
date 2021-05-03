@@ -11,7 +11,7 @@ export class MaterialImportOrderRepository {
         .leftJoinAndSelect("mio.unitType", "ut")
         .where("mio.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .limit(10)
+        .limit(30)
         .offset(offset)
         .getMany();
     }

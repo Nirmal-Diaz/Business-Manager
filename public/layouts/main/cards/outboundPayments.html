@@ -29,10 +29,10 @@
                 this.titleDescriptionText = titleDescriptionText;
 
                 if (reload) {
-                    this.offset = -10;
+                    this.offset = -30;
                 }
                 
-                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}&offset=${this.offset = this.offset+10}`)
+                fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}&offset=${this.offset = this.offset+30}`)
                     .then(response => response.json())
                     .then(response => {
                         if (response.status) {

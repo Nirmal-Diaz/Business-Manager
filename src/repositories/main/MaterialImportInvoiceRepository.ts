@@ -8,7 +8,7 @@ export class MaterialImportInvoiceRepository {
         .createQueryBuilder("mii")
         .leftJoinAndSelect("mii.invoiceStatus", "is")
         .where("mii.code LIKE :keyword", { keyword: `%${keyword}%` })
-        .limit(10)
+        .limit(30)
         .offset(offset)
         .getMany();
     }

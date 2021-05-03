@@ -8,7 +8,7 @@ export class ProductManufacturingInvoiceRepository {
         .createQueryBuilder("pmi")
         .leftJoinAndSelect("pmi.invoiceStatus", "is")
         .where("pmi.code LIKE :keyword", { keyword: `%${keyword}%` })
-        .limit(10)
+        .limit(30)
         .offset(offset)
         .getMany();
     }

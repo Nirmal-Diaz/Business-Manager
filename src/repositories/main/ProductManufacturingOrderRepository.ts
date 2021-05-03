@@ -12,7 +12,7 @@ export class ProductManufacturingOrderRepository {
         .where("pmo.code LIKE :keyword", { keyword: `%${keyword}%` })
         .where("p.name LIKE :keyword", { keyword: `%${keyword}%` })
         .where("ut.name LIKE :keyword", { keyword: `%${keyword}%` })
-        .limit(10)
+        .limit(30)
         .offset(offset)
         .getMany();
     }
