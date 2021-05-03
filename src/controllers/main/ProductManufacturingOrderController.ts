@@ -58,8 +58,8 @@ export class ProductManufacturingOrderController {
         }
     }
 
-    static async getMaterialAnalysis(id: number) {
-        const items = await EntityRepository.getMaterialAnalysis(id);
+    static async getMaterialAnalysis(code: string) {
+        const items = await EntityRepository.getMaterialAnalysis(code);
         
         if (items.length > 0) {
             return items;

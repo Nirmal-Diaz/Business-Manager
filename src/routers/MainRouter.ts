@@ -951,10 +951,10 @@ mainRouter.route("/productManufacturingOrders/:productManufacturingOrderId")
             });
     });
 
-mainRouter.route("/productManufacturingOrders/:productManufacturingOrderId/analysis")
+mainRouter.route("/productManufacturingOrders/:productManufacturingOrderCode/analysis")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
-            .then(() => ProductManufacturingOrderController.getMaterialAnalysis(parseInt(req.params.productManufacturingOrderId))).then(data => {
+            .then(() => ProductManufacturingOrderController.getMaterialAnalysis(req.params.productManufacturingOrderCode)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

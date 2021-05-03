@@ -24,7 +24,7 @@ export class ProductManufacturingOrderRepository {
         .getRawOne();
     }
 
-    static getMaterialAnalysis(id: number) {
+    static getMaterialAnalysis(code: string) {
         return getRepository(ProductManufacturingOrder).query(`
             SELECT m.code, m.name, m.viable_amount, pm.material_amount * pmo.requested_amount needed_amount, pm.material_amount * pmo.requested_amount - m.viable_amount missing_amount, ut.name unit_name FROM product_material pm
             LEFT JOIN product_manufacturing_order pmo
@@ -33,7 +33,7 @@ export class ProductManufacturingOrderRepository {
             ON pm.material_id = m.id
             LEFT JOIN unit_type ut
             ON m.unit_type_id = ut.id
-            WHERE pmo.id = ${id}
+            WHERE pmo.code = "${code}"
         `);
     }
 }
