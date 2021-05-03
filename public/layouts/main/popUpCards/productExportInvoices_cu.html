@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="/stylesheets/main/popUpCard.css" />
     <link rel="stylesheet" href="/stylesheets/main/custom_affixes.css" />
 
+    <style>
+        tr.invalid>td {
+            color: var(--inputContainerBorderColor-invalid);
+        }
+    </style>
+
     <script type="module">
         //@ts-check
         import { EntityPopUpCardInterface } from "/scripts/main/EntityPopUpCardInterface.js";
@@ -71,6 +77,8 @@
                                             const tableRowTemplate = this.form.getView().querySelector("#templateContainer").content.querySelector("tr");
                                             const tBody = productAnalysisContainer.querySelector("tbody");
                                             tBody.innerHTML = "";
+
+                                            let hasShortage = false;
                                             //Create an entry for each material analysis report
                                             for (const entry of response.data) {
                                                 const tr = tableRowTemplate.cloneNode(true);
@@ -78,10 +86,25 @@
                                                 tr.children[0].textContent = `(${entry.code}) ${entry.name}`;
                                                 tr.children[1].textContent = entry.viable_amount;
                                                 tr.children[2].textContent = entry.needed_amount;
-                                                tr.children[3].textContent = entry.missing_amount < 0 ? "None" : entry.missing_amount;
+                                                tr.children[3].textContent = parseFloat(entry.missing_amount) < 0 ? "None" : entry.missing_amount;
                                                 tr.children[4].textContent = entry.unit_name;
 
                                                 tBody.appendChild(tr);
+
+                                                if (entry.missing_amount > 0) {
+                                                    hasShortage = true;
+                                                    tr.classList.add("invalid");
+                                                }
+                                            }
+
+                                            if (hasShortage) {
+                                                //Hide save button
+                                                document.getElementById("saveButton").style.display = "none";
+                                                productAnalysisContainer.previousElementSibling.children[1].textContent = "Cannot fullfil the request";
+                                            } else {
+                                                //Hide save button
+                                                document.getElementById("saveButton").style.display = "initial";
+                                                productAnalysisContainer.previousElementSibling.children[1].textContent = "Request can be fulfilled";
                                             }
                                         } else {
                                             window.parent.shellInterface.throwAlert(response.error.title, response.error.title, response.error.message, null, "OK", null);
@@ -260,6 +283,7 @@
 
                 <div class="titleContainer">
                     <h1 class="title">Product Availability Analysis</h1>
+                    <div class="titleContainer" style="color: green;">Specify a product export request to view the analysis</div>
                 </div>
                 <div id="productAnalysisContainer" class="formFieldContainer wide">
                     <table>
