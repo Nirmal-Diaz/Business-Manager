@@ -125,7 +125,7 @@
                         //Add onload to iframe for initializing create form
                         const popUpCard = this.popUpCardObject.parentCardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/inboundPayments_cu.html");
                         popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                            popUpCard.popUpCardInterface.extendInitForm("/registries/inboundPayment.json", "inboundPayments", "PUT");
+                            popUpCard.popUpCardInterface.extendInitForm("/registries/inboundPayment.json", "/inboundPayments", "PUT");
                         });
                     });
 
