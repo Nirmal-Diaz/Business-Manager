@@ -45,7 +45,13 @@
                                     .then(response => {
                                         if (response.status) {
                                             //Adjust the unit type
-                                            unitTypeDropDown.value = response.data.unitTypeId;
+                                            unitTypeDropDown.value = response.data.product.unitTypeId;
+
+                                            //Set the produced amount
+                                            producedAmountInput.value = response.data.requestedAmount;
+
+                                            //Set price
+                                            priceInput.value = (parseFloat(response.data.product.unitPrice) * parseFloat(response.data.requestedAmount)).toFixed(2);
 
                                             //Save the unit price in price input
                                             priceInput.dataset.unitPrice = response.data.unitPrice;
@@ -84,13 +90,6 @@
                                     .catch(error => {
                                         window.parent.shellInterface.throwAlert("Aw! snap", "Contact your system administrator", `We couldn't fetch the material analysis report from our database. The most likely cause may be a network failure. If it is not the case, provide your system administrator with the following error\n\n` + error, null, "OK", null);
                                     });
-                            }
-                        });
-
-                        //Add onchange to producedAmountInput for updating price input
-                        producedAmountInput.addEventListener("input", () => {
-                            if (!producedAmountInput.parentElement.classList.contains("invalid")) {
-                                priceInput.value = (parseFloat(priceInput.dataset.unitPrice) * parseFloat(producedAmountInput.value)).toFixed(2);
                             }
                         });
 
@@ -196,7 +195,7 @@
                     </table>
                 </div>
 
-                <div class="formFieldContainer">
+                <div class="formFieldContainer disabled">
                     <div class="titleContainer">
                         <h1 class="title">Produced amount</h1>
                     </div>

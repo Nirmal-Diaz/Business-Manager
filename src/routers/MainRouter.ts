@@ -964,7 +964,7 @@ mainRouter.route("/productManufacturingOrders/:productManufacturingOrderCode/ana
 mainRouter.route("/productManufacturingOrders/:productManufacturingOrderCode/product")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product manufacturing orders", req.method)
-            .then(() => ProductManufacturingOrderController.getProduct(req.params.productManufacturingOrderCode)).then(data => {
+            .then(() => ProductManufacturingOrderController.getOrderWithProduct(req.params.productManufacturingOrderCode)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

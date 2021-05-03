@@ -43,7 +43,7 @@ export class ProductManufacturingOrderController {
         }
     }
 
-    static async getProduct(code: string) {
+    static async getOrderWithProduct(code: string) {
         const item = await getRepository(Entity).findOne({
             where: {
                 code: code
@@ -52,7 +52,7 @@ export class ProductManufacturingOrderController {
         });
 
         if (item) {
-            return item.product;
+            return item;
         } else {
             throw { title: "Oops!", titleDescription: "Please recheck your arguments", message: `We couldn't find a ${this.entityName} that matches your arguments`, technicalMessage: `No ${this.entityName} for given arguments` };
         }
