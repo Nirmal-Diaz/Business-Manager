@@ -29,6 +29,15 @@
                     //Set the current date as value for "addedDate"
                     this.form.getView().querySelector("#addedDate").value = new Date().toISOString().slice(0, 10);
 
+                    //Remove payment history container
+                    const paymentHistoryContainer = this.form.getView().querySelector("#paymentHistoryContainer");
+                    paymentHistoryContainer.previousElementSibling.remove();
+                    paymentHistoryContainer.remove();
+
+                    //Remove toBePaid and paid containers
+                    this.form.getView().querySelector("#paidPriceContainer").remove();
+                    this.form.getView().querySelector("#toBePaidPriceContainer").remove();
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then(() => {
                         const unitTypeDropDown = this.form.getView().querySelector("#unitTypeId");
                         const orderCodeInput = this.form.getView().querySelector("#orderCode");
@@ -85,6 +94,17 @@
                         formFiledContainers[i].classList.add("disabled");
                     }
 
+                    //Add onclick to addPaymentButton for opening the popUpCard
+                    const paymentHistoryContainer = this.form.getView().querySelector("#paymentHistoryContainer");
+                    paymentHistoryContainer.children[1].addEventListener("click", (event) => {
+                        event.preventDefault();
+                        //Add onload to iframe for initializing create form
+                        const popUpCard = this.popUpCardObject.parentCardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/outboundPayments_cu.html");
+                        popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                            popUpCard.popUpCardInterface.extendInitForm("/registries/outboundPayment.json", "outboundPayments", "PUT");
+                        });
+                    });
+
                     this.form.init(bindingObjectURL, submissionURL, submissionMethod).then((form) => {
                         fetch(submissionURL)
                             .then(response => response.json())
@@ -108,11 +128,7 @@
                                         let payedPrice = 0;
 
                                         if (response.status) {
-                                            //Show payment history
-                                            formFiledContainers[0].style.display = "block";
-                                            formFiledContainers[1].style.display = "block";
-
-                                            const tbody = formFiledContainers[2].querySelector("tbody");
+                                            const tbody = paymentHistoryContainer.children[0].children[1];
                                             for (const payment of response.data) {
                                                 payedPrice += parseFloat(payment.price);
                                                 const tr = document.createElement("tr");
@@ -131,22 +147,13 @@
 
                                                 tbody.appendChild(tr);
                                             }
-
-                                            //Add onclick to addPaymentButton for opening the popUpCard
-                                            formFiledContainers[2].querySelector("#addPaymentButton").addEventListener("click", (event) => {
-                                                event.preventDefault();
-                                                //Add onload to iframe for initializing create form
-                                                const popUpCard = this.popUpCardObject.parentCardInterface.cardObject.createPopUpCard("/layouts/main/popUpCards/outboundPayments_cu.html");
-                                                popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
-                                                    popUpCard.popUpCardInterface.extendInitForm("/registries/outboundPayment.json", "outboundPayments", "PUT");
-                                                });
-                                            });
                                         }
 
                                         const toBePayedPrice = (parseFloat(this.form.getBindingObject().finalPrice.value) - payedPrice);
 
-                                        this.form.getView().querySelector("#paidPrice").value = payedPrice.toFixed(2);
-                                        this.form.getView().querySelector("#toBePaidPrice").value = toBePayedPrice.toFixed(2);
+                                        //Show payed price and to be paid price
+                                        this.form.getView().querySelector("#paidPriceContainer").children[1].children[0].value = payedPrice.toFixed(2);
+                                        this.form.getView().querySelector("#toBePaidPriceContainer").children[1].children[0].value = toBePayedPrice.toFixed(2);
                                     })
                             });
                     });
@@ -169,25 +176,28 @@
         <!-- formsContainer -->
         <div class="formsContainer">
             <form>
-                <div class="formFieldContainer disabled" style="display: none;">
+                <div id="paidPriceContainer" class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="title">Currently paid</h1>
+                        <h1 class="title">We paid</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
-                        <input id="paidPrice" type="text" placeholder="eg: 10000.00">
+                        <input type="text" placeholder="eg: 10000.00">
                     </div>
                 </div>
 
-                <div class="formFieldContainer disabled" style="display: none;">
+                <div id="toBePaidPriceContainer" class="formFieldContainer disabled">
                     <div class="titleContainer">
-                        <h1 class="title">Debt</h1>
+                        <h1 class="title">We have to pay</h1>
                     </div>
                     <div class="inputContainer text prefixed price">
-                        <input id="toBePaidPrice" type="text" placeholder="eg: 10000.00">
+                        <input type="text" placeholder="eg: 10000.00">
                     </div>
                 </div>
 
-                <div class="formFieldContainer wide" style="display: none;">
+                <div class="titleContainer">
+                    <h1 class="title">Payment History</h1>
+                </div>
+                <div id="paymentHistoryContainer" class="formFieldContainer wide">
                     <table>
                         <thead>
                             <tr>
@@ -200,7 +210,7 @@
 
                         </tbody>
                     </table>
-                    <button id="addPaymentButton" class="buttonText">ADD PAYMENT</button>
+                    <button class="buttonText">ADD PAYMENT</button>
                 </div>
 
                 <div class="formFieldContainer disabled">

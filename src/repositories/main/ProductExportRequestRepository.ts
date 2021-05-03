@@ -27,14 +27,14 @@ export class ProductExportRequestRepository {
         .getRawOne();
     }
 
-    static getProductAnalysis(id: number) {
+    static getProductAnalysis(code: string) {
         return getRepository(ProductExportRequest).query(`
-            SELECT p.code, p.name, p.viable_amount, per.requested_amount needed_amount, per.requested_amount - p.viable_amount missing_amount, ut.name unit_name FROM product p
+            SELECT p.code, p.name, p.viable_amount, per.requested_amount needed_amount, p.viable_amount - per.requested_amount missing_amount, ut.name unit_name FROM product p
             LEFT JOIN product_export_request per
             ON per.product_id = p.id
             LEFT JOIN unit_type ut
             ON p.unit_type_id = ut.id
-            WHERE per.id = ${id}
+            WHERE per.code = "${code}"
         `);
     }
 }

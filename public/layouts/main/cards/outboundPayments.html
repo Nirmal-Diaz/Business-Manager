@@ -24,7 +24,14 @@
                 super("Outbound Payment", "Outbound Payments");
             }
 
-            searchItems(keyword, titleDescriptionText) {
+            searchItems(keyword, titleDescriptionText, reload = true) {
+                this.keyword = keyword;
+                this.titleDescriptionText = titleDescriptionText;
+
+                if (reload) {
+                    this.offset = -10;
+                }
+                
                 fetch(`/${PlatformUtil.capitalizedToPascal(this.entityNamePlural)}?keyword=${keyword}&offset=${this.offset = this.offset+10}`)
                     .then(response => response.json())
                     .then(response => {

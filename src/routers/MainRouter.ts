@@ -838,10 +838,10 @@ mainRouter.route("/productExportRequests/:productExportRequestId")
             });
     });
 
-mainRouter.route("/productExportRequests/:productExportRequestId/analysis")
+mainRouter.route("/productExportRequests/:productExportRequestCode/analysis")
     .get((req, res, next) => {
         PermissionController.checkPermission(req.session.userId, "product export requests", req.method)
-            .then(() => ProductExportRequestController.getProductAnalysis(parseInt(req.params.productExportRequestId))).then(data => {
+            .then(() => ProductExportRequestController.getProductAnalysis(req.params.productExportRequestCode)).then(data => {
                 res.locals.data = data; next();
             }).catch(error => {
                 res.locals.error = error; next();

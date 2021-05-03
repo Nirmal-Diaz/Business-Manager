@@ -68,8 +68,8 @@ export class ProductExportRequestController {
         }
     }
 
-    static async getProductAnalysis(id: number) {
-        const items = await EntityRepository.getProductAnalysis(id);
+    static async getProductAnalysis(code: string) {
+        const items = await EntityRepository.getProductAnalysis(code);
         
         if (items.length > 0) {
             return items;

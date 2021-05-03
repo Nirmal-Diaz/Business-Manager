@@ -338,18 +338,21 @@ export class FormUtil {
     }
 
     static resetInput(formView, formField) {
-        if (formField.inputClass === "dropDown") {
-            formView.querySelector(formField.inputQuery).value = "1";
-        } else if (formField.inputClass === "image") {
-            const imageInput = formView.querySelector(formField.inputQuery);
-
-            imageInput.value = "";
-            imageInput.dataset.stringifiedBlob = "";
-            imageInput.dataset.size = "0";
-            imageInput.dataset.type = "";
-            imageInput.previousElementSibling.src = "";
-        } else {
-            formView.querySelector(formField.inputQuery).value = "";
+        //NOTE: Since most disabled fields cannot be edited by the user, they must not be reset
+        if (!formView.querySelector(formField.inputQuery).parentElement.parentElement.classList.contains("disabled")) {
+            if (formField.inputClass === "dropDown") {
+                formView.querySelector(formField.inputQuery).value = "1";
+            } else if (formField.inputClass === "image") {
+                const imageInput = formView.querySelector(formField.inputQuery);
+    
+                imageInput.value = "";
+                imageInput.dataset.stringifiedBlob = "";
+                imageInput.dataset.size = "0";
+                imageInput.dataset.type = "";
+                imageInput.previousElementSibling.src = "";
+            } else {
+                formView.querySelector(formField.inputQuery).value = "";
+            }
         }
     }
 
