@@ -202,6 +202,7 @@
     top: 3vh;
     left: 0;
 
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -258,6 +259,8 @@
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
+    border: thin solid white;
+    box-shadow: 0 0 5px black;
 }
 
 @keyframes createPopUpCard {
