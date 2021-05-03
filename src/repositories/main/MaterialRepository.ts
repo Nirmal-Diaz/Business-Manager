@@ -27,15 +27,17 @@ export class MaterialRepository {
         return getRepository(Material)
         .query(`
             UPDATE material m,
-            (SELECT mb.material_id, SUM(mb.imported_amount) imported_amount FROM material_batch mb GROUP BY mb.material_id) material_import_inventory,
+            (SELECT material_import_inventory.material_id, IFNULL(material_import_inventory.imported_amount,0) - IFNULL(material_usage.used_amount, 0) viable_amount FROM
+            (SELECT mb.material_id, SUM(mb.imported_amount) imported_amount FROM material_batch mb GROUP BY mb.material_id) material_import_inventory LEFT JOIN
             (SELECT pm.material_id, SUM(pmo.requested_amount*pm.material_amount) used_amount FROM product_manufacturing_order pmo LEFT JOIN product_material pm ON pmo.product_id=pm.product_id WHERE pmo.order_status_id = 2 GROUP BY pm.material_id) material_usage
+            ON material_usage.material_id = material_import_inventory.material_id) material_inventory
             SET
-            m.viable_amount = material_import_inventory.imported_amount - material_usage.used_amount,
+            m.viable_amount = material_inventory.viable_amount,
             m.material_status_id = CASE
                 WHEN m.reorder_amount < m.viable_amount THEN 2
                 ELSE 1
             END
-            WHERE m.id = material_import_inventory.material_id
+            WHERE m.id = material_inventory.material_id
         `);
     }
 }
