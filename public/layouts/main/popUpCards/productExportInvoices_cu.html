@@ -76,8 +76,8 @@
                                                 const tr = tableRowTemplate.cloneNode(true);
 
                                                 tr.children[0].textContent = `(${entry.code}) ${entry.name}`;
-                                                tr.children[1].textContent = entry.needed_amount;
-                                                tr.children[2].textContent = entry.viable_amount;
+                                                tr.children[1].textContent = entry.viable_amount;
+                                                tr.children[2].textContent = entry.needed_amount;
                                                 tr.children[3].textContent = entry.missing_amount < 0 ? "None" : entry.missing_amount;
                                                 tr.children[4].textContent = entry.unit_name;
 
