@@ -8,13 +8,12 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { OutboundPayment } from "./OutboundPayment";
 import { MaterialBatch } from "./MaterialBatch";
 import { InvoiceStatus } from "./InvoiceStatus";
 import { MaterialImportOrder } from "./MaterialImportOrder";
-import { OutboundPayment } from "./OutboundPayment";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Index(
   "fk_material_import_invoice_invoice_status1_idx",
   ["invoiceStatusId"],
@@ -25,6 +24,7 @@ import { OutboundPayment } from "./OutboundPayment";
   ["orderCode"],
   {}
 )
+@Index("order_code_UNIQUE", ["orderCode"], { unique: true })
 @Entity("material_import_invoice", { schema: "business_manager" })
 export class MaterialImportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -54,6 +54,12 @@ export class MaterialImportInvoice {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
+  @OneToMany(
+    () => OutboundPayment,
+    (outboundPayment) => outboundPayment.invoiceCode2
+  )
+  outboundPayments: OutboundPayment[];
+
   @OneToOne(() => MaterialBatch, (materialBatch) => materialBatch.invoiceCode2)
   materialBatch: MaterialBatch;
 
@@ -72,10 +78,4 @@ export class MaterialImportInvoice {
   )
   @JoinColumn([{ name: "order_code", referencedColumnName: "code" }])
   orderCode2: MaterialImportOrder;
-
-  @OneToMany(
-    () => OutboundPayment,
-    (outboundPayment) => outboundPayment.invoiceCode2
-  )
-  outboundPayments: OutboundPayment[];
 }

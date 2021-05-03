@@ -8,9 +8,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MaterialImportRequest } from "./MaterialImportRequest";
 import { SupplierStatus } from "./SupplierStatus";
 import { User } from "./User";
+import { MaterialImportRequest } from "./MaterialImportRequest";
 import { Material } from "./Material";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
@@ -57,20 +57,14 @@ export class Supplier {
   @Column("int", { name: "supplier_status_id" })
   supplierStatusId: number;
 
-  @Column("text", { name: "description" })
-  description: string;
+  @Column("text", { name: "description", nullable: true })
+  description: string | null;
 
   @Column("int", { name: "user_id" })
   userId: number;
 
   @Column("date", { name: "added_date" })
   addedDate: string;
-
-  @OneToMany(
-    () => MaterialImportRequest,
-    (materialImportRequest) => materialImportRequest.supplier
-  )
-  materialImportRequests: MaterialImportRequest[];
 
   @ManyToOne(
     () => SupplierStatus,
@@ -86,6 +80,12 @@ export class Supplier {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
+
+  @OneToMany(
+    () => MaterialImportRequest,
+    (materialImportRequest) => materialImportRequest.supplier
+  )
+  materialImportRequests: MaterialImportRequest[];
 
   @ManyToMany(() => Material, (material) => material.suppliers)
   materials: Material[];

@@ -27,8 +27,8 @@ export class UserPreference {
   @Column("blob", { name: "avatar", nullable: true })
   avatar: Buffer | null;
 
-  @Column("char", { name: "temporary_hash", length: 64 })
-  temporaryHash: string;
+  @Column("char", { name: "temporary_hash", nullable: true, length: 64 })
+  temporaryHash: string | null;
 
   @OneToOne(() => User, (user) => user.userPreference, {
     onDelete: "NO ACTION",

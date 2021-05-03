@@ -7,13 +7,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ProductMaterial } from "./ProductMaterial";
 import { UnitType } from "./UnitType";
+import { ProductBatch } from "./ProductBatch";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
+import { ProductExportRequest } from "./ProductExportRequest";
 import { ProductStatus } from "./ProductStatus";
 import { User } from "./User";
-import { ProductBatch } from "./ProductBatch";
-import { ProductExportRequest } from "./ProductExportRequest";
-import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
-import { ProductMaterial } from "./ProductMaterial";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_quantity_type1_idx", ["unitTypeId"], {})
@@ -63,12 +63,33 @@ export class Product {
   })
   viableAmount: string | null;
 
+  @OneToMany(
+    () => ProductMaterial,
+    (productMaterial) => productMaterial.product
+  )
+  productMaterials: ProductMaterial[];
+
   @ManyToOne(() => UnitType, (unitType) => unitType.products, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "unit_type_id", referencedColumnName: "id" }])
   unitType: UnitType;
+
+  @OneToMany(() => ProductBatch, (productBatch) => productBatch.product)
+  productBatches: ProductBatch[];
+
+  @OneToMany(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.product
+  )
+  productManufacturingOrders: ProductManufacturingOrder[];
+
+  @OneToMany(
+    () => ProductExportRequest,
+    (productExportRequest) => productExportRequest.product
+  )
+  productExportRequests: ProductExportRequest[];
 
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.products, {
     onDelete: "NO ACTION",
@@ -83,25 +104,4 @@ export class Product {
   })
   @JoinColumn([{ name: "user_id", referencedColumnName: "id" }])
   user: User;
-
-  @OneToMany(() => ProductBatch, (productBatch) => productBatch.product)
-  productBatches: ProductBatch[];
-
-  @OneToMany(
-    () => ProductExportRequest,
-    (productExportRequest) => productExportRequest.product
-  )
-  productExportRequests: ProductExportRequest[];
-
-  @OneToMany(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) => productManufacturingOrder.product
-  )
-  productManufacturingOrders: ProductManufacturingOrder[];
-
-  @OneToMany(
-    () => ProductMaterial,
-    (productMaterial) => productMaterial.product
-  )
-  productMaterials: ProductMaterial[];
 }

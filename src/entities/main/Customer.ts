@@ -55,8 +55,8 @@ export class Customer {
   @Column("int", { name: "customer_status_id" })
   customerStatusId: number;
 
-  @Column("text", { name: "description" })
-  description: string;
+  @Column("text", { name: "description", nullable: true })
+  description: string | null;
 
   @Column("int", { name: "user_id" })
   userId: number;

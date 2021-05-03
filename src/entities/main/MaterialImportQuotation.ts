@@ -13,10 +13,10 @@ import { MaterialImportRequest } from "./MaterialImportRequest";
 import { QuotationStatus } from "./QuotationStatus";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
-@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
-@Index("fk_quotation_quotation_request1_idx", ["requestCode"], {})
 @Index("fk_material_import_quotation_unit_type1_idx", ["unitTypeId"], {})
+@Index("fk_quotation_quotation_request1_idx", ["requestCode"], {})
+@Index("fk_quotation_quotation_status1_idx", ["quotationStatusId"], {})
+@Index("quotation_request_code_UNIQUE", ["requestCode"], { unique: true })
 @Entity("material_import_quotation", { schema: "business_manager" })
 export class MaterialImportQuotation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })

@@ -3,8 +3,8 @@ import { Material } from "./Material";
 import { Product } from "./Product";
 import { UnitType } from "./UnitType";
 
-@Index("fk_material_has_product_product1_idx", ["productId"], {})
 @Index("fk_material_has_product_material1_idx", ["materialId"], {})
+@Index("fk_material_has_product_product1_idx", ["productId"], {})
 @Index("fk_product_material_unit_type1_idx", ["unitTypeId"], {})
 @Entity("product_material", { schema: "business_manager" })
 export class ProductMaterial {

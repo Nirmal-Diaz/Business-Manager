@@ -9,16 +9,16 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Customer } from "./Customer";
+import { Supplier } from "./Supplier";
 import { Material } from "./Material";
 import { Product } from "./Product";
-import { Supplier } from "./Supplier";
+import { UserPreference } from "./UserPreference";
 import { Employee } from "./Employee";
 import { Role } from "./Role";
-import { UserPreference } from "./UserPreference";
 
-@Index("username_UNIQUE", ["username"], { unique: true })
-@Index("fk_user_occupation1_idx", ["roleId"], {})
 @Index("fk_user_employee1_idx", ["employeeCode"], {})
+@Index("fk_user_occupation1_idx", ["roleId"], {})
+@Index("username_UNIQUE", ["username"], { unique: true })
 @Entity("user", { schema: "business_manager" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -42,14 +42,17 @@ export class User {
   @OneToMany(() => Customer, (customer) => customer.user)
   customers: Customer[];
 
+  @OneToMany(() => Supplier, (supplier) => supplier.user)
+  suppliers: Supplier[];
+
   @OneToMany(() => Material, (material) => material.user)
   materials: Material[];
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];
 
-  @OneToMany(() => Supplier, (supplier) => supplier.user)
-  suppliers: Supplier[];
+  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
+  userPreference: UserPreference;
 
   @ManyToOne(() => Employee, (employee) => employee.users, {
     onDelete: "NO ACTION",
@@ -64,7 +67,4 @@ export class User {
   })
   @JoinColumn([{ name: "role_id", referencedColumnName: "id" }])
   role: Role;
-
-  @OneToOne(() => UserPreference, (userPreference) => userPreference.user)
-  userPreference: UserPreference;
 }

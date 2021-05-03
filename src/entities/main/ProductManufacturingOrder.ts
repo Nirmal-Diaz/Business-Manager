@@ -7,10 +7,10 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
 import { OrderStatus } from "./OrderStatus";
 import { UnitType } from "./UnitType";
 import { Product } from "./Product";
+import { ProductManufacturingInvoice } from "./ProductManufacturingInvoice";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
 @Index("fk_material_import_order_order_status1_idx", ["orderStatusId"], {})
@@ -45,12 +45,6 @@ export class ProductManufacturingOrder {
   @Column("date", { name: "added_date" })
   addedDate: string;
 
-  @OneToOne(
-    () => ProductManufacturingInvoice,
-    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
-  )
-  productManufacturingInvoice: ProductManufacturingInvoice;
-
   @ManyToOne(
     () => OrderStatus,
     (orderStatus) => orderStatus.productManufacturingOrders,
@@ -73,4 +67,10 @@ export class ProductManufacturingOrder {
   })
   @JoinColumn([{ name: "product_id", referencedColumnName: "id" }])
   product: Product;
+
+  @OneToOne(
+    () => ProductManufacturingInvoice,
+    (productManufacturingInvoice) => productManufacturingInvoice.orderCode2
+  )
+  productManufacturingInvoice: ProductManufacturingInvoice;
 }

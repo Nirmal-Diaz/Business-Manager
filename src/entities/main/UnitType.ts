@@ -7,14 +7,14 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Material } from "./Material";
 import { MaterialBatch } from "./MaterialBatch";
 import { MaterialImportOrder } from "./MaterialImportOrder";
+import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
 import { MaterialImportQuotation } from "./MaterialImportQuotation";
+import { Material } from "./Material";
 import { Product } from "./Product";
 import { ProductBatch } from "./ProductBatch";
 import { ProductExportRequest } from "./ProductExportRequest";
-import { ProductManufacturingOrder } from "./ProductManufacturingOrder";
 import { ProductMaterial } from "./ProductMaterial";
 import { UnitCategory } from "./UnitCategory";
 
@@ -40,9 +40,6 @@ export class UnitType {
   @Column("int", { name: "default_unit_id" })
   defaultUnitId: number;
 
-  @OneToMany(() => Material, (material) => material.unitType)
-  materials: Material[];
-
   @OneToMany(() => MaterialBatch, (materialBatch) => materialBatch.unitType)
   materialBatches: MaterialBatch[];
 
@@ -53,10 +50,19 @@ export class UnitType {
   materialImportOrders: MaterialImportOrder[];
 
   @OneToMany(
+    () => ProductManufacturingOrder,
+    (productManufacturingOrder) => productManufacturingOrder.unitType
+  )
+  productManufacturingOrders: ProductManufacturingOrder[];
+
+  @OneToMany(
     () => MaterialImportQuotation,
     (materialImportQuotation) => materialImportQuotation.unitType
   )
   materialImportQuotations: MaterialImportQuotation[];
+
+  @OneToMany(() => Material, (material) => material.unitType)
+  materials: Material[];
 
   @OneToMany(() => Product, (product) => product.unitType)
   products: Product[];
@@ -69,12 +75,6 @@ export class UnitType {
     (productExportRequest) => productExportRequest.unitType
   )
   productExportRequests: ProductExportRequest[];
-
-  @OneToMany(
-    () => ProductManufacturingOrder,
-    (productManufacturingOrder) => productManufacturingOrder.unitType
-  )
-  productManufacturingOrders: ProductManufacturingOrder[];
 
   @OneToMany(
     () => ProductMaterial,

@@ -13,8 +13,8 @@ import { InvoiceStatus } from "./InvoiceStatus";
 import { ProductExportRequest } from "./ProductExportRequest";
 
 @Index("code_UNIQUE", ["code"], { unique: true })
-@Index("manufacturing_order_code_UNIQUE", ["requestCode"], { unique: true })
 @Index("fk_product_export_invoice_invoice_status1_idx", ["invoiceStatusId"], {})
+@Index("manufacturing_order_code_UNIQUE", ["requestCode"], { unique: true })
 @Entity("product_export_invoice", { schema: "business_manager" })
 export class ProductExportInvoice {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
