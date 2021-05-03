@@ -36,9 +36,15 @@
                 });
 
                 buttons[1].addEventListener("click", () => {
-                    //Add onload to iframe for initializing update form
                     const popUpCard = this.cardObject.createPopUpCard("layouts/main/popUpCards/userPreferences_u.html");
+                    popUpCard.getView().querySelector("iframe").addEventListener("load", () => {
+                        popUpCard.popUpCardInterface.extendInitForm(`/registries/userPreference.json`, `/users/@me/userPreferences`, "POST");
+                    });
                 });
+            }
+
+            searchItems() {
+                
             }
         }
     </script>
@@ -49,14 +55,16 @@
         <div class="cardDivisionSector">
             <div class="titleContainer">
                 <h1 class="title">Change Pattern Password</h1>
-                <div class="titleDescription">If you think your pattern is insecure or compromised, click on the following button to change it to a more secure one.</div>
+                <div class="titleDescription">If you think your pattern is insecure or compromised, click on the
+                    following button to change it to a more secure one.</div>
                 <button class="buttonText">CHANGE</button>
             </div>
         </div>
         <div class="cardDivisionSector">
             <div class="titleContainer">
                 <h1 class="title">Update User Preferences</h1>
-                <div class="titleDescription">Your theme, display name and the avatar can be changed by clicking on the following button</div>
+                <div class="titleDescription">Your theme, display name and the avatar can be changed by clicking on the
+                    following button</div>
                 <button class="buttonText">UPDATE</button>
             </div>
         </div>

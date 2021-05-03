@@ -24,9 +24,7 @@
             }
 
             extendInitForm(bindingObjectURL, submissionURL, submissionMethod) {
-                if (submissionMethod === "PUT") {
-                    this.form.init(bindingObjectURL, submissionURL, submissionMethod);
-                } else if (submissionMethod === "POST") {
+                if (submissionMethod === "POST") {
                     document.querySelector(".formTitleContainer .titleDescription").textContent = "Update";
 
                     //Remove the reset button
