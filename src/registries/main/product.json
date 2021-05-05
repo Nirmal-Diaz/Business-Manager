@@ -25,6 +25,12 @@
         "pattern": "^\\d{1,7}[.]\\d{2}$",
         "value": null
     },
+    "maxAmount": {
+        "inputQuery": "#maxAmount",
+        "inputClass": "text",
+        "pattern": "^\\d{1,7}[.]\\d{2}$",
+        "value": null
+    },
     "unitPrice": {
         "inputQuery": "#unitPrice",
         "inputClass": "text",

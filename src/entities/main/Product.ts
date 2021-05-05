@@ -36,6 +36,9 @@ export class Product {
   @Column("decimal", { name: "reorder_amount", precision: 10, scale: 2 })
   reorderAmount: string;
 
+  @Column("decimal", { name: "max_amount", precision: 10, scale: 2 })
+  maxAmount: string;
+
   @Column("int", { name: "unit_type_id" })
   unitTypeId: number;
 
